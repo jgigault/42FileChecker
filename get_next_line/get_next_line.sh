@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 clear;
 echo "";
 echo "\033[1m   ___ _  _ _    \033[0m";
@@ -11,7 +10,10 @@ echo "\033[1m jgigault @ student.42.fr \033[0m";
 echo "";
 echo "\033[1m------------------------------------------------\033[0m";
 echo "\033[1mFichier auteur :\033[0m"
-cat -e auteur;
+if [ ! -f auteur ];
+then echo "\033[31mFICHIER AUTEUR ABSENT\033[0m";
+else cat -e auteur;
+fi;
 
 echo "";
 echo "\033[1m------------------------------------------------\033[0m";
@@ -19,14 +21,16 @@ echo "\033[1mget_next_line.c && get_next_line.h :\033[0m";
 OBL="";
 if [ ! -f get_next_line.c ]; then echo "get_next_line.c : \033[31mINTROUVABLE\033[0m"; OBL=KO; fi;
 if [ ! -f get_next_line.h ]; then echo "get_next_line.h : \033[31mINTROUVABLE\033[0m"; OBL=KO; fi;
-if [ "$OBL" == "" ]; then
-echo "\033[0;32mOK\033[m"; fi;
+if [ "$OBL" == "" ]; then echo "\033[0;32mOK\033[m"; fi;
 
 echo "";
 echo "\033[1m------------------------------------------------\033[0m";
 echo "\033[1mlibft :\033[0m";
 LIBFT=0;
-if [ ! -f libft ]; then LIBFT=1; echo "\033[0;32mOUI\033[m"; else echo "\033[31mNON\033[0m"; fi;
+if [ ! -f libft ]; 
+then LIBFT=1; echo "\033[0;32mOUI\033[m"; 
+else echo "\033[31mNON\033[0m"; 
+fi;
 
 
 echo "";
