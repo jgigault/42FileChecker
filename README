@@ -1,0 +1,3 @@
+Chaque dossier correspond à un projet.
+
+Placez le contenu d'un dossier à la racine du projet concerné, puis lancez le script bash avec la commande "sh ./nom_du_script_bash.sh"
