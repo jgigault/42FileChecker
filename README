@@ -1,3 +1,5 @@
+42FileChecker comporte des scripts bash à exécuter pour faciliter les tâches ingrates des corrections à 42 : fichier auteur, norme, verification des noms et du nombre de fichiers, présence de fonctions interdites, compilation des libraries avec les Makefile du projet. Si un main de test est présent, il sera également compilé avec le projet.
+
 Chaque dossier correspond à un projet.
 
 Placez le contenu d'un dossier à la racine du projet concerné, puis lancez le script bash avec la commande "sh ./nom_du_script_bash.sh"
