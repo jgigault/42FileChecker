@@ -54,7 +54,7 @@ int main(void)
         total_lines++;
     }
 
-	printf("\n\033[0;32mNombre de caracteres lus : %d\n", total);
+	printf("\nNombre de caracteres lus : %d\n", total);
     printf("Nombre de lignes lues : %d", total_lines);
 
 	free (line);
