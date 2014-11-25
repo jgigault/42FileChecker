@@ -1,5 +1,36 @@
 #!/bin/bash
 
+
+
+function check_statics
+{
+
+for i in $(ls -1 $1 | grep .c)
+do
+
+FILEN=$i
+FILEPATH=$1"/"$i
+awk -v FILEN="$FILEN" 'BEGIN \
+    { \
+        OFS = ""
+        sub(/\.c/, "", FILEN)
+    } \
+    $0 ~ /^[a-z_]+[	 ]+\**[a-z_]*\(.*/ \
+    { \
+        gsub (/^[a-z_]*[	 ]+\**/, "")
+        gsub (/ *\(.*$/, "")
+        if ($1 != FILEN) \
+        { \
+            print FILENAME, " (ligne ", NR, ") : ", $0, "() \033[31mshould be declared as \033[0\
+;34mstatic\033[0m" \
+        } \
+    }' $FILEPATH
+
+done
+
+}
+
+
 clear;
 echo "";
 echo "\033[1m  _    ___ ___ ___ _____  \033[0m";
@@ -19,6 +50,12 @@ echo "";
 echo "\033[1m------------------------------------------------\033[0m";
 echo "\033[1mNorme :\033[0m";
 norminette *.[ch] | sed -n "/Error/p" | awk 'END {if (NR == 0) print "\033[0;32mOK\033[m"; else print "\033[31m",$0,"\033[0m";}';
+
+
+echo "";
+echo "\033[1m------------------------------------------------\033[0m";
+echo "\033[1mVerification des fonctions 'static' :\033[0m";
+check_statics ./ | awk 'END {if (NR == 0) print "\033[0;32mOK\033[m"; else print $0; }';
 
 echo "";
 echo "\033[1m------------------------------------------------\033[0m";
