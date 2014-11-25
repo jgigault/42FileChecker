@@ -57,7 +57,7 @@ echo "";
 echo "\033[1m------------------------------------------------\033[0m";
 echo "\033[1mlibft :\033[0m";
 LIBFT=0;
-if [ ! -f libft ]; then LIBFT=1; echo "\033[0;32mOUI\033[m"; else echo "\033[31mNON\033[0m"; fi;
+if [ -d libft ]; then LIBFT=1; echo "\033[0;32mOUI\033[m"; else echo "\033[31mNON\033[0m"; fi;
 
 
 if [ "$LIBFT" == "1" ];
