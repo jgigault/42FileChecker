@@ -65,7 +65,7 @@ then
 
 if [ -f libft/ft_memalloc.c -o -f libft/ft_strnew.c ];
 then
-LIBFT_SRCS="";
+LIBFT_SRCS="libft";
 else
 	echo "\033[1m\nVeuillez indiquer dans quel dossier se trouvent les fichiers *.c de la libft :\033[0m\033\
 [0;34m";
