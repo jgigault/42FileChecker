@@ -67,14 +67,21 @@ if [ -f libft/ft_memalloc.c -o -f libft/ft_strnew.c ];
 then
 LIBFT_SRCS="libft";
 else
-	echo "\033[1m\nVeuillez indiquer dans quel dossier se trouvent les fichiers *.c de la libft :\033[0m\033\
+
+	if [ -f libft/srcs/ft_memalloc.c -o -f libft/srcs/ft_strnew.c ];
+	then
+		LIBFT_SRCS="libft/srcs";
+	else
+
+		echo "\033[1m\nVeuillez indiquer dans quel dossier se trouvent les fichiers *.c de la libft :\033[0m\033\
 [0;34m";
-	read LIBFT_SRCS
-	while [ ! -f $LIBFT_SRCS"/ft_memalloc.c" -o ! -f $LIBFT_SRCS"/ft_strnew.c" ]
-	do
-		echo "\033[0m\033[31mDossier invalide !\033[0m\n\n\033[1mVeuillez reessayer (exemple : ./libft/srcs) :\033[0m\033[0;34m";
 		read LIBFT_SRCS
-	done
+		while [ ! -f $LIBFT_SRCS"/ft_memalloc.c" -o ! -f $LIBFT_SRCS"/ft_strnew.c" ]
+		do
+			echo "\033[0m\033[31mDossier invalide !\033[0m\n\n\033[1mVeuillez reessayer (exemple : ./libft/srcs) :\033[0m\033[0;34m";
+			read LIBFT_SRCS
+		done
+	fi;
 fi;
 
 echo "\033[0m";
@@ -88,9 +95,12 @@ echo "\033[1m------------------------------------------------\033[0m";
 echo "\033[1mNorme :\033[0m";
 norminette get_next_line.[ch] | sed "/Norminette can't check this file/d" | sed "/Norme:/d" | awk 'BEGIN { OFS = "" } END {if (NR == 0) print "get_next_line : \033[0;32mOK\033[m"; else print "\033[31m",$0,"\033[0m";}';
 if [ "$LIBFT" == "1" ];
-if [ ! -f libft/srcs ]; then norminette libft/srcs/*.[ch] | sed "/Norminette can't check this file/d" | sed "/Norme:/d" | awk 'BEGIN { OFS = "" } END {if (NR == 0) print "libft/srcs/*.[ch] : \033[0;32mOK\033[m"; else print "libft/srcs/*.[ch] : \033[31m",$0,"\033[0m";}'; fi;
-if [ ! -f libft/includes ]; then norminette libft/includes/*.[ch] | sed "/Norminette can't check this file/d" | sed "/Norme:/d" | awk 'BEGIN { OFS = "" } END {if (NR == 0) print "libft/includes/*.[ch] : \033[0;32mOK\033[m"; else print "libft/includes/*.[ch] : \033[31m",$0,"\033[0m";}'; fi;
-then norminette libft/*.[ch] | sed "/Norminette can't check this file/d" | sed "/Norme:/d" | awk 'BEGIN { OFS = "" } END {if (NR == 0) print "libft/*.[ch] : \033[0;32mOK\033[m"; else print "libft/*.[ch] : \033[31m",$0,"\033[0m";}'; fi;
+then
+	if [ -d $LIBFT_SRCS ]; then norminette $LIBFT_SRCS/*.[ch] | sed "/Norminette can't check this file/d" | sed "/Norme:/d" | awk 'BEGIN { OFS = "" } END {if (NR == 0) print "'"$LIBFT_SRCS"'/*.[ch] : \033[0;32mOK\033[m"; else print "'"$LIBFT_SRCS"'/*.[ch] : \033[31m",$0,"\033[0m";}'; fi;
+	if [ -d libft/includes ]; then norminette libft/includes/*.[ch] | sed "/Norminette can't check this file/d" | sed "/Norme:/d" | awk 'BEGIN { OFS = "" } END {if (NR == 0) print "libft/includes/*.[ch] : \033[0;32mOK\033[m"; else print "libft/includes/*.[ch] : \033[31m",$0,"\033[0m";}'; fi;
+
+	norminette libft/*.[ch] | sed "/Norminette can't check this file/d" | sed "/Norme:/d" | awk 'BEGIN { OFS = "" } END {if (NR == 0) print "libft/*.[ch] : \033[0;32mOK\033[m"; else print "libft/*.[ch] : \033[31m",$0,"\033[0m";}'; 
+fi;
 
 echo "";
 echo "\033[1m------------------------------------------------\033[0m";
@@ -112,13 +122,13 @@ fi;
 
 
 
-if [ -f main_1.c -a -f main_2.c -a -f main_3.c -a -f main_4.c -a -f main_5.c -a -f main_6.c -a -f main_7.c ]; then
+if [ -f main_1.c -a -f main_2.c -a -f main_3.c -a -f main_4.c -a -f main_5.c -a -f main_6.c -a -f main_7.c -a -f main_8.c ]; then
 
 
 echo "";
 echo "\033[1m------------------------------------------------\033[0m";
 
-rm -f get_next_line.o main_1.o main_2.o main_3.o main_4.o main_5.o main_6.o main_7.o;
+rm -f get_next_line.o main_1.o main_2.o main_3.o main_4.o main_5.o main_6.o main_7.o main_8.o;
 
 if [ "$LIBFT" == "1" ];
 then
@@ -140,6 +150,8 @@ gcc -Wall -Wextra -Werror -I libft/includes/ -c main_6.c;
 gcc -o test_gnl_6 get_next_line.o main_6.o -L libft/ -lft;
 gcc -Wall -Wextra -Werror -I libft/includes/ -c main_7.c;
 gcc -o test_gnl_7 get_next_line.o main_7.o -L libft/ -lft;
+gcc -Wall -Wextra -Werror -I libft/includes/ -c main_8.c;
+gcc -o test_gnl_8 get_next_line.o main_8.o -L libft/ -lft;
 echo "\033[0m"
 else
 echo "\033[1mCompilation SANS libft.\033[0m\033[31m";
@@ -158,6 +170,8 @@ gcc -Wall -Wextra -Werror -c main_6.c;
 gcc -o test_gnl_6 get_next_line.o main_6.o;
 gcc -Wall -Wextra -Werror -c main_7.c;
 gcc -o test_gnl_7 get_next_line.o main_7.o;
+gcc -Wall -Wextra -Werror -c main_8.c;
+gcc -o test_gnl_8 get_next_line.o main_8.o;
 echo "\033[0m"
 fi;
 
@@ -226,8 +240,16 @@ echo  "\033[0;34m";
 time ./test_gnl_7;
 echo "\033[0m";
 
+echo "";
+echo "\033[1m------------------------------------------------\033[0m";
+echo "\033[1mTest 8 (plusieurs lignes vides en fin de fichier) :\033[0m";
+echo  "\033[0;34m";
+time ./test_gnl_8;
+echo "\033[0m";
 
-rm -f get_next_line.o main_1.o main_2.o main_3.o main_4.o main_5.o main_6.o main_7.o;
+
+
+rm -f get_next_line.o main_1.o main_2.o main_3.o main_4.o main_5.o main_6.o main_7.o main_8.o;
 
 fi;
 

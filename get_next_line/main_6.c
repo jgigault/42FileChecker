@@ -30,11 +30,7 @@ int main(void)
         total += strlen(line);
         total_lines++;
 	}
-
-
 	close(fd1);
-
-
     if (total_errors == 0 && total_lines == 2097152 && total == 134217728)
     {
         printf("\033[0;32mOK");

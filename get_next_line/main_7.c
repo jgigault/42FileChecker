@@ -12,7 +12,6 @@
 
 int main(void) 
 {
-
 	int fd1;
 	char *line; 
 	int total;
@@ -20,8 +19,6 @@ int main(void)
 
 	line = NULL;
 	fd1 = open("test_7.txt", O_RDONLY);
-
-
 	total_lines = 0;
 	total = 0;
 	while (get_next_line(fd1, &line) == 1)
@@ -29,22 +26,17 @@ int main(void)
         total += strlen(line);
         total_lines++;
 	}
-
-	if (strcmp(line, "") == 0)
+	close(fd1);
+	if (total == 0 && total_lines == 0)
 	{
 		printf("\033[0;32mOK");
 	}
 	else
 	{
-
-	close(fd1);
-	printf("\nNombre de caracteres lus : %d\n", total);
-	printf("Nombre de caracteres attendus : 0\n");
-    printf("Nombre de lignes lues : %d\n", total_lines);
-    printf("Nombre de lignes attendues : 0\n");
-
+		printf("\nNombre de caracteres lus : %d\n", total);
+		printf("Nombre de caracteres attendus : 0\n");
+		printf("Nombre de lignes lues : %d\n", total_lines);
+		printf("Nombre de lignes attendues : 0\n");
 	}
-
-	free (line);
 	return (0);
 }

@@ -18,9 +18,6 @@ int main(void)
 	int total_lines;
 	int total_errors;
 	line = NULL;
-//	fd1 = open("test_1.txt", O_RDONLY);
-
-
 	total_errors = 0;
 	total_lines = 0;
 	total = 0;
@@ -62,19 +59,16 @@ int main(void)
 		total_lines++;
     }
 
-
     if (total_errors == 0 && total_lines == 5 && total == 2029)
     {
         printf("\033[0;32mOK");
     }
     else
     {
-
-    printf("\nNombre de caracteres lus : %d\n", total);
-    printf("Nombre de caracteres attendus : 2029\n");
-    printf("Nombre de lignes lues : %d\n", total_lines);
-    printf("Nombre de lignes attendues : 5\n");
-
+		printf("\nNombre de caracteres lus : %d\n", total);
+		printf("Nombre de caracteres attendus : 2029\n");
+		printf("Nombre de lignes lues : %d\n", total_lines);
+		printf("Nombre de lignes attendues : 5\n");
 	}
 	free (line);
 	return (0);

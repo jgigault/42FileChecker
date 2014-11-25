@@ -18,9 +18,6 @@ int main(void)
 	int total_lines;
 
 	line = NULL;
-//	fd1 = open("test_1.txt", O_RDONLY);
-
-
 	total_lines = 0;
 	total = 0;
 	if (get_next_line(0, &line) == 1)
@@ -53,10 +50,9 @@ int main(void)
         total += strlen(line);
         total_lines++;
     }
-
 	printf("\nNombre de caracteres lus : %d\n", total);
     printf("Nombre de lignes lues : %d", total_lines);
-
-	free (line);
+	if (line)
+		free (line);
 	return (0);
 }
