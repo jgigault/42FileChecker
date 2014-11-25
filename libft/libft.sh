@@ -21,8 +21,7 @@ awk -v FILEN="$FILEN" 'BEGIN \
         gsub (/ *\(.*$/, "")
         if ($1 != FILEN) \
         { \
-            print FILENAME, " (ligne ", NR, ") : ", $0, "() \033[31mshould be declared as \033[0\
-;34mstatic\033[0m" \
+            print FILENAME, " (ligne ", NR, ") : ", $0, "() \033[31mshould be declared as \033[0;34mstatic\033[0m" \
         } \
     }' $FILEPATH
 
@@ -55,7 +54,7 @@ norminette *.[ch] | sed -n "/Error/p" | awk 'END {if (NR == 0) print "\033[0;32m
 echo "";
 echo "\033[1m------------------------------------------------\033[0m";
 echo "\033[1mVerification des fonctions 'static' :\033[0m";
-check_statics ./ | awk 'END {if (NR == 0) print "\033[0;32mOK\033[m"; else print $0; }';
+check_statics . | awk 'END {if (NR == 0) print "\033[0;32mOK\033[m"; else print $0; }';
 
 echo "";
 echo "\033[1m------------------------------------------------\033[0m";
