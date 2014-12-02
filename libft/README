@@ -1,6 +1,11 @@
-1. Clonez le depot avec : git clone https://github.com/jgigault/42FileChecker
+ _    ___ ___ ___ _____
+| |  |_ _| _ ) __|_   _| __   __  __    __ _
+| |__ | || _ \ _|  | |  /  |_||_ /  |/ |_ |_)
+|____|___|___/_|   |_|  \__| ||__\__|\ |__| \
 
-2. Placez les fichiers a la racine de votre projet libft
+1. Clonez le dépôt avec : git clone https://github.com/jgigault/42FileChecker
+
+2. Placez les fichiers du dossier "libft" à la racine de votre projet libft
 
 3. Placez le Mouli-nator (mvaude@student.42.fr) dans un sous-dossier "m1"
 
