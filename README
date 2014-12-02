@@ -1,3 +1,9 @@
+`  _  _  ____  _____ _ _       ____ _               _              `
+` | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  `
+` | || |_ __) | |_  | | |/ _ \ |   | '_ \ / _ \/ __| |/ / _ \ '__| `
+` |__   _/ __/|  _| | | |  __/ |___| | | |  __/ (__|   <  __/ |    `
+`    |_||_____|_|   |_|_|\___|\____|_| |_|\___|\___|_|\_\___|_|    `
+
 42FileChecker comporte des scripts bash à exécuter pour faciliter les tâches ingrates des corrections à 42 : fichier auteur, norme, verification des noms et du nombre de fichiers, présence de fonctions interdites, compilation des librairies avec les Makefile du projet. Si un main de test est présent, il sera également compilé avec le projet et exécuté.
 
 Chaque dossier correspond à un projet.
