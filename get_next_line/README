@@ -1,5 +1,12 @@
-1. Clonez le depot avec : git clone https://github.com/jgigault/42FileChecker
+  ___ _  _ _
+ / __| \| | |     __    __ __    __ _
+| (_ | .\`| |__  /  |_||_ /  |/ |_ |_)
+ \___|_|\_|____| \__| ||__\__|\ |__| \
 
-2. Placez les fichiers a la racine de votre projet get_next_line
+## Installation
+
+1. Clonez le dépôt avec : git clone https://github.com/jgigault/42FileChecker
+
+2. Placez les fichiers du dossier "get_next_line" à la racine de votre projet get_next_line
 
 3. Lancez le script avec : sh ./get_next_line.sh
