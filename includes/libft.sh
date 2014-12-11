@@ -156,7 +156,7 @@ function check_statics
 		do
 			FILEN=$i
 			FILEPATH=$1"/"$i
-			awk -v FILEN="$FILEN" 'BEGIN \
+			awk -v FILEN="$FILEN" -v FILEN2="$FILEN" 'BEGIN \
     	{ \
         	OFS = ""
 	        sub(/\.c/, "", FILEN)
@@ -167,7 +167,7 @@ function check_statics
         	gsub (/ *\(.*$/, "")
 	        if ($1 != FILEN) \
     	    { \
-        	    print FILENAME, " (ligne ", NR, ") : ", $0, "() should be declared as static" \
+        	    print FILEN2, " (ligne ", NR, ") : ", $0, "() should be declared as static" \
 	        } \
     	}' $FILEPATH
 		done
