@@ -287,7 +287,7 @@ function config_libft
 		then
 			echo $C_RED"  $AB2: No such file or directory"$C_CLEAR$C_WHITE
 		else
-			printf $C_WHITE
+			printf $C_WHITE""
 		fi
 		tput cnorm
 		read -p "  $HOME/" -e AB0
@@ -297,7 +297,7 @@ function config_libft
 	done
 	cd "$RETURNPATH"
 	save_config "libft" "$AB2"
-	printf $C_CLEAR
+	printf $C_CLEAR""
 	check_libft
 }
 

@@ -10,15 +10,9 @@
 ####################################################################
 
 FILECHECKER_SH=1
-source includes/utils.sh
-source includes/libft.sh
-source includes/get_next_line.sh
-source includes/transition.sh
-source includes/update.sh
-source includes/credits.sh
-
 RETURNPATH=$(pwd | sed 's/ /\ /g')
 OPT_NO_UPDATE=0
+OPT_NO_COLOR=0
 
 i=1
 while (( i <= $# ))
@@ -27,8 +21,19 @@ do
 	then
 		OPT_NO_UPDATE=1
 	fi
+	if [ "${!i}" == "--no-color" ]
+	then
+		OPT_NO_COLOR=1
+	fi
 	(( i += 1 ))
 done
+
+source includes/utils.sh
+source includes/libft.sh
+source includes/get_next_line.sh
+source includes/transition.sh
+source includes/update.sh
+source includes/credits.sh
 
 function main
 {

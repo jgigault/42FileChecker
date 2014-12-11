@@ -245,7 +245,7 @@ function config_gnl
 	done
 	cd "$RETURNPATH"
 	save_config "gnl" "$AB2"
-	printf $C_CLEAR
+	printf $C_CLEAR""
 	check_gnl
 }
 

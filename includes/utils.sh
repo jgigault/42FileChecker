@@ -9,17 +9,19 @@ then
 		$COLUMNS=80;
 	fi;
 
-
-	C_CLEAR="\033[0m"
-	C_YELLOW="\033[33;1m"
-	C_RED="\033[31m"
-	C_GREEN="\033[32m"
-	C_CYAN="\033[36;1m"
-	C_WHITE="\033[37;1m"
-	C_BLUE="\033[34;1m"
-	C_GREY="\033[1;30m"
-	C_BLACK="\033[30;1m"
-	C_INVERT="\033[44;1m"$C_WHITE
+	if [ "$OPT_NO_COLOR" == "0" ]
+	then
+		C_CLEAR="\033[0m"
+		C_YELLOW="\033[33;1m"
+		C_RED="\033[31m"
+		C_GREEN="\033[32m"
+		C_CYAN="\033[36;1m"
+		C_WHITE="\033[37;1m"
+		C_BLUE="\033[34;1m"
+		C_GREY="\033[1;30m"
+		C_BLACK="\033[30;1m"
+		C_INVERT="\033[44;1m"$C_WHITE
+	fi
 
 	function display_error
 	{
@@ -46,7 +48,7 @@ then
         (( MARGIN= $COLUMNS ))
         printf $C_GREY""
 	    printf "%"$MARGIN"s" "" | sed s/' '/"${c:=¯ }"/g | cut -c1-$MARGIN
-	    printf $C_CLEAR
+	    printf $C_CLEAR""
 	    if [ "$1" != "" ]
 	    then
 		    echo "$1";
@@ -89,7 +91,7 @@ then
 		echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 		echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n "
 		clear
-		printf $C_GREY
+		printf $C_GREY""
 		display_center " "
 		display_center "  _  _  ____  _____ _ _       ____ _               _              "
 		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  "
@@ -98,14 +100,14 @@ then
 		display_center "    |_||_____|_|   |_|_|\___|\____|_| |_|\___|\___|_|\_\___|_|    "
 		display_center "    jgigault @ student.42.fr                    06 51 15 98 82    "
 		display_center " "
-		printf $C_CLEAR
+		printf $C_CLEAR""
 	}
 
 	function display_footer
 	{
-		echo $C_WHITE
+		echo $C_WHITE""
 		printf "%"$COLUMNS"s" "" | sed s/' '/"${c:=#}"/g | cut -c1-$COLUMNS
-		echo $C_CLEAR
+		echo $C_CLEAR""
 	}
 
 	function ft_atoi
@@ -284,7 +286,7 @@ then
 			printf "\b\b\b\b\b\b"
 		done
 		printf "    \b\b\b\b"
-		printf $C_CLEAR
+		printf $C_CLEAR""
 	}
 
 	function check_fileexists
