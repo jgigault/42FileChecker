@@ -1,8 +1,6 @@
 # 42FileChecker
 
-42FileChecker is a tiny bash script developped at 42 school for testing and checking the files according to the rules of the subjects.
-
-<img src="http://i.imgur.com/9Sf0rPW.png" />
+<img style="float:right;" src="http://i.imgur.com/6pC7t9P.png" />42FileChecker is a tiny bash script developped at 42 school for testing and checking the files according to the rules of the subjects.
 
 ## what it does
 The script is designed as a reminder of the basic rules of the sujects:
