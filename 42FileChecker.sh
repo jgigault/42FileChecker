@@ -18,6 +18,17 @@ source includes/update.sh
 source includes/credits.sh
 
 RETURNPATH=$(pwd | sed 's/ /\ /g')
+OPT_NO_UPDATE=0
+
+i=1
+while (( i <= $# ))
+do
+	if [ "${!i}" == "--no-update" ]
+	then
+		OPT_NO_UPDATE=1
+	fi
+	(( i += 1 ))
+done
 
 function main
 {
@@ -33,5 +44,8 @@ function main
 }
 
 #display_header_transition
-update
+if [ "$OPT_NO_UPDATE" == "0" ]
+then
+	update
+fi
 main
