@@ -162,7 +162,7 @@ then
 	function get_config
 	{
 		local MYFILE MYPATH
-		MYFILE=".my"$1
+		MYFILE="$RETURNPATH/.my"$1
 		if [ ! -f "$MYFILE" ]
 		then
 			touch "$MYFILE"
