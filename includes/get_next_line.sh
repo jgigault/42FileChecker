@@ -167,9 +167,9 @@ function check_gnl_macro
 function check_gnl_moulitest
 {
 	local RET0 TOTAL
-	rm -f .mymoulitest
-	cd "$RETURNPATH"/moulitest/get_next_line_tests/
-	make 1> "$RETURNPATH"/.mymoulitest 2>&1
+	rm -f "$RETURNPATH.mymoulitest"
+	cd "$RETURNPATH/moulitest/get_next_line_tests/"
+	make 1> "$RETURNPATH/.mymoulitest 2>&1"
 	cd "$RETURNPATH"
 	RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "END OF UNIT TESTS"`
 	if [ "$RET0" == "" ]

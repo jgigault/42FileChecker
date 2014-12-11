@@ -17,7 +17,7 @@ source includes/transition.sh
 source includes/update.sh
 source includes/credits.sh
 
-RETURNPATH1=$(pwd)
+RETURNPATH=$(pwd | sed 's/ /\ /g')
 
 function main
 {

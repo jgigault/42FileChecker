@@ -161,13 +161,14 @@ then
 
 	function get_config
 	{
-		local MYFILE MYPATH
-		MYFILE="$RETURNPATH/.my"$1
+		local MYFILE MYPATH RET0
+		MYFILE=`printf "$RETURNPATH/.my$1" | sed 's/ /\\ /g'`
+#		MYFILE="$RETURNPATH/.my"$1
 		if [ ! -f "$MYFILE" ]
 		then
 			touch "$MYFILE"
 		fi
-		MYPATH=`cat $MYFILE`
+		MYPATH=`cat "$MYFILE"`
 		if [ ! -d "$MYPATH" ]
 		then
 			printf "" > "$MYFILE"
@@ -178,10 +179,11 @@ then
 
 	function save_config
 	{
-		local MYFILE
+		local MYFILE RET0
 		MYFILE=".my$1"
-#		printf "$2" > "$RETURNPATH"/"$MYFILE"
-		printf "$2" > "$MYFILE"
+		RET0=`printf "$RETURNPATH/$MYFILE" | sed 's/ /\\ /g'`
+		RET0=`echo "printf \"$2\" > \"$RET0\""`
+		eval $RET0
 	}
 
 	function exit_checker
@@ -216,8 +218,8 @@ then
 		rm -f "$RETURNPATH"/.mynorminette
 		cd "$MYPATH"
 		RET0=$(find . -type f | sed '/^\.\/\./d' | grep -E \\.\[hc\]$ | tr '\n' ' ')
-		RET2=`norminette $RET0 2>&1`
-		cd $RETURNPATH
+		RET2=`norminette "$RET0" 2>&1`
+		cd "$RETURNPATH"
 		echo "$RET2" > "$RETURNPATH"/.mynorminette
 		RET2=`cat .mynorminette | grep Error`
 		RET3=`cat .mynorminette | grep Warning`
