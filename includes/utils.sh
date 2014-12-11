@@ -50,7 +50,7 @@ then
 	    if [ "$1" != "" ]
 	    then
 		    echo "$1";
-		fi;
+		fi
 	}
 
 	function display_righttitle
@@ -168,11 +168,11 @@ then
 			touch "$MYFILE"
 		fi
 		MYPATH=`cat $MYFILE`
-#		if [ ! -d "$MYPATH" ]
-#		then
-			#printf "" > "$MYFILE"
-			#MYPATH=""
-#		fi
+		if [ ! -d "$MYPATH" ]
+		then
+			printf "" > "$MYFILE"
+			MYPATH=""
+		fi
 		printf "$MYPATH"
 	}
 
@@ -180,7 +180,7 @@ then
 	{
 		local MYFILE
 		MYFILE=".my$1"
-		printf "$2" > "$RETURNPATH"/"$MYFILE"
+		printf "$2" > "$MYFILE"
 	}
 
 	function exit_checker
@@ -215,7 +215,6 @@ then
 		rm -f "$RETURNPATH"/.mynorminette
 		cd "$MYPATH"
 		RET0=$(find . -type f | sed '/^\.\/\./d' | grep -E \\.\[hc\]$ | tr '\n' ' ')
-		#printf $C_GREY"  norminette $RET0\n"$C_CLEAR
 		RET2=`norminette $RET0 2>&1`
 		cd $RETURNPATH
 		echo "$RET2" > "$RETURNPATH"/.mynorminette

@@ -237,7 +237,6 @@ function config_gnl
 		else
 			printf $C_WHITE
 		fi
-#		printf $C_WHITE"  $HOME/"
 		tput cnorm
 		read -p "  $HOME/" -e AB0
 		tput civis
