@@ -180,7 +180,8 @@ then
 	{
 		local MYFILE
 		MYFILE=".my$1"
-		printf "$2" > "$MYFILE"
+		printf "$2" > "$RETURNPATH"/"$MYFILE"
+#		printf "$2" > "$MYFILE"
 	}
 
 	function exit_checker
