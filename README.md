@@ -15,6 +15,10 @@ Basic tests with compilation are also available for get_next_line and complete u
 	git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
 	cd ~/42FileChecker && sh ./42FileChecker.sh
 
+## supported projects
+* libft
+* get_next_line
+
 ## options
 	--no-update   // Do not check for updates at launch
 	--no-color    // Do not display color tags
