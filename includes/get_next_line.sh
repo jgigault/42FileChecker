@@ -52,7 +52,7 @@ function check_gnl_basics
 	if [ -d "$GNL_LIBFT" ]
 	then
 		make re -C "$GNL_LIBFT" >/dev/null
-		EXTRA0=" -L$GNL_LIBFT -lft "
+		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
 	fi
 	cd "$RETURNPATH"/srcs/gnl
 	i=0
