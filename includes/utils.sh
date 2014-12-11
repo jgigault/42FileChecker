@@ -168,11 +168,11 @@ then
 			touch "$MYFILE"
 		fi
 		MYPATH=`cat $MYFILE`
-		if [ ! -d "$MYPATH" ]
-		then
-			printf "" > "$MYFILE"
-			MYPATH=""
-		fi
+#		if [ ! -d "$MYPATH" ]
+#		then
+			#printf "" > "$MYFILE"
+			#MYPATH=""
+#		fi
 		printf "$MYPATH"
 	}
 
