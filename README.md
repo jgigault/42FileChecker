@@ -15,6 +15,9 @@ Basic tests with compilation are also available for get_next_line and complete u
 	git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
 	cd ~/42FileChecker && sh ./42FileChecker.sh
 
+## options
+   --no-update	Do not check for updates at launch
+
 ## dependencies
 * The script automatically download, configure and launch for you the latest version of the "moulitest" project (Yan Yang): https://github.com/yyang42/moulitest
 * The "norminette" program from 42 school is required
