@@ -44,7 +44,7 @@ function check_gnl_all
 
 function check_gnl_basics
 {
-	local GNLC GNL_LIBFT EXTRA0 i j FILEN TITLEN RET0 errors SPEC0
+	local GNLC GNL_LIBFT EXTRA0 i j FILEN TITLEN RET0 errors fatal SPEC0
 	check_gnl_create_header
 	GNLC="$MYPATH/get_next_line.c"
 	GNL_LIBFT="$MYPATH/libft"
@@ -58,6 +58,7 @@ function check_gnl_basics
 	i=0
 	j=0
 	errors=0
+	fatal=0
 	echo "GNL BASIC TESTS:\n" > "$RETURNPATH"/.mybasictests
 	while [ "${CHK_GNL_BASICS[i]}" != "" ]
 	do
@@ -70,7 +71,7 @@ function check_gnl_basics
 		(( i += 1 ))
 		echo "$j -> $TITLEN ($FILEN.c):" >> "$RETURNPATH"/.mybasictests
 		rm -f "$FILEN"
-		RET0=`gcc -Wall -Werror -Wextra $GNLC $EXTRA0 $FILEN.c -o $FILEN`
+		RET0=`gcc -Wall -Werror -Wextra $GNLC $EXTRA0 $FILEN.c -o $FILEN 2>&1`
 		if [ -f $FILEN ]
 		then
 			if [ "$SPEC0" != "" ]
@@ -87,16 +88,22 @@ function check_gnl_basics
 			echo "$RET0" >> "$RETURNPATH"/.mybasictests
 		else
 			echo "Cannot compile" >> "$RETURNPATH"/.mybasictests
-			(( errors += 1 ))
+			echo "$RET0" >> "$RETURNPATH"/.mybasictests
+			(( fatal += 1 ))
 		fi
 		echo "" >> "$RETURNPATH"/.mybasictests
 	done
 	cd "$RETURNPATH"
-	if (( $errors == 0 ))
+	if (( $fatal > 0 ))
 	then
-		printf $C_GREEN"  All tests passed"$C_CLEAR
+		printf $C_RED"  $fatal fatal error(s): Cannot compile"$C_CLEAR
 	else
-		printf $C_RED"  $errors failed test(s)"$C_CLEAR
+		if (( $errors == 0 ))
+		then
+			printf $C_GREEN"  All tests passed"$C_CLEAR
+		else
+			printf $C_RED"  $errors failed test(s)"$C_CLEAR
+		fi
 	fi
 }
 
@@ -168,7 +175,7 @@ function check_gnl_moulitest
 {
 	local RET0 TOTAL
 	rm -f "$RETURNPATH"/.mymoulitest
-	cd "$RETURNPATH"/moulitest/get_next_line_tests/
+	cd "$RETURNPATH/moulitest/get_next_line_tests/"
 	make 1> "$RETURNPATH"/.mymoulitest 2>&1
 	cd "$RETURNPATH"
 	RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "END OF UNIT TESTS"`
