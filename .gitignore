@@ -1,0 +1,4 @@
+moulitest/
+.my*
+*~
+srcs/gnl/gnl.h

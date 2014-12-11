@@ -1,0 +1,23 @@
+# 42FileChecker
+
+42FileChecker is a tiny bash script developped at 42 school for testing and checking the files according to the rules of the subjects.
+
+<img src="http://i.imgur.com/9Sf0rPW.png" />
+
+## what it does
+The script is designed as a reminder of the basic rules of the sujects:
+* author file terminated by a Line Feed
+* count and names of files
+* code's standard
+* required and forbidden functions
+* macro and static variables declarations
+
+Basic tests with compilation are also available for get_next_line and complete unit tests are handled by the "moulitest" (please refer to the dependencies bellow).
+
+## install & launch
+	git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
+	cd ~/42FileChecker && sh ./42FileChecker.sh
+
+## dependencies
+* The script automatically download, configure and launch for you the latest version of the "moulitest" project (Yan Yang): https://github.com/yyang42/moulitest
+* The "norminette" program from 42 school is required
