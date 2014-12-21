@@ -21,7 +21,7 @@ function update
 		MOULIDATE=`cat .myret`
 		if [ "$MOULIDATE" == "0" ]
 		then
-			printf $C_RED"  Your version of 'moulitest' (yyang42@student.42.fr) is out-of-date.\n  Choose UPDATE MOULITEST (1) for getting the last version.\n\n"$C_CLEAR
+			printf $C_RED"  Your version of 'moulitest' (yyang42@student.42.fr) is out-of-date.\n  Choose UPDATE MOULITEST (1) for getting the last version or use '--no-update' to skip this message.\n\n"$C_CLEAR
 			display_menu\
 			   	""\
                 install_update_moulitest "UPDATE MOULITEST"\
@@ -29,7 +29,7 @@ function update
 		fi
 		if [ "$MOULIDATE" == "2" ]
 		then
-			printf $C_RED"  The 'moulitest' (yyang42@student.42.fr) is not installed.\n  Choose INSTALL MOULITEST (1) for getting it.\n\n"$C_CLEAR
+			printf $C_RED"  The 'moulitest' (yyang42@student.42.fr) is not installed.\n  Choose INSTALL MOULITEST (1) for installing it or use '--no-update' to skip this message.\n\n"$C_CLEAR
 			display_menu\
              	""\
                 install_update_moulitest "INSTALL MOULITEST"\
@@ -43,7 +43,7 @@ function update
 			exit_checker
 			printf "UPTODATE2" > .myret
 		else
-			printf $C_RED"  Your version of '42FileChecker' is out-of-date.\n  Choose UPDATE 42FILECHECKER (1) for getting the last version.\n\n"$C_CLEAR
+			printf $C_RED"  Your version of '42FileChecker' is out-of-date.\n  Choose UPDATE 42FILECHECKER (1) for getting the last version or use '--no-update' to skip this message.\n\n"$C_CLEAR
 			display_menu\
               	""\
                 install_update "UPDATE 42FILECHECKER"\
