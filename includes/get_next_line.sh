@@ -94,7 +94,7 @@ function check_gnl_basics
 		SPEC0="${CHK_GNL_BASICS[i]}"
 		(( i += 1 ))
 		echo "$j -> $TITLEN ($FILEN.c):" >> "$RETURNPATH"/.mybasictests
-		#rm -f "$FILEN"
+		rm -f "$FILEN"
 		RET0=`gcc -Wall -Werror -Wextra $GNLC $EXTRA0 $FILEN.c -o $FILEN 2>&1`
 		if [ -f $FILEN ]
 		then
