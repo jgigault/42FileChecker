@@ -35,7 +35,7 @@ then
 				if [ "$exists" == "0" ]
 				then
 					(( total += 1 ))
-					echo "\"${MYFUNCS[$item]}\" is a forbidden function" >> $LOG_FILENAME
+					echo "\"${MYFUNCS[$item]}\" is not part of the subject" >> $LOG_FILENAME
 				fi
 			done
 			if (( total == 0 ))
@@ -43,10 +43,10 @@ then
 				printf $C_GREEN"  No forbidden function found"$C_CLEAR
 				echo "" > $LOG_FILENAME
 			else
-				printf $C_RED"  $total forbidden function(s)"$C_CLEAR
+				printf $C_RED"  $total warning(s)"$C_CLEAR
 			fi
 		else
-			printf $C_RED"  Compilation failed, test not performed"$C_CLEAR
+			printf $C_RED"  Test not performed (see details)"$C_CLEAR
 			echo "$2: File Not Found" > $LOG_FILENAME
 		fi
 	}

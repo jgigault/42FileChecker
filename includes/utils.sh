@@ -210,7 +210,10 @@ then
 			"gnl")
 				echo "GET_NEXT_LINE_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
 				;;
-		esac
+			"ft_ls")
+				echo "FT_LS_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
+				;;
+	esac
 	}
 
 	function check_norme
