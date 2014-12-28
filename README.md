@@ -18,6 +18,7 @@ Basic tests with compilation are also available for get_next_line and complete u
 ## options
 	--no-update   // Do not check for updates at launch
 	--no-color    // Do not display color tags
+	--no-timeout  // Disable time-out child process
 
 ## supported projects
 * libft

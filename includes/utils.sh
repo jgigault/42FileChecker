@@ -291,7 +291,10 @@ then
 				(( total_delay2 = $total_delay / 5 ))
 				printf $C_RED"  Time out ($total_delay2 sec)"$C_CLEAR > $RETURNPATH/.myret
 			fi
-			(( total_delay += 1 ))
+			if [ "$OPT_NO_TIMEOUT" == "0" ]
+			then
+				(( total_delay += 1 ))
+			fi
 			local temp=${spinstr#?}
 			printf "  [%c] " "$spinstr"
 			local spinstr=$temp${spinstr%"$temp"}

@@ -13,6 +13,7 @@ FILECHECKER_SH=1
 RETURNPATH=$(pwd | sed 's/ /\ /g')
 OPT_NO_UPDATE=0
 OPT_NO_COLOR=0
+OPT_NO_TIMEOUT=0
 
 i=1
 while (( i <= $# ))
@@ -24,6 +25,10 @@ do
 	if [ "${!i}" == "--no-color" ]
 	then
 		OPT_NO_COLOR=1
+	fi
+	if [ "${!i}" == "--no-timeout" ]
+	then
+		OPT_NO_TIMEOUT=1
 	fi
 	(( i += 1 ))
 done
