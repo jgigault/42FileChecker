@@ -124,7 +124,6 @@ then
 	{
 		local -a MENU FUNCS
 		local PARAMS0 TOTAL SEL LEN
-#		display_hr $C_BLUE
 		PARAMS0="\"$1\" "
 		SEL=""
 		shift 1
@@ -323,4 +322,12 @@ then
 		fi
 	}
 
-fi;
+	function check_create_tmp_dir
+	{
+		if [ ! -d "$RETURNPATH"/tmp ]
+		then
+			mkdir "$RETURNPATH"/tmp
+		fi
+	}
+
+fi

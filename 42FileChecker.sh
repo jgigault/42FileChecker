@@ -34,6 +34,7 @@ source includes/get_next_line.sh
 source includes/transition.sh
 source includes/update.sh
 source includes/credits.sh
+source includes/forbidden.sh
 
 function main
 {

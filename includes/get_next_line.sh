@@ -4,9 +4,11 @@ if [ "$FILECHECKER_SH" == "1" ]
 then
 
 
-declare -a CHK_GNL='( "check_libft_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_gnl_macro" "BUFF_SIZE macro" "check_gnl_bonus" "bonus: static var" "check_gnl_basics" "basic tests" "check_gnl_moulitest" "moulitest (yyang@student.42.fr)" )'
+declare -a CHK_GNL='( "check_libft_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_gnl_macro" "BUFF_SIZE macro" "check_gnl_bonus" "bonus: static var" "check_gnl_forbidden_func" "Forbidden functions" "check_gnl_basics" "basic tests" "check_gnl_moulitest" "moulitest (yyang@student.42.fr)" )'
 
 declare -a CHK_GNL_BASICS='("gnl1_1" "1 line 8 chars with Line Feed" "" "gnl1_2" "2 lines 8 chars with Line Feed" "" "gnl1_3" "4 lines 8 chars with Line Feed" "" "gnl2_1" "STDIN: 1 line 8 chars with Line Feed" "cat gnl1_1.txt | SPEC0" "gnl2_2" "STDIN: 2 lines 8 chars with Line Feed" "cat gnl1_2.txt | SPEC0" "gnl2_3" "STDIN: 4 lines 8 chars with Line Feed" "cat gnl1_3.txt | SPEC0" "gnl3_1" "1 line 16 chars with Line Feed" "" "gnl3_2" "2 lines 16 chars with Line Feed" "" "gnl3_3" "4 lines 16 chars with Line Feed" "" "gnl4_1" "STDIN: 1 line 16 chars with Line Feed" "cat gnl3_1.txt | SPEC0" "gnl4_2" "STDIN: 2 lines 16 chars with Line Feed" "cat gnl3_2.txt | SPEC0" "gnl4_3" "STDIN: 4 lines 16 chars with Line Feed" "cat gnl3_3.txt | SPEC0" "gnl5_1" "1 line 4 chars with Line Feed" "" "gnl5_2" "2 lines 4 chars with Line Feed" "" "gnl5_3" "4 lines 4 chars with Line Feed" "" "gnl6_1" "STDIN: 1 line 4 chars with Line Feed" "cat gnl5_1.txt | SPEC0" "gnl6_2" "STDIN: 2 lines 4 chars with Line Feed" "cat gnl5_2.txt | SPEC0" "gnl6_3" "STDIN: 4 lines 4 chars with Line Feed" "cat gnl5_3.txt | SPEC0" "gnl7_1" "1 lines 8 chars without Line Feed" "" "gnl7_2" "2 lines 8 chars without Line Feed" "" "gnl7_3" "4 lines 8 chars without Line Feed" "" "gnl8_1" "STDIN: 1 line 8 chars without Line Feed" "cat gnl7_1.txt | SPEC0" "gnl8_2" "STDIN: 2 lines 8 chars without Line Feed" "cat gnl7_2.txt | SPEC0" "gnl8_3" "STDIN: 4 lines 8 chars without Line Feed" "cat gnl7_3.txt | SPEC0" "gnl9" "Bad file descriptor" "")'
+
+declare -a CHK_GNL_AUTHORIZED_FUNCS='(read malloc free get_next_line main)'
 
 function check_gnl_all
 {
@@ -38,8 +40,30 @@ function check_gnl_all
 		"open .mynorminette" "see details: norminette"\
 		"open .mymacro" "see details: BUFF_SIZE macro"\
 		"open .mybonusstatic" "see details: bonus: static var"\
+		"open .myforbiddenfunc" "see details: forbidden functions"\
 		"open .mybasictests" "see details: basic tests"\
 		"open .mymoulitest" "see details: moulitest"
+}
+
+function check_gnl_forbidden_func
+{
+	FILEN=forbiddenfuncs
+	GNLC="$MYPATH/get_next_line.c"
+	GNL_LIBFT="$MYPATH/libft"
+	EXTRA0=
+	check_create_tmp_dir
+	check_gnl_create_header
+	if [ -d "$GNL_LIBFT" ]
+	then
+		make re -C "$GNL_LIBFT" >/dev/null
+		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
+	fi
+	echo "#define NULL ((void *)0)\n#include \"../srcs/gnl/gnl.h\"\nint main(void) { int ret; ret = get_next_line(0, NULL); f return (1); }" > $RETURNPATH/tmp/$FILEN.c
+	cd "$RETURNPATH"/tmp
+	rm -f "$FILEN"
+	RET0=`gcc $GNLC $EXTRA0 $FILEN.c -o $FILEN 2>&1`
+	cd "$RETURNPATH"
+	check_forbidden_func CHK_GNL_AUTHORIZED_FUNCS "./tmp/$FILEN"
 }
 
 function check_gnl_basics
@@ -70,7 +94,7 @@ function check_gnl_basics
 		SPEC0="${CHK_GNL_BASICS[i]}"
 		(( i += 1 ))
 		echo "$j -> $TITLEN ($FILEN.c):" >> "$RETURNPATH"/.mybasictests
-		rm -f "$FILEN"
+		#rm -f "$FILEN"
 		RET0=`gcc -Wall -Werror -Wextra $GNLC $EXTRA0 $FILEN.c -o $FILEN 2>&1`
 		if [ -f $FILEN ]
 		then
