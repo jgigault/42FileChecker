@@ -53,6 +53,7 @@ function main
 		check_gnl "get_next_line"\
 		check_ft_ls "ft_ls"\
 		display_credits "CREDITS"\
+		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
 		exit_checker "EXIT"
 }
 
