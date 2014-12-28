@@ -56,7 +56,7 @@ function main
 		exit_checker "EXIT"
 }
 
-#display_header_transition
+display_header_transition
 if [ "$OPT_NO_UPDATE" == "0" ]
 then
 	update
