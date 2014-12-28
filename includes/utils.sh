@@ -279,7 +279,7 @@ then
 		local pid=$1
 		local delay=0.2
 		local spinstr='|/-\'
-		printf $C_BLUE
+		printf $C_BLUE""
 		while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
 			local temp=${spinstr#?}
 			printf "  [%c] " "$spinstr"
