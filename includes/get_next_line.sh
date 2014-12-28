@@ -58,7 +58,7 @@ function check_gnl_forbidden_func
 		make re -C "$GNL_LIBFT" >/dev/null
 		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
 	fi
-	echo "#define NULL ((void *)0)\n#include \"../srcs/gnl/gnl.h\"\nint main(void) { int ret; ret = get_next_line(0, NULL); f return (1); }" > $RETURNPATH/tmp/$FILEN.c
+	echo "#define NULL ((void *)0)\n#include \"../srcs/gnl/gnl.h\"\nint main(void) { int ret; ret = get_next_line(0, NULL); return (1); }" > $RETURNPATH/tmp/$FILEN.c
 	cd "$RETURNPATH"/tmp
 	rm -f "$FILEN"
 	RET0=`gcc $GNLC $EXTRA0 $FILEN.c -o $FILEN 2>&1`
@@ -201,8 +201,8 @@ function check_gnl_moulitest
 	if [ -d moulitest ]
 	then
 		rm -f "$RETURNPATH"/.mymoulitest
-		cd "$RETURNPATH/moulitest/get_next_line_tests/"
-		make 1> "$RETURNPATH"/.mymoulitest 2>&1
+		cd "$RETURNPATH/moulitest/"
+		make gnl 1> "$RETURNPATH"/.mymoulitest 2>&1
 		cd "$RETURNPATH"
 		RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "END OF UNIT TESTS"`
 		if [ "$RET0" == "" ]
