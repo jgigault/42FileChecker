@@ -4,13 +4,15 @@ if [ "$FILECHECKER_SH" == "1" ]
 then
 
 
-declare -a CHK_LIBFT='( "check_author" "auteur" "check_fileexists LIBFT_MANDATORIES" "required functions" "check_fileexists LIBFT_BONUS" "bonus" "check_libft_extra" "extra functions" "check_norme" "norminette" "check_libft_static" "static declarations" "check_libft_moulitest" "moulitest (yyang@student.42.fr)" )'
+declare -a CHK_LIBFT='( "check_author" "auteur" "check_fileexists LIBFT_MANDATORIES" "required functions" "check_fileexists LIBFT_BONUS" "bonus" "check_libft_extra" "extra functions" "check_norme" "norminette" "check_libft_static" "static declarations" "check_libft_forbidden_func" "forbidden functions" "check_libft_moulitest" "moulitest (yyang@student.42.fr)" )'
 
 declare -a LIBFT_MANDATORIES='(libft.h ft_strcat.c ft_strncat.c ft_strlcat.c ft_strchr.c ft_strnstr.c ft_strrchr.c ft_strclr.c ft_strcmp.c ft_strncmp.c ft_strcpy.c ft_strncpy.c ft_strdel.c ft_strdup.c ft_strequ.c ft_strnequ.c ft_striter.c ft_striteri.c ft_strjoin.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strnew.c ft_strstr.c ft_strsplit.c ft_strsub.c ft_strtrim.c ft_atoi.c ft_itoa.c ft_tolower.c ft_toupper.c ft_putchar.c ft_putchar_fd.c ft_putstr.c ft_putstr_fd.c ft_putnbr.c ft_putnbr_fd.c ft_putendl.c ft_putendl_fd.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_memalloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memccpy.c ft_memdel.c ft_memmove.c ft_memset.c ft_bzero.c)'
 
 declare -a LIBFT_BONUS='(ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstiter.c ft_lstadd.c ft_lstmap.c)'
 
 declare -a LIBFT_EXTRA='()'
+
+declare -a CHK_LIBFT_AUTHORIZED_FUNCS='(free malloc write main)'
 
 function check_libft_all
 {
@@ -44,7 +46,88 @@ function check_libft_all
 		"open .myextra" "see details: extra functions"\
 		"open .mynorminette" "see details: norminette"\
 		"open .mystatic" "see details: static declarations"\
+		"open .myforbiddenfunc" "see details: forbidden functions"\
 		"open .mymoulitest" "see details: moulitest"
+}
+
+function check_libft_forbidden_func
+{
+	local F
+	FILEN=forbiddenfuncs
+	F=$RETURNPATH/tmp/$FILEN.c
+	LIBFTH=`find $MYPATH -name libft.h`
+	check_create_tmp_dir
+	echo "#define NULL ((void *)0)\n#include \"$LIBFTH\"\nint main(void) {" > $F
+	echo "ft_putstr(NULL);" >> $F
+	echo "ft_memset(NULL, 0, 0);" >> $F
+	echo "ft_bzero(NULL, 0);" >> $F
+	echo "ft_memcpy(NULL, NULL, 0);" >> $F
+	echo "ft_memccpy(NULL, NULL, 0, 0);" >> $F
+	echo "ft_memmove(NULL, NULL, 0);" >> $F
+	echo "ft_memchr(NULL, 0, 0);" >> $F
+	echo "ft_memcmp(NULL, NULL, 0);" >> $F
+	echo "ft_strlen(NULL);" >> $F
+	echo "ft_strdup(NULL);" >> $F
+	echo "ft_strcpy(NULL, NULL);" >> $F
+	echo "ft_strncpy(NULL, NULL, 0);" >> $F
+	echo "ft_strcat(NULL, NULL);" >> $F
+	echo "ft_strncat(NULL, NULL, 0);" >> $F
+	echo "ft_strlcat(NULL, NULL, 0);" >> $F
+	echo "ft_strchr(NULL, 0);" >> $F
+	echo "ft_strrchr(NULL, 0);" >> $F
+	echo "ft_strstr(NULL, NULL);" >> $F
+	echo "ft_strnstr(NULL, NULL, 0);" >> $F
+	echo "ft_strcmp(NULL, NULL);" >> $F
+	echo "ft_strncmp(NULL, NULL, 0);" >> $F
+	echo "ft_atoi(NULL);" >> $F
+	echo "ft_isalpha(0);" >> $F
+	echo "ft_isdigit(0);" >> $F
+	echo "ft_isalnum(0);" >> $F
+	echo "ft_isascii(0);" >> $F
+	echo "ft_isprint(0);" >> $F
+	echo "ft_toupper(0);" >> $F
+	echo "ft_tolower(0);" >> $F
+	echo "ft_memalloc(0);" >> $F
+	echo "ft_memdel(NULL);" >> $F
+	echo "ft_strnew(0);" >> $F
+	echo "ft_strdel(NULL);" >> $F
+	echo "ft_strclr(NULL);" >> $F
+	echo "ft_striter(NULL, NULL);" >> $F
+	echo "ft_striteri(NULL, NULL);" >> $F
+	echo "ft_strmap(NULL, NULL);" >> $F
+	echo "ft_strmapi(NULL, NULL);" >> $F
+	echo "ft_strequ(NULL, NULL);" >> $F
+	echo "ft_strnequ(NULL, NULL, 0);" >> $F
+	echo "ft_strsub(NULL, 0, 0);" >> $F
+	echo "ft_strjoin(NULL, NULL);" >> $F
+	echo "ft_strtrim(NULL);" >> $F
+	echo "ft_strsplit(NULL, 0);" >> $F
+	echo "ft_itoa(0);" >> $F
+	echo "ft_putchar(0);" >> $F
+	echo "ft_putchar_fd(0, 0);" >> $F
+	echo "ft_putstr(NULL);" >> $F
+	echo "ft_putstr_fd(NULL, 0);" >> $F
+	echo "ft_putendl(NULL);" >> $F
+	echo "ft_putendl_fd(NULL, 0);" >> $F
+	echo "ft_putnbr(0);" >> $F
+	echo "ft_putnbr_fd(0, 0);" >> $F
+	RET0=`check_fileexists LIBFT_BONUS | grep 'All files were found'`
+	if [ "$RET0" != "" ]
+	then
+		echo "ft_lstnew(NULL, 0);" >> $F
+		echo "ft_lstdelone(NULL, NULL);" >> $F
+		echo "ft_lstdel(NULL, NULL);" >> $F
+		echo "ft_lstadd(NULL, NULL);" >> $F
+		echo "ft_lstiter(NULL, NULL);" >> $F
+		echo "ft_lstmap(NULL, NULL);" >> $F
+	fi
+	echo "return (1); }" >> $F
+	cd "$RETURNPATH"/tmp
+	make re -C "$MYPATH" >/dev/null
+	rm -f "$FILEN"
+	RET0=`gcc "$F" -L"$MYPATH" -lft -o "$FILEN"`
+	cd "$RETURNPATH"
+	check_forbidden_func CHK_LIBFT_AUTHORIZED_FUNCS "./tmp/$FILEN"
 }
 
 function check_libft_extra
@@ -99,13 +182,13 @@ function check_libft_moulitest
 {
 	local RET0 TOTAL
 	rm -f "$RETURNPATH"/.mymoulitest
-	cd "$RETURNPATH"/moulitest/libft_tests/
+	cd "$RETURNPATH"/moulitest/
 	RET0=`check_fileexists LIBFT_BONUS | grep 'All files were found'`
 	if [ "$RET0" == "" ]
 	then
-		make part2 1> "$RETURNPATH"/.mymoulitest 2>&1
+		make libft_part2 1> "$RETURNPATH"/.mymoulitest 2>&1
 	else
-		make bonus 1> "$RETURNPATH"/.mymoulitest 2>&1
+		make libft_bonus 1> "$RETURNPATH"/.mymoulitest 2>&1
 	fi
 	cd "$RETURNPATH"
 	RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "END OF UNIT TESTS"`
