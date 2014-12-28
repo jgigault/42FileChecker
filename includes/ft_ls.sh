@@ -62,22 +62,28 @@ function check_ft_ls_moulitest
 		cd "$RETURNPATH/moulitest/"
 		make ft_ls 1> "$RETURNPATH"/.mymoulitest 2>&1
 		cd "$RETURNPATH"
-		RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "END OF UNIT TESTS"`
+		RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "STARTING ALL UNIT TESTS"`
 		if [ "$RET0" == "" ]
 		then
 			printf $C_RED"  Fatal error: moulitest cannot compile (see details)"$C_CLEAR
 		else
-			RET0=`cat -e .mymoulitest | grep FAIL | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | awk 'BEGIN {OFS = ""} {print "  ",$0}'`
-			if [ "$RET0" != "" ]
+			RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "END OF UNIT TESTS"`
+			if [ "$RET0" == "" ]
 			then
-				TOTAL=`printf "$RET0" | wc -l | sed 's/ //g'`
-				printf $C_RED"  $TOTAL failed test(s)"$C_CLEAR
+				printf $C_RED"  Fatal error: moulitest has aborted (see details)"$C_CLEAR
 			else
-				printf $C_GREEN"  All Unit Tests passed"$C_CLEAR
+				RET0=`cat -e .mymoulitest | grep FAIL | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | awk 'BEGIN {OFS = ""} {print "  ",$0}'`
+				if [ "$RET0" != "" ]
+				then
+					TOTAL=`printf "$RET0" | wc -l | sed 's/ //g'`
+					printf $C_RED"  $TOTAL failed test(s)"$C_CLEAR
+				else
+					printf $C_GREEN"  All Unit Tests passed"$C_CLEAR
+				fi
 			fi
-			RET0=`cat -e .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//'`
-			echo "$RET0" > "$RETURNPATH"/.mymoulitest
 		fi
+		RET0=`cat -e .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//'`
+		echo "$RET0" > "$RETURNPATH"/.mymoulitest
 	else
 		printf $C_RED"  'moulitest' is not installed"$C_CLEAR
 	fi
