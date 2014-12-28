@@ -301,17 +301,13 @@ then
 			if (( $total_delay >= 5 ))
 			then
 				(( total_delay2 = ( 109 - $total_delay ) / 5 ))
-				printf "[time out: $total_delay2]"
+				printf "[time out: %02d]" "$total_delay2"
 			fi
 			sleep $delay
 			printf "\b\b\b\b\b\b"
 			if (( $total_delay >= 5 ))
 			then
-				printf "\b\b\b\b\b\b\b\b\b\b\b\b\b"
-				if (( $total_delay2 > 9 ))
-				then
-					printf "\b"
-				fi
+				printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
 			fi
 		done
 		printf "                     \b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
