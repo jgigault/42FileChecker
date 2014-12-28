@@ -268,7 +268,7 @@ then
 		sleep 0.08s
 		clear
 		echo ""
-		display_center "  _  _  ____  _____ _ _       ____ _               _              "
+		display_center "  _  _  ____  _____ _ _       ____ _               _               "
 		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  |"
 		display_center " | || |_ __) | |_  | | |/ _ \ |   | '_ \ / _ \/ __| |/ / _ \ '__| |"
 		display_center " |__   _/ __/|  _| | | |  __/ |___| | | |  __/ (__|   <  __/ |    |"
@@ -278,32 +278,32 @@ then
 		sleep 0.08s
 		clear
 		echo ""
-		display_center "  _  _  ____  _____ _ _       ____ _               _              "
-		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  "
+		display_center "  _  _  ____  _____ _ _       ____ _               _               "
+		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __   "
 		display_center " | || |_ __) | |_  | | |/ _ \ |   | '_ \ / _ \/ __| |/ / _ \ '__| |"
 		display_center " |__   _/ __/|  _| | | |  __/ |___| | | |  __/ (__|   <  __/ |    |"
-		display_center "    |_||_____|_|   |_|_|\___|\____|_| |_|\___|\___|_|\_\___|_|    "
-		display_center "    jgigault @ student.42.fr                    06 51 15 98 82    "
+		display_center "    |_||_____|_|   |_|_|\___|\____|_| |_|\___|\___|_|\_\___|_|     "
+		display_center "    jgigault @ student.42.fr                    06 51 15 98 82     "
 		echo ""
 		sleep 0.08s
 		clear
 		echo ""
-		display_center "  _  _  ____  _____ _ _       ____ _               _              "
-		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  "
+		display_center "  _  _  ____  _____ _ _       ____ _               _               "
+		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __   "
 		display_center " | || |_ __) | |_  | | |/ _ \ |   | '_ \ / _ \/ __| |/ / _ \ '__| ."
-		display_center " |__   _/ __/|  _| | | |  __/ |___| | | |  __/ (__|   <  __/ |    "
-		display_center "    |_||_____|_|   |_|_|\___|\____|_| |_|\___|\___|_|\_\___|_|    "
-		display_center "    jgigault @ student.42.fr                    06 51 15 98 82    "
+		display_center " |__   _/ __/|  _| | | |  __/ |___| | | |  __/ (__|   <  __/ |     "
+		display_center "    |_||_____|_|   |_|_|\___|\____|_| |_|\___|\___|_|\_\___|_|     "
+		display_center "    jgigault @ student.42.fr                    06 51 15 98 82     "
 		echo ""
 		sleep 0.08s
 		clear
 		echo ""
-		display_center "  _  _  ____  _____ _ _       ____ _               _              "
-		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  "
-		display_center " | || |_ __) | |_  | | |/ _ \ |   | '_ \ / _ \/ __| |/ / _ \ '__| "
-		display_center " |__   _/ __/|  _| | | |  __/ |___| | | |  __/ (__|   <  __/ |    "
-		display_center "    |_||_____|_|   |_|_|\___|\____|_| |_|\___|\___|_|\_\___|_|    "
-		display_center "    jgigault @ student.42.fr                    06 51 15 98 82    "
+		display_center "  _  _  ____  _____ _ _       ____ _               _               "
+		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __   "
+		display_center " | || |_ __) | |_  | | |/ _ \ |   | '_ \ / _ \/ __| |/ / _ \ '__|  "
+		display_center " |__   _/ __/|  _| | | |  __/ |___| | | |  __/ (__|   <  __/ |     "
+		display_center "    |_||_____|_|   |_|_|\___|\____|_| |_|\___|\___|_|\_\___|_|     "
+		display_center "    jgigault @ student.42.fr                    06 51 15 98 82     "
 		echo ""
 		sleep 0.08s
 
