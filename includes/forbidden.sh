@@ -35,7 +35,11 @@ then
 				if [ "$exists" == "0" ]
 				then
 					(( total += 1 ))
-					echo "\"${MYFUNCS[$item]}\" is not part of the subject" >> $LOG_FILENAME
+					if (( total == 1 ))
+					then
+						echo "You should justify the use of the following functions:" > $LOG_FILENAME
+					fi
+					echo "-> ${MYFUNCS[$item]}" >> $LOG_FILENAME
 				fi
 			done
 			if (( total == 0 ))
