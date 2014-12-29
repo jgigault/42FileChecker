@@ -154,7 +154,7 @@ function check_ft_ls_top
 	local LPATH=$1
 	local LHOME
 	LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
-	LPATH="echo "$LPATH" | sed 's/$LHOME/~/'"
+	LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
 	LPATH=`eval $LPATH`
 	printf "$C_GREY"
 	display_center "FT_LS"
