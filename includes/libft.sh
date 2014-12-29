@@ -195,9 +195,9 @@ function check_libft_moulitest
 {
 	local RET0 TOTAL
 	rm -f "$RETURNPATH"/.mymoulitest
-	cd "$RETURNPATH"/moulitest/
 	if [ -d moulitest ]
 	then
+		cd "$RETURNPATH"/moulitest/
 		RET0=`check_fileexists LIBFT_BONUS | grep 'All files were found'`
 		if [ "$RET0" == "" ]
 		then
