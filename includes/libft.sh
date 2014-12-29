@@ -422,12 +422,17 @@ function check_libft_sum
 
 function check_libft_top
 {
+	local LPATH=$1
+	local LHOME
+	LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
+	LPATH="echo "$LPATH" | sed 's/$LHOME/~/'"
+	LPATH=`eval $LPATH`
 	printf "$C_GREY"
     display_center "LIBFT"
     printf "\n"$C_CLEAR
 	if [ "$1" != "" ]
 	then
-		printf "  "$C_WHITE"Current configuration:$C_CLEAR\n  $1\n\n"
+		printf "  "$C_WHITE"Current configuration:$C_CLEAR\n  $LPATH\n\n"
 	fi
 }
 
