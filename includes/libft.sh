@@ -53,81 +53,86 @@ function check_libft_all
 function check_libft_forbidden_func
 {
 	local F
-	FILEN=forbiddenfuncs
-	F=$RETURNPATH/tmp/$FILEN.c
-	LIBFTH=`find $MYPATH -name libft.h`
-	check_create_tmp_dir
-	echo "#define NULL ((void *)0)\n#include \"$LIBFTH\"\nint main(void) {" > $F
-	echo "ft_putstr(NULL);" >> $F
-	echo "ft_memset(NULL, 0, 0);" >> $F
-	echo "ft_bzero(NULL, 0);" >> $F
-	echo "ft_memcpy(NULL, NULL, 0);" >> $F
-	echo "ft_memccpy(NULL, NULL, 0, 0);" >> $F
-	echo "ft_memmove(NULL, NULL, 0);" >> $F
-	echo "ft_memchr(NULL, 0, 0);" >> $F
-	echo "ft_memcmp(NULL, NULL, 0);" >> $F
-	echo "ft_strlen(NULL);" >> $F
-	echo "ft_strdup(NULL);" >> $F
-	echo "ft_strcpy(NULL, NULL);" >> $F
-	echo "ft_strncpy(NULL, NULL, 0);" >> $F
-	echo "ft_strcat(NULL, NULL);" >> $F
-	echo "ft_strncat(NULL, NULL, 0);" >> $F
-	echo "ft_strlcat(NULL, NULL, 0);" >> $F
-	echo "ft_strchr(NULL, 0);" >> $F
-	echo "ft_strrchr(NULL, 0);" >> $F
-	echo "ft_strstr(NULL, NULL);" >> $F
-	echo "ft_strnstr(NULL, NULL, 0);" >> $F
-	echo "ft_strcmp(NULL, NULL);" >> $F
-	echo "ft_strncmp(NULL, NULL, 0);" >> $F
-	echo "ft_atoi(NULL);" >> $F
-	echo "ft_isalpha(0);" >> $F
-	echo "ft_isdigit(0);" >> $F
-	echo "ft_isalnum(0);" >> $F
-	echo "ft_isascii(0);" >> $F
-	echo "ft_isprint(0);" >> $F
-	echo "ft_toupper(0);" >> $F
-	echo "ft_tolower(0);" >> $F
-	echo "ft_memalloc(0);" >> $F
-	echo "ft_memdel(NULL);" >> $F
-	echo "ft_strnew(0);" >> $F
-	echo "ft_strdel(NULL);" >> $F
-	echo "ft_strclr(NULL);" >> $F
-	echo "ft_striter(NULL, NULL);" >> $F
-	echo "ft_striteri(NULL, NULL);" >> $F
-	echo "ft_strmap(NULL, NULL);" >> $F
-	echo "ft_strmapi(NULL, NULL);" >> $F
-	echo "ft_strequ(NULL, NULL);" >> $F
-	echo "ft_strnequ(NULL, NULL, 0);" >> $F
-	echo "ft_strsub(NULL, 0, 0);" >> $F
-	echo "ft_strjoin(NULL, NULL);" >> $F
-	echo "ft_strtrim(NULL);" >> $F
-	echo "ft_strsplit(NULL, 0);" >> $F
-	echo "ft_itoa(0);" >> $F
-	echo "ft_putchar(0);" >> $F
-	echo "ft_putchar_fd(0, 0);" >> $F
-	echo "ft_putstr(NULL);" >> $F
-	echo "ft_putstr_fd(NULL, 0);" >> $F
-	echo "ft_putendl(NULL);" >> $F
-	echo "ft_putendl_fd(NULL, 0);" >> $F
-	echo "ft_putnbr(0);" >> $F
-	echo "ft_putnbr_fd(0, 0);" >> $F
-	RET0=`check_fileexists LIBFT_BONUS | grep 'All files were found'`
-	if [ "$RET0" != "" ]
+	if [ -f "$MYPATH/Makefile" ]
 	then
-		echo "ft_lstnew(NULL, 0);" >> $F
-		echo "ft_lstdelone(NULL, NULL);" >> $F
-		echo "ft_lstdel(NULL, NULL);" >> $F
-		echo "ft_lstadd(NULL, NULL);" >> $F
-		echo "ft_lstiter(NULL, NULL);" >> $F
-		echo "ft_lstmap(NULL, NULL);" >> $F
+		FILEN=forbiddenfuncs
+		F=$RETURNPATH/tmp/$FILEN.c
+		LIBFTH=`find $MYPATH -name libft.h`
+		check_create_tmp_dir
+		echo "#define NULL ((void *)0)\n#include \"$LIBFTH\"\nint main(void) {" > $F
+		echo "ft_putstr(NULL);" >> $F
+		echo "ft_memset(NULL, 0, 0);" >> $F
+		echo "ft_bzero(NULL, 0);" >> $F
+		echo "ft_memcpy(NULL, NULL, 0);" >> $F
+		echo "ft_memccpy(NULL, NULL, 0, 0);" >> $F
+		echo "ft_memmove(NULL, NULL, 0);" >> $F
+		echo "ft_memchr(NULL, 0, 0);" >> $F
+		echo "ft_memcmp(NULL, NULL, 0);" >> $F
+		echo "ft_strlen(NULL);" >> $F
+		echo "ft_strdup(NULL);" >> $F
+		echo "ft_strcpy(NULL, NULL);" >> $F
+		echo "ft_strncpy(NULL, NULL, 0);" >> $F
+		echo "ft_strcat(NULL, NULL);" >> $F
+		echo "ft_strncat(NULL, NULL, 0);" >> $F
+		echo "ft_strlcat(NULL, NULL, 0);" >> $F
+		echo "ft_strchr(NULL, 0);" >> $F
+		echo "ft_strrchr(NULL, 0);" >> $F
+		echo "ft_strstr(NULL, NULL);" >> $F
+		echo "ft_strnstr(NULL, NULL, 0);" >> $F
+		echo "ft_strcmp(NULL, NULL);" >> $F
+		echo "ft_strncmp(NULL, NULL, 0);" >> $F
+		echo "ft_atoi(NULL);" >> $F
+		echo "ft_isalpha(0);" >> $F
+		echo "ft_isdigit(0);" >> $F
+		echo "ft_isalnum(0);" >> $F
+		echo "ft_isascii(0);" >> $F
+		echo "ft_isprint(0);" >> $F
+		echo "ft_toupper(0);" >> $F
+		echo "ft_tolower(0);" >> $F
+		echo "ft_memalloc(0);" >> $F
+		echo "ft_memdel(NULL);" >> $F
+		echo "ft_strnew(0);" >> $F
+		echo "ft_strdel(NULL);" >> $F
+		echo "ft_strclr(NULL);" >> $F
+		echo "ft_striter(NULL, NULL);" >> $F
+		echo "ft_striteri(NULL, NULL);" >> $F
+		echo "ft_strmap(NULL, NULL);" >> $F
+		echo "ft_strmapi(NULL, NULL);" >> $F
+		echo "ft_strequ(NULL, NULL);" >> $F
+		echo "ft_strnequ(NULL, NULL, 0);" >> $F
+		echo "ft_strsub(NULL, 0, 0);" >> $F
+		echo "ft_strjoin(NULL, NULL);" >> $F
+		echo "ft_strtrim(NULL);" >> $F
+		echo "ft_strsplit(NULL, 0);" >> $F
+		echo "ft_itoa(0);" >> $F
+		echo "ft_putchar(0);" >> $F
+		echo "ft_putchar_fd(0, 0);" >> $F
+		echo "ft_putstr(NULL);" >> $F
+		echo "ft_putstr_fd(NULL, 0);" >> $F
+		echo "ft_putendl(NULL);" >> $F
+		echo "ft_putendl_fd(NULL, 0);" >> $F
+		echo "ft_putnbr(0);" >> $F
+		echo "ft_putnbr_fd(0, 0);" >> $F
+		RET0=`check_fileexists LIBFT_BONUS | grep 'All files were found'`
+		if [ "$RET0" != "" ]
+		then
+			echo "ft_lstnew(NULL, 0);" >> $F
+			echo "ft_lstdelone(NULL, NULL);" >> $F
+			echo "ft_lstdel(NULL, NULL);" >> $F
+			echo "ft_lstadd(NULL, NULL);" >> $F
+			echo "ft_lstiter(NULL, NULL);" >> $F
+			echo "ft_lstmap(NULL, NULL);" >> $F
+		fi
+		echo "return (1); }" >> $F
+		cd "$RETURNPATH"/tmp
+		make re -C "$MYPATH" >/dev/null
+		rm -f "$FILEN"
+		RET0=`gcc "$F" -L"$MYPATH" -lft -o "$FILEN"`
+		cd "$RETURNPATH"
+		check_forbidden_func CHK_LIBFT_AUTHORIZED_FUNCS "./tmp/$FILEN"
+	else
+		printf $C_RED"  Makefile not found"$C_CLEAR
 	fi
-	echo "return (1); }" >> $F
-	cd "$RETURNPATH"/tmp
-	make re -C "$MYPATH" >/dev/null
-	rm -f "$FILEN"
-	RET0=`gcc "$F" -L"$MYPATH" -lft -o "$FILEN"`
-	cd "$RETURNPATH"
-	check_forbidden_func CHK_LIBFT_AUTHORIZED_FUNCS "./tmp/$FILEN"
 }
 
 function check_libft_extra
