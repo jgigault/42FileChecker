@@ -8,6 +8,7 @@ The script is designed as a reminder:
 * code's standard
 * required and forbidden functions
 * macro and static variables declarations
+* makefile rules
 
 Basic tests with compilation are also available for get_next_line and complete unit tests are handled by the "moulitest" (please refer to the dependencies bellow).
 
