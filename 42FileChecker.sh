@@ -41,6 +41,7 @@ source includes/transition.sh
 source includes/update.sh
 source includes/credits.sh
 source includes/forbidden.sh
+source includes/makefile.sh
 
 function main
 {

@@ -4,7 +4,7 @@ if [ "$FILECHECKER_SH" == "1" ]
 then
 
 
-declare -a CHK_FT_LS='( "check_ft_ls_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_ft_ls_forbidden_func" "forbidden functions" "check_ft_ls_moulitest" "moulitest (yyang@student.42.fr)" )'
+declare -a CHK_FT_LS='( "check_ft_ls_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_ft_ls_makefile" "makefile" "check_ft_ls_forbidden_func" "forbidden functions" "check_ft_ls_moulitest" "moulitest (yyang@student.42.fr)" )'
 
 declare -a CHK_FT_LS_AUTHORIZED_FUNCS='(write opendir readdir closedir stat lstat getpwuid getgrgid listxattr getxattr time ctime readlink malloc free perror strerror exit main)'
 
@@ -36,8 +36,16 @@ function check_ft_ls_all
 		""\
 		main "OK"\
 		"open .mynorminette" "see details: norminette"\
+		"open .mymakefile" "see details: makefile"\
 		"open .myforbiddenfunc" "see details: forbidden functions"\
 		"open .mymoulitest" "see details: moulitest"
+}
+
+function check_ft_ls_makefile
+{
+	local MYPATH
+	MYPATH=$(get_config "ft_ls")
+	check_makefile "$MYPATH" ft_ls
 }
 
 function check_ft_ls_forbidden_func
