@@ -6,7 +6,7 @@
 /*   By: jgigault <jgigault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 09:42:43 by jgigault          #+#    #+#             */
-/*   Updated: 2014/12/10 13:08:41 by jgigault         ###   ########.fr       */
+/*   Updated: 2014/12/30 11:29:52 by jgigault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int				main(int argc, char **argv)
 				errors++;
 			count++;
 		}
+		if (count == 1 && strcmp(line, "abcdefg") != 0)
+			errors++;
 		if (errors > 0)
 		{
 			printf("%d lines read | %d error(s)", count, errors);

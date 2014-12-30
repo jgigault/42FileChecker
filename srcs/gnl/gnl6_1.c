@@ -6,7 +6,7 @@
 /*   By: jgigault <jgigault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 09:42:43 by jgigault          #+#    #+#             */
-/*   Updated: 2014/12/10 13:54:31 by jgigault         ###   ########.fr       */
+/*   Updated: 2014/12/30 11:31:31 by jgigault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int				main(int argc, char **argv)
 				errors++;
 			count++;
 		}
+		if (count == 0 && strcmp(line, "123") != 0)
+			errors++;
 		if (errors > 0)
 		{
 			printf("\"%s\" was read instead of \"123\"", line);
