@@ -6,7 +6,7 @@
 /*   By: jgigault <jgigault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 09:42:43 by jgigault          #+#    #+#             */
-/*   Updated: 2014/12/30 11:31:40 by jgigault         ###   ########.fr       */
+/*   Updated: 2014/12/30 12:28:46 by jgigault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ int				main(int argc, char **argv)
 	int			fd;
 	int			ret;
 	int			count;
-	char		*filename;
 	int			errors;
 
-	filename = "gnl5_2.txt";
 	fd = 0;
 	if (argc && argv)
 	{
@@ -33,13 +31,22 @@ int				main(int argc, char **argv)
 		line = NULL;
 		while ((ret = get_next_line(fd, &line)) > 0)
 		{
+			printf("%d -> %d / %s\n", count, ret, line);
 			if (count == 0 && strcmp(line, "123") != 0)
 				errors++;
 			if (count == 1 && strcmp(line, "abc") != 0)
 				errors++;
 			count++;
 		}
-		if (count == 1 && strcmp(line, "abc") != 0)
+		printf("%d -> %d / %s\n", count, ret, line);
+		if (count == 1)
+		{
+			if (strcmp(line, "abc") != 0)
+				errors++;
+			else
+				count++;
+		}
+		if (count != 2)
 			errors++;
 		if (errors > 0)
 		{
@@ -52,7 +59,7 @@ int				main(int argc, char **argv)
 	}
 	else
 	{
-		printf("An error occured while reading file %s through STDIN", filename);
+		printf("An error occured while reading file through STDIN");
 	}
 	return (0);
 }

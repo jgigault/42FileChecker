@@ -6,7 +6,7 @@
 /*   By: jgigault <jgigault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 09:42:43 by jgigault          #+#    #+#             */
-/*   Updated: 2014/12/30 11:28:42 by jgigault         ###   ########.fr       */
+/*   Updated: 2014/12/30 12:27:11 by jgigault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,14 @@ int				main(int argc, char **argv)
 				errors++;
 			count++;
 		}
-		if (count == 1 && strcmp(line, "fghijklmnopqrst") != 0)
+		if (count == 1)
+		{
+			if (strcmp(line, "fghijklmnopqrst") != 0)
+				errors++;
+			else
+				count++;
+		}
+		if (count != 2)
 			errors++;
 		if (errors > 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: jgigault <jgigault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 09:42:43 by jgigault          #+#    #+#             */
-/*   Updated: 2014/12/10 14:07:21 by jgigault         ###   ########.fr       */
+/*   Updated: 2014/12/30 12:22:36 by jgigault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ int				main(int argc, char **argv)
 		{
 			if (strcmp(line, "12345678") != 0)
 				errors++;
+			else
+				count++;
 		}
+		if (count != 1)
+			errors++;
 		if (errors > 0)
 		{
 			printf("\"%s\" was read instead of \"12345678\"", line);

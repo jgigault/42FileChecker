@@ -6,7 +6,7 @@
 /*   By: jgigault <jgigault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/12/10 09:42:43 by jgigault          #+#    #+#             */
-/*   Updated: 2014/12/30 11:29:28 by jgigault         ###   ########.fr       */
+/*   Updated: 2014/12/30 12:25:17 by jgigault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,14 @@ int				main(int argc, char **argv)
 				errors++;
 			count++;
 		}
-		if (count == 3 && strcmp(line, "defghij") != 0)
+		if (count == 3)
+		{
+			if (strcmp(line, "defghij") != 0)
+				errors++;
+			else
+				count++;
+		}
+		if (count != 4)
 			errors++;
 		close(fd);
 		if (errors > 0)
