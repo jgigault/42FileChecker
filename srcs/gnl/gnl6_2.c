@@ -31,14 +31,12 @@ int				main(int argc, char **argv)
 		line = NULL;
 		while ((ret = get_next_line(fd, &line)) > 0)
 		{
-			printf("%d -> %d / %s\n", count, ret, line);
 			if (count == 0 && strcmp(line, "123") != 0)
 				errors++;
 			if (count == 1 && strcmp(line, "abc") != 0)
 				errors++;
 			count++;
 		}
-		printf("%d -> %d / %s\n", count, ret, line);
 		if (count == 1)
 		{
 			if (strcmp(line, "abc") != 0)
