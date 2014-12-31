@@ -16,15 +16,15 @@ Basic tests with compilation are also available for get_next_line and complete u
 	git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
 	cd ~/42FileChecker && sh ./42FileChecker.sh
 
-## options
-	--no-update   // Do not check for updates at launch
-	--no-color    // Do not display color tags
-	--no-timeout  // Disable time-out child process
-
 ## supported projects
 * libft
 * get_next_line
 * ft_ls
+
+## options
+	--no-update   // Do not check for updates at launch
+	--no-color    // Do not display color tags
+	--no-timeout  // Disable time-out child process
 
 ## dependencies
 * The script automatically download, configure and launch for you the latest version of the "moulitest" project (Yan Yang): https://github.com/yyang42/moulitest
