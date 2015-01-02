@@ -167,6 +167,7 @@ then
 		SEL=`ft_atoi "$SEL"`
 		while [ -z "${MENU[$SEL]}" -o "$(echo "${FUNCS[$SEL]}" | grep open)" != "" ]
 		do
+			printf "\a"
 			if [ "$(echo "${FUNCS[$SEL]}" | grep open)" != "" ]
 			then
 				eval ${FUNCS[$SEL]}
