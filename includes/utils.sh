@@ -160,7 +160,7 @@ then
 			printf $C_CLEAR"\n"
 			shift 2
         done
-		printf "\n  "$C_WHITE"Type a number between 1 and "$TOTAL": "
+		printf "\n  "$C_WHITE"Type a number between 1 and "$SELN": "
 		tput cnorm
 		read -s -n 1 SEL
 		tput civis
