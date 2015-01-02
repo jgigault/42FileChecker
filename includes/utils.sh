@@ -112,18 +112,32 @@ then
 
 	function ft_atoi
 	{
+		local SELN
 		if [ "$1" != "1" -a "$1" != "2" -a "$1" != "3" -a "$1" != "4" -a "$1" != "5" -a "$1" != "6" -a "$1" != "7" -a "$1" != "8" -a "$1" != "9" ]
 		then
-			printf "0"
+			SELN=`LC_CTYPE=C printf '%d' "'$1"`
+			if (( $SELN >= 65 )) && (( $SELN <= 90 ))
+			then
+				(( SELN=$SELN - 65 + 10 ))
+				printf "$SELN"
+			else
+				if (( $SELN >= 97 )) && (( $SELN <= 122 ))
+				then
+					(( SELN=$SELN - 97 + 10 ))
+					printf "$SELN"
+				else
+					printf "0"
+				fi
+			fi
 		else
-			printf "$SEL"
+			printf "$1"
 		fi
 	}
 
 	function display_menu
 	{
 		local -a MENU FUNCS
-		local PARAMS0 TOTAL SEL LEN
+		local PARAMS0 TOTAL SEL LEN SELN
 		PARAMS0="\"$1\" "
 		SEL=""
 		shift 1
@@ -133,8 +147,15 @@ then
 			(( TOTAL += 1 ))
 			FUNCS[$TOTAL]="$1"
 			MENU[$TOTAL]="$2"
+			if (( $TOTAL < 10 ))
+			then
+				SELN=$TOTAL
+			else
+				(( SELN=65 + $TOTAL - 10 ))
+				SELN=`echo "$SELN" | awk '{printf("%c", $0)}'`
+			fi
 			(( LEN=$COLUMNS - ${#2} - 9 ))
-			printf $C_INVERT"  "$TOTAL")    $2 "
+			printf $C_INVERT"  "$SELN")    $2 "
 			printf "%"$LEN"s" " "
 			printf $C_CLEAR"\n"
 			shift 2
