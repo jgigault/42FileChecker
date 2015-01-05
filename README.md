@@ -20,6 +20,7 @@ Basic tests with compilation are also available for get_next_line and complete u
 * libft
 * get_next_line
 * ft_ls
+* ft_printf
 
 ## options
 	--no-update   // Do not check for updates at launch
