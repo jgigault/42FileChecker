@@ -54,7 +54,7 @@ function main
 		check_libft "libft"\
 		check_gnl "get_next_line"\
 		check_ft_ls "ft_ls"\
-		check_ft_ls "ft_printf"\
+		check_ft_printf "ft_printf"\
 		display_credits "CREDITS"\
 		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
 		exit_checker "EXIT"

@@ -37,7 +37,8 @@ function check_ft_printf_all
 		main "OK"\
 		"open .mynorminette" "see details: norminette"\
 		"open .mymakefile" "see details: makefile"\
-		"open .myforbiddenfunc" "see details: forbidden functions"
+		"open .myforbiddenfunc" "see details: forbidden functions"\
+		"open .mymoulitest" "see details: moulitest"
 }
 
 function check_ft_printf_makefile
@@ -105,7 +106,7 @@ function check_ft_printf_moulitest
     then
         rm -f "$RETURNPATH"/.mymoulitest
         cd "$RETURNPATH/moulitest/"
-        make ft_ls 1> "$RETURNPATH"/.mymoulitest 2>&1
+        make ft_printf 1> "$RETURNPATH"/.mymoulitest 2>&1
         cd "$RETURNPATH"
         RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "STARTING ALL UNIT TESTS"`
         if [ "$RET0" == "" ]
