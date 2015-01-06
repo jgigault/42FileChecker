@@ -4,7 +4,7 @@ if [ "$FILECHECKER_SH" == "1" ]
 then
 
 
-declare -a CHK_FT_LS='( "check_ft_ls_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_ft_ls_makefile" "makefile" "check_ft_ls_forbidden_func" "forbidden functions" "check_ft_ls_moulitest" "moulitest (yyang@student.42.fr)" )'
+declare -a CHK_FT_LS='( "check_ft_ls_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_ft_ls_makefile" "makefile" "check_ft_ls_forbidden_func" "forbidden functions" "check_ft_ls_leaks" "leaks" "check_ft_ls_moulitest" "moulitest (yyang@student.42.fr)" )'
 
 declare -a CHK_FT_LS_AUTHORIZED_FUNCS='(write opendir readdir closedir stat lstat getpwuid getgrgid listxattr getxattr time ctime readlink malloc free perror strerror exit main)'
 
@@ -38,7 +38,23 @@ function check_ft_ls_all
 		"open .mynorminette" "see details: norminette"\
 		"open .mymakefile" "see details: makefile"\
 		"open .myforbiddenfunc" "see details: forbidden functions"\
+		"open .myleaks" "see details: leaks"\
 		"open .mymoulitest" "see details: moulitest"
+}
+
+function check_ft_ls_leaks
+{
+	local RET0 LOGFILENAME PROGNAME
+	LOGFILENAME=.myleaks
+	rm -f $LOGFILENAME
+	touch $LOGFILENAME
+	make re -C "$MYPATH" >/dev/null
+	if [ -f "$MYPATH/ft_ls" ]
+	then
+		check_leaks "$MYPATH/ft_ls" "-1R /" ".myleaks" ""
+	else
+		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
+	fi
 }
 
 function check_ft_ls_makefile

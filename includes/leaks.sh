@@ -9,15 +9,16 @@ then
 		errors=0
 		fatal=0
 		PROGNAME="$1"
-		LOGFILENAME="$2"
-		NOTICE="$3"
+		PROGARGS="$2"
+		LOGFILENAME="$3"
+		NOTICE="$4"
 		if [ -f "$PROGNAME" ]
 		then
-			(eval "$PROGNAME" 1>/dev/null 2>$LOGFILENAME &)
+			(eval "$PROGNAME $PROGARGS" 1>/dev/null 2>$LOGFILENAME &)
 			PROCESSID=`ps | grep "$PROGNAME" | grep -v "grep" | sed 's/^[ ]*//g' | cut -d" " -f1`
 			if [ "$PROCESSID" != "" ]
 			then
-				sleep 3
+				sleep 5
 				RET0=`leaks $PROCESSID 2>&1`
 				RET1=`echo "$RET0" | grep "command not found"`
 				if [ "$RET1" != "" ]
