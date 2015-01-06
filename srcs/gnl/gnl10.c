@@ -10,7 +10,7 @@ int  main(void)
   while ((get_next_line(fd, &line)) > 0)
   {
     printf("%s\n", line);
-    //free(line)         <-- In my opinion, this line should not exit
+    //free(line)         <-- In my opinion, this line should not exist
   }
   close(fd);
   free(line);
