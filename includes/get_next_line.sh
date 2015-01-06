@@ -188,6 +188,8 @@ function check_gnl_leaks
 			if [ "$RET0" == "" ]
 			then
 				RET0=`cat .myleaks | grep "total leaked bytes" | cut -d":" -f2 | sed 's/^[ ]*//g' | sed 's/[. ]*$//g'`
+				RET0=`cat .myleaks`
+				RET0=`echo "If you are sure that your 'get_next_line' has no leaks, read this:\nIn my opinion, 'get_next_line' should free itself the pointer 'line' as the function 'getline(3)' in linux (man 3 getline).\nThe pointer is reallocated as a new line is read, so no leaks should appear.\n-----------------------------\n\n$RET0" > .myleaks`
 				if [ "$RET0" != "" ]
 				then
 					printf $C_RED"  $RET0"$C_CLEAR
