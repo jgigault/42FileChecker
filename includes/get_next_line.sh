@@ -185,92 +185,30 @@ function check_gnl_multiple_fd
 
 function check_gnl_leaks
 {
-	local GNLC GNL_LIBFT EXTRA0 i j FILEN TITLEN RET0 errors fatal GNLID
+	local GNLC GNL_LIBFT EXTRA0 RET0 LOGFILENAME PROGNAME
 	check_gnl_create_header
 	GNLC="$MYPATH/get_next_line.c"
 	GNL_LIBFT="$MYPATH/libft"
 	EXTRA0=
+	LOGFILENAME=.myleaks
 	if [ -d "$GNL_LIBFT" ]
 	then
 		make re -C "$GNL_LIBFT" >/dev/null
 		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
 	fi
-	i=0
-	j=0
-	errors=0
-	fatal=0
-	rm -f .myleaks
-	touch .myleaks
+	rm -f $LOGFILENAME
+	touch $LOGFILENAME
 	rm -f "$RETURNPATH/srcs/gnl/gnl10"
 	cd "$RETURNPATH"/srcs/gnl
 	RET0=`gcc -Wall -Werror -Wextra $GNLC $EXTRA0 gnl10.c -o gnl10 1>../../.myleaks 2>&1`
 	cd "$RETURNPATH"
 	if [ -f "$RETURNPATH/srcs/gnl/gnl10" ]
 	then
-		(./srcs/gnl/gnl10 1>/dev/null 2>.myleaks &)
-		GNLID=`ps | grep "./srcs/gnl/gnl10" | grep -v "grep" | sed 's/^[ ]*//g' | cut -d" " -f1`
-		if [ "$GNLID" != "" ]
-		then
-			sleep 3
-			RET0=`leaks $GNLID 2>&1`
-			if [ "$(echo "$RET0" | grep "command not found")" != "" ]
-			then
-				fatal=2
-				echo "$RET0" > .myleaks
-			else
-				if [ "$(echo "$RET0" | grep "because the process does not exist")" != "" ]
-				then
-					(( errors += 1 ))
-					echo "$RET0" > .myleaks
-				else
-					kill $GNLID
-					wait $! 2>/dev/null
-					echo "$RET0" > .myleaks
-					RET0=`cat .myleaks | grep "pointer being freed was not allocated"`
-					if [ "$RET0" != "" ]
-					then
-						(( errors += 1 ))
-					fi
-				fi
-			fi
-		else
-			(( errors += 1 ))
-		fi
+		RET0=`cat ./srcs/gnl/gnl10.c | sed 's/\\\\/\\\\\\\\/g'`
+		NOTICE="If you are sure that your 'get_next_line' has no leaks, read this:\nIn my opinion, 'get_next_line' should free itself the pointer 'line' when a new line is read, like the function 'getline(3)' in linux does (man 3 getline).\nThe similar function 'getline' reallocate the pointer 'line' when a new line is read, so no leaks appear.\nDo not hesitate to contact me if you want to debate...\n\nHere is the main() test:\n-----------------------------\n$RET0\n-----------------------------\n\n\n"
+		check_leaks "./srcs/gnl/gnl10" ".myleaks" "$NOTICE"
 	else
-		fatal=1
-	fi
-	if (( $fatal > 0 ))
-	then
-		if (( $fatal == 1 ))
-		then
-			printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
-		fi
-		if (( $fatal == 2 ))
-		then
-			printf $C_RED"  Command not found"$C_CLEAR
-		fi
-	else
-		if (( $errors == 0 ))
-		then
-			RET0=`cat .myleaks | grep "0 leaks for 0 total leaked bytes"`
-			if [ "$RET0" == "" ]
-			then
-				RET0=`cat .myleaks | grep "total leaked bytes" | cut -d":" -f2 | sed 's/^[ ]*//g' | sed 's/[. ]*$//g'`
-				RET0=`cat .myleaks`
-				RET0=`echo "If you are sure that your 'get_next_line' has no leaks, read this:\nIn my opinion, 'get_next_line' should free itself the pointer 'line' as the function 'getline(3)' in linux (man 3 getline).\nThe pointer is reallocated as a new line is read, so no leaks should appear.\n-----------------------------\n\n$RET0" > .myleaks`
-				if [ "$RET0" != "" ]
-				then
-					printf $C_RED"  $RET0"$C_CLEAR
-				else
-					printf $C_RED"  An error occured"$C_CLEAR
-				fi
-			else
-				RET0=`echo "$RET0" | cut -d":" -f2 | sed 's/^[ ]*//g' | sed 's/[. ]*$//g'`
-				printf $C_GREEN"  $RET0"$C_CLEAR
-			fi
-		else
-			printf $C_RED"  An error occured"$C_CLEAR
-		fi
+		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
 	fi
 }
 

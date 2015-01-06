@@ -43,6 +43,7 @@ source includes/update.sh
 source includes/credits.sh
 source includes/forbidden.sh
 source includes/makefile.sh
+source includes/leaks.sh
 
 function main
 {
