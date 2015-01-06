@@ -378,6 +378,8 @@ then
 		if [ ! -d "$RETURNPATH"/tmp ]
 		then
 			mkdir "$RETURNPATH"/tmp
+		else
+			rm -rf "$RETURNPATH"/tmp/*
 		fi
 	}
 

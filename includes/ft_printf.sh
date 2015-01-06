@@ -3,8 +3,9 @@
 if [ "$FILECHECKER_SH" == "1" ]
 then
 
+source includes/ft_printf_list.sh
 
-declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_moulitest" "moulitest (yyang@student.42.fr)" )'
+declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests (beta)" "check_ft_printf_moulitest" "moulitest (yyang@student.42.fr)" )'
 
 declare -a CHK_FT_PRINTF_AUTHORIZED_FUNCS='(write malloc free exit main)'
 
@@ -38,7 +39,101 @@ function check_ft_printf_all
 		"open .mynorminette" "see details: norminette"\
 		"open .mymakefile" "see details: makefile"\
 		"open .myforbiddenfunc" "see details: forbidden functions"\
+		"open .mybasictests" "see details: basic tests"\
 		"open .mymoulitest" "see details: moulitest"
+}
+
+function check_ft_printf_basictests
+{
+	local errors success i TTYPE TVAL TARGS FILEN RET1 RET2 RET0
+	i=0
+	index=0
+	errors=0
+	success=0
+	rm -f .mybasictests .mybasictestssuccess
+	touch .mybasictests .mybasictestssuccess
+	check_create_tmp_dir
+	check_ft_printf_create_header
+	echo "FT_PRINTF TESTS:" >> .mybasictestssuccess
+	while [ "${CHK_FT_PRINTF_LIST[$i]}" != "" ]
+	do
+		(( index += 1 ))
+		TTYPE="${CHK_FT_PRINTF_LIST[$i]}"
+		(( i += 1 ))
+		TVAL="${CHK_FT_PRINTF_LIST[$i]}"
+		(( i += 1 ))
+		check_ft_printf_basictests_gcc "$TTYPE"
+		TARGS=`echo "\"$TVAL\"" | sed 's/|/\" \"/g'`
+		TARGSV=`echo "\"$TVAL\"" | sed 's/|/\", \"/g'`
+		FILEN1="./tmp/ft_printf_$TTYPE"
+		FILEN2="./tmp/printf_$TTYPE"
+		RET1=`eval "$FILEN1 $TARGS" 2>&1`
+		RET2=`eval "$FILEN2 $TARGS" 2>&1`
+		if [ "$RET1" != "$RET2" ]
+		then
+			if (( $errors == 0 ))
+			then
+				echo "see the entire list of tests by opening file:\n$RETURNPATH/.mybasictestssuccess" >> .mybasictests
+				echo "\n--------------\n" >> .mybasictests
+				echo "FAILED TESTS:\n" >> .mybasictests
+				echo "#TEST NUMBER (TYPE OF ARG)" >> .mybasictests
+				echo "INSTRUCTION();" >> .mybasictests
+				echo "1. your function ft_printf" >> .mybasictests
+				echo "2. unix function printf" >> .mybasictests
+				echo "   (returned value) -->written on stdout<--" >> .mybasictests
+			fi
+			(( errors += 1 ))
+			case "$TTYPE" in
+				"s") TTYPEV="char *" ;;
+			esac
+			printf "\n#%d (%s)\n" "$index" "$TTYPEV" >> .mybasictests
+			echo "ft_printf($TARGSV);" >> .mybasictests
+			RET0=`echo "$RET1" | cut -d"|" -f2`
+			printf "1. (%5d) -->" "$RET0" >> .mybasictests
+			RET0=`echo "$RET1" | cut -d"|" -f1`
+			printf "%s<--\n" "$RET0" >> .mybasictests
+			RET0=`echo "$RET2" | cut -d"|" -f2`
+			printf "2. (%5d) -->" "$RET0" >> .mybasictests
+			RET0=`echo "$RET2" | cut -d"|" -f1`
+			printf "%s<--\n" "$RET0" >> .mybasictests
+			printf "%4d. FAIL     (%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
+		else
+			(( success += 1 ))
+			printf "%4d. ft_printf(%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
+		fi
+	done
+	if (( $errors == 0 ))
+	then
+		cat .mybasictestssuccess > .mybasictests
+		printf $C_GREEN"  All tests passed ($index tests)"$C_CLEAR
+	else
+		printf $C_RED"  $errors failed test(s) out of $index tests"$C_CLEAR
+	fi
+}
+
+function check_ft_printf_basictests_gcc
+{
+	local FILEN
+	FILEN="printf_$1"
+	if [ ! -f "./tmp/ft_$FILEN" -o ! -f "./tmp/$FILEN" ]
+	then
+		make re -C "$MYPATH" >/dev/null
+		if [ -d "$MYPATH/libft" ]
+		then
+			make re -C "$MYPATH/libft" >/dev/null
+			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -L"$MYPATH/libft" -lft -o "./tmp/ft_$FILEN"`
+		else
+			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN"`
+		fi
+		RET0=`gcc "./srcs/printf/$FILEN.c" -o "./tmp/$FILEN"`
+	fi
+}
+
+function check_ft_printf_create_header
+{
+	local FTPRINTFH
+	FTPRINTFH=`find "$MYPATH" -name \*printf\*.h`
+	echo "#include \"$FTPRINTFH\"" > "$RETURNPATH"/tmp/printf.h
 }
 
 function check_ft_printf_makefile
