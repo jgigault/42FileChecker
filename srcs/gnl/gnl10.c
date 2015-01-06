@@ -6,7 +6,7 @@
 /*   By: jgigault <jgigault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/06 08:56:30 by jgigault          #+#    #+#             */
-/*   Updated: 2015/01/06 08:56:36 by jgigault         ###   ########.fr       */
+/*   Updated: 2015/01/06 09:08:51 by jgigault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int				main(void)
 	while ((get_next_line(fd, &line)) > 0)
 	{
 		printf("%s\n", line);
-		free (line);
 	}
 	close(fd);
 	if (line)
