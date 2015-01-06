@@ -179,7 +179,10 @@ then
 			SEL=`ft_atoi "$SEL"`
 		done
 		printf "\n"
-		eval ${FUNCS[$SEL]}
+		if [ "${FUNCS[$SEL]}" != "" ]
+		then
+			eval ${FUNCS[$SEL]}
+		fi
 	}
 
 	function get_config

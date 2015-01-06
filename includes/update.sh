@@ -25,6 +25,7 @@ function update
 			display_menu\
 			   	""\
                 install_update_moulitest "UPDATE MOULITEST"\
+				"" "SKIP UPDATE"\
                 exit_checker "EXIT"
 		fi
 		if [ "$MOULIDATE" == "2" ]
@@ -33,6 +34,7 @@ function update
 			display_menu\
              	""\
                 install_update_moulitest "INSTALL MOULITEST"\
+				"" "SKIP UPDATE"\
                 exit_checker "EXIT"
 		fi
 	else
@@ -47,6 +49,7 @@ function update
 			display_menu\
               	""\
                 install_update "UPDATE 42FILECHECKER"\
+				"" "SKIP UPDATE"\
                 exit_checker "EXIT"
 		fi
 	fi
