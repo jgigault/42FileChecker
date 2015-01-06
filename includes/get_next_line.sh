@@ -4,7 +4,7 @@ if [ "$FILECHECKER_SH" == "1" ]
 then
 
 
-declare -a CHK_GNL='( "check_libft_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_gnl_macro" "BUFF_SIZE macro" "check_gnl_bonus" "bonus: static var" "check_gnl_forbidden_func" "forbidden functions" "check_gnl_basics" "basic tests" "check_gnl_leaks" "leaks" "check_gnl_moulitest" "moulitest (yyang@student.42.fr)" )'
+declare -a CHK_GNL='( "check_libft_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_gnl_macro" "BUFF_SIZE macro" "check_gnl_bonus" "bonus: static var" "check_gnl_forbidden_func" "forbidden functions" "check_gnl_basics" "basic tests" "check_gnl_multiple_fd" "bonus: multiple file descriptor" "check_gnl_leaks" "leaks" "check_gnl_moulitest" "moulitest (yyang@student.42.fr)" )'
 
 declare -a CHK_GNL_BASICS='("gnl1_1" "1 line 8 chars with Line Feed" "" "gnl1_2" "2 lines 8 chars with Line Feed" "" "gnl1_3" "4 lines 8 chars with Line Feed" "" "gnl2_1" "STDIN: 1 line 8 chars with Line Feed" "cat gnl1_1.txt | SPEC0" "gnl2_2" "STDIN: 2 lines 8 chars with Line Feed" "cat gnl1_2.txt | SPEC0" "gnl2_3" "STDIN: 4 lines 8 chars with Line Feed" "cat gnl1_3.txt | SPEC0" "gnl3_1" "1 line 16 chars with Line Feed" "" "gnl3_2" "2 lines 16 chars with Line Feed" "" "gnl3_3" "4 lines 16 chars with Line Feed" "" "gnl4_1" "STDIN: 1 line 16 chars with Line Feed" "cat gnl3_1.txt | SPEC0" "gnl4_2" "STDIN: 2 lines 16 chars with Line Feed" "cat gnl3_2.txt | SPEC0" "gnl4_3" "STDIN: 4 lines 16 chars with Line Feed" "cat gnl3_3.txt | SPEC0" "gnl5_1" "1 line 4 chars with Line Feed" "" "gnl5_2" "2 lines 4 chars with Line Feed" "" "gnl5_3" "4 lines 4 chars with Line Feed" "" "gnl6_1" "STDIN: 1 line 4 chars with Line Feed" "cat gnl5_1.txt | SPEC0" "gnl6_2" "STDIN: 2 lines 4 chars with Line Feed" "cat gnl5_2.txt | SPEC0" "gnl6_3" "STDIN: 4 lines 4 chars with Line Feed" "cat gnl5_3.txt | SPEC0" "gnl7_1" "1 lines 8 chars without Line Feed" "" "gnl7_2" "2 lines 8 chars without Line Feed" "" "gnl7_3" "4 lines 8 chars without Line Feed" "" "gnl8_1" "STDIN: 1 line 8 chars without Line Feed" "cat gnl7_1.txt | SPEC0" "gnl8_2" "STDIN: 2 lines 8 chars without Line Feed" "cat gnl7_2.txt | SPEC0" "gnl8_3" "STDIN: 4 lines 8 chars without Line Feed" "cat gnl7_3.txt | SPEC0" "gnl9" "Bad file descriptor" "")'
 
@@ -42,6 +42,7 @@ function check_gnl_all
 		"open .mybonusstatic" "see details: bonus: static var"\
 		"open .myforbiddenfunc" "see details: forbidden functions"\
 		"open .mybasictests" "see details: basic tests"\
+		"open .mymultiplefd" "see details: bonus: multiple file descriptor"\
 		"open .myleaks" "see details: leaks"\
 		"open .mymoulitest" "see details: moulitest"
 }
@@ -128,6 +129,56 @@ function check_gnl_basics
 			printf $C_GREEN"  All tests passed"$C_CLEAR
 		else
 			printf $C_RED"  $errors failed test(s)"$C_CLEAR
+		fi
+	fi
+}
+
+function check_gnl_multiple_fd
+{
+	local GNLC GNL_LIBFT EXTRA0 i j FILEN TITLEN RET0 errors fatal GNLID
+	check_gnl_create_header
+	GNLC="$MYPATH/get_next_line.c"
+	GNL_LIBFT="$MYPATH/libft"
+	EXTRA0=
+	if [ -d "$GNL_LIBFT" ]
+	then
+		make re -C "$GNL_LIBFT" >/dev/null
+		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
+	fi
+	i=0
+	j=0
+	errors=0
+	fatal=0
+	rm -f .mymultiplefd
+	touch .mymultiplefd
+	rm -f "$RETURNPATH/srcs/gnl/gnl11"
+	cd "$RETURNPATH"/srcs/gnl
+	RET0=`gcc -Wall -Werror -Wextra $GNLC $EXTRA0 gnl11.c -o gnl11 1>../../.mymultiplefd 2>&1`
+	cd "$RETURNPATH"
+	if [ -f "$RETURNPATH/srcs/gnl/gnl11" ]
+	then
+		RET0=`./srcs/gnl/gnl11 2>&1`
+		if [ "$RET0" != "OK" ]
+		then
+			(( errors += 1 ))
+		fi
+	else
+		fatal=1
+	fi
+	if (( $fatal > 0 ))
+	then
+		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
+	else
+		if (( $errors == 0 ))
+		then
+			printf $C_GREEN"  Multiple file descriptor supported"$C_CLEAR
+		else
+			if [ "$RET0" != "" ]
+			then
+				printf $C_RED"  $RET0"$C_CLEAR
+			else
+				printf $C_RED"  An error occured"$C_CLEAR
+			fi
 		fi
 	fi
 }
