@@ -303,7 +303,7 @@ then
 	{
 		local pid=$1
 		local total_delay=0
-		local total_delay2=150
+		local total_delay2=240
 		local delay=0.2
 		local spinstr='|/-\'
 		printf $C_BLUE""
@@ -325,7 +325,7 @@ then
 			local spinstr=$temp${spinstr%"$temp"}
 			if (( $total_delay >= 5 ))
 			then
-				(( total_delay2 = ( 109 - $total_delay ) / 5 ))
+				(( total_delay2 = ( 209 - $total_delay ) / 5 ))
 				printf "[time out: %02d]" "$total_delay2"
 			fi
 			sleep $delay
