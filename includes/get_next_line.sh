@@ -207,21 +207,31 @@ function check_gnl_leaks
 	cd "$RETURNPATH"
 	if [ -f "$RETURNPATH/srcs/gnl/gnl10" ]
 	then
-		man gcc > ./srcs/gnl/gnl10.txt
 		(./srcs/gnl/gnl10 1>/dev/null 2>.myleaks &)
 		GNLID=`ps | grep "./srcs/gnl/gnl10" | grep -v "grep" | sed 's/^[ ]*//g' | cut -d" " -f1`
 		if [ "$GNLID" != "" ]
 		then
 			sleep 3
-			RET0=`leaks $GNLID 1>.myleaks 2>&1`
-			#RET0=`echo "kill $GNLID"`
-			#eval "$RET0"
-			kill $GNLID
-			wait $! 2>/dev/null
-			RET0=`cat .myleaks | grep "pointer being freed was not allocated"`
-			if [ "$RET0" != "" ]
+			RET0=`leaks $GNLID 2>&1`
+			if [ "$(echo "$RET0" | grep "command not found")" != "" ]
 			then
-				(( errors += 1 ))
+				fatal=2
+				echo "$RET0" > .myleaks
+			else
+				if [ "$(echo "$RET0" | grep "because the process does not exist")" != "" ]
+				then
+					(( errors += 1 ))
+					echo "$RET0" > .myleaks
+				else
+					kill $GNLID
+					wait $! 2>/dev/null
+					echo "$RET0" > .myleaks
+					RET0=`cat .myleaks | grep "pointer being freed was not allocated"`
+					if [ "$RET0" != "" ]
+					then
+						(( errors += 1 ))
+					fi
+				fi
 			fi
 		else
 			(( errors += 1 ))
@@ -231,7 +241,14 @@ function check_gnl_leaks
 	fi
 	if (( $fatal > 0 ))
 	then
-		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
+		if (( $fatal == 1 ))
+		then
+			printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
+		fi
+		if (( $fatal == 2 ))
+		then
+			printf $C_RED"  Command not found"$C_CLEAR
+		fi
 	else
 		if (( $errors == 0 ))
 		then
