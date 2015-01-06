@@ -85,15 +85,16 @@ function check_ft_printf_basictests
 			(( errors += 1 ))
 			case "$TTYPE" in
 				"s") TTYPEV="char *" ;;
+				"d") TTYPEV="int" ;;
 			esac
 			printf "\n#%d (%s)\n" "$index" "$TTYPEV" >> .mybasictests
 			echo "ft_printf($TARGSV);" >> .mybasictests
 			RET0=`echo "$RET1" | cut -d"|" -f2`
-			printf "1. (%5d) -->" "$RET0" >> .mybasictests
+			printf "1. (%5d) -->" "$RET0" >> .mybasictests 2>&1
 			RET0=`echo "$RET1" | cut -d"|" -f1`
 			printf "%s<--\n" "$RET0" >> .mybasictests
 			RET0=`echo "$RET2" | cut -d"|" -f2`
-			printf "2. (%5d) -->" "$RET0" >> .mybasictests
+			printf "2. (%5d) -->" "$RET0" >> .mybasictests 2>&1
 			RET0=`echo "$RET2" | cut -d"|" -f1`
 			printf "%s<--\n" "$RET0" >> .mybasictests
 			printf "%4d. FAIL     (%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
@@ -121,11 +122,11 @@ function check_ft_printf_basictests_gcc
 		if [ -d "$MYPATH/libft" ]
 		then
 			make re -C "$MYPATH/libft" >/dev/null
-			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -L"$MYPATH/libft" -lft -o "./tmp/ft_$FILEN"`
+			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -L"$MYPATH/libft" -lft -o "./tmp/ft_$FILEN" 2>&1`
 		else
-			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN"`
+			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN" 2>&1`
 		fi
-		RET0=`gcc "./srcs/printf/$FILEN.c" -o "./tmp/$FILEN"`
+		RET0=`gcc "./srcs/printf/$FILEN.c" -o "./tmp/$FILEN" 2>&1`
 	fi
 }
 
