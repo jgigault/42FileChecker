@@ -386,4 +386,25 @@ then
 		fi
 	}
 
+	function check_kill_by_name
+	{
+		local PROCESSID PROCESSID0 PROGNAME PROCESSCOUNT
+		PROGNAME="$1"
+		if [ "$PROGNAME" != "" ]
+		then
+			PROCESSID=`ps | grep "$1" | grep -v "grep" | sed 's/^[ ]*//g' | cut -d" " -f1`
+			if [ "$PROCESSID" != "" ]
+			then
+				PROCESSCOUNT=`echo "$PROCESSID" | wc -l`
+				while (( $PROCESSCOUNT > 0 ))
+				do
+					(( PROCESSCOUNT -= 1 ))
+					PROCESSID0=`echo "$PROCESSID" | awk '{print; exit}'`
+					kill $PROCESSID0
+					wait $! 2>/dev/null
+				done
+			fi
+		fi
+	}
+
 fi

@@ -19,8 +19,7 @@ then
 			PROCESSID=`ps | grep "$PROGNAME $PROGARGS" | grep -v "grep" | sed 's/^[ ]*//g' | cut -d" " -f1`
 			if [ "$PROCESSID" != "" ]
 			then
-				kill $PROCESSID
-				wait $! 2>/dev/null
+				check_kill_by_name "$PROGNAME $PROGARGS"
 				RET0=`cat "$LOGFILENAME" | wc -l | sed 's/[ \t]*//g'`
 				printf $RET0
 			else
@@ -56,7 +55,7 @@ then
 						if [[ "$(echo "$RET1" | sed 's/[^0-9]*//g')" == "$RET1" ]]
 						then
 							(( RET2= $RET0 * 100 / $RET1 ))
-							if (( $RET2 <= 50 ))
+							if (( $RET2 <= 75 ))
 							then
 								printf $C_RED"  Estimated speed rate: $RET2%%"$C_CLEAR
 							else

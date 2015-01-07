@@ -31,8 +31,7 @@ then
 					then
 						(( errors += 1 ))
 					else
-						kill $PROCESSID
-						wait $! 2>/dev/null
+						check_kill_by_name "$PROGNAME"
 						echo "$RET0" > $LOGFILENAME
 						RET0=`cat "$LOGFILENAME" | grep "pointer being freed was not allocated"`
 						if [ "$RET0" != "" ]
