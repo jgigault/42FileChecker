@@ -64,7 +64,12 @@ function check_ft_printf_basictests
 		(( i += 1 ))
 		check_ft_printf_basictests_gcc "$TTYPE"
 		TARGS=`echo "\"$TVAL\"" | sed 's/|/\" \"/g'`
-		TARGSV=`echo "\"$TVAL\"" | sed 's/|/\", \"/g'`
+		if [ "$TTYPE" == "d" ]
+		then
+			TARGSV=`echo "\"$TVAL" | sed 's/|/, /g' | sed 's/,/\",/'`
+		else
+			TARGSV=`echo "\"$TVAL\"" | sed 's/|/\", \"/g'`
+		fi
 		FILEN1="./tmp/ft_printf_$TTYPE"
 		FILEN2="./tmp/printf_$TTYPE"
 		RET1=`eval "$FILEN1 $TARGS" 2>&1`
@@ -98,10 +103,10 @@ function check_ft_printf_basictests
 			printf "2. (%5d) -->" "$RET0" >> .mybasictests 2>&1
 			RET0=`echo "$RET2" | cut -d"|" -f1`
 			printf "%s<--\n" "$RET0" >> .mybasictests
-			printf "%4d. FAIL     (%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
+			printf "%4d. FAIL ft_printf(%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
 		else
 			(( success += 1 ))
-			printf "%4d. ft_printf(%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
+			printf "%4d.      ft_printf(%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
 		fi
 	done
 	if (( $errors == 0 ))
