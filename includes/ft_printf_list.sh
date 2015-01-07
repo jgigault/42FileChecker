@@ -52,6 +52,8 @@ then
 
 	CHK_FT_PRINTF_LIST+=("d" "%+d|42")
 	CHK_FT_PRINTF_LIST+=("d" "%+d|-42")
+	CHK_FT_PRINTF_LIST+=("d" "%+d|0")
+	CHK_FT_PRINTF_LIST+=("d" "%+d|4242424242424242424242")
 	CHK_FT_PRINTF_LIST+=("d" "% +d|42")
 	CHK_FT_PRINTF_LIST+=("d" "% +d|-42")
 	CHK_FT_PRINTF_LIST+=("d" "%+ d|42")

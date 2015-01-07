@@ -4,7 +4,7 @@ if [ "$FILECHECKER_SH" == "1" ]
 then
 
 
-declare -a CHK_LIBFT='( "check_author" "auteur" "check_fileexists LIBFT_MANDATORIES" "required functions" "check_fileexists LIBFT_BONUS" "bonus" "check_libft_extra" "extra functions" "check_norme" "norminette" "check_libft_static" "static declarations" "check_libft_makefile" "makefile" "check_libft_forbidden_func" "forbidden functions" "check_libft_moulitest" "moulitest (yyang@student.42.fr)" )'
+declare -a CHK_LIBFT='( "check_author" "auteur" "check_libft_required_exists" "required functions" "check_libft_bonus_exists" "bonus" "check_libft_extra" "extra functions" "check_norme" "norminette" "check_libft_static" "static declarations" "check_libft_makefile" "makefile" "check_libft_forbidden_func" "forbidden functions" "check_libft_moulitest" "moulitest (yyang@student.42.fr)" )'
 
 declare -a LIBFT_MANDATORIES='(libft.h ft_strcat.c ft_strncat.c ft_strlcat.c ft_strchr.c ft_strnstr.c ft_strrchr.c ft_strclr.c ft_strcmp.c ft_strncmp.c ft_strcpy.c ft_strncpy.c ft_strdel.c ft_strdup.c ft_strequ.c ft_strnequ.c ft_striter.c ft_striteri.c ft_strjoin.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strnew.c ft_strstr.c ft_strsplit.c ft_strsub.c ft_strtrim.c ft_atoi.c ft_itoa.c ft_tolower.c ft_toupper.c ft_putchar.c ft_putchar_fd.c ft_putstr.c ft_putstr_fd.c ft_putnbr.c ft_putnbr_fd.c ft_putendl.c ft_putendl_fd.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_memalloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memccpy.c ft_memdel.c ft_memmove.c ft_memset.c ft_bzero.c)'
 
@@ -52,14 +52,27 @@ function check_libft_all
 }
 
 function check_libft_makefile
-{
+{	if [ "$OPT_NO_MAKEFILE" == "0" ]; then
 	local MYPATH
 	MYPATH=$(get_config "libft")
 	check_makefile "$MYPATH" libft.a
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+}
+
+function check_libft_bonus_exists
+{	if [ "$OPT_NO_LIBFTFILESEXIST" == "0" ]; then
+	check_fileexists LIBFT_BONUS
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+}
+
+function check_libft_required_exists
+{	if [ "$OPT_NO_LIBFTFILESEXIST" == "0" ]; then
+	check_fileexists LIBFT_MANDATORIES
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_libft_forbidden_func
-{
+{	if [ "$OPT_NO_FORBIDDEN" == "0" ]; then
 	local F
 	if [ -f "$MYPATH/Makefile" ]
 	then
@@ -141,10 +154,11 @@ function check_libft_forbidden_func
 	else
 		printf $C_RED"  Makefile not found"$C_CLEAR
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_libft_extra
-{
+{	if [ "$OPT_NO_LIBFTFILESEXIST" == "0" ]; then
 	local i j exists TOTAL TOTAL2 RET0
 	TOTAL=0
 	TOTAL2=0
@@ -189,10 +203,11 @@ function check_libft_extra
 			printf $C_GREEN"  $TOTAL2 extra functions were found"$C_CLEAR
 		fi
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_libft_moulitest
-{
+{	if [ "$OPT_NO_MOULITEST" == "0" ]; then
 	local RET0 TOTAL
 	rm -f "$RETURNPATH"/.mymoulitest
 	if [ -d moulitest ]
@@ -231,10 +246,12 @@ function check_libft_moulitest
 	else
 		printf $C_RED"  'moulitest' is not installed"$C_CLEAR
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_libft_static
 {
+	if [ "$OPT_NO_STATICDECLARATIONS" == "0" ]; then
 	local RET0 TOTAL
 	RET0=`check_statics "$MYPATH" | tee .mystatic`
 	TOTAL=`echo "$RET0" | wc -l | sed 's/ //g'`
@@ -249,6 +266,7 @@ function check_libft_static
 			printf $C_RED"  $TOTAL warning(s)"$C_CLEAR
 		fi
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_statics

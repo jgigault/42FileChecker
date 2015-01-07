@@ -14,6 +14,19 @@ RETURNPATH=$(pwd | sed 's/ /\ /g')
 OPT_NO_UPDATE=0
 OPT_NO_COLOR=0
 OPT_NO_TIMEOUT=0
+OPT_NO_NORMINETTE=0
+OPT_NO_AUTEUR=0
+OPT_NO_MOULITEST=0
+OPT_NO_SPEEDTEST=0
+OPT_NO_LEAKS=0
+OPT_NO_BASICTESTS=0
+OPT_NO_MAKEFILE=0
+OPT_NO_FORBIDDEN=0
+OPT_NO_STATICDECLARATIONS=0
+OPT_NO_LIBFTFILESEXIST=0
+OPT_NO_GNLMULTIPLEFD=0
+OPT_NO_GNLONESTATIC=0
+OPT_NO_GNLMACRO=0
 
 i=1
 while (( i <= $# ))
@@ -29,6 +42,58 @@ do
 	if [ "${!i}" == "--no-timeout" ]
 	then
 		OPT_NO_TIMEOUT=1
+	fi
+	if [ "${!i}" == "--no-norminette" ]
+	then
+		OPT_NO_NORMINETTE=1
+	fi
+	if [ "${!i}" == "--no-auteur" ]
+	then
+		OPT_NO_AUTEUR=1
+	fi
+	if [ "${!i}" == "--no-moulitest" ]
+	then
+		OPT_NO_MOULITEST=1
+	fi
+	if [ "${!i}" == "--no-speedtest" ]
+	then
+		OPT_NO_SPEEDTEST=1
+	fi
+	if [ "${!i}" == "--no-leaks" ]
+	then
+		OPT_NO_LEAKS=1
+	fi
+	if [ "${!i}" == "--no-basictests" ]
+	then
+		OPT_NO_BASICTESTS=1
+	fi
+	if [ "${!i}" == "--no-makefile" ]
+	then
+		OPT_NO_MAKEFILE=1
+	fi
+	if [ "${!i}" == "--no-forbidden" ]
+	then
+		OPT_NO_FORBIDDEN=1
+	fi
+	if [ "${!i}" == "--no-staticdeclarations" ]
+	then
+		OPT_NO_STATICDECLARATIONS=1
+	fi
+	if [ "${!i}" == "--no-libftfilesexists" ]
+	then
+		OPT_NO_LIBFTFILESEXIST=1
+	fi
+	if [ "${!i}" == "--no-gnlmultiplefd" ]
+	then
+		OPT_NO_GNLMULTIPLEFD=1
+	fi
+	if [ "${!i}" == "--no-gnlonestatic" ]
+	then
+		OPT_NO_GNLONESTATIC=1
+	fi
+	if [ "${!i}" == "--no-gnlmacro" ]
+	then
+		OPT_NO_GNLMACRO=1
 	fi
 	(( i += 1 ))
 done

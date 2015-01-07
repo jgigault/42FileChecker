@@ -44,7 +44,7 @@ function check_ft_ls_all
 }
 
 function check_ft_ls_speedtest
-{
+{	if [ "$OPT_NO_SPEEDTEST" == "0" ]; then
 	local LOGFILENAME
 	LOGFILENAME=.myspeedtest
 	rm -f $LOGFILENAME
@@ -56,10 +56,11 @@ function check_ft_ls_speedtest
 	else
 		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_ft_ls_leaks
-{
+{	if [ "$OPT_NO_LEAKS" == "0" ]; then
 	local RET0 LOGFILENAME PROGNAME
 	LOGFILENAME=.myleaks
 	rm -f $LOGFILENAME
@@ -71,17 +72,19 @@ function check_ft_ls_leaks
 	else
 		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_ft_ls_makefile
-{
+{	if [ "$OPT_NO_MAKEFILE" == "0" ]; then
 	local MYPATH
 	MYPATH=$(get_config "ft_ls")
 	check_makefile "$MYPATH" ft_ls
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_ft_ls_forbidden_func
-{
+{	if [ "$OPT_NO_FORBIDDEN" == "0" ]; then
 	local RET0
 	RET0=`make -C "$MYPATH" 2>&1`
 	if [ -f "$MYPATH/ft_ls" ]
@@ -91,10 +94,11 @@ function check_ft_ls_forbidden_func
 		printf $C_RED"  Test not performed (see details)"$C_CLEAR
 		echo "$RET0" > .myforbiddenfunc
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_ft_ls_moulitest
-{
+{	if [ "$OPT_NO_MOULITEST" == "0" ]; then
 	local RET0 TOTAL
 	if [ -d moulitest ]
 	then
@@ -127,6 +131,7 @@ function check_ft_ls_moulitest
 	else
 		printf $C_RED"  'moulitest' is not installed"$C_CLEAR
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_ft_ls

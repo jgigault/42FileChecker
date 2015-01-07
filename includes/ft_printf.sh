@@ -44,7 +44,7 @@ function check_ft_printf_all
 }
 
 function check_ft_printf_basictests
-{
+{	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
 	local errors success i TTYPE TVAL TARGS FILEN RET1 RET2 RET0
 	i=0
 	index=0
@@ -110,6 +110,7 @@ function check_ft_printf_basictests
 	else
 		printf $C_RED"  $errors failed test(s) out of $index tests"$C_CLEAR
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_ft_printf_basictests_gcc
@@ -138,14 +139,15 @@ function check_ft_printf_create_header
 }
 
 function check_ft_printf_makefile
-{
+{	if [ "$OPT_NO_MAKEFILE" == "0" ]; then
 	local MYPATH
 	MYPATH=$(get_config "ft_printf")
 	check_makefile "$MYPATH" libftprintf.a
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_ft_printf_forbidden_func
-{
+{	if [ "$OPT_NO_FORBIDDEN" == "0" ]; then
 	local F
 	if [ -f "$MYPATH/Makefile" ]
 	then
@@ -171,6 +173,7 @@ function check_ft_printf_forbidden_func
 	else
 		printf $C_RED"  Makefile not found"$C_CLEAR
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_ft_printf
@@ -196,7 +199,7 @@ function check_ft_printf
 }
 
 function check_ft_printf_moulitest
-{
+{	if [ "$OPT_NO_MOULITEST" == "0" ]; then
     local RET0 TOTAL
     if [ -d moulitest ]
     then
@@ -229,6 +232,7 @@ function check_ft_printf_moulitest
     else
         printf $C_RED"  'moulitest' is not installed"$C_CLEAR
     fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
  }
 
 function config_ft_printf

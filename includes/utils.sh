@@ -245,7 +245,7 @@ then
 	}
 
 	function check_norme
-	{
+	{	if [ "$OPT_NO_NORMINETTE" == "0" ]; then
 		local RET0 RET2 RET3 RET4 TOTAL TOTA2
 		rm -f "$RETURNPATH"/.mynorminette
 		cd "$MYPATH"
@@ -280,10 +280,11 @@ then
 				printf $C_RED"  $TOTAL error(s) or warning(s)"$C_CLEAR
 			fi
 		fi
+		else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 	}
 
 	function check_author
-	{
+	{	if [ "$OPT_NO_AUTEUR" == "0" ]; then
 		local AUTHORF AUTHORC AUTHORE AUTHORG
 		AUTHORF="$MYPATH/auteur"
 		if [ ! -f "$AUTHORF" ]
@@ -300,6 +301,7 @@ then
 				printf $C_GREEN"  $AUTHORC"$C_CLEAR
 			fi
 		fi
+		else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 	}
 
 	function display_spinner

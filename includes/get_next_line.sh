@@ -48,7 +48,7 @@ function check_gnl_all
 }
 
 function check_gnl_forbidden_func
-{
+{	if [ "$OPT_NO_FORBIDDEN" == "0" ]; then
 	FILEN=forbiddenfuncs
 	GNLC="$MYPATH/get_next_line.c"
 	GNL_LIBFT="$MYPATH/libft"
@@ -66,10 +66,11 @@ function check_gnl_forbidden_func
 	RET0=`gcc $GNLC $EXTRA0 $FILEN.c -o $FILEN 2>&1`
 	cd "$RETURNPATH"
 	check_forbidden_func CHK_GNL_AUTHORIZED_FUNCS "./tmp/$FILEN"
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_gnl_basics
-{
+{	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
 	local GNLC GNL_LIBFT EXTRA0 i j FILEN TITLEN RET0 errors fatal SPEC0
 	check_gnl_create_header
 	GNLC="$MYPATH/get_next_line.c"
@@ -131,10 +132,11 @@ function check_gnl_basics
 			printf $C_RED"  $errors failed test(s)"$C_CLEAR
 		fi
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_gnl_multiple_fd
-{
+{	if [ "$OPT_NO_GNLMULTIPLEFD" == "0" ]; then
 	local GNLC GNL_LIBFT EXTRA0 i j FILEN TITLEN RET0 errors fatal GNLID
 	check_gnl_create_header
 	GNLC="$MYPATH/get_next_line.c"
@@ -181,10 +183,11 @@ function check_gnl_multiple_fd
 			fi
 		fi
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_gnl_leaks
-{
+{	if [ "$OPT_NO_LEAKS" == "0" ]; then
 	local GNLC GNL_LIBFT EXTRA0 RET0 LOGFILENAME PROGNAME
 	check_gnl_create_header
 	GNLC="$MYPATH/get_next_line.c"
@@ -210,6 +213,7 @@ function check_gnl_leaks
 	else
 		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_gnl_create_header
@@ -220,7 +224,7 @@ function check_gnl_create_header
 }
 
 function check_gnl_bonus
-{
+{	if [ "$OPT_NO_GNLONESTATIC" == "0" ]; then
 	local RET0 TOTAL GNLC
 	GNLC="$MYPATH/get_next_line.c"
 	if [ -f "$GNLC" ]
@@ -245,10 +249,11 @@ function check_gnl_bonus
 		printf $C_RED"  get_next_line.c: File Not Found"$C_CLEAR
 		echo "get_next_line.c: File Not Found" > "$RETURNPATH"/.mybonusstatic
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_gnl_macro
-{
+{	if [ "$OPT_NO_GNLMACRO" == "0" ]; then
     local RET0 RET2 HEADERF GNLC VAL0
     HEADERF="$MYPATH/get_next_line.h"
 	GNLC="$MYPATH/get_next_line.c"
@@ -274,10 +279,11 @@ function check_gnl_macro
         printf $C_RED"  get_next_line.h: File Not Found"$C_CLEAR
 		echo "get_next_line.h: File Not Found" > "$RETURNPATH"/.mymacro
     fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_gnl_moulitest
-{
+{	if [ "$OPT_NO_MOULITEST" == "0" ]; then
 	local RET0 TOTAL
 	if [ -d moulitest ]
 	then
@@ -310,6 +316,7 @@ function check_gnl_moulitest
 	else
 		printf $C_RED"  'moulitest' is not installed"$C_CLEAR
 	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_gnl
