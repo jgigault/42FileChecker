@@ -18,7 +18,7 @@ then
 		touch "$LOG_FILENAME"
 		if [ -f "$2" ]
 		then
-			RET0=`nm -m "$2" | grep " external " | grep -v " _ft_" | awk '{OFS=""} $0 ~ / _[^_]/ {gsub(/^[a-zA-Z0-9\(\)_, \[\]]*( _)/, ""); print $1}' | tr "\n" "\ "`
+			RET0=`nm -m "$2" | grep "(from libSystem)" | awk '{OFS=""} $0 ~ / _/ {gsub(/^[a-zA-Z0-9\(\)_, \[\]]* _[_]*/, ""); gsub(/_chk[ A-Za-z0-9\(\)]*$/, ""); print $1}' | tr "\n" "\ "`
 			RET0=`printf "MYFUNCS=($RET0)"`
 			eval $RET0
 			total=0
