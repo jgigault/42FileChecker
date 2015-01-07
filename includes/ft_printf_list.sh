@@ -34,13 +34,19 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%.2s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%5.2s is a string|this")
 
+	CHK_FT_PRINTF_LIST+=("s" "%-10s is a string|this")
+	CHK_FT_PRINTF_LIST+=("s" "%-.2s is a string|this")
+	CHK_FT_PRINTF_LIST+=("s" "%-5.2s is a string|this")
+
 	# integer
 	CHK_FT_PRINTF_LIST+=("d" "%d|1")
 	CHK_FT_PRINTF_LIST+=("d" "%d|-1")
 	CHK_FT_PRINTF_LIST+=("d" "%d|4242")
 	CHK_FT_PRINTF_LIST+=("d" "%d|-4242")
-	CHK_FT_PRINTF_LIST+=("d" "%d|4242424242424242424242")
-	CHK_FT_PRINTF_LIST+=("d" "%d|-4242424242424242424242")
+	CHK_FT_PRINTF_LIST+=("d" "%d|2147483647")
+	CHK_FT_PRINTF_LIST+=("d" "%d|2147483648")
+	CHK_FT_PRINTF_LIST+=("d" "%d|–2147483648")
+	CHK_FT_PRINTF_LIST+=("d" "%d|–2147483649")
 
 	CHK_FT_PRINTF_LIST+=("d" "% d|42")
 	CHK_FT_PRINTF_LIST+=("d" "% d|-42")
@@ -72,5 +78,53 @@ then
 	CHK_FT_PRINTF_LIST+=("d" "%5d|42")
 	CHK_FT_PRINTF_LIST+=("d" "%05d|42")
 	CHK_FT_PRINTF_LIST+=("d" "%005d|42")
+
+	# integer short
+	CHK_FT_PRINTF_LIST+=("h" "%hd|0")
+	CHK_FT_PRINTF_LIST+=("h" "%hd|42")
+	CHK_FT_PRINTF_LIST+=("h" "%hd|-42")
+	CHK_FT_PRINTF_LIST+=("h" "%hd|32767")
+	CHK_FT_PRINTF_LIST+=("h" "%hd|−32768")
+	CHK_FT_PRINTF_LIST+=("h" "%hd|32768")
+	CHK_FT_PRINTF_LIST+=("h" "%hd|−32769")
+
+	# integer long
+	CHK_FT_PRINTF_LIST+=("l" "%ld|0")
+	CHK_FT_PRINTF_LIST+=("l" "%ld|42")
+	CHK_FT_PRINTF_LIST+=("l" "%ld|-42")
+	CHK_FT_PRINTF_LIST+=("l" "%ld|2147483647")
+	CHK_FT_PRINTF_LIST+=("l" "%ld|–2147483648")
+	CHK_FT_PRINTF_LIST+=("l" "%ld|2147483648")
+	CHK_FT_PRINTF_LIST+=("l" "%ld|–2147483649")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	# extra !!
+	# integer long long ??
+	# m == L
+	#CHK_FT_PRINTF_LIST+=("m" "%Ld|0")
+	#CHK_FT_PRINTF_LIST+=("m" "%Ld|42")
+	#CHK_FT_PRINTF_LIST+=("m" "%Ld|-42")
+	#CHK_FT_PRINTF_LIST+=("m" "%Ld|9223372036854775807")
+	#CHK_FT_PRINTF_LIST+=("m" "%Ld|–9223372036854775808")
+	#CHK_FT_PRINTF_LIST+=("m" "%Ld|9223372036854775808")
+	#CHK_FT_PRINTF_LIST+=("m" "%Ld|–9223372036854775809")
+
 
 fi;

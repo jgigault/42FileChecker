@@ -54,7 +54,7 @@ function check_ft_printf_basictests
 	touch .mybasictests .mybasictestssuccess
 	check_create_tmp_dir
 	check_ft_printf_create_header
-	echo "FT_PRINTF TESTS:" >> .mybasictestssuccess
+	echo "FT_PRINTF TESTS:\n" >> .mybasictestssuccess
 	while [ "${CHK_FT_PRINTF_LIST[$i]}" != "" ]
 	do
 		(( index += 1 ))
@@ -63,6 +63,11 @@ function check_ft_printf_basictests
 		TVAL="${CHK_FT_PRINTF_LIST[$i]}"
 		(( i += 1 ))
 		check_ft_printf_basictests_gcc "$TTYPE"
+		if [ ! -f "./tmp/ft_printf_$TTYPE" ]
+		then
+			printf $C_RED"  Fatal error : Cannot compile"$C_CLEAR
+			return
+		fi
 		TARGS=`echo "\"$TVAL\"" | sed 's/|/\" \"/g'`
 		if [ "$TTYPE" == "d" ]
 		then
@@ -81,32 +86,36 @@ function check_ft_printf_basictests
 				echo "see the entire list of tests by opening file:\n$RETURNPATH/.mybasictestssuccess" >> .mybasictests
 				echo "\n--------------\n" >> .mybasictests
 				echo "FAILED TESTS:\n" >> .mybasictests
-				echo "#TEST NUMBER (TYPE OF ARG)" >> .mybasictests
-				echo "INSTRUCTION();" >> .mybasictests
-				echo "1. your function ft_printf" >> .mybasictests
-				echo "2. unix function printf" >> .mybasictests
-				echo "   (returned value) -->written on stdout<--" >> .mybasictests
+				echo "# TEST NUMBER (TYPE OF ARG)" >> .mybasictests
+				echo "  INSTRUCTION();" >> .mybasictests
+				echo "  1. your function ft_printf" >> .mybasictests
+				echo "  2. unix function printf" >> .mybasictests
+				echo "     (returned value) -->written on stdout<--" >> .mybasictests
 			fi
 			(( errors += 1 ))
 			case "$TTYPE" in
 				"s") TTYPEV="(char *)" ;;
 				"d") TTYPEV="(int)" ;;
+				"h") TTYPEV="(short)" ;;
+				"l") TTYPEV="(long)" ;;
+				"m") TTYPEV="(long long)" ;;
 				"0") TTYPEV="" ;;
 			esac
-			printf "\n#%d %s\n" "$index" "$TTYPEV" >> .mybasictests
-			echo "ft_printf($TARGSV);" >> .mybasictests
+			printf "\n# %04d %s\n" "$index" "$TTYPEV" >> .mybasictests
+			echo "  ft_printf($TARGSV);" >> .mybasictests
 			RET0=`echo "$RET1" | cut -d"|" -f2`
-			printf "1. (%5d) -->" "$RET0" >> .mybasictests 2>&1
+			printf "  1. (%5d) -->" "$RET0" >> .mybasictests 2>&1
 			RET0=`echo "$RET1" | cut -d"|" -f1`
 			printf "%s<--\n" "$RET0" >> .mybasictests
 			RET0=`echo "$RET2" | cut -d"|" -f2`
-			printf "2. (%5d) -->" "$RET0" >> .mybasictests 2>&1
+			printf "  2. (%5d) -->" "$RET0" >> .mybasictests 2>&1
 			RET0=`echo "$RET2" | cut -d"|" -f1`
 			printf "%s<--\n" "$RET0" >> .mybasictests
 			printf "%4d. FAIL ft_printf(%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
 		else
 			(( success += 1 ))
-			printf "%4d.      ft_printf(%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
+			RET0=`echo "$RET1" | cut -d"|" -f1`
+			printf "%4d.      ft_printf(%s);  -->%s<--\n" "$index" "$TARGSV" "$RET0" >> .mybasictestssuccess
 		fi
 	done
 	if (( $errors == 0 ))
