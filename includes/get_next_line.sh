@@ -28,7 +28,7 @@ function check_gnl_all
 		printf "  $C_WHITE$j -> $TITLE$C_CLEAR\n"
 		(eval "$FUNC" "all" > .myret) &
 		display_spinner $!
-		RET0=`cat .myret`
+		RET0=`cat .myret | sed 's/%/%%/g'`
 		printf "$RET0\n"
 		printf "\n"
 		(( j += 1 ))
