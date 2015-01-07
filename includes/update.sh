@@ -6,10 +6,10 @@ then
 
 function update
 {
-	local UPTODATE MOULIDATE
+	local UPTODATE MOULIDATE VERSION
 	tput civis
 	display_header
-	display_righttitle ""
+	echo ""
 	printf "  Checking for updates...\n"
 	(check_for_update > .myret) &
 	display_spinner $!
@@ -45,7 +45,13 @@ function update
 			exit_checker
 			printf "UPTODATE2" > .myret
 		else
-			printf $C_RED"  Your version of '42FileChecker' is out-of-date.\n  Choose UPDATE 42FILECHECKER (1) for getting the last version or use '--no-update' to skip this message.\n\n"$C_CLEAR
+			display_header
+			echo ""
+			VERSION=$(git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
+			printf $C_RED""
+			display_center "Your version of '42FileChecker' is out-of-date."
+			display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
+			printf "\n  Choose UPDATE 42FILECHECKER (1) for installing the last version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
 			display_menu\
               	""\
                 install_update "UPDATE 42FILECHECKER"\
@@ -87,11 +93,11 @@ function install_update
 	if [ "$RES0" == "" ]
 	then
 		printf $C_BLUE"  Done.\n"$C_CLEAR
+		CVERSION=$(git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}' | tee .myrev)
 		sleep 0.1
 		display_hr
 		printf $C_WHITE"\n  Please restart the program with the following command line: "$C_CLEAR"\n  sh ./42FileChecker.sh\n\n"
 		tput cnorm
-		#exit
 		sh ./42FileChecker.sh
 	else
 		RES0=`git reset --hard origin/master 2>&1`
@@ -103,11 +109,11 @@ function install_update
 			tput cnorm
 		else
 			printf $C_BLUE"  Done.\n"$C_CLEAR
+			CVERSION=$(git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}' | tee .myrev)
 			sleep 0.1
 			display_hr
 			printf $C_WHITE"\n  Please restart the program with the following command line: "$C_CLEAR"\n  sh ./42FileChecker.sh\n\n\n\n\n"
 			tput cnorm
-			#exit
 			sh ./42FileChecker.sh
 		fi
 	fi

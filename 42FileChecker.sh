@@ -10,6 +10,8 @@
 ####################################################################
 
 FILECHECKER_SH=1
+CVERSION=$(cat .myrev 2>/dev/null)
+if [ "$CVERSION" == "" ]; then CVERSION="104"; fi
 RETURNPATH=$(pwd | sed 's/ /\ /g')
 OPT_NO_UPDATE=0
 OPT_NO_COLOR=0

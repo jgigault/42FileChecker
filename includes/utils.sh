@@ -92,7 +92,7 @@ then
 		echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n "
 		clear
 		printf $C_GREY""
-		display_center " "
+		display_righttitle "V1.r$CVERSION"
 		display_center "  _  _  ____  _____ _ _       ____ _               _              "
 		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  "
 		display_center " | || |_ __) | |_  | | |/ _ \ |   | '_ \ / _ \/ __| |/ / _ \ '__| "
