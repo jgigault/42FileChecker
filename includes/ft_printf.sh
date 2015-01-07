@@ -84,10 +84,11 @@ function check_ft_printf_basictests
 			fi
 			(( errors += 1 ))
 			case "$TTYPE" in
-				"s") TTYPEV="char *" ;;
-				"d") TTYPEV="int" ;;
+				"s") TTYPEV="(char *)" ;;
+				"d") TTYPEV="(int)" ;;
+				"0") TTYPEV="" ;;
 			esac
-			printf "\n#%d (%s)\n" "$index" "$TTYPEV" >> .mybasictests
+			printf "\n#%d %s\n" "$index" "$TTYPEV" >> .mybasictests
 			echo "ft_printf($TARGSV);" >> .mybasictests
 			RET0=`echo "$RET1" | cut -d"|" -f2`
 			printf "1. (%5d) -->" "$RET0" >> .mybasictests 2>&1

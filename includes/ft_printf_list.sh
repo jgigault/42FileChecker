@@ -6,19 +6,19 @@ then
 	declare -a CHK_FT_PRINTF_LIST
 
 	# easy
-	CHK_FT_PRINTF_LIST+=("s" "")
-	CHK_FT_PRINTF_LIST+=("s" "test")
-	CHK_FT_PRINTF_LIST+=("s" "1234")
+	CHK_FT_PRINTF_LIST+=("0" "")
+	CHK_FT_PRINTF_LIST+=("0" "test")
+	CHK_FT_PRINTF_LIST+=("0" "1234")
 
 	# wrong flag
-	CHK_FT_PRINTF_LIST+=("s" "%")
-	CHK_FT_PRINTF_LIST+=("s" "% ")
-	CHK_FT_PRINTF_LIST+=("s" "% z")
+	CHK_FT_PRINTF_LIST+=("0" "%")
+	CHK_FT_PRINTF_LIST+=("0" "% ")
+	CHK_FT_PRINTF_LIST+=("0" "% z")
 	CHK_FT_PRINTF_LIST+=("s" "% z|test")
 	CHK_FT_PRINTF_LIST+=("d" "% z|42")
 
 	# %
-	CHK_FT_PRINTF_LIST+=("s" "%%")
+	CHK_FT_PRINTF_LIST+=("0" "%%")
 	CHK_FT_PRINTF_LIST+=("s" "%%|test")
 	CHK_FT_PRINTF_LIST+=("s" "%   %|test")
 	CHK_FT_PRINTF_LIST+=("s" "%000   %|test")
@@ -35,7 +35,6 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%5.2s is a string|this")
 
 	# integer
-	CHK_FT_PRINTF_LIST+=("d" "%d")
 	CHK_FT_PRINTF_LIST+=("d" "%d|1")
 	CHK_FT_PRINTF_LIST+=("d" "%d|-1")
 	CHK_FT_PRINTF_LIST+=("d" "%d|4242")
