@@ -4,7 +4,7 @@ if [ "$FILECHECKER_SH" == "1" ]
 then
 
 
-declare -a CHK_FT_LS='( "check_ft_ls_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_ft_ls_makefile" "makefile" "check_ft_ls_forbidden_func" "forbidden functions" "check_ft_ls_leaks" "leaks" "check_ft_ls_moulitest" "moulitest (yyang@student.42.fr)" )'
+declare -a CHK_FT_LS='( "check_ft_ls_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_ft_ls_makefile" "makefile" "check_ft_ls_forbidden_func" "forbidden functions" "check_ft_ls_leaks" "leaks" "check_ft_ls_speedtest" "speed test" "check_ft_ls_moulitest" "moulitest (yyang@student.42.fr)" )'
 
 declare -a CHK_FT_LS_AUTHORIZED_FUNCS='(write opendir readdir closedir stat lstat getpwuid getgrgid listxattr getxattr time ctime readlink malloc free perror strerror exit main)'
 
@@ -26,7 +26,7 @@ function check_ft_ls_all
 		printf "  $C_WHITE$j -> $TITLE$C_CLEAR\n"
 		(eval "$FUNC" "all" > .myret) &
 		display_spinner $!
-		RET0=`cat .myret`
+		RET0=`cat .myret | sed 's/%/%%/g'`
 		printf "$RET0\n"
 		printf "\n"
 		(( j += 1 ))
@@ -39,7 +39,23 @@ function check_ft_ls_all
 		"open .mymakefile" "see details: makefile"\
 		"open .myforbiddenfunc" "see details: forbidden functions"\
 		"open .myleaks" "see details: leaks"\
+		"open .myspeedtest" "see details: speed test"\
 		"open .mymoulitest" "see details: moulitest"
+}
+
+function check_ft_ls_speedtest
+{
+	local LOGFILENAME
+	LOGFILENAME=.myspeedtest
+	rm -f $LOGFILENAME
+	touch $LOGFILENAME
+	make re -C "$MYPATH" >/dev/null
+	if [ -f "$MYPATH/ft_ls" ]
+	then
+		check_speedtest "$MYPATH/ft_ls" "ls" "-1lR /" "$LOGFILENAME" "Your program is compared with the original 'ls'.\n\n"
+	else
+		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
+	fi
 }
 
 function check_ft_ls_leaks
@@ -51,7 +67,7 @@ function check_ft_ls_leaks
 	make re -C "$MYPATH" >/dev/null
 	if [ -f "$MYPATH/ft_ls" ]
 	then
-		check_leaks "$MYPATH/ft_ls" "-1R /" ".myleaks" ""
+		check_leaks "$MYPATH/ft_ls" "-1R /" "$LOGFILENAME" ""
 	else
 		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
 	fi

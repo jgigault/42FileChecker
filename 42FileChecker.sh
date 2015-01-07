@@ -44,6 +44,7 @@ source includes/credits.sh
 source includes/forbidden.sh
 source includes/makefile.sh
 source includes/leaks.sh
+source includes/speedtest.sh
 
 function main
 {
