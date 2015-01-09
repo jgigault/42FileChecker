@@ -49,8 +49,14 @@ function update
 			echo ""
 			VERSION=$(git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
 			printf $C_RED""
-			display_center "Your version of '42FileChecker' is out-of-date."
-			display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
+			if [ "$VERSION" != "$CVERSION" ]
+			then
+				display_center "Your version of '42FileChecker' is out-of-date."
+				display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
+			else
+				display_center "Your copy of '42FileChecker' has been modified locally."
+				display_center "Skip update if you don't want to erase your changes."
+			fi
 			printf "\n  Choose UPDATE 42FILECHECKER (1) for installing the last version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
 			display_menu\
               	""\
@@ -93,7 +99,7 @@ function install_update
 	if [ "$RES0" == "" ]
 	then
 		printf $C_BLUE"  Done.\n"$C_CLEAR
-		CVERSION=$(git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}' | tee .myrev)
+		git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}' > .myrev 2>/dev/null
 		sleep 0.1
 		display_hr
 		printf $C_WHITE"\n  Please restart the program with the following command line: "$C_CLEAR"\n  sh ./42FileChecker.sh\n\n"
@@ -109,7 +115,7 @@ function install_update
 			tput cnorm
 		else
 			printf $C_BLUE"  Done.\n"$C_CLEAR
-			CVERSION=$(git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}' | tee .myrev)
+			git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}' > .myrev 2>/dev/null
 			sleep 0.1
 			display_hr
 			printf $C_WHITE"\n  Please restart the program with the following command line: "$C_CLEAR"\n  sh ./42FileChecker.sh\n\n\n\n\n"

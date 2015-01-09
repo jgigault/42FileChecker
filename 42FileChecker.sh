@@ -10,8 +10,9 @@
 ####################################################################
 
 FILECHECKER_SH=1
+if [ ! -f .myrev ]; then git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}' > .myrev 2>/dev/null; fi
 CVERSION=$(cat .myrev 2>/dev/null)
-if [ "$CVERSION" == "" ]; then CVERSION="104"; fi
+if [ "$CVERSION" == "" ]; then CVERSION="???"; fi
 RETURNPATH=$(pwd | sed 's/ /\ /g')
 OPT_NO_UPDATE=0
 OPT_NO_COLOR=0
