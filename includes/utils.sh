@@ -137,7 +137,7 @@ then
 	function display_menu
 	{
 		local -a MENU FUNCS
-		local PARAMS0 TOTAL SEL LEN SELN
+		local PARAMS0 TOTAL SEL LEN SELN TITLE
 		PARAMS0="\"$1\" "
 		SEL=""
 		shift 1
@@ -147,6 +147,7 @@ then
 			(( TOTAL += 1 ))
 			FUNCS[$TOTAL]="$1"
 			MENU[$TOTAL]="$2"
+			TITLE=`echo "$2" | sed 's/%/%%/g'`
 			if (( $TOTAL < 10 ))
 			then
 				SELN=$TOTAL
@@ -155,7 +156,7 @@ then
 				SELN=`echo "$SELN" | awk '{printf("%c", $0)}'`
 			fi
 			(( LEN=$COLUMNS - ${#2} - 9 ))
-			printf $C_INVERT"  "$SELN")    $2 "
+			printf $C_INVERT"  "$SELN")    $TITLE "
 			printf "%"$LEN"s" " "
 			printf $C_CLEAR"\n"
 			shift 2

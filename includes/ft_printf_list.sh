@@ -100,22 +100,22 @@ then
 	CHK_FT_PRINTF_LIST+=("d" "%-0+5d|-42")
 
 	# integer short
-	CHK_FT_PRINTF_LIST+=("h" "%hd|0")
-	CHK_FT_PRINTF_LIST+=("h" "%hd|42")
-	CHK_FT_PRINTF_LIST+=("h" "%hd|-42")
-	CHK_FT_PRINTF_LIST+=("h" "%hd|32767")
-	CHK_FT_PRINTF_LIST+=("h" "%hd|−32768")
-	CHK_FT_PRINTF_LIST+=("h" "%hd|32768")
-	CHK_FT_PRINTF_LIST+=("h" "%hd|−32769")
+	CHK_FT_PRINTF_LIST+=("dh" "%hd|0")
+	CHK_FT_PRINTF_LIST+=("dh" "%hd|42")
+	CHK_FT_PRINTF_LIST+=("dh" "%hd|-42")
+	CHK_FT_PRINTF_LIST+=("dh" "%hd|32767")
+	CHK_FT_PRINTF_LIST+=("dh" "%hd|−32768")
+	CHK_FT_PRINTF_LIST+=("dh" "%hd|32768")
+	CHK_FT_PRINTF_LIST+=("dh" "%hd|−32769")
 
 	# integer long
-	CHK_FT_PRINTF_LIST+=("l" "%ld|0")
-	CHK_FT_PRINTF_LIST+=("l" "%ld|42")
-	CHK_FT_PRINTF_LIST+=("l" "%ld|-42")
-	CHK_FT_PRINTF_LIST+=("l" "%ld|2147483647")
-	CHK_FT_PRINTF_LIST+=("l" "%ld|–2147483648")
-	CHK_FT_PRINTF_LIST+=("l" "%ld|2147483648")
-	CHK_FT_PRINTF_LIST+=("l" "%ld|–2147483649")
+	CHK_FT_PRINTF_LIST+=("dl" "%ld|0")
+	CHK_FT_PRINTF_LIST+=("dl" "%ld|42")
+	CHK_FT_PRINTF_LIST+=("dl" "%ld|-42")
+	CHK_FT_PRINTF_LIST+=("dl" "%ld|2147483647")
+	CHK_FT_PRINTF_LIST+=("dl" "%ld|–2147483648")
+	CHK_FT_PRINTF_LIST+=("dl" "%ld|2147483648")
+	CHK_FT_PRINTF_LIST+=("dl" "%ld|–2147483649")
 
 
 
