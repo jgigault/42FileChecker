@@ -108,7 +108,7 @@ function install_update
 	if [ "$RES0" == "" ]
 	then
 		printf $C_BLUE"  Done.\n"$C_CLEAR
-		git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}' > .myrev 2>/dev/null
+		git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev"\n"}' > .myrev 2>/dev/null
 		sleep 0.1
 		display_hr
 		printf $C_WHITE"\n  Please restart the program with the following command line: "$C_CLEAR"\n  sh ./42FileChecker.sh\n\n"
@@ -124,7 +124,7 @@ function install_update
 			tput cnorm
 		else
 			printf $C_BLUE"  Done.\n"$C_CLEAR
-			git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}' > .myrev 2>/dev/null
+			git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev"\n"}' > .myrev 2>/dev/null
 			sleep 0.1
 			display_hr
 			printf $C_WHITE"\n  Please restart the program with the following command line: "$C_CLEAR"\n  sh ./42FileChecker.sh\n\n\n\n\n"
