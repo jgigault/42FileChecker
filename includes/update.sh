@@ -6,7 +6,7 @@ then
 
 function update
 {
-	local UPTODATE MOULIDATE VERSION
+	local UPTODATE MOULIDATE VERSION RET0 RET1
 	tput civis
 	display_header
 	echo ""
@@ -53,6 +53,15 @@ function update
 			then
 				display_center "Your version of '42FileChecker' is out-of-date."
 				display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
+				RET0=`git rev-parse HEAD 2>/dev/null`
+				if [ "$RET0" != "" ]
+				then
+					RET1=`git log --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  "$0}`
+					if [ "$RET1" != "" ]
+					then
+						printf "\n  Last commits:\n$RET1\n"
+					fi
+				fi
 			else
 				display_center "Your copy of '42FileChecker' has been modified locally."
 				display_center "Skip update if you don't want to erase your changes."
