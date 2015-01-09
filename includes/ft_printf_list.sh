@@ -33,10 +33,16 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%10s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%.2s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%5.2s is a string|this")
+	CHK_FT_PRINTF_LIST+=("s" "%10s is a string|")
+	CHK_FT_PRINTF_LIST+=("s" "%.2s is a string|")
+	CHK_FT_PRINTF_LIST+=("s" "%5.2s is a string|")
 
 	CHK_FT_PRINTF_LIST+=("s" "%-10s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%-.2s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%-5.2s is a string|this")
+	CHK_FT_PRINTF_LIST+=("s" "%-10s is a string|")
+	CHK_FT_PRINTF_LIST+=("s" "%-.2s is a string|")
+	CHK_FT_PRINTF_LIST+=("s" "%-5.2s is a string|")
 
 	# integer
 	CHK_FT_PRINTF_LIST+=("d" "%d|1")
@@ -76,8 +82,22 @@ then
 	CHK_FT_PRINTF_LIST+=("d" "%00d|-42")
 
 	CHK_FT_PRINTF_LIST+=("d" "%5d|42")
+	CHK_FT_PRINTF_LIST+=("d" "%5+d|42")
 	CHK_FT_PRINTF_LIST+=("d" "%05d|42")
-	CHK_FT_PRINTF_LIST+=("d" "%005d|42")
+	CHK_FT_PRINTF_LIST+=("d" "%0+5d|42")
+	CHK_FT_PRINTF_LIST+=("d" "%5d|-42")
+	CHK_FT_PRINTF_LIST+=("d" "%5+d|-42")
+	CHK_FT_PRINTF_LIST+=("d" "%05d|-42")
+	CHK_FT_PRINTF_LIST+=("d" "%0+5d|-42")
+
+	CHK_FT_PRINTF_LIST+=("d" "%-5d|42")
+	CHK_FT_PRINTF_LIST+=("d" "%-5+d|42")
+	CHK_FT_PRINTF_LIST+=("d" "%-05d|42")
+	CHK_FT_PRINTF_LIST+=("d" "%-0+5d|42")
+	CHK_FT_PRINTF_LIST+=("d" "%-5d|-42")
+	CHK_FT_PRINTF_LIST+=("d" "%-5+d|-42")
+	CHK_FT_PRINTF_LIST+=("d" "%-05d|-42")
+	CHK_FT_PRINTF_LIST+=("d" "%-0+5d|-42")
 
 	# integer short
 	CHK_FT_PRINTF_LIST+=("h" "%hd|0")

@@ -45,105 +45,119 @@ function check_ft_printf_all
 
 function check_ft_printf_basictests
 {	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
-	local errors success i TTYPE TVAL TARGS FILEN RET1 RET2 RET0
+	local errors fatal success i TTYPE TVAL TARGS FILEN RET1 RET2 RET0
 	i=0
 	index=0
 	errors=0
 	success=0
+	fatal=0
 	rm -f .mybasictests .mybasictestssuccess
 	touch .mybasictests .mybasictestssuccess
 	check_create_tmp_dir
 	check_ft_printf_create_header
 	echo "FT_PRINTF TESTS:\n" >> .mybasictestssuccess
-	while [ "${CHK_FT_PRINTF_LIST[$i]}" != "" ]
+	while [ "${CHK_FT_PRINTF_LIST[$i]}" != "" -a $fatal -eq 0 ]
 	do
 		(( index += 1 ))
 		TTYPE="${CHK_FT_PRINTF_LIST[$i]}"
 		(( i += 1 ))
 		TVAL="${CHK_FT_PRINTF_LIST[$i]}"
 		(( i += 1 ))
-		check_ft_printf_basictests_gcc "$TTYPE"
-		if [ ! -f "./tmp/ft_printf_$TTYPE" ]
+		RET0=`check_ft_printf_basictests_gcc "$TTYPE"`
+		if [ "$RET0" != "" ]
 		then
-			printf $C_RED"  Fatal error : Cannot compile"$C_CLEAR
-			return
-		fi
-		TARGS=`echo "\"$TVAL\"" | sed 's/|/\" \"/g'`
-		if [ "$TTYPE" == "d" ]
-		then
-			TARGSV=`echo "\"$TVAL" | sed 's/|/, /g' | sed 's/,/\",/'`
+			(( fatal += 1 ));
 		else
-			TARGSV=`echo "\"$TVAL\"" | sed 's/|/\", \"/g'`
-		fi
-		FILEN1="./tmp/ft_printf_$TTYPE"
-		FILEN2="./tmp/printf_$TTYPE"
-		RET1=`eval "$FILEN1 $TARGS" 2>&1`
-		RET2=`eval "$FILEN2 $TARGS" 2>&1`
-		if [ "$RET1" != "$RET2" ]
-		then
-			if (( $errors == 0 ))
+			TARGS=`echo "\"$TVAL\"" | sed 's/|/\" \"/g'`
+			if [ "$TTYPE" == "d" ]
 			then
-				echo "see the entire list of tests by opening file:\n$RETURNPATH/.mybasictestssuccess" >> .mybasictests
-				echo "\n--------------\n" >> .mybasictests
-				echo "FAILED TESTS:\n" >> .mybasictests
-				echo "# TEST NUMBER (TYPE OF ARG)" >> .mybasictests
-				echo "  INSTRUCTION();" >> .mybasictests
-				echo "  1. your function ft_printf" >> .mybasictests
-				echo "  2. unix function printf" >> .mybasictests
-				echo "     (returned value) -->written on stdout<--" >> .mybasictests
+				TARGSV=`echo "\"$TVAL" | sed 's/|/, /g' | sed 's/,/\",/'`
+			else
+				TARGSV=`echo "\"$TVAL\"" | sed 's/|/\", \"/g'`
 			fi
-			(( errors += 1 ))
-			case "$TTYPE" in
-				"s") TTYPEV="(char *)" ;;
-				"d") TTYPEV="(int)" ;;
-				"h") TTYPEV="(short)" ;;
-				"l") TTYPEV="(long)" ;;
-				"m") TTYPEV="(long long)" ;;
-				"0") TTYPEV="" ;;
-			esac
-			printf "\n# %04d %s\n" "$index" "$TTYPEV" >> .mybasictests
-			echo "  ft_printf($TARGSV);" >> .mybasictests
-			RET0=`echo "$RET1" | cut -d"|" -f2`
-			printf "  1. (%5d) -->" "$RET0" >> .mybasictests 2>&1
-			RET0=`echo "$RET1" | cut -d"|" -f1`
-			printf "%s<--\n" "$RET0" >> .mybasictests
-			RET0=`echo "$RET2" | cut -d"|" -f2`
-			printf "  2. (%5d) -->" "$RET0" >> .mybasictests 2>&1
-			RET0=`echo "$RET2" | cut -d"|" -f1`
-			printf "%s<--\n" "$RET0" >> .mybasictests
-			printf "%4d. FAIL ft_printf(%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
-		else
-			(( success += 1 ))
-			RET0=`echo "$RET1" | cut -d"|" -f1`
-			printf "%4d.      ft_printf(%s);  -->%s<--\n" "$index" "$TARGSV" "$RET0" >> .mybasictestssuccess
+			FILEN1="./tmp/ft_printf_$TTYPE"
+			FILEN2="./tmp/printf_$TTYPE"
+			RET1=`eval "$FILEN1 $TARGS" 2>&1`
+			RET2=`eval "$FILEN2 $TARGS" 2>&1`
+			if [ "$RET1" != "$RET2" ]
+			then
+				if (( $errors == 0 ))
+				then
+					echo "see the entire list of tests by opening file:\n$RETURNPATH/.mybasictestssuccess" >> .mybasictests
+					echo "\n--------------\n" >> .mybasictests
+					echo "FAILED TESTS:\n" >> .mybasictests
+					echo "# TEST NUMBER (TYPE OF ARG)" >> .mybasictests
+					echo "  INSTRUCTION();" >> .mybasictests
+					echo "  1. your function ft_printf" >> .mybasictests
+					echo "  2. unix function printf" >> .mybasictests
+					echo "     (returned value) -->written on stdout<--" >> .mybasictests
+				fi
+				(( errors += 1 ))
+				case "$TTYPE" in
+					"s") TTYPEV="(char *)" ;;
+					"d") TTYPEV="(int)" ;;
+					"h") TTYPEV="(short)" ;;
+					"l") TTYPEV="(long)" ;;
+					"m") TTYPEV="(long long)" ;;
+					"0") TTYPEV="" ;;
+				esac
+				printf "\n# %04d %s\n" "$index" "$TTYPEV" >> .mybasictests
+				echo "  ft_printf($TARGSV);" >> .mybasictests
+				RET0=`echo "$RET1" | cut -d"|" -f2`
+				printf "  1. (%5d) -->" "$RET0" >> .mybasictests 2>&1
+				RET0=`echo "$RET1" | cut -d"|" -f1`
+				printf "%s<--\n" "$RET0" >> .mybasictests
+				RET0=`echo "$RET2" | cut -d"|" -f2`
+				printf "  2. (%5d) -->" "$RET0" >> .mybasictests 2>&1
+				RET0=`echo "$RET2" | cut -d"|" -f1`
+				printf "%s<--\n" "$RET0" >> .mybasictests
+				printf "%4d. FAIL ft_printf(%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
+			else
+				(( success += 1 ))
+				RET0=`echo "$RET1" | cut -d"|" -f1`
+				printf "%4d.      ft_printf(%s);\n" "$index" "$TARGSV" >> .mybasictestssuccess
+			fi
 		fi
 	done
-	if (( $errors == 0 ))
+	if (( $fatal == 0 ))
 	then
-		cat .mybasictestssuccess > .mybasictests
-		printf $C_GREEN"  All tests passed ($index tests)"$C_CLEAR
+		if (( $errors == 0 ))
+		then
+			cat .mybasictestssuccess > .mybasictests
+			printf $C_GREEN"  All tests passed ($index tests)"$C_CLEAR
+		else
+			printf $C_RED"  $errors failed test(s) out of $index tests"$C_CLEAR
+		fi
 	else
-		printf $C_RED"  $errors failed test(s) out of $index tests"$C_CLEAR
+		printf $C_RED"  Fatal error : Cannot compile"$C_CLEAR
 	fi
 	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_ft_printf_basictests_gcc
 {
-	local FILEN
+	local FILEN RET0
 	FILEN="printf_$1"
 	if [ ! -f "./tmp/ft_$FILEN" -o ! -f "./tmp/$FILEN" ]
 	then
-		make re -C "$MYPATH" >/dev/null
 		if [ -d "$MYPATH/libft" ]
 		then
-			make re -C "$MYPATH/libft" >/dev/null
-			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -L"$MYPATH/libft" -lft -o "./tmp/ft_$FILEN" 2>&1`
+			RET0=`make re -C "$MYPATH/libft" 2>&1 1>/dev/null`
+			if [ "$RET0" != "" ]; then echo "$RET0" > .mybasictests; printf "error"; return; fi
+			RET0=`make re -C "$MYPATH" 2>&1 1>/dev/null`
+			if [ "$RET0" != "" ]; then echo "$RET0" > .mybasictests; printf "error"; return; fi
+			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -L"$MYPATH/libft" -lft -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
+			if [ "$RET0" != "" ]; then echo "$RET0" > .mybasictests; printf "error"; return; fi
 		else
-			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN" 2>&1`
+			RET0=`make re -C "$MYPATH" 2>&1 1>/dev/null`
+			if [ "$RET0" != "" ]; then echo "$RET0" > .mybasictests; printf "error"; return; fi
+			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
+			if [ "$RET0" != "" ]; then echo "$RET0" > .mybasictests; printf "error"; return; fi
 		fi
-		RET0=`gcc "./srcs/printf/$FILEN.c" -o "./tmp/$FILEN" 2>&1`
+		RET0=`gcc "./srcs/printf/$FILEN.c" -o "./tmp/$FILEN" 2>&1 1>/dev/null`
+		if [ "$RET0" != "" ]; then echo "$RET0" > .mybasictests; printf "error"; return; fi
 	fi
+	return 1
 }
 
 function check_ft_printf_create_header
