@@ -6,7 +6,7 @@ then
 
 function update
 {
-	local UPTODATE MOULIDATE VERSION RET0 RET1
+	local UPTODATE MOULIDATE VERSION RET0 RET1 LOCALHASH REMOTEHASH
 	tput civis
 	display_header
 	printf "\n\n"
@@ -49,16 +49,18 @@ function update
 		else
 			display_header
 			printf "\n\n"
+			LOCALHASH=`git show-ref | grep -v remotes | cut -d" " -f1`
+			REMOTEHASH=`git ls-remote 2>/dev/null | grep HEAD | cut -f1`
 			VERSION=$(git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
 			printf $C_RED""
-			if [ "$VERSION" != "$CVERSION" ]
+			if [ "$REMOTEHASH" != "$LOCALHASH" ]
 			then
 				display_center "Your version of '42FileChecker' is out-of-date."
 				display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
-				RET0=`git show-ref --hash origin/master 2>/dev/null`
+				RET0=`git show-ref | grep -v remotes | cut -d" " -f1`
 				if [ "$RET0" != "" ]
 				then
-					RET1=`git log --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  "$0}'`
+					RET1=`git log origin/master --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  "$0}'`
 					if [ "$RET1" != "" ]
 					then
 						printf "\n  Last commits:\n$RET1\n"
