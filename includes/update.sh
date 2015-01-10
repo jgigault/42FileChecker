@@ -53,7 +53,7 @@ function update
 			then
 				display_center "Your version of '42FileChecker' is out-of-date."
 				display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
-				RET0=`git rev-parse HEAD 2>/dev/null`
+				RET0=`git show-ref --hash origin/master 2>/dev/null`
 				if [ "$RET0" != "" ]
 				then
 					RET1=`git log --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  "$0}`
