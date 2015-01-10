@@ -51,7 +51,7 @@ function update
 			printf "\n\n"
 			LOCALHASH=`git show-ref | grep -v remotes | cut -d" " -f1`
 			REMOTEHASH=`git ls-remote 2>/dev/null | grep HEAD | cut -f1`
-			VERSION=$(git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
+			VERSION=$(git shortlog origin/master -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
 			printf $C_RED""
 			if [ "$REMOTEHASH" != "$LOCALHASH" ]
 			then
