@@ -6,7 +6,7 @@
 /*   By: jgigault <jgigault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/07 11:40:52 by jgigault          #+#    #+#             */
-/*   Updated: 2015/01/07 12:19:03 by jgigault         ###   ########.fr       */
+/*   Updated: 2015/01/10 14:15:46 by jgigault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,16 @@
 int				main(int argc, char **argv)
 {
 	int		ret;
+	char	*str;
 
-	ret = ft_printf(argv[1]);
+	if (argv[1][0] == 'p')
+	{
+		ret = ft_printf(argv[2], (void *)(str = "I am a void"));
+	}
+	else
+	{
+		ret = ft_printf(argv[2]);
+	}
 	printf("|%d", ret);
 	return (0);
 }

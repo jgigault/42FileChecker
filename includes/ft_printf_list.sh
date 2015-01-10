@@ -13,17 +13,56 @@ then
 	# wrong flag
 	CHK_FT_PRINTF_LIST+=("0" "%")
 	CHK_FT_PRINTF_LIST+=("0" "% ")
-	CHK_FT_PRINTF_LIST+=("0" "% z")
-	CHK_FT_PRINTF_LIST+=("s" "% z|test")
-	CHK_FT_PRINTF_LIST+=("d" "% z|42")
+	CHK_FT_PRINTF_LIST+=("0" "% v")
 
 	# %
 	CHK_FT_PRINTF_LIST+=("0" "%%")
+
+	# hexadecimal
+	#CHK_FT_PRINTF_LIST+=("0p" "%p|(void *)(str = \"I am a void\")")
+
+
+
+
+	CHK_FT_PRINTF_LIST+=("s" "% v|test")
 	CHK_FT_PRINTF_LIST+=("s" "%%|test")
 	CHK_FT_PRINTF_LIST+=("s" "%   %|test")
 	CHK_FT_PRINTF_LIST+=("s" "%000   %|test")
 	CHK_FT_PRINTF_LIST+=("s" "%%%|test")
 	CHK_FT_PRINTF_LIST+=("s" "%%   %|test")
+
+
+
+	# x X
+	CHK_FT_PRINTF_LIST+=("x" "%x|42")
+	CHK_FT_PRINTF_LIST+=("x" "%X|42")
+	CHK_FT_PRINTF_LIST+=("x" "%x|0")
+	CHK_FT_PRINTF_LIST+=("x" "%X|0")
+	CHK_FT_PRINTF_LIST+=("x" "%x|-42")
+	CHK_FT_PRINTF_LIST+=("x" "%X|-42")
+	CHK_FT_PRINTF_LIST+=("x" "%x|4294967296")
+	CHK_FT_PRINTF_LIST+=("x" "%X|4294967296")
+	CHK_FT_PRINTF_LIST+=("xs" "%x|test")
+
+	CHK_FT_PRINTF_LIST+=("x" "%10x|42")
+	CHK_FT_PRINTF_LIST+=("x" "%-10x|42")
+
+	CHK_FT_PRINTF_LIST+=("x" "%lx|4294967296")
+	CHK_FT_PRINTF_LIST+=("x" "%llX|4294967296")
+
+	CHK_FT_PRINTF_LIST+=("x" "%hx|4294967296")
+	CHK_FT_PRINTF_LIST+=("x" "%hhX|4294967296")
+
+	CHK_FT_PRINTF_LIST+=("x" "%jx|4294967295")
+	CHK_FT_PRINTF_LIST+=("x" "%jx|4294967296")
+
+	CHK_FT_PRINTF_LIST+=("x" "%jx|-4294967296")
+	CHK_FT_PRINTF_LIST+=("x" "%jx|-4294967297")
+
+	CHK_FT_PRINTF_LIST+=("x" "%llx|9223372036854775807")
+	CHK_FT_PRINTF_LIST+=("x" "%llx|9223372036854775808")
+
+
 
 	# string
 	CHK_FT_PRINTF_LIST+=("s" "%s|this is a string")
@@ -44,7 +83,12 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%-.2s is a string|")
 	CHK_FT_PRINTF_LIST+=("s" "%-5.2s is a string|")
 
+
+
+
 	# integer
+	CHK_FT_PRINTF_LIST+=("d" "% v|42")
+
 	CHK_FT_PRINTF_LIST+=("d" "%d|1")
 	CHK_FT_PRINTF_LIST+=("d" "%d|-1")
 	CHK_FT_PRINTF_LIST+=("d" "%d|4242")

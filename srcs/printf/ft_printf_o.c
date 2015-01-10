@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printf_s.c                                         :+:      :+:    :+:   */
+/*   ft_printf_o.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jgigault <jgigault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/01/06 11:34:07 by jgigault          #+#    #+#             */
-/*   Updated: 2015/01/10 13:05:17 by jgigault         ###   ########.fr       */
+/*   Created: 2015/01/07 18:52:22 by jgigault          #+#    #+#             */
+/*   Updated: 2015/01/10 12:48:56 by jgigault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../tmp/printf.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -17,7 +18,7 @@ int				main(int argc, char **argv)
 {
 	int		ret;
 
-	ret = printf(argv[2], argv[3]);
+	ret = ft_printf(argv[2], strtod(argv[3]));
 	printf("|%d", ret);
 	return (0);
 }

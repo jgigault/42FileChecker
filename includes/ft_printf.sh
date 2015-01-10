@@ -5,7 +5,7 @@ then
 
 source includes/ft_printf_list.sh
 
-declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests s" "basic tests %s (beta)" "check_ft_printf_basictests d" "basic tests %d (beta)" "check_ft_printf_basictests 0" "basic tests (beta)" "check_ft_printf_moulitest" "moulitest (yyang@student.42.fr)" )'
+declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests s" "basic tests %s (beta)" "check_ft_printf_basictests d" "basic tests %d (beta)" "check_ft_printf_basictests x" "basic tests %x %X (beta)" "check_ft_printf_basictests 0" "basic tests (beta)" "check_ft_printf_moulitest" "moulitest (yyang@student.42.fr)" )'
 
 declare -a CHK_FT_PRINTF_AUTHORIZED_FUNCS='(write malloc free exit main)'
 
@@ -41,6 +41,7 @@ function check_ft_printf_all
 		"open .myforbiddenfunc" "more info: forbidden functions"\
 		"open .mybasictestss" "more info: basic tests %s (beta)"\
 		"open .mybasictestsd" "more info: basic tests %d (beta)"\
+		"open .mybasictestsx" "more info: basic tests %x %X (beta)"\
 		"open .mybasictests0" "more info: basic tests (beta)"\
 		"open .mymoulitest" "more info: moulitest"
 }
@@ -68,23 +69,23 @@ function check_ft_printf_basictests
 		(( i += 1 ))
 		TVAL="${CHK_FT_PRINTF_LIST[$i]}"
 		(( i += 1 ))
-		if [ "$TYPE" == "${TTYPE[0]}" ]
+		if [ "$TYPE" == "${TTYPE:0:1}" ]
 		then
 			(( total += 1 ))
-			RET0=`check_ft_printf_basictests_gcc "$TTYPE"`
+			RET0=`check_ft_printf_basictests_gcc "${TTYPE:0:1}" "$LOGFILENAME"`
 			if [ "$RET0" != "" ]
 			then
 				(( fatal += 1 ));
 			else
-				TARGS=`echo "\"$TVAL\"" | sed 's/|/\" \"/g'`
-				if [ "$TTYPE" == "d" ]
+				TARGS=`echo "${TTYPE:0:1}" "\"$TVAL\"" | sed 's/|/\" \"/g'`
+				if [ "${TTYPE:0:1}" == "d" -o "$TTYPE" == "0p" -o "${TTYPE:0:1}" == "x" ]
 				then
 					TARGSV=`echo "\"$TVAL" | sed 's/|/, /g' | sed 's/,/\",/'`
 				else
 					TARGSV=`echo "\"$TVAL\"" | sed 's/|/\", \"/g'`
 				fi
-				FILEN1="./tmp/ft_printf_$TTYPE"
-				FILEN2="./tmp/printf_$TTYPE"
+				FILEN1="./tmp/ft_printf_${TTYPE:0:1}"
+				FILEN2="./tmp/printf_${TTYPE:0:1}"
 				RET1=`eval "$FILEN1 $TARGS" 2>&1`
 				RET2=`eval "$FILEN2 $TARGS" 2>&1`
 				if [ "$RET1" != "$RET2" ]
@@ -106,8 +107,9 @@ function check_ft_printf_basictests
 						"d") TTYPEV="(int)" ;;
 						"dh") TTYPEV="(short)" ;;
 						"dl") TTYPEV="(long)" ;;
-						#"m") TTYPEV="(long long)" ;;
 						"0") TTYPEV="" ;;
+						"0p") TTYPEV="(void *)" ;;
+						"x") TTYPEV="(int)" ;;
 					esac
 					printf "\n# %04d %s\n" "$index" "$TTYPEV" >> $LOGFILENAME
 					echo "  ft_printf($TARGSV);" >> $LOGFILENAME
@@ -135,7 +137,7 @@ function check_ft_printf_basictests
 			cat $LOGFILENAME"success" > $LOGFILENAME
 			printf $C_GREEN"  All tests passed ($total tests)"$C_CLEAR
 		else
-			printf $C_RED"  $errors failed test(s) out of $index tests"$C_CLEAR
+			printf $C_RED"  $errors failed test(s) out of $total tests"$C_CLEAR
 		fi
 	else
 		printf $C_RED"  Fatal error : Cannot compile"$C_CLEAR
