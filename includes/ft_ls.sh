@@ -35,12 +35,12 @@ function check_ft_ls_all
 	display_menu\
 		""\
 		main "OK"\
-		"open .mynorminette" "see details: norminette"\
-		"open .mymakefile" "see details: makefile"\
-		"open .myforbiddenfunc" "see details: forbidden functions"\
-		"open .myleaks" "see details: leaks"\
-		"open .myspeedtest" "see details: speed test"\
-		"open .mymoulitest" "see details: moulitest"
+		"open .mynorminette" "more info: norminette"\
+		"open .mymakefile" "more info: makefile"\
+		"open .myforbiddenfunc" "more info: forbidden functions"\
+		"open .myleaks" "more info: leaks"\
+		"open .myspeedtest" "more info: speed test"\
+		"open .mymoulitest" "more info: moulitest"
 }
 
 function check_ft_ls_speedtest
@@ -197,17 +197,22 @@ function config_ft_ls
 function check_ft_ls_top
 {
 	local LPATH=$1
-	local LHOME
+	local LHOME LEN
 	LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
 	LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
 	LPATH=`eval $LPATH`
-	printf "$C_GREY"
-	display_center "FT_LS"
-	printf "\n"$C_CLEAR
+	printf $C_WHITE"\n"
 	if [ "$1" != "" ]
 	then
-		printf "  "$C_WHITE"Current configuration:$C_CLEAR\n  $LPATH\n\n"
+		printf "  Current configuration:"
+		(( LEN=$COLUMNS - 24 ))
+		printf "%"$LEN"s" "FT_LS  "
+		printf $C_CLEAR"  $LPATH\n\n"
+	else
+		printf "  FT_LS\n"
+		printf "\n"
 	fi
+	printf ""$C_CLEAR
 }
 
 fi;

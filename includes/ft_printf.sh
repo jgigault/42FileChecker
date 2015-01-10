@@ -36,13 +36,13 @@ function check_ft_printf_all
 	display_menu\
 		""\
 		main "OK"\
-		"open .mynorminette" "see details: norminette"\
-		"open .mymakefile" "see details: makefile"\
-		"open .myforbiddenfunc" "see details: forbidden functions"\
-		"open .mybasictestss" "see details: basic tests %s (beta)"\
-		"open .mybasictestsd" "see details: basic tests %d (beta)"\
-		"open .mybasictests0" "see details: basic tests (beta)"\
-		"open .mymoulitest" "see details: moulitest"
+		"open .mynorminette" "more info: norminette"\
+		"open .mymakefile" "more info: makefile"\
+		"open .myforbiddenfunc" "more info: forbidden functions"\
+		"open .mybasictestss" "more info: basic tests %s (beta)"\
+		"open .mybasictestsd" "more info: basic tests %d (beta)"\
+		"open .mybasictests0" "more info: basic tests (beta)"\
+		"open .mymoulitest" "more info: moulitest"
 }
 
 function check_ft_printf_basictests
@@ -319,13 +319,18 @@ function check_ft_printf_top
 	LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
 	LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
 	LPATH=`eval $LPATH`
-	printf "$C_GREY"
-    display_center "FT_PRINTF"
-    printf "\n"$C_CLEAR
-	if [ "$1" != "" ]
-	then
-		printf "  "$C_WHITE"Current configuration:$C_CLEAR\n  $LPATH\n\n"
-	fi
+	printf $C_WHITE"\n"
+    if [ "$1" != "" ]
+    then
+        printf "  Current configuration:"
+        (( LEN=$COLUMNS - 24 ))
+        printf "%"$LEN"s" "FT_PRINTF  "
+        printf $C_CLEAR"  $LPATH\n\n"
+    else
+        printf "  FT_PRINTF\n"
+        printf "\n"
+    fi
+    printf ""$C_CLEAR
 }
 
 fi;

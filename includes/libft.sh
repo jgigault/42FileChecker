@@ -41,14 +41,14 @@ function check_libft_all
 	display_menu\
 		""\
 		main "OK"\
-		"open .myLIBFT_MANDATORIES" "see details: required functions"\
-		"open .myLIBFT_BONUS" "see details: bonus functions"\
-		"open .myextra" "see details: extra functions"\
-		"open .mynorminette" "see details: norminette"\
-		"open .mystatic" "see details: static declarations"\
-		"open .mymakefile" "see details: makefile"\
-		"open .myforbiddenfunc" "see details: forbidden functions"\
-		"open .mymoulitest" "see details: moulitest"
+		"open .myLIBFT_MANDATORIES" "more info: required functions"\
+		"open .myLIBFT_BONUS" "more info: bonus functions"\
+		"open .myextra" "more info: extra functions"\
+		"open .mynorminette" "more info: norminette"\
+		"open .mystatic" "more info: static declarations"\
+		"open .mymakefile" "more info: makefile"\
+		"open .myforbiddenfunc" "more info: forbidden functions"\
+		"open .mymoulitest" "more info: moulitest"
 }
 
 function check_libft_makefile
@@ -449,17 +449,22 @@ function check_libft_sum
 function check_libft_top
 {
 	local LPATH=$1
-	local LHOME
+	local LHOME LEN
 	LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
 	LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
 	LPATH=`eval $LPATH`
-	printf "$C_GREY"
-    display_center "LIBFT"
-    printf "\n"$C_CLEAR
+	printf $C_WHITE"\n"
 	if [ "$1" != "" ]
 	then
-		printf "  "$C_WHITE"Current configuration:$C_CLEAR\n  $LPATH\n\n"
+		printf "  Current configuration:"
+		(( LEN=$COLUMNS - 24 ))
+		printf "%"$LEN"s" "LIBFT  "
+		printf $C_CLEAR"  $LPATH\n\n"
+	else
+		printf "  LIBFT\n"
+		printf "\n"
 	fi
+    printf ""$C_CLEAR
 }
 
 fi;

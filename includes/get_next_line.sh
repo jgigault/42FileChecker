@@ -37,14 +37,14 @@ function check_gnl_all
 	display_menu\
 		""\
 		main "OK"\
-		"open .mynorminette" "see details: norminette"\
-		"open .mymacro" "see details: BUFF_SIZE macro"\
-		"open .mybonusstatic" "see details: bonus: static var"\
-		"open .myforbiddenfunc" "see details: forbidden functions"\
-		"open .mybasictests" "see details: basic tests"\
-		"open .mymultiplefd" "see details: bonus: multiple file descriptor"\
-		"open .myleaks" "see details: leaks"\
-		"open .mymoulitest" "see details: moulitest"
+		"open .mynorminette" "more info: norminette"\
+		"open .mymacro" "more info: BUFF_SIZE macro"\
+		"open .mybonusstatic" "more info: bonus: static var"\
+		"open .myforbiddenfunc" "more info: forbidden functions"\
+		"open .mybasictests" "more info: basic tests"\
+		"open .mymultiplefd" "more info: bonus: multiple file descriptor"\
+		"open .myleaks" "more info: leaks"\
+		"open .mymoulitest" "more info: moulitest"
 }
 
 function check_gnl_forbidden_func
@@ -386,13 +386,18 @@ function check_gnl_top
 	LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
 	LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
 	LPATH=`eval $LPATH`
-	printf "$C_GREY"
-	display_center "GET NEXT LINE"
-	printf "\n"$C_CLEAR
-	if [ "$1" != "" ]
-	then
-		printf "  "$C_WHITE"Current configuration:$C_CLEAR\n  $LPATH\n\n"
-	fi
+	printf $C_WHITE"\n"
+    if [ "$1" != "" ]
+    then
+        printf "  Current configuration:"
+        (( LEN=$COLUMNS - 24 ))
+        printf "%"$LEN"s" "GET_NEXT_LINE  "
+        printf $C_CLEAR"  $LPATH\n\n"
+    else
+        printf "  GET_NEXT_LINE\n"
+        printf "\n"
+    fi
+    printf ""$C_CLEAR
 }
 
 fi;

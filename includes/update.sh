@@ -9,7 +9,7 @@ function update
 	local UPTODATE MOULIDATE VERSION RET0 RET1
 	tput civis
 	display_header
-	echo ""
+	printf "\n\n"
 	printf "  Checking for updates...\n"
 	(check_for_update > .myret) &
 	display_spinner $!
@@ -18,10 +18,12 @@ function update
 	then
 		(check_for_moulitest > .myret) &
 		display_spinner $!
+		display_header
+		printf "\n\n"
 		MOULIDATE=`cat .myret`
 		if [ "$MOULIDATE" == "0" ]
 		then
-			printf $C_RED"  Your version of 'moulitest' (yyang42@student.42.fr) is out-of-date.\n  Choose UPDATE MOULITEST (1) for getting the last version or use '--no-update' to skip this message.\n\n"$C_CLEAR
+			printf $C_RED"  Your version of 'moulitest' (https://github.com/yyang42/moulitest) is out-of-date.\n  Choose UPDATE MOULITEST (1) for installing the latest version or SKIP UPDATE (2) if you want to skip this warning.\n\n"$C_CLEAR
 			display_menu\
 			   	""\
                 install_update_moulitest "UPDATE MOULITEST"\
@@ -30,11 +32,11 @@ function update
 		fi
 		if [ "$MOULIDATE" == "2" ]
 		then
-			printf $C_RED"  The 'moulitest' (yyang42@student.42.fr) is not installed.\n  Choose INSTALL MOULITEST (1) for installing it or use '--no-update' to skip this message.\n\n"$C_CLEAR
+			printf $C_RED"  The 'moulitest' (https://github.com/yyang42/moulitest) is not installed.\n  Choose INSTALL MOULITEST (1) for installing it or SKIP INSTALL (2) if you want to skip this warning.\n\n"$C_CLEAR
 			display_menu\
              	""\
                 install_update_moulitest "INSTALL MOULITEST"\
-				"" "SKIP UPDATE"\
+				"" "SKIP INSTALL"\
                 exit_checker "EXIT"
 		fi
 	else

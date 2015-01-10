@@ -7,20 +7,23 @@ then
 	if [ "$COLUMNS" == "" ]
 	then
 		$COLUMNS=80;
-	fi;
+	fi
 
 	if [ "$OPT_NO_COLOR" == "0" ]
 	then
-		C_CLEAR="\033[0m"
-		C_YELLOW="\033[33;1m"
-		C_RED="\033[31m"
-		C_GREEN="\033[32m"
-		C_CYAN="\033[36;1m"
-		C_WHITE="\033[37;1m"
-		C_BLUE="\033[34;1m"
-		C_GREY="\033[1;30m"
+		C_BLACKBG="\033[40m\033[37m"
+		C_CLEAR="\033[0m"$C_BLACKBG
+		C_YELLOW=$C_BLACKBG"\033[33;1m"
+		C_RED=$C_BLACKBG"\033[31m\033[38;5;160m"
+		C_GREEN=$C_BLACKBG"\033[32m\033[38;5;70m"
+		C_CYAN=$C_BLACKBG"\033[36;1m"
+		C_WHITE=$C_BLACKBG"\033[37;1m"
+		C_BLUE=$C_BLACKBG"\033[34;1m"
+		C_GREY=$C_BLACKBG"\033[1;30m"
+		C_GREY=$C_BLACKBG"\033[38;5;239m"
 		C_BLACK="\033[30;1m"
-		C_INVERT="\033[44;1m"$C_WHITE
+		C_INVERT="\033[48;5;17m""\033[38;5;104m"
+		C_INVERTGREY="\033[48;5;233m""\033[38;5;95m"
 	fi
 
 	function display_error
@@ -78,8 +81,8 @@ then
 		    (( MARGIN= ($COLUMNS - $LEN) / 2 ))
 		    printf "%"$MARGIN"s" " "
 			printf "$1"
+			(( MARGIN= $MARGIN + ($COLUMNS - $LEN - $MARGIN * 2) ))
 			printf "%"$MARGIN"s" " "
-			printf "\n"
 		else
 			printf "\n"
 		fi
@@ -91,7 +94,7 @@ then
 		echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 		echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n "
 		clear
-		printf $C_GREY""
+		printf $C_INVERT""
 		display_righttitle "V1.r$CVERSION"
 		display_center "  _  _  ____  _____ _ _       ____ _               _              "
 		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  "
@@ -137,46 +140,53 @@ then
 	function display_menu
 	{
 		local -a MENU FUNCS
-		local PARAMS0 TOTAL SEL LEN SELN TITLE
-		PARAMS0="\"$1\" "
+		local TOTAL SEL LEN SELN TITLE
 		SEL=""
 		shift 1
+		printf $C_INVERT""
+		printf "%"$COLUMNS"s" " "
+		printf "\n"
 		while (( $# > 0 ))
         do
-			PARAMS0=$PARAMS0" $1 \"$2\""
-			(( TOTAL += 1 ))
-			FUNCS[$TOTAL]="$1"
-			MENU[$TOTAL]="$2"
-			TITLE=`echo "$2" | sed 's/%/%%/g'`
-			if (( $TOTAL < 10 ))
+			if [ "$1" == "_" ]
 			then
-				SELN=$TOTAL
+				printf "%"$COLUMNS"s" " "
+				shift 1
 			else
-				(( SELN=65 + $TOTAL - 10 ))
-				SELN=`echo "$SELN" | awk '{printf("%c", $0)}'`
+				(( TOTAL += 1 ))
+				FUNCS[$TOTAL]="$1"
+				MENU[$TOTAL]="$2"
+				TITLE=`echo "$2" | sed 's/%/%%/g'`
+				if (( $TOTAL < 10 ))
+				then
+					SELN=$TOTAL
+				else
+					(( SELN=65 + $TOTAL - 10 ))
+					SELN=`echo "$SELN" | awk '{printf("%c", $0)}'`
+				fi
+				(( LEN=$COLUMNS - ${#2} - 9 ))
+				printf "  "$SELN")    $TITLE "
+				printf "%"$LEN"s" " "
+				printf "\n"
+				shift 2
 			fi
-			(( LEN=$COLUMNS - ${#2} - 9 ))
-			printf $C_INVERT"  "$SELN")    $TITLE "
-			printf "%"$LEN"s" " "
-			printf $C_CLEAR"\n"
-			shift 2
         done
-		printf "\n  "$C_WHITE"Type a number between 1 and "$SELN": "
-		tput cnorm
+		printf "%"$COLUMNS"s" " "
+		printf $C_CLEAR"\n"
 		read -s -n 1 SEL
-		tput civis
 		SEL=`ft_atoi "$SEL"`
-		while [ -z "${MENU[$SEL]}" -o "$(echo "${FUNCS[$SEL]}" | grep open)" != "" ]
+		while [ -z "${MENU[$SEL]}" -o "$(echo "${FUNCS[$SEL]}" | grep '^open ')" != "" ]
 		do
 			printf "\a"
-			if [ "$(echo "${FUNCS[$SEL]}" | grep open)" != "" ]
+			if [ "$(echo "${FUNCS[$SEL]}" | grep '^open ')" != "" ]
 			then
-				eval ${FUNCS[$SEL]}
+				if [ -f "$(echo "${FUNCS[$SEL]}" | sed 's/^open //')" -o "$(echo "${FUNCS[$SEL]}" | grep http)" != "" ]
+				then
+					eval ${FUNCS[$SEL]}
+				fi
 			fi
 			SEL=""
-			tput cnorm
 			read -s -n 1 SEL
-			tput civis
 			SEL=`ft_atoi "$SEL"`
 		done
 		printf "\n"
@@ -217,7 +227,7 @@ then
 	{
 		printf "\n"
 		display_hr
-		printf "\n\n\n\n"
+		printf "\n\n\n\n\033[0m"
 		tput cnorm
 		clear
 		exit

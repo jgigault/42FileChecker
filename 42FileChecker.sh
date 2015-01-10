@@ -34,70 +34,24 @@ OPT_NO_GNLMACRO=0
 i=1
 while (( i <= $# ))
 do
-	if [ "${!i}" == "--no-update" ]
-	then
-		OPT_NO_UPDATE=1
-	fi
-	if [ "${!i}" == "--no-color" ]
-	then
-		OPT_NO_COLOR=1
-	fi
-	if [ "${!i}" == "--no-timeout" ]
-	then
-		OPT_NO_TIMEOUT=1
-	fi
-	if [ "${!i}" == "--no-norminette" ]
-	then
-		OPT_NO_NORMINETTE=1
-	fi
-	if [ "${!i}" == "--no-auteur" ]
-	then
-		OPT_NO_AUTEUR=1
-	fi
-	if [ "${!i}" == "--no-moulitest" ]
-	then
-		OPT_NO_MOULITEST=1
-	fi
-	if [ "${!i}" == "--no-speedtest" ]
-	then
-		OPT_NO_SPEEDTEST=1
-	fi
-	if [ "${!i}" == "--no-leaks" ]
-	then
-		OPT_NO_LEAKS=1
-	fi
-	if [ "${!i}" == "--no-basictests" ]
-	then
-		OPT_NO_BASICTESTS=1
-	fi
-	if [ "${!i}" == "--no-makefile" ]
-	then
-		OPT_NO_MAKEFILE=1
-	fi
-	if [ "${!i}" == "--no-forbidden" ]
-	then
-		OPT_NO_FORBIDDEN=1
-	fi
-	if [ "${!i}" == "--no-staticdeclarations" ]
-	then
-		OPT_NO_STATICDECLARATIONS=1
-	fi
-	if [ "${!i}" == "--no-libftfilesexists" ]
-	then
-		OPT_NO_LIBFTFILESEXIST=1
-	fi
-	if [ "${!i}" == "--no-gnlmultiplefd" ]
-	then
-		OPT_NO_GNLMULTIPLEFD=1
-	fi
-	if [ "${!i}" == "--no-gnlonestatic" ]
-	then
-		OPT_NO_GNLONESTATIC=1
-	fi
-	if [ "${!i}" == "--no-gnlmacro" ]
-	then
-		OPT_NO_GNLMACRO=1
-	fi
+	case "${!i}" in
+		"--no-update") OPT_NO_UPDATE=1 ;;
+		"--no-color") OPT_NO_COLOR=1 ;;
+		"--no-timeout") OPT_NO_TIMEOUT=1 ;;
+		"--no-norminette") OPT_NO_NORMINETTE=1 ;;
+		"--no-auteur") OPT_NO_AUTEUR=1 ;;
+		"--no-moulitest") OPT_NO_MOULITEST=1 ;;
+		"--no-speedtest") OPT_NO_SPEEDTEST=1 ;;
+		"--no-leaks") OPT_NO_LEAKS=1 ;;
+		"--no-basictests") OPT_NO_BASICTESTS=1 ;;
+		"--no-makefile") OPT_NO_MAKEFILE=1 ;;
+		"--no-forbidden") OPT_NO_FORBIDDEN=1 ;;
+		"--no-staticdeclarations") OPT_NO_STATICDECLARATIONS=1 ;;
+		"--no-libftfilesexists") OPT_NO_LIBFTFILESEXIST=1 ;;
+		"--no-gnlmultiplefd") OPT_NO_GNLMULTIPLEFD=1 ;;
+		"--no-gnlonestatic") OPT_NO_GNLONESTATIC=1 ;;
+		"--no-gnlmacro") OPT_NO_GNLMACRO=1 ;;
+	esac
 	(( i += 1 ))
 done
 
@@ -118,13 +72,14 @@ function main
 {
 	tput civis
 	display_header
-	display_righttitle ""
+	printf "\n\n"
 	display_menu\
 		""\
 		check_libft "libft"\
 		check_gnl "get_next_line"\
 		check_ft_ls "ft_ls"\
 		check_ft_printf "ft_printf"\
+		"_"\
 		display_credits "CREDITS"\
 		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
 		exit_checker "EXIT"
