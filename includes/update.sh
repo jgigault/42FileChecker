@@ -103,7 +103,7 @@ function install_update
 {
 	local RES0
 	display_header
-	display_righttitle ""
+	printf "\n\n"
 	printf "  Updating 42FileChecker\n"
 	(git merge origin/master 2>&1 > .myret) &
 	display_spinner $!
@@ -113,10 +113,7 @@ function install_update
 	then
 		printf $C_BLUE"  Done.\n"$C_CLEAR
 		git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev"\n"}' > .myrev 2>/dev/null
-		sleep 0.1
-		display_hr
-		printf $C_WHITE"\n  Please restart the program with the following command line: "$C_CLEAR"\n  sh ./42FileChecker.sh\n\n"
-		tput cnorm
+		sleep 0.5
 		sh ./42FileChecker.sh
 	else
 		RES0=`git reset --hard origin/master 2>&1`
@@ -129,10 +126,7 @@ function install_update
 		else
 			printf $C_BLUE"  Done.\n"$C_CLEAR
 			git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev"\n"}' > .myrev 2>/dev/null
-			sleep 0.1
-			display_hr
-			printf $C_WHITE"\n  Please restart the program with the following command line: "$C_CLEAR"\n  sh ./42FileChecker.sh\n\n\n\n\n"
-			tput cnorm
+			sleep 0.5
 			sh ./42FileChecker.sh
 		fi
 	fi
@@ -165,7 +159,7 @@ function install_update_moulitest
 	if [ ! -d moulitest ]
 	then
 		display_header
-		display_righttitle ""
+		printf "\n\n"
 		printf "  Installing moulitest...\n"
 		(git clone https://github.com/yyang42/moulitest > .myret 2>&1) &
 		display_spinner $!
@@ -175,7 +169,6 @@ function install_update_moulitest
 		then
 			display_error "An error occured."
 			printf $C_RED"$(echo "$RES0" | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
-			tput cnorm
 			exit_checker
 		else
 			printf $C_BLUE"  Done.\n"$C_CLEAR
@@ -184,7 +177,7 @@ function install_update_moulitest
 		fi
 	else
 		display_header
-		display_righttitle ""
+		printf "\n\n"
 		cd moulitest
 		printf "  Updating moulitest...\n"
 		((git reset --hard origin/master > .myret 2>&1) && git merge origin/master > .myrest 2>&1) &
