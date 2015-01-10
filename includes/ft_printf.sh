@@ -48,7 +48,7 @@ function check_ft_printf_all
 
 function check_ft_printf_basictests
 {	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
-	local total errors fatal success i TTYPE TVAL TARGS FILEN RET1 RET2 RET0 TYPE
+	local total errors fatal success i TTYPE TVAL TARGS FILEN RET1 RET2 RET0 TYPE TVAL0
 	i=0
 	index=0
 	total=0
@@ -61,13 +61,14 @@ function check_ft_printf_basictests
 	touch $LOGFILENAME $LOGFILENAME"success"
 	check_create_tmp_dir
 	check_ft_printf_create_header
-	echo "FT_PRINTF TESTS:\n" >> $LOGFILENAME"success"
+	echo "SUCCESS TESTS:\n" >> $LOGFILENAME"success"
 	while [ "${CHK_FT_PRINTF_LIST[$i]}" != "" -a $fatal -eq 0 ]
 	do
 		(( index += 1 ))
 		TTYPE="${CHK_FT_PRINTF_LIST[$i]}"
 		(( i += 1 ))
-		TVAL="${CHK_FT_PRINTF_LIST[$i]}"
+		TVAL0="${CHK_FT_PRINTF_LIST[$i]}"
+		TVAL=`printf "%s" "${CHK_FT_PRINTF_LIST[$i]}" | sed 's/\\\\/\\\\\\\\/g'`
 		(( i += 1 ))
 		if [ "$TYPE" == "${TTYPE:0:1}" ]
 		then
@@ -77,7 +78,7 @@ function check_ft_printf_basictests
 			then
 				(( fatal += 1 ));
 			else
-				TARGS=`echo "${TTYPE:0:1}" "\"$TVAL\"" | sed 's/|/\" \"/g'`
+				TARGS=`echo "${TTYPE:0:1}" "\"$TVAL0\"" | sed 's/|/\" \"/g'`
 				if [ "${TTYPE:0:1}" == "d" -o "$TTYPE" == "0p" -o "${TTYPE:0:1}" == "x" ]
 				then
 					TARGSV=`echo "\"$TVAL" | sed 's/|/, /g' | sed 's/,/\",/'`
@@ -92,8 +93,6 @@ function check_ft_printf_basictests
 				then
 					if (( $errors == 0 ))
 					then
-						echo "see the entire list of tests by opening file:\n$RETURNPATH/$$LOGFILENAMEsuccess" >> $LOGFILENAME
-						echo "\n--------------\n" >> $LOGFILENAME
 						echo "FAILED TESTS:\n" >> $LOGFILENAME
 						echo "# TEST NUMBER (TYPE OF ARG)" >> $LOGFILENAME
 						echo "  INSTRUCTION();" >> $LOGFILENAME
@@ -112,14 +111,14 @@ function check_ft_printf_basictests
 						"x") TTYPEV="(int)" ;;
 					esac
 					printf "\n# %04d %s\n" "$index" "$TTYPEV" >> $LOGFILENAME
-					echo "  ft_printf($TARGSV);" >> $LOGFILENAME
+					printf "  ft_printf(%s);\n" "$TARGSV" >> $LOGFILENAME
 					RET0=`echo "$RET1" | cut -d"|" -f2`
 					printf "  1. (%5d) -->" "$RET0" >> $LOGFILENAME 2>&1
-					RET0=`echo "$RET1" | cut -d"|" -f1`
+					RET0=`echo "$RET1" | cut -d"|" -f1  | sed 's/\\\\/\\\\\\\\/g'`
 					printf "%s<--\n" "$RET0" >> $LOGFILENAME
 					RET0=`echo "$RET2" | cut -d"|" -f2`
 					printf "  2. (%5d) -->" "$RET0" >> $LOGFILENAME 2>&1
-					RET0=`echo "$RET2" | cut -d"|" -f1`
+					RET0=`echo "$RET2" | cut -d"|" -f1  | sed 's/\\\\/\\\\\\\\/g'`
 					printf "%s<--\n" "$RET0" >> $LOGFILENAME
 					printf "%4d. FAIL ft_printf(%s);\n" "$index" "$TARGSV" >> $LOGFILENAME"success"
 				else
@@ -137,6 +136,8 @@ function check_ft_printf_basictests
 			cat $LOGFILENAME"success" > $LOGFILENAME
 			printf $C_GREEN"  All tests passed ($total tests)"$C_CLEAR
 		else
+			echo "\n--------------\n" >> $LOGFILENAME
+			cat $LOGFILENAME"success" >> $LOGFILENAME
 			printf $C_RED"  $errors failed test(s) out of $total tests"$C_CLEAR
 		fi
 	else
@@ -154,8 +155,8 @@ function check_ft_printf_basictests_gcc
 	then
 		if [ -d "$MYPATH/libft" ]
 		then
-			RET0=`make re -C "$MYPATH/libft" 2>&1 1>/dev/null`
-			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
+#			RET0=`make re -C "$MYPATH/libft" 2>&1 1>/dev/null`
+#			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
 			RET0=`make re -C "$MYPATH" 2>&1 1>/dev/null`
 			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
 			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -L"$MYPATH/libft" -lft -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
@@ -253,7 +254,7 @@ function check_ft_printf_moulitest
         then
             printf $C_RED"  Fatal error: moulitest cannot compile (see details)"$C_CLEAR
         else
-            RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed's/\$$//' | grep "END OF UNIT TESTS"`
+            RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "END OF UNIT TESTS"`
             if [ "$RET0" == "" ]
             then
                 printf $C_RED"  Fatal error: moulitest has aborted (see details)"$C_CLEAR

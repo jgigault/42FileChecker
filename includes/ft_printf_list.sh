@@ -7,7 +7,9 @@ then
 
 	# easy
 	CHK_FT_PRINTF_LIST+=("0" "")
+	CHK_FT_PRINTF_LIST+=("0" "\n")
 	CHK_FT_PRINTF_LIST+=("0" "test")
+	CHK_FT_PRINTF_LIST+=("0" "test\n")
 	CHK_FT_PRINTF_LIST+=("0" "1234")
 
 	# wrong flag
@@ -62,14 +64,22 @@ then
 	CHK_FT_PRINTF_LIST+=("x" "%llx|9223372036854775807")
 	CHK_FT_PRINTF_LIST+=("x" "%llx|9223372036854775808")
 
+	CHK_FT_PRINTF_LIST+=("x" "%010x|542")
+	CHK_FT_PRINTF_LIST+=("x" "%-15x|542")
+	CHK_FT_PRINTF_LIST+=("x" "%2x|542")
+	CHK_FT_PRINTF_LIST+=("x" "%.2x|5427")
+	CHK_FT_PRINTF_LIST+=("x" "%5.2x|5427")
+
 
 
 	# string
 	CHK_FT_PRINTF_LIST+=("s" "%s|this is a string")
 	CHK_FT_PRINTF_LIST+=("s" "this is a %s|string")
 	CHK_FT_PRINTF_LIST+=("s" "%s is a string|this")
+	CHK_FT_PRINTF_LIST+=("s" "this is a Line Feed %s|\n")
 
 	CHK_FT_PRINTF_LIST+=("s" "%10s is a string|this")
+	CHK_FT_PRINTF_LIST+=("s" "%010s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%.2s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%5.2s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%10s is a string|")
@@ -77,6 +87,7 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%5.2s is a string|")
 
 	CHK_FT_PRINTF_LIST+=("s" "%-10s is a string|this")
+	CHK_FT_PRINTF_LIST+=("s" "%-010s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%-.2s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%-5.2s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%-10s is a string|")
@@ -90,6 +101,8 @@ then
 	CHK_FT_PRINTF_LIST+=("d" "% v|42")
 
 	CHK_FT_PRINTF_LIST+=("d" "%d|1")
+	CHK_FT_PRINTF_LIST+=("d" "the %d|1")
+	CHK_FT_PRINTF_LIST+=("d" "%d is one|1")
 	CHK_FT_PRINTF_LIST+=("d" "%d|-1")
 	CHK_FT_PRINTF_LIST+=("d" "%d|4242")
 	CHK_FT_PRINTF_LIST+=("d" "%d|-4242")
