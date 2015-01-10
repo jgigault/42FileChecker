@@ -60,17 +60,17 @@ function update
 				RET0=`git show-ref | grep -v remotes | cut -d" " -f1`
 				if [ "$RET0" != "" ]
 				then
-					RET1=`git log origin/master --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  "$0}'`
+					RET1=`git log origin/master --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  -> "$0}'`
 					if [ "$RET1" != "" ]
 					then
-						printf "\n  Last commits:\n$RET1\n"
+						printf "\n\n  Last commits:\n$RET1\n"
 					fi
 				fi
 			else
 				display_center "Your copy of '42FileChecker' has been modified locally."
 				display_center "Skip update if you don't want to erase your changes."
 			fi
-			printf "\n\n  Choose UPDATE 42FILECHECKER (1) for installing the last version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
+			printf "\n  Choose UPDATE 42FILECHECKER (1) for installing the last version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
 			display_menu\
               	""\
                 install_update "UPDATE 42FILECHECKER"\
