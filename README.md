@@ -10,7 +10,7 @@ The script is designed as a reminder:
 * macro and static variables declarations
 * makefile rules
 
-Basic tests with compilation are also available for get_next_line and complete unit tests are handled by the "moulitest" (please refer to the dependencies bellow).
+Basic tests with compilation are also available for get_next_line and ft_printf (beta), whilst complete unit tests are handled by the "moulitest" (https://github.com/yyang42/moulitest) which is automatically installed and updated.
 
 ## install & launch
 	git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
@@ -28,5 +28,5 @@ Basic tests with compilation are also available for get_next_line and complete u
 	--no-timeout  // Disable time-out child process
 
 ## dependencies
-* The script automatically download, configure and launch for you the latest version of the "moulitest" project (Yan Yang): https://github.com/yyang42/moulitest
+* The script may automatically install and update the latest version of the "moulitest" project: https://github.com/yyang42/moulitest
 * The "norminette" program from 42 school is required
