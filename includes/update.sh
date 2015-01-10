@@ -47,11 +47,11 @@ function update
 			exit_checker
 			printf "UPTODATE2" > .myret
 		else
-			display_header
-			printf "\n\n"
 			LOCALHASH=`git show-ref | grep -v remotes | cut -d" " -f1`
 			REMOTEHASH=`git ls-remote 2>/dev/null | grep HEAD | cut -f1`
 			VERSION=$(git shortlog origin/master -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
+			display_header
+			printf "\n\n"
 			printf $C_RED""
 			if [ "$REMOTEHASH" != "$LOCALHASH" ]
 			then
@@ -63,14 +63,14 @@ function update
 					RET1=`git log origin/master --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  -> "$0}'`
 					if [ "$RET1" != "" ]
 					then
-						printf "\n\n  Last commits:\n$RET1\n"
+						printf "\n\n  Last commits:\n$RET1"
 					fi
 				fi
 			else
 				display_center "Your copy of '42FileChecker' has been modified locally."
 				display_center "Skip update if you don't want to erase your changes."
 			fi
-			printf "\n  Choose UPDATE 42FILECHECKER (1) for installing the last version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
+			printf "\n\n  Choose UPDATE 42FILECHECKER (1) for installing the last version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
 			display_menu\
               	""\
                 install_update "UPDATE 42FILECHECKER"\
