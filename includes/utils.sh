@@ -249,9 +249,6 @@ then
 			"ft_ls")
 				echo "FT_LS_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
 				;;
-			"ft_printf")
-				echo "FT_PRINTF_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
-				;;
 		esac
 	}
 

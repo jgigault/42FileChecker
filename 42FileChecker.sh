@@ -60,6 +60,7 @@ source includes/libft.sh
 source includes/get_next_line.sh
 source includes/ft_ls.sh
 source includes/ft_printf.sh
+source includes/fdf.sh
 source includes/transition.sh
 source includes/update.sh
 source includes/credits.sh
@@ -79,6 +80,7 @@ function main
 		check_gnl "get_next_line"\
 		check_ft_ls "ft_ls"\
 		check_ft_printf "ft_printf"\
+		check_fdf "fdf"\
 		"_"\
 		display_credits "CREDITS"\
 		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
