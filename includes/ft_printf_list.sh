@@ -16,9 +16,15 @@ then
 	CHK_FT_PRINTF_LIST+=("0" "%")
 	CHK_FT_PRINTF_LIST+=("0" "% ")
 	CHK_FT_PRINTF_LIST+=("0" "% h")
+	CHK_FT_PRINTF_LIST+=("0" "%Z")
+	CHK_FT_PRINTF_LIST+=("0" "% hZ")
 
 	# %
 	CHK_FT_PRINTF_LIST+=("0" "%%")
+	CHK_FT_PRINTF_LIST+=("0" "%5%")
+	CHK_FT_PRINTF_LIST+=("0" "%-5%")
+	CHK_FT_PRINTF_LIST+=("0" "%05%")
+	CHK_FT_PRINTF_LIST+=("0" "%-05%")
 
 	# hexadecimal
 	#CHK_FT_PRINTF_LIST+=("0p" "%p|(void *)(str = \"I am a void\")")
@@ -26,7 +32,7 @@ then
 
 
 
-	CHK_FT_PRINTF_LIST+=("s" "% v|test")
+	CHK_FT_PRINTF_LIST+=("s" "% Z|test")
 	CHK_FT_PRINTF_LIST+=("s" "%%|test")
 	CHK_FT_PRINTF_LIST+=("s" "%   %|test")
 	CHK_FT_PRINTF_LIST+=("s" "%000   %|test")
