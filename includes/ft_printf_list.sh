@@ -15,7 +15,7 @@ then
 	# wrong flag
 	CHK_FT_PRINTF_LIST+=("0" "%")
 	CHK_FT_PRINTF_LIST+=("0" "% ")
-	CHK_FT_PRINTF_LIST+=("0" "% v")
+	CHK_FT_PRINTF_LIST+=("0" "% h")
 
 	# %
 	CHK_FT_PRINTF_LIST+=("0" "%%")
