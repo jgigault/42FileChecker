@@ -38,7 +38,6 @@ then
 					do
 						RET0=`echo "cat \"$i\" | awk '\\$0 ~ /[\(= \t]${MYFUNCS[$item]}[ \t]*\(/ {print}'"`
 						RET0=`eval "$RET0"`
-						echo $RET0"";
 						if [ "$RET0" != "" ]
 						then
 							exists=1
