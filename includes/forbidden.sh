@@ -6,7 +6,7 @@ then
 	function check_forbidden_func
 	{
 		local -a MYFUNCS
-		local exists total
+		local exists total i RET0
 		LOG_FILENAME=.myforbiddenfunc
 		OLD_IFS=$IFS
 		IFS=''
@@ -18,7 +18,7 @@ then
 		touch "$LOG_FILENAME"
 		if [ -f "$2" ]
 		then
-			RET0=`nm -m "$2" | grep "(from libSystem)" | awk '{OFS=""} $0 ~ / _/ {gsub(/^[a-zA-Z0-9\(\)_, \[\]]* _[_]*/, ""); gsub(/_chk[ A-Za-z0-9\(\)]*$/, ""); print $1}' | tr "\n" "\ "`
+			RET0=`nm -m -u "$2" | grep '(from libSystem)' | awk '{OFS=""} $0 ~ / _/ {gsub(/^[a-zA-Z0-9\(\)_, \[\]]* _[_]*/, ""); gsub(/_chk[ A-Za-z0-9\(\)]*$/, ""); print $1}' | tr "\n" "\ "`
 			RET0=`printf "MYFUNCS=($RET0)"`
 			eval $RET0
 			total=0
@@ -34,12 +34,25 @@ then
 				done
 				if [ "$exists" == "0" ]
 				then
-					(( total += 1 ))
-					if (( total == 1 ))
+					for i in $(find "$MYPATH" | grep -E \\.\[c\]$)
+					do
+						RET0=`echo "cat \"$i\" | awk '\\$0 ~ /[\(= \t]${MYFUNCS[$item]}[ \t]*\(/ {print}'"`
+						RET0=`eval "$RET0"`
+						echo $RET0"";
+						if [ "$RET0" != "" ]
+						then
+							exists=1
+						fi
+					done
+					if [ "$exists" == "1" ]
 					then
-						echo "You should justify the use of the following functions:" > $LOG_FILENAME
+						(( total += 1 ))
+						if (( total == 1 ))
+						then
+							echo "You should justify the use of the following functions:" > $LOG_FILENAME
+						fi
+						echo "-> ${MYFUNCS[$item]}" >> $LOG_FILENAME
 					fi
-					echo "-> ${MYFUNCS[$item]}" >> $LOG_FILENAME
 				fi
 			done
 			if (( total == 0 ))
