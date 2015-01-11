@@ -21,19 +21,19 @@ int				main(int argc, char **argv)
 	ret = -999;
 	switch (argc)
 	{
-	case 3 :
+	case 4 :
 		ret = ft_printf(argv[2], argv[3]);
 		break;
-	case 4 :
+	case 5 :
 		ret = ft_printf(argv[2], argv[3], argv[4]);
 		break;
-	case 5 :
+	case 6 :
 		ret = ft_printf(argv[2], argv[3], argv[4], argv[5]);
 		break;
-	case 6 :
+	case 7 :
 		ret = ft_printf(argv[2], argv[3], argv[4], argv[5], argv[6]);
 		break;
-	case 7 :
+	case 8 :
 		ret = ft_printf(argv[2], argv[3], argv[4], argv[5], argv[6], argv[7]);
 		break;
 	}

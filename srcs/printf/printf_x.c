@@ -20,19 +20,19 @@ int				main(int argc, char **argv)
 	ret = -999;
 	switch (argc)
 	{
-	case 3 :
+	case 4 :
 		ret = printf(argv[2], atoll(argv[3]));
 		break;
-	case 4 :
+	case 5 :
 		ret = printf(argv[2], atoll(argv[3]), atoll(argv[4]));
 		break;
-	case 5 :
+	case 6 :
 		ret = printf(argv[2], atoll(argv[3]), atoll(argv[4]), atoll(argv[5]));
 		break;
-	case 6 :
+	case 7 :
 		ret = printf(argv[2], atoll(argv[3]), atoll(argv[4]), atoll(argv[5]), atoll(argv[6]));
 		break;
-	case 7 :
+	case 8 :
 		ret = printf(argv[2], atoll(argv[3]), atoll(argv[4]), atoll(argv[5]), atoll(argv[6]), atoll(argv[7]));
 		break;
 	}
