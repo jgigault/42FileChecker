@@ -60,8 +60,8 @@ function check_gnl_forbidden_func
 		make -C "$GNL_LIBFT" >/dev/null 2>&1
 		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
 	fi
-	echo "#define NULL ((void *)0)\n#include \"../srcs/gnl/gnl.h\"\nint main(void) { int ret; ret = get_next_line(0, NULL); return (1); }" > $RETURNPATH/tmp/$FILEN.c
-	rm -f "$FILEN"
+	echo "#define NULL ((void *)0)\n#include \"gnl.h\"\nint main(void) { int ret; ret = get_next_line(0, NULL); return (1); }" > ./tmp/$FILEN.c
+	rm -f "./tmp/$FILEN"
 	RET0=`gcc $GNLC $EXTRA0 ./tmp/$FILEN.c -o ./tmp/$FILEN 2>&1`
 	check_forbidden_func CHK_GNL_AUTHORIZED_FUNCS "./tmp/$FILEN"
 	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
@@ -152,7 +152,7 @@ function check_gnl_multiple_fd
 	rm -f .mymultiplefd
 	touch .mymultiplefd
 	rm -f "./tmp/gnl11"
-	RET0=`gcc -Wall -Werror -Wextra $GNLC $EXTRA0 ./srcs/gnl/gnl11.c -o ./tmp/gnl11 1>.mymultiplefd 2>&1`
+	RET0=`gcc -Wall -Werror -Wextra -I ./tmp $GNLC $EXTRA0 ./srcs/gnl/gnl11.c -o ./tmp/gnl11 1>.mymultiplefd 2>&1`
 	if [ -f "./tmp/gnl11" ]
 	then
 		RET0=`./tmp/gnl11 2>&1`
