@@ -73,25 +73,25 @@ then
 								printf $C_GREEN"  Makefile seems to work perfectly"$C_CLEAR
 							else
 								echo "Running 'make all' twice in a row should return the message \"make: Nothing to be done for \`all'\".\n" >> $LLOG
-								printf $C_RED"  'all' rule should not have been performed (see details)"$C_CLEAR
+								printf $C_RED"  'all' rule should not have been performed (see more info)"$C_CLEAR
 							fi
 						else
 							echo "The following file is missing:" >> $LLOG
 							echo "-> $LBINARY" >> $LLOG
-							printf $C_RED"  'all' rule has failed (see details)"$C_CLEAR
+							printf $C_RED"  'all' rule has failed (see more info)"$C_CLEAR
 						fi
 					else
 						echo "The following file should have been cleaned:" >> $LLOG
 						echo "$RET0" >> $LLOG
-						printf $C_RED"  'fclean' rule has failed (see details)"$C_CLEAR
+						printf $C_RED"  'fclean' rule has failed (see more info)"$C_CLEAR
 					fi
 				else
 					echo "The following files should have been cleaned:" >> $LLOG
 					echo "$RET0" >> $LLOG
-					printf $C_RED"  'clean' rule has failed (see details)"$C_CLEAR
+					printf $C_RED"  'clean' rule has failed (see more info)"$C_CLEAR
 				fi
 			else
-				printf $C_RED"  $errors rule(s) are missing (see details)"$C_CLEAR
+				printf $C_RED"  $errors rule(s) are missing (see more info)"$C_CLEAR
 			fi
 		else
 			printf $C_RED"  Makefile not found"$C_CLEAR
