@@ -18,6 +18,7 @@ int				main(int argc, char **argv)
 {
 	int		ret;
 
+	ret = -999;
 	if (argv[1][0] == 'h')
 	{
 		ret = ft_printf(argv[2], atoi(argv[3]));
@@ -28,7 +29,16 @@ int				main(int argc, char **argv)
 	}
 	else
 	{
-		ret = ft_printf(argv[2], atol(argv[3]));
+		if (argc == 3)
+			ret = ft_printf(argv[2], atol(argv[3]));
+		else if (argc == 4)
+			ret = ft_printf(argv[2], atol(argv[3]), atol(argv[4]));
+		else if (argc == 5)
+			ret = ft_printf(argv[2], atol(argv[3]), atol(argv[4]), atol(argv[5]));
+		else if (argc == 6)
+			ret = ft_printf(argv[2], atol(argv[3]), atol(argv[4]), atol(argv[5]), atol(argv[6]));
+		else if (argc == 7)
+			ret = ft_printf(argv[2], atol(argv[3]), atol(argv[4]), atol(argv[5]), atol(argv[6]), atol(argv[7]));
 	}
 	printf("|%d", ret);
 	return (0);

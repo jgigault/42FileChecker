@@ -153,22 +153,15 @@ function check_ft_printf_basictests_gcc
 	LOGFILENAME="$2"
 	if [ ! -f "./tmp/ft_$FILEN" -o ! -f "./tmp/$FILEN" ]
 	then
-		if [ -d "$MYPATH/libft" ]
+		if [ -f "$MYPATH/libftprintf.a" ]
 		then
-#			RET0=`make re -C "$MYPATH/libft" 2>&1 1>/dev/null`
-#			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
-			RET0=`make re -C "$MYPATH" 2>&1 1>/dev/null`
+			RET0=`gcc -Wall -Werror -Wextra "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
 			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
-			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -L"$MYPATH/libft" -lft -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
+			RET0=`gcc "./srcs/printf/$FILEN.c" -o "./tmp/$FILEN" 2>&1 1>/dev/null`
 			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
 		else
-			RET0=`make re -C "$MYPATH" 2>&1 1>/dev/null`
-			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
-			RET0=`gcc "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
-			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
+			echo "$MYPATH/libftprintf.a was not found" > $LOGFILENAME; printf "error"; return;
 		fi
-		RET0=`gcc "./srcs/printf/$FILEN.c" -o "./tmp/$FILEN" 2>&1 1>/dev/null`
-		if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
 	fi
 	return 1
 }
@@ -200,18 +193,15 @@ function check_ft_printf_forbidden_func
 		echo "#include \"$FTPRINTFH\"\nint main(void) {" > $F
 		echo "ft_printf(\"\");" >> $F
 		echo "return (1); }" >> $F
-		cd "$RETURNPATH"/tmp
 		make re -C "$MYPATH" >/dev/null
-		rm -f "$FILEN"
-		if [ -d "$MYPATH/libft" ]
+		rm -f "$RETURNPATH/tmp/$FILEN"
+		if [ -f "$MYPATH/libftprintf.a" ]
 		then
-			make re -C "$MYPATH/libft" >/dev/null
-			RET0=`gcc "$F" -L"$MYPATH" -lftprintf -L"$MYPATH/libft" -lft -o "$FILEN"`
+			RET0=`gcc "$F" -L"$MYPATH" -lftprintf -o "$RETURNPATH/tmp/$FILEN"`
+			check_forbidden_func CHK_FT_PRINTF_AUTHORIZED_FUNCS "./tmp/$FILEN"
 		else
-			RET0=`gcc "$F" -L"$MYPATH" -lftprintf -o "$FILEN"`
+			printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
 		fi
-		cd "$RETURNPATH"
-		check_forbidden_func CHK_FT_PRINTF_AUTHORIZED_FUNCS "./tmp/$FILEN"
 	else
 		printf $C_RED"  Makefile not found"$C_CLEAR
 	fi

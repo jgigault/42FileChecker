@@ -94,6 +94,10 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%-.2s is a string|")
 	CHK_FT_PRINTF_LIST+=("s" "%-5.2s is a string|")
 
+	CHK_FT_PRINTF_LIST+=("s" "%s|this|is")
+	CHK_FT_PRINTF_LIST+=("s" "%s %s|this|is|a")
+	CHK_FT_PRINTF_LIST+=("s" "%s %s %s|this|is|a|multi")
+	CHK_FT_PRINTF_LIST+=("s" "%s %s %s %s gg!|this|is|a|multi|string")
 
 
 
@@ -174,6 +178,10 @@ then
 	CHK_FT_PRINTF_LIST+=("dl" "%ld|2147483648")
 	CHK_FT_PRINTF_LIST+=("dl" "%ld|–2147483649")
 
+	CHK_FT_PRINTF_LIST+=("d" "%d|1")
+	CHK_FT_PRINTF_LIST+=("d" "%d %d|1|-2")
+	CHK_FT_PRINTF_LIST+=("d" "%d %d %d|1|-2|33")
+	CHK_FT_PRINTF_LIST+=("d" "%d %d %d %d gg!|1|-2|33|42")
 
 
 
