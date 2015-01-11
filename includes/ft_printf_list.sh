@@ -25,6 +25,7 @@ then
 	CHK_FT_PRINTF_LIST+=("0" "%-5%")
 	CHK_FT_PRINTF_LIST+=("0" "%05%")
 	CHK_FT_PRINTF_LIST+=("0" "%-05%")
+	CHK_FT_PRINTF_LIST+=("0" "% hZ%")
 
 	# hexadecimal
 	#CHK_FT_PRINTF_LIST+=("0p" "%p|(void *)(str = \"I am a void\")")
@@ -100,15 +101,15 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%-.2s is a string|")
 	CHK_FT_PRINTF_LIST+=("s" "%-5.2s is a string|")
 
-	CHK_FT_PRINTF_LIST+=("s" "%s|this|is")
-	CHK_FT_PRINTF_LIST+=("s" "%s %s|this|is|a")
-	CHK_FT_PRINTF_LIST+=("s" "%s %s %s|this|is|a|multi")
-	CHK_FT_PRINTF_LIST+=("s" "%s %s %s %s gg!|this|is|a|multi|string")
+	CHK_FT_PRINTF_LIST+=("s" "%s %s|this|is")
+	CHK_FT_PRINTF_LIST+=("s" "%s %s %s|this|is|a")
+	CHK_FT_PRINTF_LIST+=("s" "%s %s %s %s|this|is|a|multi")
+	CHK_FT_PRINTF_LIST+=("s" "%s %s %s %s string. gg!|this|is|a|multi|string")
 
 
 
 	# integer
-	CHK_FT_PRINTF_LIST+=("d" "% v|42")
+	CHK_FT_PRINTF_LIST+=("d" "% Z|42")
 
 	CHK_FT_PRINTF_LIST+=("d" "%d|1")
 	CHK_FT_PRINTF_LIST+=("d" "the %d|1")
@@ -175,6 +176,12 @@ then
 	CHK_FT_PRINTF_LIST+=("dh" "%hd|32768")
 	CHK_FT_PRINTF_LIST+=("dh" "%hd|−32769")
 
+	# signed char
+	CHK_FT_PRINTF_LIST+=("dH" "%hhd|127")
+	CHK_FT_PRINTF_LIST+=("dH" "%hhd|128")
+	CHK_FT_PRINTF_LIST+=("dH" "%hhd|-128")
+	CHK_FT_PRINTF_LIST+=("dH" "%hhd|-129")
+
 	# integer long
 	CHK_FT_PRINTF_LIST+=("dl" "%ld|0")
 	CHK_FT_PRINTF_LIST+=("dl" "%ld|42")
@@ -187,7 +194,8 @@ then
 	CHK_FT_PRINTF_LIST+=("d" "%d|1")
 	CHK_FT_PRINTF_LIST+=("d" "%d %d|1|-2")
 	CHK_FT_PRINTF_LIST+=("d" "%d %d %d|1|-2|33")
-	CHK_FT_PRINTF_LIST+=("d" "%d %d %d %d gg!|1|-2|33|42")
+	CHK_FT_PRINTF_LIST+=("d" "%d %d %d %d|1|-2|33|42")
+	CHK_FT_PRINTF_LIST+=("d" "%d %d %d %d gg!|1|-2|33|42|0")
 
 
 
