@@ -104,11 +104,21 @@ function check_ft_printf_basictests
 					case "$TTYPE" in
 						"s") TTYPEV="(char *)" ;;
 						"d") TTYPEV="(int)" ;;
+						"dj") TTYPEV="(intmax_t)" ;;
+						"dz") TTYPEV="(ssize_t)" ;;
 						"dh") TTYPEV="(short)" ;;
+						"dH") TTYPEV="(signed char)" ;;
 						"dl") TTYPEV="(long)" ;;
+						"dL") TTYPEV="(long long)" ;;
 						"0") TTYPEV="" ;;
 						"0p") TTYPEV="(void *)" ;;
 						"x") TTYPEV="(int)" ;;
+						"xh") TTYPEV="(unsigned short)" ;;
+						"xH") TTYPEV="(unsigned char)" ;;
+						"xl") TTYPEV="(unsigned long)" ;;
+						"xL") TTYPEV="(unsigned long long)" ;;
+						"xj") TTYPEV="(uintmax_t)" ;;
+						"xz") TTYPEV="(size_t)" ;;
 					esac
 					printf "\n# %04d %s\n" "$index" "$TTYPEV" >> $LOGFILENAME
 					printf "  ft_printf(%s);\n" "$TARGSV" >> $LOGFILENAME

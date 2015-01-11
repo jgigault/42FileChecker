@@ -168,9 +168,6 @@ then
 	CHK_FT_PRINTF_LIST+=("d" "%-0+5d|-42")
 
 	# integer short
-	CHK_FT_PRINTF_LIST+=("dh" "%hd|0")
-	CHK_FT_PRINTF_LIST+=("dh" "%hd|42")
-	CHK_FT_PRINTF_LIST+=("dh" "%hd|-42")
 	CHK_FT_PRINTF_LIST+=("dh" "%hd|32767")
 	CHK_FT_PRINTF_LIST+=("dh" "%hd|−32768")
 	CHK_FT_PRINTF_LIST+=("dh" "%hd|32768")
@@ -183,13 +180,25 @@ then
 	CHK_FT_PRINTF_LIST+=("dH" "%hhd|-129")
 
 	# integer long
-	CHK_FT_PRINTF_LIST+=("dl" "%ld|0")
-	CHK_FT_PRINTF_LIST+=("dl" "%ld|42")
-	CHK_FT_PRINTF_LIST+=("dl" "%ld|-42")
 	CHK_FT_PRINTF_LIST+=("dl" "%ld|2147483647")
 	CHK_FT_PRINTF_LIST+=("dl" "%ld|–2147483648")
 	CHK_FT_PRINTF_LIST+=("dl" "%ld|2147483648")
 	CHK_FT_PRINTF_LIST+=("dl" "%ld|–2147483649")
+
+	# integer long long
+	CHK_FT_PRINTF_LIST+=("dL" "%lld|9223372036854775807")
+	CHK_FT_PRINTF_LIST+=("dL" "%lld|-9223372036854775808")
+
+	# interger intmax_t
+	CHK_FT_PRINTF_LIST+=("dj" "%jd|9223372036854775807")
+	CHK_FT_PRINTF_LIST+=("dj" "%jd|–9223372036854775808")
+
+	# interger size_t
+	CHK_FT_PRINTF_LIST+=("dz" "%zd|4294967295")
+	CHK_FT_PRINTF_LIST+=("dz" "%zd|4294967296")
+	CHK_FT_PRINTF_LIST+=("dz" "%zd|–0")
+	CHK_FT_PRINTF_LIST+=("dz" "%zd|–1")
+
 
 	CHK_FT_PRINTF_LIST+=("d" "%d|1")
 	CHK_FT_PRINTF_LIST+=("d" "%d %d|1|-2")
@@ -217,13 +226,6 @@ then
 	# extra !!
 	# integer long long ??
 	# m == L
-	#CHK_FT_PRINTF_LIST+=("m" "%Ld|0")
-	#CHK_FT_PRINTF_LIST+=("m" "%Ld|42")
-	#CHK_FT_PRINTF_LIST+=("m" "%Ld|-42")
-	#CHK_FT_PRINTF_LIST+=("m" "%Ld|9223372036854775807")
-	#CHK_FT_PRINTF_LIST+=("m" "%Ld|–9223372036854775808")
-	#CHK_FT_PRINTF_LIST+=("m" "%Ld|9223372036854775808")
-	#CHK_FT_PRINTF_LIST+=("m" "%Ld|–9223372036854775809")
 
 
 fi;
