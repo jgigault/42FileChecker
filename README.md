@@ -17,10 +17,94 @@ Basic tests with compilation are also available for get_next_line and ft_printf 
 	cd ~/42FileChecker && sh ./42FileChecker.sh
 
 ## supported projects
-* libft
-* get_next_line
-* ft_ls
-* ft_printf
+<table width="100%">
+<thead>
+<tr>
+<td width="30%" height="60px"></td>
+<td width="14%" align="center" cellpadding="0">
+<strong>libft</strong>
+</td>
+<td width="14%" align="center" cellpadding="0">
+<strong>gnl</strong>
+</td>
+<td width="14%" align="center" cellpadding="0">
+<strong size="5">ft_ls</strong></ins>
+</td>
+<td width="14%" align="center" cellpadding="0">
+<strong>ft_printf</strong>
+</td>
+<td width="14%" align="center" cellpadding="0">
+<strong>fdf</strong>
+</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top" height="60px">auteur</td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+</tr>
+<tr>
+<td valign="top" height="60px">norminette</td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+</tr>
+<tr>
+<td valign="top" height="60px">makefile</td>
+<td></td>
+<td></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+</tr>
+<tr>
+<td valign="top" height="60px">forbidden functions</td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+</tr>
+<tr>
+<td valign="top" height="60px">leaks</td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"></td>
+</tr>
+<tr>
+<td valign="top" height="60px">speed test</td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"></td>
+</tr>
+<tr>
+<td valign="top" height="60px">tests with compilation</td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
+</tr>
+<tr>
+<td valign="top" height="60px">moulitest</td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
+</tr>
+</tbody>
+</table>
 
 ## options
 	--no-update   // Do not check for updates at launch
