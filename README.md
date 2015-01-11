@@ -17,6 +17,7 @@ Basic tests with compilation are also available for get_next_line and ft_printf 
 	cd ~/42FileChecker && sh ./42FileChecker.sh
 
 ## supported projects
+
 <table width="100%">
 <thead>
 <tr>
