@@ -6,7 +6,7 @@ then
 
 declare -a CHK_GNL='( "check_libft_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_gnl_macro" "BUFF_SIZE macro" "check_gnl_bonus" "bonus: static var" "check_gnl_forbidden_func" "forbidden functions" "check_gnl_basics" "basic tests" "check_gnl_multiple_fd" "bonus: multiple file descriptor" "check_gnl_leaks" "leaks" "check_gnl_moulitest" "moulitest (yyang@student.42.fr)" )'
 
-declare -a CHK_GNL_BASICS='("gnl1_1" "1 line 8 chars with Line Feed" "" "gnl1_2" "2 lines 8 chars with Line Feed" "" "gnl1_3" "4 lines 8 chars with Line Feed" "" "gnl2_1" "STDIN: 1 line 8 chars with Line Feed" "cat gnl1_1.txt | SPEC0" "gnl2_2" "STDIN: 2 lines 8 chars with Line Feed" "cat gnl1_2.txt | SPEC0" "gnl2_3" "STDIN: 4 lines 8 chars with Line Feed" "cat gnl1_3.txt | SPEC0" "gnl3_1" "1 line 16 chars with Line Feed" "" "gnl3_2" "2 lines 16 chars with Line Feed" "" "gnl3_3" "4 lines 16 chars with Line Feed" "" "gnl4_1" "STDIN: 1 line 16 chars with Line Feed" "cat gnl3_1.txt | SPEC0" "gnl4_2" "STDIN: 2 lines 16 chars with Line Feed" "cat gnl3_2.txt | SPEC0" "gnl4_3" "STDIN: 4 lines 16 chars with Line Feed" "cat gnl3_3.txt | SPEC0" "gnl5_1" "1 line 4 chars with Line Feed" "" "gnl5_2" "2 lines 4 chars with Line Feed" "" "gnl5_3" "4 lines 4 chars with Line Feed" "" "gnl6_1" "STDIN: 1 line 4 chars with Line Feed" "cat gnl5_1.txt | SPEC0" "gnl6_2" "STDIN: 2 lines 4 chars with Line Feed" "cat gnl5_2.txt | SPEC0" "gnl6_3" "STDIN: 4 lines 4 chars with Line Feed" "cat gnl5_3.txt | SPEC0" "gnl7_1" "1 lines 8 chars without Line Feed" "" "gnl7_2" "2 lines 8 chars without Line Feed" "" "gnl7_3" "4 lines 8 chars without Line Feed" "" "gnl8_1" "STDIN: 1 line 8 chars without Line Feed" "cat gnl7_1.txt | SPEC0" "gnl8_2" "STDIN: 2 lines 8 chars without Line Feed" "cat gnl7_2.txt | SPEC0" "gnl8_3" "STDIN: 4 lines 8 chars without Line Feed" "cat gnl7_3.txt | SPEC0" "gnl9" "Bad file descriptor" "")'
+declare -a CHK_GNL_BASICS='("gnl1_1" "1 line 8 chars with Line Feed" "" "gnl1_2" "2 lines 8 chars with Line Feed" "" "gnl1_3" "4 lines 8 chars with Line Feed" "" "gnl2_1" "STDIN: 1 line 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_1.txt | SPEC0" "gnl2_2" "STDIN: 2 lines 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_2.txt | SPEC0" "gnl2_3" "STDIN: 4 lines 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_3.txt | SPEC0" "gnl3_1" "1 line 16 chars with Line Feed" "" "gnl3_2" "2 lines 16 chars with Line Feed" "" "gnl3_3" "4 lines 16 chars with Line Feed" "" "gnl4_1" "STDIN: 1 line 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_1.txt | SPEC0" "gnl4_2" "STDIN: 2 lines 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_2.txt | SPEC0" "gnl4_3" "STDIN: 4 lines 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_3.txt | SPEC0" "gnl5_1" "1 line 4 chars with Line Feed" "" "gnl5_2" "2 lines 4 chars with Line Feed" "" "gnl5_3" "4 lines 4 chars with Line Feed" "" "gnl6_1" "STDIN: 1 line 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_1.txt | SPEC0" "gnl6_2" "STDIN: 2 lines 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_2.txt | SPEC0" "gnl6_3" "STDIN: 4 lines 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_3.txt | SPEC0" "gnl7_1" "1 lines 8 chars without Line Feed" "" "gnl7_2" "2 lines 8 chars without Line Feed" "" "gnl7_3" "4 lines 8 chars without Line Feed" "" "gnl8_1" "STDIN: 1 line 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_1.txt | SPEC0" "gnl8_2" "STDIN: 2 lines 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_2.txt | SPEC0" "gnl8_3" "STDIN: 4 lines 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_3.txt | SPEC0" "gnl9" "Bad file descriptor" "")'
 
 declare -a CHK_GNL_AUTHORIZED_FUNCS='(read malloc free get_next_line main)'
 
@@ -57,14 +57,12 @@ function check_gnl_forbidden_func
 	check_gnl_create_header
 	if [ -d "$GNL_LIBFT" ]
 	then
-		make re -C "$GNL_LIBFT" >/dev/null
+		make -C "$GNL_LIBFT" >/dev/null 2>&1
 		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
 	fi
 	echo "#define NULL ((void *)0)\n#include \"../srcs/gnl/gnl.h\"\nint main(void) { int ret; ret = get_next_line(0, NULL); return (1); }" > $RETURNPATH/tmp/$FILEN.c
-	cd "$RETURNPATH"/tmp
 	rm -f "$FILEN"
-	RET0=`gcc $GNLC $EXTRA0 $FILEN.c -o $FILEN 2>&1`
-	cd "$RETURNPATH"
+	RET0=`gcc $GNLC $EXTRA0 ./tmp/$FILEN.c -o ./tmp/$FILEN 2>&1`
 	check_forbidden_func CHK_GNL_AUTHORIZED_FUNCS "./tmp/$FILEN"
 	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
@@ -72,21 +70,21 @@ function check_gnl_forbidden_func
 function check_gnl_basics
 {	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
 	local GNLC GNL_LIBFT EXTRA0 i j FILEN TITLEN RET0 errors fatal SPEC0
+	check_create_tmp_dir
 	check_gnl_create_header
 	GNLC="$MYPATH/get_next_line.c"
 	GNL_LIBFT="$MYPATH/libft"
 	EXTRA0=
 	if [ -d "$GNL_LIBFT" ]
 	then
-		make re -C "$GNL_LIBFT" >/dev/null
+		make -C "$GNL_LIBFT" >/dev/null 2>&1
 		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
 	fi
-	cd "$RETURNPATH"/srcs/gnl
 	i=0
 	j=0
 	errors=0
 	fatal=0
-	echo "GNL BASIC TESTS:\n" > "$RETURNPATH"/.mybasictests
+	echo "GNL BASIC TESTS:\n" > .mybasictests
 	while [ "${CHK_GNL_BASICS[i]}" != "" ]
 	do
 		(( j += 1 ))
@@ -96,31 +94,30 @@ function check_gnl_basics
 		(( i += 1 ))
 		SPEC0="${CHK_GNL_BASICS[i]}"
 		(( i += 1 ))
-		echo "$j -> $TITLEN ($FILEN.c):" >> "$RETURNPATH"/.mybasictests
-		rm -f "$FILEN"
-		RET0=`gcc -Wall -Werror -Wextra $GNLC $EXTRA0 $FILEN.c -o $FILEN 2>&1`
-		if [ -f $FILEN ]
+		echo "$j -> $TITLEN ($FILEN.c):" >> .mybasictests
+		rm -f "./tmp/$FILEN"
+		RET0=`gcc -Wall -Werror -Wextra -I ./tmp $GNLC $EXTRA0 ./srcs/gnl/$FILEN.c -o ./tmp/$FILEN 2>&1`
+		if [ -f ./tmp/$FILEN ]
 		then
 			if [ "$SPEC0" != "" ]
 			then
-				RET0=`echo "$SPEC0" | sed 's/SPEC0/\.\/$FILEN/'`
+				RET0=`echo "$SPEC0" | sed 's/SPEC0/\.\/\.\/tmp\/$FILEN/'`
 				RET0=`eval $RET0 2>&1`
 			else
-				RET0=`./$FILEN 2>&1`
+				RET0=`./tmp/$FILEN 2>&1`
 			fi
 			if [ "$RET0" != "OK" ]
 			then
 				(( errors += 1 ))
 			fi
-			echo "$RET0" >> "$RETURNPATH"/.mybasictests
+			echo "$RET0" >> .mybasictests
 		else
-			echo "Cannot compile" >> "$RETURNPATH"/.mybasictests
-			echo "$RET0" >> "$RETURNPATH"/.mybasictests
+			echo "Cannot compile" >> .mybasictests
+			echo "$RET0" >> .mybasictests
 			(( fatal += 1 ))
 		fi
-		echo "" >> "$RETURNPATH"/.mybasictests
+		echo "" >> .mybasictests
 	done
-	cd "$RETURNPATH"
 	if (( $fatal > 0 ))
 	then
 		printf $C_RED"  $fatal fatal error(s): Cannot compile"$C_CLEAR
@@ -138,13 +135,14 @@ function check_gnl_basics
 function check_gnl_multiple_fd
 {	if [ "$OPT_NO_GNLMULTIPLEFD" == "0" ]; then
 	local GNLC GNL_LIBFT EXTRA0 i j FILEN TITLEN RET0 errors fatal GNLID
+	check_create_tmp_dir
 	check_gnl_create_header
 	GNLC="$MYPATH/get_next_line.c"
 	GNL_LIBFT="$MYPATH/libft"
 	EXTRA0=
 	if [ -d "$GNL_LIBFT" ]
 	then
-		make re -C "$GNL_LIBFT" >/dev/null
+		make -C "$GNL_LIBFT" >/dev/null 2>&1
 		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
 	fi
 	i=0
@@ -153,13 +151,11 @@ function check_gnl_multiple_fd
 	fatal=0
 	rm -f .mymultiplefd
 	touch .mymultiplefd
-	rm -f "$RETURNPATH/srcs/gnl/gnl11"
-	cd "$RETURNPATH"/srcs/gnl
-	RET0=`gcc -Wall -Werror -Wextra $GNLC $EXTRA0 gnl11.c -o gnl11 1>../../.mymultiplefd 2>&1`
-	cd "$RETURNPATH"
-	if [ -f "$RETURNPATH/srcs/gnl/gnl11" ]
+	rm -f "./tmp/gnl11"
+	RET0=`gcc -Wall -Werror -Wextra $GNLC $EXTRA0 ./srcs/gnl/gnl11.c -o ./tmp/gnl11 1>.mymultiplefd 2>&1`
+	if [ -f "./tmp/gnl11" ]
 	then
-		RET0=`./srcs/gnl/gnl11 2>&1`
+		RET0=`./tmp/gnl11 2>&1`
 		if [ "$RET0" != "OK" ]
 		then
 			(( errors += 1 ))
@@ -189,6 +185,7 @@ function check_gnl_multiple_fd
 function check_gnl_leaks
 {	if [ "$OPT_NO_LEAKS" == "0" ]; then
 	local GNLC GNL_LIBFT EXTRA0 RET0 LOGFILENAME PROGNAME
+	check_create_tmp_dir
 	check_gnl_create_header
 	GNLC="$MYPATH/get_next_line.c"
 	GNL_LIBFT="$MYPATH/libft"
@@ -196,21 +193,20 @@ function check_gnl_leaks
 	LOGFILENAME=.myleaks
 	if [ -d "$GNL_LIBFT" ]
 	then
-		make re -C "$GNL_LIBFT" >/dev/null
+		make -C "$GNL_LIBFT" >/dev/null 2>&1
 		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
 	fi
 	rm -f $LOGFILENAME
 	touch $LOGFILENAME
-	rm -f "$RETURNPATH/srcs/gnl/gnl10"
-	cd "$RETURNPATH"/srcs/gnl
-	RET0=`gcc -Wall -Werror -Wextra $GNLC $EXTRA0 gnl10.c -o gnl10 1>../../.myleaks 2>&1`
-	cd "$RETURNPATH"
-	if [ -f "$RETURNPATH/srcs/gnl/gnl10" ]
+	rm -f "./tmp/gnl10"
+	RET0=`gcc -Wall -Werror -Wextra -I ./tmp $GNLC $EXTRA0 ./srcs/gnl/gnl10.c -o ./tmp/gnl10 2>&1`
+	if [ -f "./tmp/gnl10" ]
 	then
 		RET0=`cat ./srcs/gnl/gnl10.c | sed 's/\\\\/\\\\\\\\/g'`
 		NOTICE="If you are sure that your 'get_next_line' has no leaks, read this:\nIn my opinion, 'get_next_line' should free itself the pointer 'line' when a new line is read, like the function 'getline(3)' in linux does (man 3 getline).\nThe similar function 'getline' reallocate the pointer 'line' when a new line is read, so no leaks appear.\nDo not hesitate to contact me if you want to debate...\n\nHere is the main() test:\n-----------------------------\n$RET0\n-----------------------------\n\n\n"
-		check_leaks "./srcs/gnl/gnl10" "" ".myleaks" "$NOTICE"
+		check_leaks "./tmp/gnl10" "" "$LOGFILENAME" "$NOTICE"
 	else
+		echo "$RET0" > $LOGFILENAME
 		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
 	fi
 	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
@@ -220,7 +216,7 @@ function check_gnl_create_header
 {
 	local GNLH
 	GNLH="$MYPATH/get_next_line.h"
-	echo "#include \"$GNLH\"" > "$RETURNPATH"/srcs/gnl/gnl.h
+	echo "#include \"$GNLH\"" > ./tmp/gnl.h
 }
 
 function check_gnl_bonus

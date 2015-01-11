@@ -24,7 +24,7 @@ int				main(int argc, char **argv)
 	char		*filename;
 	int			errors;
 
-	filename = "gnl7_2.txt";
+	filename = "./srcs/gnl/gnl7_2.txt";
 	fd = 0;
 	if (argc && argv)
 	{

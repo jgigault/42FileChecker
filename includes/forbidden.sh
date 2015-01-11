@@ -62,7 +62,7 @@ then
 				printf $C_RED"  $total warning(s)"$C_CLEAR
 			fi
 		else
-			printf $C_RED"  Test not performed (see details)"$C_CLEAR
+			printf $C_RED"  Test not performed (see more info)"$C_CLEAR
 			echo "$2: File Not Found" > $LOG_FILENAME
 		fi
 	}
