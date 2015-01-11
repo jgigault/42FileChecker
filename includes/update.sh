@@ -27,7 +27,7 @@ function update
 			display_menu\
 			   	""\
                 install_update_moulitest "UPDATE MOULITEST"\
-				"" "SKIP UPDATE"\
+				main "SKIP UPDATE"\
                 exit_checker "EXIT"
 		fi
 		if [ "$MOULIDATE" == "2" ]
@@ -36,15 +36,20 @@ function update
 			display_menu\
              	""\
                 install_update_moulitest "INSTALL MOULITEST"\
-				"" "SKIP INSTALL"\
+				main "SKIP INSTALL"\
                 exit_checker "EXIT"
+		fi
+		if [ "$MOULIDATE" == "1" ]
+		then
+			main
 		fi
 	else
 		if [ "$UPTODATE" == "2" ]
 		then
 			display_error "An error occured."
 			printf $C_RED"$(cat .myret2 | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
-			exit_checker
+			printf "\n"
+			tput cnorm
 			printf "UPTODATE2" > .myret
 		else
 			LOCALHASH=`git show-ref | grep -v remotes | cut -d" " -f1`
@@ -74,7 +79,7 @@ function update
 			display_menu\
               	""\
                 install_update "UPDATE 42FILECHECKER"\
-				"" "SKIP UPDATE"\
+				main "SKIP UPDATE"\
                 exit_checker "EXIT"
 		fi
 	fi
@@ -169,7 +174,8 @@ function install_update_moulitest
 		then
 			display_error "An error occured."
 			printf $C_RED"$(echo "$RES0" | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
-			exit_checker
+			printf "\n"
+			tput cnorm
 		else
 			printf $C_BLUE"  Done.\n"$C_CLEAR
 			sleep 0.5
@@ -190,6 +196,7 @@ function install_update_moulitest
 			display_error "An error occured."
 			printf $C_RED"$(echo "$RES0" | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
 			printf "\n"
+			tput cnorm
 		else
 			printf $C_BLUE"  Done.\n"$C_CLEAR
 			sleep 0.5
