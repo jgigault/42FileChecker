@@ -186,12 +186,12 @@ function install_update_moulitest
 		printf "\n\n"
 		cd moulitest
 		printf "  Updating moulitest...\n"
-		((git reset --hard origin/master > .myret 2>&1) && git merge origin/master > .myrest 2>&1) &
-		RES0=`cat .myret`
+		((git reset --hard origin/master > ../.myret 2>&1) && git merge origin/master > ../.myrest 2>&1) &
+		RES0=`cat ../.myret`
 		RES2=`echo "$RES0" | grep fatal`
 		display_spinner $!
 		cd ..
-		if [ "$RES2" == "" ]
+		if [ "$RES2" != "" ]
 		then
 			display_error "An error occured."
 			printf $C_RED"$(echo "$RES0" | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
