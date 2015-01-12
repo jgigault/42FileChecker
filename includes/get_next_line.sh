@@ -280,38 +280,7 @@ function check_gnl_macro
 
 function check_gnl_moulitest
 {	if [ "$OPT_NO_MOULITEST" == "0" ]; then
-	local RET0 TOTAL
-	if [ -d moulitest ]
-	then
-		rm -f "$RETURNPATH"/.mymoulitest
-		cd "$RETURNPATH/moulitest/"
-		make gnl 1> "$RETURNPATH"/.mymoulitest 2>&1
-		cd "$RETURNPATH"
-		RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "STARTING ALL UNIT TESTS"`
-		if [ "$RET0" == "" ]
-		then
-			printf $C_RED"  Fatal error: moulitest cannot compile (see details)"$C_CLEAR
-		else
-			RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "END OF UNIT TESTS"`
-			if [ "$RET0" == "" ]
-			then
-				printf $C_RED"  Fatal error: moulitest has aborted (see details)"$C_CLEAR
-			else
-				RET0=`cat -e .mymoulitest | grep FAIL | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | awk 'BEGIN {OFS = ""} {print "  ",$0}'`
-				if [ "$RET0" != "" ]
-				then
-					TOTAL=`printf "$RET0" | wc -l | sed 's/ //g'`
-					printf $C_RED"  $TOTAL failed test(s)"$C_CLEAR
-				else
-					printf $C_GREEN"  All Unit Tests passed"$C_CLEAR
-				fi
-			fi
-		fi
-		RET0=`cat -e .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//'`
-		echo "$RET0" > "$RETURNPATH"/.mymoulitest
-	else
-		printf $C_RED"  'moulitest' is not installed"$C_CLEAR
-	fi
+	check_moulitest "gnl"
 	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 

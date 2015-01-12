@@ -208,43 +208,12 @@ function check_libft_extra
 
 function check_libft_moulitest
 {	if [ "$OPT_NO_MOULITEST" == "0" ]; then
-	local RET0 TOTAL
-	rm -f "$RETURNPATH"/.mymoulitest
-	if [ -d moulitest ]
+	RET0=`check_fileexists LIBFT_BONUS | grep 'All files were found'`
+	if [ "$RET0" == "" ]
 	then
-		cd "$RETURNPATH"/moulitest/
-		RET0=`check_fileexists LIBFT_BONUS | grep 'All files were found'`
-		if [ "$RET0" == "" ]
-		then
-			make libft_part2 1> "$RETURNPATH"/.mymoulitest 2>&1
-		else
-			make libft_bonus 1> "$RETURNPATH"/.mymoulitest 2>&1
-		fi
-		cd "$RETURNPATH"
-		RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "STARTING ALL UNIT TESTS"`
-		if [ "$RET0" == "" ]
-		then
-			printf $C_RED"  Fatal error: moulitest cannot compile (see details)"$C_CLEAR
-		else
-			RET0=`cat .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//' | grep "END OF UNIT TESTS"`
-			if [ "$RET0" == "" ]
-			then
-				printf $C_RED"  Fatal error: moulitest has aborted (see details)"$C_CLEAR
-			else
-				RET0=`cat -e .mymoulitest | grep FAIL`
-				if [ "$RET0" != "" ]
-				then
-					TOTAL=`echo "$RET0" | wc -l | sed 's/ //g'`
-					printf $C_RED"  $TOTAL failed test(s)"$C_CLEAR
-				else
-					printf $C_GREEN"  All Unit Tests passed"$C_CLEAR
-				fi
-			fi
-		fi
-		RET0=`cat -e .mymoulitest | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//'`
-		echo "$RET0" > "$RETURNPATH"/.mymoulitest
+		check_moulitest "libft_part2"
 	else
-		printf $C_RED"  'moulitest' is not installed"$C_CLEAR
+		check_moulitest "libft_bonus"
 	fi
 	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }

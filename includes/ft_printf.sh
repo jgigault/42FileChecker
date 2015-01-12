@@ -243,10 +243,10 @@ function check_ft_printf
 function check_ft_printf_moulitest
 {	if [ "$OPT_NO_MOULITEST" == "0" ]; then
     local RET0 TOTAL
+    rm -f .mymoulitest
     if [ -d moulitest ]
     then
-        rm -f "$RETURNPATH"/.mymoulitest
-        make ft_printf -C moulitest 1> "$RETURNPATH"/.mymoulitest 2>&1
+        make ft_printf -C moulitest 1> .mymoulitest 2>&1
 		check_moulitest_cleanlog ".mymoulitest"
         RET0=`cat .mymoulitest | grep "STARTING ALL UNIT TESTS"`
         if [ "$RET0" == "" ]
