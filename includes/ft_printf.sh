@@ -242,35 +242,7 @@ function check_ft_printf
 
 function check_ft_printf_moulitest
 {	if [ "$OPT_NO_MOULITEST" == "0" ]; then
-    local RET0 TOTAL
-    rm -f .mymoulitest
-    if [ -d moulitest ]
-    then
-        make ft_printf -C moulitest 1> .mymoulitest 2>&1
-		check_moulitest_cleanlog ".mymoulitest"
-        RET0=`cat .mymoulitest | grep "STARTING ALL UNIT TESTS"`
-        if [ "$RET0" == "" ]
-        then
-            printf $C_RED"  Fatal error: moulitest cannot compile (see more info)"$C_CLEAR
-        else
-            RET0=`cat .mymoulitest | grep "END OF UNIT TESTS"`
-            if [ "$RET0" == "" ]
-            then
-                printf $C_RED"  Fatal error: moulitest has aborted (see more info)"$C_CLEAR
-            else
-                RET0=`cat .mymoulitest | grep FAIL`
-                if [ "$RET0" != "" ]
-                then
-                    TOTAL=`printf "%s" "$RET0" | wc -l | sed 's/ //g'`
-                    printf $C_RED"  $TOTAL failed test(s)"$C_CLEAR
-                else
-                    printf $C_GREEN"  All Unit Tests passed"$C_CLEAR
-                fi
-            fi
-        fi
-    else
-        printf $C_RED"  'moulitest' is not installed"$C_CLEAR
-    fi
+	check_moulitest "ft_printf"
 	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
  }
 
