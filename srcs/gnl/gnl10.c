@@ -13,7 +13,6 @@ int  main(void)
     //free(line)         <-- In my opinion, this line should not exist
   }
   close(fd);
-  free(line);
   while (1);
   return (0);
 }
