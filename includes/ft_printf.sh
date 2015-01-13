@@ -11,7 +11,7 @@ declare -a CHK_FT_PRINTF_AUTHORIZED_FUNCS='(write malloc free exit main)'
 
 function check_ft_printf_all
 {
-	local FUNC TITLE i j RET0 MYPATH
+	local FUNC TITLE i j j2 RET0 MYPATH
 	MYPATH=$(get_config "ft_printf")
 	configure_moulitest "ft_printf" "$MYPATH"
 	i=0
@@ -24,7 +24,8 @@ function check_ft_printf_all
 		FUNC="${CHK_FT_PRINTF[$i]}"
 		(( i += 1 ))
 		TITLE=`echo "${CHK_FT_PRINTF[$i]}"  | sed 's/%/%%/g'`
-		printf "  $C_WHITE$j -> $TITLE$C_CLEAR\n"
+		j2=`ft_itoa "$j"`
+		printf "  $C_WHITE${j2} -> $TITLE$C_CLEAR\n"
 		(eval "$FUNC" > .myret) &
 		display_spinner $!
 		RET0=`cat .myret | sed 's/%/%%/g'`
@@ -123,7 +124,14 @@ function check_ft_printf_basictests
 						"xl") TTYPEV="(unsigned long)" ;;
 						"xL") TTYPEV="(unsigned long long)" ;;
 						"xj") TTYPEV="(uintmax_t)" ;;
-						"xz") TTYPEV="(size_t)" ;;
+						"u") TTYPEV="(unsigned int)" ;;
+						"uh") TTYPEV="(unsigned char)" ;;
+						"uj") TTYPEV="(intmax_t)" ;;
+						"uz") TTYPEV="(size_t)" ;;
+						"uH") TTYPEV="(unsigned short)" ;;
+						"ul") TTYPEV="(unsigned long)" ;;
+						"uL") TTYPEV="(unsigned long long)" ;;
+						"uU") TTYPEV="(unsigned long)" ;;
 					esac
 					printf "\n# %04d %s\n" "$index" "$TTYPEV" >> $LOGFILENAME
 					printf "  ft_printf(%s);\n" "$TARGSV" >> $LOGFILENAME
@@ -135,11 +143,12 @@ function check_ft_printf_basictests
 					printf "  2. (%5d) -->" "$RET0" >> $LOGFILENAME 2>&1
 					RET0=`echo "$RET2" | cut -d"|" -f1  | sed 's/\\\\/\\\\\\\\/g'`
 					printf "%s<--\n" "$RET0" >> $LOGFILENAME
-					printf "%4d. FAIL ft_printf(%s);\n" "$index" "$TARGSV" >> $LOGFILENAME"success"
+					RET0=`echo "$RET2" | cut -d"|" -f1 | sed 's/\\\\/\\\\\\\\/g' | sed 's/NULL//g'`
+					printf "%4d. FAIL %-45s -> \"%s\"\n" "$index" "ft_printf($TARGSV);" "$RET0" >> $LOGFILENAME"success"
 				else
 					(( success += 1 ))
-					RET0=`echo "$RET1" | cut -d"|" -f1`
-					printf "%4d.      ft_printf(%s);\n" "$index" "$TARGSV" >> $LOGFILENAME"success"
+					RET0=`echo "$RET2" | cut -d"|" -f1 | sed 's/\\\\/\\\\\\\\/g' | sed 's/NULL//g'`
+					printf "%4d.      %-45s -> \"%s\"\n" "$index" "ft_printf($TARGSV);" "$RET0" >> $LOGFILENAME"success"
 				fi
 			fi
 		fi

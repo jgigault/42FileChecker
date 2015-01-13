@@ -113,6 +113,18 @@ then
 		echo $C_CLEAR""
 	}
 
+	function ft_itoa
+	{
+		local -i i=$1
+		if [ "$1" != "1" -a "$1" != "2" -a "$1" != "3" -a "$1" != "4" -a "$1" != "5" -a "$1" != "6" -a "$1" != "7" -a "$1" != "8" -a "$1" != "9" ]
+		then
+			(( i=$1 + 65 - 10 ))
+			printf \\$(printf '%03o' $i)
+		else
+			printf "$1"
+		fi
+	}
+
 	function ft_atoi
 	{
 		local SELN
