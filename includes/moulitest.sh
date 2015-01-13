@@ -39,7 +39,7 @@ then
 			        RET0=`echo "$RET1" | grep FAIL`
 			        if [ "$RET0" != "" ]
 			        then
-			            TOTAL=`printf "%s" "$RET0" | wc -l | sed 's/ //g'`
+			            TOTAL=`printf "%s\n" "$RET0" | wc -l | sed 's/ //g'`
 			            printf $C_RED"  $TOTAL failed test(s)"$C_CLEAR
 			        else
 			            printf $C_GREEN"  All Unit Tests passed"$C_CLEAR
