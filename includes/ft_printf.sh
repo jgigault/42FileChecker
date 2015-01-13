@@ -35,7 +35,7 @@ function check_ft_printf_all
 	done
 	display_menu\
 		""\
-		main "OK"\
+		check_ft_printf_all "RETRY"\
 		"open .mynorminette" "more info: norminette"\
 		"open .mymakefile" "more info: makefile"\
 		"open .myforbiddenfunc" "more info: forbidden functions"\
@@ -43,7 +43,10 @@ function check_ft_printf_all
 		"open .mybasictestsd" "more info: basic tests %d (beta)"\
 		"open .mybasictestsx" "more info: basic tests %x %X (beta)"\
 		"open .mybasictests0" "more info: basic tests (beta)"\
-		"open .mymoulitest" "more info: moulitest"
+		"open .mymoulitest" "more info: moulitest"\
+		"_"\
+		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
+		main "BACK TO MAIN MENU"
 }
 
 function check_ft_printf_basictests
@@ -78,8 +81,8 @@ function check_ft_printf_basictests
 			then
 				(( fatal += 1 ));
 			else
-				TARGS=`echo "${TTYPE:0:1}" "\"$TVAL0\"" | sed 's/|/\" \"/g'`
-				if [ "${TTYPE:0:1}" == "d" -o "$TTYPE" == "0p" -o "${TTYPE:0:1}" == "x" ]
+				TARGS=`echo "$TTYPE" "\"$TVAL0\"" | sed 's/|/\" \"/g'`
+				if [ "${TTYPE:0:1}" == "d" -o "$TTYPE" == "0p" -o "$TTYPE" == "sN" -o "${TTYPE:0:1}" == "x" ]
 				then
 					TARGSV=`echo "\"$TVAL" | sed 's/|/, /g' | sed 's/,/\",/'`
 				else
@@ -103,6 +106,7 @@ function check_ft_printf_basictests
 					(( errors += 1 ))
 					case "$TTYPE" in
 						"s") TTYPEV="(char *)" ;;
+						"sN") TTYPEV="(NULL)" ;;
 						"d") TTYPEV="(int)" ;;
 						"dj") TTYPEV="(intmax_t)" ;;
 						"dz") TTYPEV="(ssize_t)" ;;
@@ -202,11 +206,11 @@ function check_ft_printf_forbidden_func
 		echo "int ft_printf(char const *format, ...);\nint main(void) {" > $F
 		echo "ft_printf(\"\");" >> $F
 		echo "return (1); }" >> $F
-		make re -C "$MYPATH" >/dev/null
+		make re -C "$MYPATH" 1>.myforbiddenfunc 2>&1
 		rm -f "$RETURNPATH/tmp/$FILEN"
 		if [ -f "$MYPATH/libftprintf.a" ]
 		then
-			RET0=`gcc "$F" -L"$MYPATH" -lftprintf -o "$RETURNPATH/tmp/$FILEN"`
+			RET0=`gcc "$F" -L"$MYPATH" -lftprintf -o "$RETURNPATH/tmp/$FILEN" 2>&1`
 			check_forbidden_func CHK_FT_PRINTF_AUTHORIZED_FUNCS "./tmp/$FILEN"
 		else
 			printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR

@@ -6,7 +6,7 @@
 /*   By: jgigault <jgigault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/01/06 11:34:07 by jgigault          #+#    #+#             */
-/*   Updated: 2015/01/13 13:10:21 by jgigault         ###   ########.fr       */
+/*   Updated: 2015/01/13 16:16:20 by jgigault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int				main(int argc, char **argv)
 	int			ret;
 
 	ret = -999;
+	if (argc == 4 && argv[1][1] == 'N')
+		ret = ft_printf(argv[2], NULL);
 	if (argc == 4)
 		ret = ft_printf(argv[2], argv[3]);
 	else if (argc == 5)

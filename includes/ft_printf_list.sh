@@ -26,6 +26,7 @@ then
 	CHK_FT_PRINTF_LIST+=("0" "%05%")
 	CHK_FT_PRINTF_LIST+=("0" "%-05%")
 	CHK_FT_PRINTF_LIST+=("0" "% hZ%")
+	CHK_FT_PRINTF_LIST+=("0" "%.0%")
 
 	# hexadecimal
 	#CHK_FT_PRINTF_LIST+=("0p" "%p|(void *)(str = \"I am a void\")")
@@ -115,6 +116,7 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%s %s %s %s string. gg!|this|is|a|multi|string")
 	CHK_FT_PRINTF_LIST+=("s" "%s%s%s%s%s|this|is|a|multi|string")
 
+	CHK_FT_PRINTF_LIST+=("sN" "%s|NULL")
 
 
 
