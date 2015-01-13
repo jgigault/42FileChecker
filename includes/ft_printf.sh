@@ -198,9 +198,8 @@ function check_ft_printf_forbidden_func
 	then
 		FILEN=forbiddenfuncs
 		F=$RETURNPATH/tmp/$FILEN.c
-		FTPRINTFH=`find "$MYPATH" -name \*printf\*.h`
 		check_create_tmp_dir
-		echo "#include \"$FTPRINTFH\"\nint main(void) {" > $F
+		echo "int ft_printf(char const *format, ...);\nint main(void) {" > $F
 		echo "ft_printf(\"\");" >> $F
 		echo "return (1); }" >> $F
 		make re -C "$MYPATH" >/dev/null

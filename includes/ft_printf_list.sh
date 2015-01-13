@@ -34,6 +34,8 @@ then
 
 
 	CHK_FT_PRINTF_LIST+=("s" "% Z|test")
+	CHK_FT_PRINTF_LIST+=("s" "% Z |test")
+	CHK_FT_PRINTF_LIST+=("s" "% Z%s|test")
 	CHK_FT_PRINTF_LIST+=("s" "%%|test")
 	CHK_FT_PRINTF_LIST+=("s" "%   %|test")
 	CHK_FT_PRINTF_LIST+=("s" "%000   %|test")
@@ -77,10 +79,16 @@ then
 	CHK_FT_PRINTF_LIST+=("x" "%.2x|5427")
 	CHK_FT_PRINTF_LIST+=("x" "%5.2x|5427")
 
+	CHK_FT_PRINTF_LIST+=("x" "%#x|42")
+	CHK_FT_PRINTF_LIST+=("x" "%ll#x|9223372036854775807")
+	CHK_FT_PRINTF_LIST+=("x" "%#llx|9223372036854775807")
 
 
 	# string
+	CHK_FT_PRINTF_LIST+=("s" "%s|abc")
 	CHK_FT_PRINTF_LIST+=("s" "%s|this is a string")
+	CHK_FT_PRINTF_LIST+=("s" "%s |this is a string")
+	CHK_FT_PRINTF_LIST+=("s" "%s  |this is a string")
 	CHK_FT_PRINTF_LIST+=("s" "this is a %s|string")
 	CHK_FT_PRINTF_LIST+=("s" "%s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "this is a Line Feed %s|\n")
@@ -105,6 +113,9 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%s %s %s|this|is|a")
 	CHK_FT_PRINTF_LIST+=("s" "%s %s %s %s|this|is|a|multi")
 	CHK_FT_PRINTF_LIST+=("s" "%s %s %s %s string. gg!|this|is|a|multi|string")
+	CHK_FT_PRINTF_LIST+=("s" "%s%s%s%s%s|this|is|a|multi|string")
+
+
 
 
 
@@ -205,7 +216,6 @@ then
 	CHK_FT_PRINTF_LIST+=("d" "%d %d %d|1|-2|33")
 	CHK_FT_PRINTF_LIST+=("d" "%d %d %d %d|1|-2|33|42")
 	CHK_FT_PRINTF_LIST+=("d" "%d %d %d %d gg!|1|-2|33|42|0")
-
 
 
 
