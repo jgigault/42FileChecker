@@ -7,11 +7,37 @@ int  main(void)
 {
   char  *line = NULL;
   int   fd = open("./srcs/gnl/gnl10.txt", O_RDONLY);
-  while ((get_next_line(fd, &line)) > 0)
-  {
-    printf("%s\n", line);
-    //free(line)         <-- In my opinion, this line should not exist
-  }
+  get_next_line(fd, &line);
+  free(line);
+  line = NULL;
+  get_next_line(fd, &line);
+  free(line);
+  line = NULL;
+  get_next_line(fd, &line);
+  free(line);
+  line = NULL;
+  get_next_line(fd, &line);
+  free(line);
+  line = NULL;
+  get_next_line(fd, &line);
+  free(line);
+  line = NULL;
+  get_next_line(fd, &line);
+  free(line);
+  line = NULL;
+  get_next_line(fd, &line);
+  free(line);
+  line = NULL;
+  get_next_line(fd, &line);
+  free(line);
+  line = NULL;
+  get_next_line(fd, &line);
+  free(line);
+  line = NULL;
+  get_next_line(fd, &line);
+  free(line);
+  line = NULL;
+  get_next_line(fd, &line);
   close(fd);
   while (1);
   return (0);
