@@ -23,10 +23,10 @@ then
 				RET0=`cat "$LOGFILENAME" | wc -l | sed 's/[ \t]*//g'`
 				printf $RET0
 			else
-				printf "-2"
+				printf "%s" "-2"
 			fi
 		else
-			printf "-1"
+			printf "%s" "-1"
 		fi
 		rm -f $LOGFILENAME
 	}
