@@ -203,7 +203,7 @@ function check_gnl_leaks
 	if [ -f "./tmp/gnl10" ]
 	then
 		RET0=`cat ./srcs/gnl/gnl10.c | sed 's/\\\\/\\\\\\\\/g'`
-		NOTICE="If you are sure that your 'get_next_line' has no leaks, read this:\nIn my opinion, 'get_next_line' should free itself the pointer 'line' when a new line is read, like the function 'getline(3)' in linux does (man 3 getline).\nThe similar function 'getline' reallocate the pointer 'line' when a new line is read, so no leaks appear.\nDo not hesitate to contact me if you want to debate...\n\nHere is the main() test:\n-----------------------------\n$RET0\n-----------------------------\n\n\n"
+		NOTICE="Here is the main() test:\n-----------------------------\n$RET0\n-----------------------------\n\n\n"
 		check_leaks "./tmp/gnl10" "" "$LOGFILENAME" "$NOTICE"
 	else
 		echo "$RET0" > $LOGFILENAME
