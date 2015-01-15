@@ -253,6 +253,7 @@ then
 	CHK_FT_PRINTF_LIST+=("d" "% 10.5d|4242")
 	CHK_FT_PRINTF_LIST+=("d" "%+10.5d|4242")
 	CHK_FT_PRINTF_LIST+=("d" "%-+10.5d|4242")
+	CHK_FT_PRINTF_LIST+=("d" "%03.2d|0")
 
 
 	# u
