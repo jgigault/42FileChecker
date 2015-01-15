@@ -245,28 +245,6 @@ then
 		exit
 	}
 
-	function configure_moulitest
-	{
-		display_header
-		display_righttitle "$0 -> LIBFT MENU"
-		check_libft_top "$2"
-		printf $C_BLUE"  Configuring 'moulitest'...\n\n"$C_CLEAR
-		case "$1" in
-			"libft")
-				echo "LIBFT_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
-				;;
-			"gnl")
-				echo "GET_NEXT_LINE_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
-				;;
-			"ft_ls")
-				echo "FT_LS_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
-				;;
-			"ft_printf")
-				echo "FT_PRINTF_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
-				;;
-		esac
-	}
-
 	function check_norme
 	{	if [ "$OPT_NO_NORMINETTE" == "0" ]; then
 		local RET0 RET2 RET3 RET4 TOTAL TOTA2
