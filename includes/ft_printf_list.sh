@@ -92,7 +92,7 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%s  |this is a string")
 	CHK_FT_PRINTF_LIST+=("s" "this is a %s|string")
 	CHK_FT_PRINTF_LIST+=("s" "%s is a string|this")
-	CHK_FT_PRINTF_LIST+=("s" "this is a Line Feed %s|\n")
+	CHK_FT_PRINTF_LIST+=("s" "Line Feed %s|\n")
 
 	CHK_FT_PRINTF_LIST+=("s" "%10s is a string|this")
 	CHK_FT_PRINTF_LIST+=("s" "%010s is a string|this")
@@ -117,7 +117,24 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%s%s%s%s%s|this|is|a|multi|string")
 
 	CHK_FT_PRINTF_LIST+=("sN" "%s|NULL")
+	CHK_FT_PRINTF_LIST+=("sN" "%s %s|NULL|string")
 
+
+
+
+	# c
+	CHK_FT_PRINTF_LIST+=("dc" "%c|42")
+	CHK_FT_PRINTF_LIST+=("dc" "%5c|42")
+	CHK_FT_PRINTF_LIST+=("dc" "%05c|42")
+	CHK_FT_PRINTF_LIST+=("dc" "%-5c|42")
+	CHK_FT_PRINTF_LIST+=("dc" "%c|0")
+
+	# o
+	CHK_FT_PRINTF_LIST+=("dc" "%o|40")
+	CHK_FT_PRINTF_LIST+=("dc" "%5o|41")
+	CHK_FT_PRINTF_LIST+=("dc" "%05o|42")
+	CHK_FT_PRINTF_LIST+=("dc" "%-5o|2500")
+	CHK_FT_PRINTF_LIST+=("dc" "%o|0")
 
 
 

@@ -94,6 +94,8 @@ function check_ft_printf_basictests
 				FILEN2="./tmp/printf_${TTYPE:0:1}"
 				RET1=`eval "$FILEN1 $TARGS" 2>&1`
 				RET2=`eval "$FILEN2 $TARGS" 2>&1`
+				RET1=`printf "%s" "$RET1" | awk 'BEGIN{ORS="[BR]"}{print}' | sed 's/\[BR\]$//'`
+				RET2=`printf "%s" "$RET2" | awk 'BEGIN{ORS="[BR]"}{print}' | sed 's/\[BR\]$//'`
 				if [ "$RET1" != "$RET2" ]
 				then
 					if (( $errors == 0 ))
@@ -109,6 +111,7 @@ function check_ft_printf_basictests
 					case "$TTYPE" in
 						"s") TTYPEV="(char *)" ;;
 						"sN") TTYPEV="(NULL)" ;;
+						"dc") TTYPEV="(char)" ;;
 						"d") TTYPEV="(int)" ;;
 						"dj") TTYPEV="(intmax_t)" ;;
 						"dz") TTYPEV="(ssize_t)" ;;
@@ -135,19 +138,19 @@ function check_ft_printf_basictests
 					esac
 					printf "\n# %04d %s\n" "$index" "$TTYPEV" >> $LOGFILENAME
 					printf "  ft_printf(%s);\n" "$TARGSV" >> $LOGFILENAME
-					RET0=`echo "$RET1" | cut -d"|" -f2`
+					RET0=`printf "%s" "$RET1" | sed 's/\\\\/\\\\\\\\/g' | cut -d"|" -f2 | sed 's/NULL//g'`
 					printf "  1. (%5d) -->" "$RET0" >> $LOGFILENAME 2>&1
-					RET0=`echo "$RET1" | cut -d"|" -f1  | sed 's/\\\\/\\\\\\\\/g'`
+					RET0=`printf "%s" "$RET1" | sed 's/\\\\/\\\\\\\\/g' | cut -d"|" -f1 | sed 's/\[BR\]/\\\\n/g'`
 					printf "%s<--\n" "$RET0" >> $LOGFILENAME
-					RET0=`echo "$RET2" | cut -d"|" -f2`
+					RET0=`printf "%s" "$RET2" | sed 's/\\\\/\\\\\\\\/g' | cut -d"|" -f2 | sed 's/NULL//g'`
 					printf "  2. (%5d) -->" "$RET0" >> $LOGFILENAME 2>&1
-					RET0=`echo "$RET2" | cut -d"|" -f1  | sed 's/\\\\/\\\\\\\\/g'`
+					RET0=`printf "%s" "$RET2" | sed 's/\\\\/\\\\\\\\/g' | cut -d"|" -f1 | sed 's/\[BR\]/\\\\n/g'`
 					printf "%s<--\n" "$RET0" >> $LOGFILENAME
-					RET0=`echo "$RET2" | cut -d"|" -f1 | sed 's/\\\\/\\\\\\\\/g' | sed 's/NULL//g'`
+					RET0=`echo "$RET2" | cut -d"|" -f1 | sed 's/\\\\/\\\\\\\\/g' | sed 's/NULL//g' | sed 's/\[BR\]/\\\\n/g'`
 					printf "%4d. FAIL %-45s -> \"%s\"\n" "$index" "ft_printf($TARGSV);" "$RET0" >> $LOGFILENAME"success"
 				else
 					(( success += 1 ))
-					RET0=`echo "$RET2" | cut -d"|" -f1 | sed 's/\\\\/\\\\\\\\/g' | sed 's/NULL//g'`
+					RET0=`echo "$RET2" | cut -d"|" -f1 | sed 's/\\\\/\\\\\\\\/g' | sed 's/NULL//g' | sed 's/\[BR\]/\\\\n/g'`
 					printf "%4d.      %-45s -> \"%s\"\n" "$index" "ft_printf($TARGSV);" "$RET0" >> $LOGFILENAME"success"
 				fi
 			fi
