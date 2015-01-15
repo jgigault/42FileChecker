@@ -135,6 +135,7 @@ then
 	CHK_FT_PRINTF_LIST+=("dc" "%-5c|42")
 	CHK_FT_PRINTF_LIST+=("dc" "%c|0")
 	CHK_FT_PRINTF_LIST+=("dc" "null %c and text|0")
+	CHK_FT_PRINTF_LIST+=("dc" "% c|0")
 
 	# o
 	CHK_FT_PRINTF_LIST+=("dc" "%o|40")
@@ -244,6 +245,12 @@ then
 	CHK_FT_PRINTF_LIST+=("d" "%d %d %d %d gg!|1|-2|33|42|0")
 
 
+	# accuracy
+	CHK_FT_PRINTF_LIST+=("d" "%.2d|4242")
+	CHK_FT_PRINTF_LIST+=("d" "%.10d|4242")
+	CHK_FT_PRINTF_LIST+=("d" "%5.2d|4242")
+	CHK_FT_PRINTF_LIST+=("d" "%-15.2d|4242")
+	CHK_FT_PRINTF_LIST+=("d" "%.2d|4242")
 
 
 	# u
@@ -257,6 +264,8 @@ then
 	CHK_FT_PRINTF_LIST+=("u" "%15u|4294967295")
 	CHK_FT_PRINTF_LIST+=("u" "%-15u|4294967295")
 	CHK_FT_PRINTF_LIST+=("u" "%015u|4294967295")
+	CHK_FT_PRINTF_LIST+=("u" "% u|4294967295")
+	CHK_FT_PRINTF_LIST+=("u" "%+u|4294967295")
 
 	CHK_FT_PRINTF_LIST+=("ul" "%lu|4294967295")
 	CHK_FT_PRINTF_LIST+=("ul" "%lu|4294967296")
@@ -273,11 +282,13 @@ then
 	CHK_FT_PRINTF_LIST+=("uU" "%hU|4294967296")
 	CHK_FT_PRINTF_LIST+=("uU" "%U|4294967296")
 
-
-
-
-
-
+	# mistaken
+	CHK_FT_PRINTF_LIST+=("uz" "%zhd|4294967296")
+	CHK_FT_PRINTF_LIST+=("uL" "%lhl|9223372036854775807")
+	CHK_FT_PRINTF_LIST+=("uL" "%lhlz|9223372036854775807")
+	CHK_FT_PRINTF_LIST+=("uL" "%zj|9223372036854775807")
+	CHK_FT_PRINTF_LIST+=("ul" "%lhh|2147483647")
+	CHK_FT_PRINTF_LIST+=("ul" "%hhld|128")
 
 
 
