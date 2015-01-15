@@ -5,7 +5,7 @@ then
 
 source includes/ft_printf_list.sh
 
-declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests s" "basic tests %s (beta)" "check_ft_printf_basictests d" "basic tests %d (beta)" "check_ft_printf_basictests u" "basic tests %u (beta)" "check_ft_printf_basictests x" "basic tests %x (beta)" "check_ft_printf_basictests 0" "basic tests (beta)" "check_ft_printf_moulitest" "moulitest (https://github.com/yyang42/moulitest)" )'
+declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests (beta)" "check_ft_printf_moulitest" "moulitest (https://github.com/yyang42/moulitest)" )'
 
 declare -a CHK_FT_PRINTF_AUTHORIZED_FUNCS='(write malloc free exit main)'
 
@@ -40,11 +40,7 @@ function check_ft_printf_all
 		"open .mynorminette" "more info: norminette"\
 		"open .mymakefile" "more info: makefile"\
 		"open .myforbiddenfunc" "more info: forbidden functions"\
-		"open .mybasictestss" "more info: basic tests %s (beta)"\
-		"open .mybasictestsd" "more info: basic tests %d (beta)"\
-		"open .mybasictestsu" "more info: basic tests %u (beta)"\
-		"open .mybasictestsx" "more info: basic tests %x (beta)"\
-		"open .mybasictests0" "more info: basic tests (beta)"\
+		"open .mybasictests" "more info: basic tests (beta)"\
 		"open .mymoulitest" "more info: moulitest"\
 		"_"\
 		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
@@ -61,7 +57,7 @@ function check_ft_printf_basictests
 	success=0
 	fatal=0
 	TYPE="$1"
-	LOGFILENAME=".mybasictests$TYPE"
+	LOGFILENAME=".mybasictests"
 	rm -f $LOGFILENAME $LOGFILENAME"success"
 	touch $LOGFILENAME $LOGFILENAME"success"
 	check_create_tmp_dir
@@ -75,8 +71,8 @@ function check_ft_printf_basictests
 		TVAL0="${CHK_FT_PRINTF_LIST[$i]}"
 		TVAL=`printf "%s" "${CHK_FT_PRINTF_LIST[$i]}" | sed 's/\\\\/\\\\\\\\/g'`
 		(( i += 1 ))
-		if [ "$TYPE" == "${TTYPE:0:1}" ]
-		then
+		#if [ "$TYPE" == "${TTYPE:0:1}" ]
+		#then
 			(( total += 1 ))
 			RET0=`check_ft_printf_basictests_gcc "${TTYPE:0:1}" "$LOGFILENAME"`
 			if [ "$RET0" != "" ]
@@ -154,7 +150,7 @@ function check_ft_printf_basictests
 					printf "%4d.      %-45s -> \"%s\"\n" "$index" "ft_printf($TARGSV);" "$RET0" >> $LOGFILENAME"success"
 				fi
 			fi
-		fi
+		#fi
 	done
 	if (( $fatal == 0 ))
 	then

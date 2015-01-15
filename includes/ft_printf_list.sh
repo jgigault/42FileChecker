@@ -84,6 +84,13 @@ then
 	CHK_FT_PRINTF_LIST+=("x" "%ll#x|9223372036854775807")
 	CHK_FT_PRINTF_LIST+=("x" "%#llx|9223372036854775807")
 
+	CHK_FT_PRINTF_LIST+=("x" "%#x|42")
+	CHK_FT_PRINTF_LIST+=("x" "%#X|42")
+	CHK_FT_PRINTF_LIST+=("x" "%#8x|42")
+	CHK_FT_PRINTF_LIST+=("x" "%#08x|42")
+	CHK_FT_PRINTF_LIST+=("x" "%#-08x|42")
+
+
 
 	# string
 	CHK_FT_PRINTF_LIST+=("s" "%s|abc")
@@ -128,6 +135,7 @@ then
 	CHK_FT_PRINTF_LIST+=("dc" "%05c|42")
 	CHK_FT_PRINTF_LIST+=("dc" "%-5c|42")
 	CHK_FT_PRINTF_LIST+=("dc" "%c|0")
+	CHK_FT_PRINTF_LIST+=("dc" "null %c and text|0")
 
 	# o
 	CHK_FT_PRINTF_LIST+=("dc" "%o|40")
