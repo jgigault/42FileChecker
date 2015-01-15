@@ -5,7 +5,7 @@ then
 
 source includes/ft_printf_list.sh
 
-declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests (beta)" "check_ft_printf_moulitest" "moulitest (https://github.com/yyang42/moulitest)" )'
+declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests (beta)" "check_ft_printf_leaks" "leaks" "check_ft_printf_moulitest" "moulitest (https://github.com/yyang42/moulitest)" )'
 
 declare -a CHK_FT_PRINTF_AUTHORIZED_FUNCS='(write malloc free exit main)'
 
@@ -41,6 +41,7 @@ function check_ft_printf_all
 		"open .mymakefile" "more info: makefile"\
 		"open .myforbiddenfunc" "more info: forbidden functions"\
 		"open .mybasictests" "more info: basic tests (beta)"\
+		"open .myleaks" "more info: leaks"\
 		"open .mymoulitest" "more info: moulitest"\
 		"_"\
 		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
@@ -170,6 +171,34 @@ function check_ft_printf_basictests
 	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
+function check_ft_printf_leaks
+{	if [ "$OPT_NO_LEAKS" == "0" ]; then
+	local LOGFILENAME RET0 CSRC BSRC
+	CSRC=./srcs/printf/ft_printf_leaks.c
+	BSRC=./tmp/ft_printf_leaks
+	LOGFILENAME=.myleaks
+	rm -f $LOGFILENAME
+	touch $LOGFILENAME
+	check_create_tmp_dir
+	make re -C "$MYPATH" &>$LOGFILENAME
+	if [ -f "$MYPATH/libftprintf.a" ]
+	then
+		check_ft_printf_create_header
+		RET0=`gcc -Wall -Werror -Wextra "$CSRC" -L "$MYPATH" -lftprintf -o "$BSRC" &>$LOGFILENAME`
+		if [ -f "$BSRC" ]
+		then
+			RET0=`cat "$CSRC" | sed 's/\\\\/\\\\\\\\/g'`
+			NOTICE="Here is the main() test:\n-----------------------------\n$RET0\n-----------------------------\n\n\n"
+			check_leaks "$BSRC" "" "$LOGFILENAME" "$NOTICE"
+		else
+			printf $C_RED"  Fatal error : Cannot compile"$C_CLEAR
+		fi
+	else
+		printf $C_RED"  Fatal error : Cannot compile"$C_CLEAR
+	fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+}
+
 function check_ft_printf_basictests_gcc
 {
 	local FILEN RET0 LOGFILENAME
@@ -195,7 +224,7 @@ function check_ft_printf_create_header
 {
 	local FTPRINTFH
 	FTPRINTFH=`find "$MYPATH" -name \*printf\*.h`
-	echo "#include \"$FTPRINTFH\"" > "$RETURNPATH"/tmp/printf.h
+	echo "#include <stdarg.h>\nint ft_printf(char const *format, ...);" > "$RETURNPATH"/tmp/printf.h
 }
 
 function check_ft_printf_makefile
