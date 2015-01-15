@@ -84,13 +84,12 @@ then
 	CHK_FT_PRINTF_LIST+=("x" "%ll#x|9223372036854775807")
 	CHK_FT_PRINTF_LIST+=("x" "%#llx|9223372036854775807")
 
+	CHK_FT_PRINTF_LIST+=("x" "%#x|0")
 	CHK_FT_PRINTF_LIST+=("x" "%#x|42")
 	CHK_FT_PRINTF_LIST+=("x" "%#X|42")
 	CHK_FT_PRINTF_LIST+=("x" "%#8x|42")
 	CHK_FT_PRINTF_LIST+=("x" "%#08x|42")
 	CHK_FT_PRINTF_LIST+=("x" "%#-08x|42")
-
-
 
 	# string
 	CHK_FT_PRINTF_LIST+=("s" "%s|abc")

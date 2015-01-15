@@ -62,6 +62,7 @@ function check_ft_printf_basictests
 	touch $LOGFILENAME $LOGFILENAME"success"
 	check_create_tmp_dir
 	check_ft_printf_create_header
+	make re -C "$MYPATH" &>/dev/null
 	echo "SUCCESS TESTS:\n" >> $LOGFILENAME"success"
 	while [ "${CHK_FT_PRINTF_LIST[$i]}" != "" -a $fatal -eq 0 ]
 	do
@@ -176,6 +177,7 @@ function check_ft_printf_basictests_gcc
 	LOGFILENAME="$2"
 	if [ ! -f "./tmp/ft_$FILEN" -o ! -f "./tmp/$FILEN" ]
 	then
+		make re -C "$MYPATH" &>/dev/null
 		if [ -f "$MYPATH/libftprintf.a" ]
 		then
 			RET0=`gcc -Wall -Werror -Wextra "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
