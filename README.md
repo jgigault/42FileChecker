@@ -85,7 +85,7 @@ Basic tests with compilation are also available for get_next_line and ft_printf 
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
-<td valign="top" align="center"></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
 </tr>
 <tr>
