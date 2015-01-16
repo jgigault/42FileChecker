@@ -29,13 +29,11 @@ int main(void)
   printf("%hhd\n", c);
   printf("%jd\n", im);
   printf("%zd\n", (size_t)i);
-  printf("%U\n", i);
   printf("%u\n", i);
   printf("%o\n", 40);
   printf("%#08x\n", 42);
   printf("%x\n", 1000);
   printf("%#X\n", 1000);
-  printf("%s\n", NULL);
   printf("%S\n", L"ݗݜशব");
   printf("%s%s\n", "test", "test");
   printf("%s%s%s\n", "test", "test", "test");
