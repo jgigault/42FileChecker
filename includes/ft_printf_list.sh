@@ -91,6 +91,11 @@ then
 	CHK_FT_PRINTF_LIST+=("x" "%#08x|42")
 	CHK_FT_PRINTF_LIST+=("x" "%#-08x|42")
 
+	CHK_FT_PRINTF_LIST+=("d" "@moulitest: %#.x, %#.0x|0|0")
+	CHK_FT_PRINTF_LIST+=("d" "@moulitest: %.x, %.0x|0|0")
+	CHK_FT_PRINTF_LIST+=("d" "@moulitest: %5.x, %5.0x|0|0")
+
+
 	# string
 	CHK_FT_PRINTF_LIST+=("s" "%s|abc")
 	CHK_FT_PRINTF_LIST+=("s" "%s|this is a string")
@@ -122,7 +127,8 @@ then
 	CHK_FT_PRINTF_LIST+=("s" "%s %s %s %s string. gg!|this|is|a|multi|string")
 	CHK_FT_PRINTF_LIST+=("s" "%s%s%s%s%s|this|is|a|multi|string")
 
-	CHK_FT_PRINTF_LIST+=("sN" "%s|NULL")
+	CHK_FT_PRINTF_LIST+=("sN" "@moulitest: %s|NULL")
+	CHK_FT_PRINTF_LIST+=("dN" "%.2c|NULL")
 	CHK_FT_PRINTF_LIST+=("sN" "%s %s|NULL|string")
 
 
@@ -133,7 +139,8 @@ then
 	CHK_FT_PRINTF_LIST+=("dc" "%5c|42")
 	CHK_FT_PRINTF_LIST+=("dc" "%05c|42")
 	CHK_FT_PRINTF_LIST+=("dc" "%-5c|42")
-	CHK_FT_PRINTF_LIST+=("dc" "%c|0")
+	CHK_FT_PRINTF_LIST+=("dc" "@moulitest: %c|0")
+	CHK_FT_PRINTF_LIST+=("dc" "%2c|0")
 	CHK_FT_PRINTF_LIST+=("dc" "null %c and text|0")
 	CHK_FT_PRINTF_LIST+=("dc" "% c|0")
 
@@ -142,7 +149,11 @@ then
 	CHK_FT_PRINTF_LIST+=("dc" "%5o|41")
 	CHK_FT_PRINTF_LIST+=("dc" "%05o|42")
 	CHK_FT_PRINTF_LIST+=("dc" "%-5o|2500")
-	CHK_FT_PRINTF_LIST+=("dc" "%o|0")
+	CHK_FT_PRINTF_LIST+=("dc" "@moulitest: %o|0")
+	CHK_FT_PRINTF_LIST+=("d" "@moulitest: %.o, %.0o|0|0")
+	CHK_FT_PRINTF_LIST+=("d" "@moulitest: %5.o, %5.0o|0|0")
+	CHK_FT_PRINTF_LIST+=("d" "@moulitest: %#.o, %#.0o|0|0")
+	CHK_FT_PRINTF_LIST+=("d" "@moulitest: %.10o|42")
 
 
 
@@ -254,6 +265,11 @@ then
 	CHK_FT_PRINTF_LIST+=("d" "%+10.5d|4242")
 	CHK_FT_PRINTF_LIST+=("d" "%-+10.5d|4242")
 	CHK_FT_PRINTF_LIST+=("d" "%03.2d|0")
+	CHK_FT_PRINTF_LIST+=("d" "@moulitest: %.10d|-42")
+	CHK_FT_PRINTF_LIST+=("d" "@moulitest: %.d, %.0d|42|43")
+	CHK_FT_PRINTF_LIST+=("d" "@moulitest: %.d, %.0d|0|0")
+	CHK_FT_PRINTF_LIST+=("d" "@moulitest: %5.d, %5.0d|0|0")
+
 
 
 	# u
@@ -285,8 +301,13 @@ then
 	CHK_FT_PRINTF_LIST+=("uU" "%hU|4294967296")
 	CHK_FT_PRINTF_LIST+=("uU" "%U|4294967296")
 
+	CHK_FT_PRINTF_LIST+=("u" "@moulitest: %.5u|42")
+
+
 	# mistaken
 	CHK_FT_PRINTF_LIST+=("uz" "%zhd|4294967296")
+	CHK_FT_PRINTF_LIST+=("uL" "%jzd|9223372036854775807")
+	CHK_FT_PRINTF_LIST+=("uL" "%jhd|9223372036854775807")
 	CHK_FT_PRINTF_LIST+=("uL" "%lhl|9223372036854775807")
 	CHK_FT_PRINTF_LIST+=("uL" "%lhlz|9223372036854775807")
 	CHK_FT_PRINTF_LIST+=("uL" "%zj|9223372036854775807")
