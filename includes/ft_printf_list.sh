@@ -313,7 +313,8 @@ then
 	CHK_FT_PRINTF_LIST+=("uL" "%zj|9223372036854775807")
 	CHK_FT_PRINTF_LIST+=("ul" "%lhh|2147483647")
 	CHK_FT_PRINTF_LIST+=("ul" "%hhld|128")
-
+	CHK_FT_PRINTF_LIST+=("d" "@main_ftprintf: %####0000 33..1..#00d\n|256")
+	CHK_FT_PRINTF_LIST+=("d" "@main_ftprintf: %####0000 33..1d\n|256")
 
 
 
