@@ -152,7 +152,7 @@ then
 	function display_menu
 	{
 		local -a MENU FUNCS
-		local TOTAL SEL LEN SELN TITLE
+		local TOTAL SEL LEN SELN TITLE i TESTSA TESTSI
 		SEL=""
 		shift 1
 		printf $C_INVERT""
@@ -165,22 +165,54 @@ then
 				printf "%"$COLUMNS"s" " "
 				shift 1
 			else
-				(( TOTAL += 1 ))
-				FUNCS[$TOTAL]="$1"
-				MENU[$TOTAL]="$2"
-				TITLE=`echo "$2" | sed 's/%/%%/g'`
-				if (( $TOTAL < 10 ))
+				if [ "$1" == "TESTS" ]
 				then
-					SELN=$TOTAL
+					i=2
+					TESTSI=1
+					TESTSA="$2[$i]"
+					while [ "${!TESTSA}" != "" ]
+					do
+						(( TOTAL += 1 ))
+						#FUNCS[$TOTAL]="${!TESTSA}"
+						(( i++ ))
+						TESTSA="$2[$i]"
+						FUNCS[$TOTAL]="$3 $TESTSI"
+						MENU[$TOTAL]="${!TESTSA}"
+						(( i++ ))
+						(( TESTSI++ ))
+						TITLE=`echo "${!TESTSA}" | sed 's/%/%%/g'`
+						if (( $TOTAL < 10 ))
+						then
+							SELN=$TOTAL
+						else
+							(( SELN=65 + $TOTAL - 10 ))
+							SELN=`echo "$SELN" | awk '{printf("%c", $0)}'`
+						fi
+						(( LEN=$COLUMNS - ${#TITLE} - 9 ))
+						printf "  "$SELN")    $TITLE "
+						printf "%"$LEN"s" " "
+						printf "\n"
+						TESTSA="$2[$i]"
+					done
+					shift 3
 				else
-					(( SELN=65 + $TOTAL - 10 ))
-					SELN=`echo "$SELN" | awk '{printf("%c", $0)}'`
+					(( TOTAL += 1 ))
+					FUNCS[$TOTAL]="$1"
+					MENU[$TOTAL]="$2"
+					TITLE=`echo "$2" | sed 's/%/%%/g'`
+					if (( $TOTAL < 10 ))
+					then
+						SELN=$TOTAL
+					else
+						(( SELN=65 + $TOTAL - 10 ))
+						SELN=`echo "$SELN" | awk '{printf("%c", $0)}'`
+					fi
+					(( LEN=$COLUMNS - ${#TITLE} - 9 ))
+					printf "  "$SELN")    $TITLE "
+					printf "%"$LEN"s" " "
+					printf "\n"
+					shift 2
 				fi
-				(( LEN=$COLUMNS - ${#2} - 9 ))
-				printf "  "$SELN")    $TITLE "
-				printf "%"$LEN"s" " "
-				printf "\n"
-				shift 2
 			fi
         done
 		printf "%"$COLUMNS"s" " "

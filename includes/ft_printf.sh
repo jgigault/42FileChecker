@@ -11,11 +11,13 @@ declare -a CHK_FT_PRINTF_AUTHORIZED_FUNCS='(write malloc free exit main)'
 
 function check_ft_printf_all
 {
-	local FUNC TITLE i j j2 RET0 MYPATH
+	local FUNC TITLE i j k j2 RET0 MYPATH TESTONLY
+	TESTONLY="$1"
 	MYPATH=$(get_config "ft_printf")
 	configure_moulitest "ft_printf" "$MYPATH"
 	i=0
 	j=1
+	k=0
 	display_header
 	display_righttitle ""
 	check_ft_printf_top "$MYPATH"
@@ -26,17 +28,24 @@ function check_ft_printf_all
 		TITLE=`echo "${CHK_FT_PRINTF[$i]}"  | sed 's/%/%%/g'`
 		j2=`ft_itoa "$j"`
 		printf "  $C_WHITE${j2} -> $TITLE$C_CLEAR\n"
-		(eval "$FUNC" > .myret) &
-		display_spinner $!
-		RET0=`cat .myret | sed 's/%/%%/g'`
-		printf "$RET0\n"
-		printf "\n"
+		if [ "$TESTONLY" == "" -o "$TESTONLY" == "$k" ]
+		then
+			(eval "$FUNC" > .myret) &
+			display_spinner $!
+			RET0=`cat .myret | sed 's/%/%%/g'`
+			printf "$RET0\n"
+			printf "\n"
+		else
+			printf $C_GREY"  --Not performed--\n"$C_CLEAR;
+			printf "\n"
+		fi
 		(( j += 1 ))
 		(( i += 1 ))
+		(( k += 1 ))
 	done
 	display_menu\
 		""\
-		check_ft_printf_all "RETRY"\
+		"check_ft_printf" "OK"\
 		"open .mynorminette" "more info: norminette"\
 		"open .mymakefile" "more info: makefile"\
 		"open .myforbiddenfunc" "more info: forbidden functions"\
@@ -305,7 +314,10 @@ function check_ft_printf
 	then
 		display_menu\
             ""\
-			check_ft_printf_all "check it!"\
+			check_ft_printf_all "check all!"\
+			"_"\
+			"TESTS" "CHK_FT_PRINTF" "check_ft_printf_all"\
+			"_"\
 			config_ft_printf "change path"\
 			main "BACK TO MAIN MENU"
 	else
