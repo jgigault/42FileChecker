@@ -5,6 +5,7 @@ then
 
 	declare -a CHK_FT_PRINTF_LIST
 
+
 	# easy
 	CHK_FT_PRINTF_LIST+=("0" "")
 	CHK_FT_PRINTF_LIST+=("0" "\n")
@@ -314,9 +315,9 @@ then
 	CHK_FT_PRINTF_LIST+=("ul" "%lhh|2147483647")
 	CHK_FT_PRINTF_LIST+=("ul" "%hhld|128")
 	CHK_FT_PRINTF_LIST+=("d" "@main_ftprintf: %####0000 33..1..#00d\n|256")
-	CHK_FT_PRINTF_LIST+=("d" "@main_ftprintf: %####0000 33..1d\n|256")
+	CHK_FT_PRINTF_LIST+=("d" "@main_ftprintf: %####0000 33..1d|256")
 
-
+	CHK_FT_PRINTF_LIST+=("d" "@main_ftprintf: %###-#0000 33...12..#0+0d|256")
 
 
 
