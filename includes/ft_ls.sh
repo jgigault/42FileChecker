@@ -4,17 +4,19 @@ if [ "$FILECHECKER_SH" == "1" ]
 then
 
 
-declare -a CHK_FT_LS='( "check_ft_ls_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_ft_ls_makefile" "makefile" "check_ft_ls_forbidden_func" "forbidden functions" "check_ft_ls_leaks" "leaks" "check_ft_ls_speedtest" "speed test" "check_ft_ls_moulitest" "moulitest (https://github.com/yyang42/moulitest)" )'
+declare -a CHK_FT_LS='( "check_author" "auteur" "check_norme" "norminette" "check_ft_ls_makefile" "makefile" "check_ft_ls_forbidden_func" "forbidden functions" "check_ft_ls_leaks" "leaks" "check_ft_ls_speedtest" "speed test" "check_ft_ls_moulitest" "moulitest (https://github.com/yyang42/moulitest)" )'
 
 declare -a CHK_FT_LS_AUTHORIZED_FUNCS='(write opendir readdir closedir stat lstat getpwuid getgrgid listxattr getxattr time ctime readlink malloc free perror strerror exit main)'
 
 function check_ft_ls_all
 {
-	local FUNC TITLE i j RET0 MYPATH
+	local FUNC TITLE i j j2 k RET0 MYPATH TESTONLY
+	TESTONLY="$1"
 	MYPATH=$(get_config "ft_ls")
 	configure_moulitest "ft_ls" "$MYPATH"
-	i=2
-	j=1;
+	i=0
+	j=1
+	k=0
 	display_header
 	display_righttitle ""
 	check_ft_ls_top "$MYPATH"
@@ -22,25 +24,37 @@ function check_ft_ls_all
 	do
 		FUNC=${CHK_FT_LS[$i]}
 		(( i += 1 ))
+		TITLE=`echo "${CHK_FT_LS[$i]}"  | sed 's/%/%%/g'`
 		TITLE=${CHK_FT_LS[$i]}
-		printf "  $C_WHITE$j -> $TITLE$C_CLEAR\n"
-		(eval "$FUNC" "all" > .myret) &
-		display_spinner $!
-		RET0=`cat .myret | sed 's/%/%%/g'`
-		printf "$RET0\n"
-		printf "\n"
+		j2=`ft_itoa "$j"`
+		printf "  $C_WHITE${j2} -> $TITLE$C_CLEAR\n"
+		if [ "$TESTONLY" == "" -o "$TESTONLY" == "$k" ]
+		then
+			(eval "$FUNC" "all" > .myret) &
+			display_spinner $!
+			RET0=`cat .myret | sed 's/%/%%/g'`
+			printf "$RET0\n"
+			printf "\n"
+		else
+			printf $C_GREY"  --Not performed--\n"$C_CLEAR
+			printf "\n"
+		fi
 		(( j += 1 ))
 		(( i += 1 ))
+		(( k += 1 ))
 	done
 	display_menu\
 		""\
-		main "OK"\
+		check_ft_ls "OK"\
 		"open .mynorminette" "more info: norminette"\
 		"open .mymakefile" "more info: makefile"\
 		"open .myforbiddenfunc" "more info: forbidden functions"\
 		"open .myleaks" "more info: leaks"\
 		"open .myspeedtest" "more info: speed test"\
-		"open .mymoulitest" "more info: moulitest"
+		"open .mymoulitest" "more info: moulitest"\
+		"_"\
+		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
+		main "BACK TO MAIN MENU"
 }
 
 function check_ft_ls_speedtest
@@ -114,7 +128,10 @@ function check_ft_ls
 	then
 		display_menu\
             ""\
-			check_ft_ls_all "check it!"\
+			check_ft_ls_all "check all!"\
+			"_"\
+			"TESTS" "CHK_FT_LS" "check_ft_ls_all"\
+			"_"\
 			config_ft_ls "change path"\
 			main "BACK TO MAIN MENU"
 	else
