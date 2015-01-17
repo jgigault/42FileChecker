@@ -5,6 +5,7 @@ then
 
 	function check_forbidden_func
 	{
+		local LPATH LHOME
 		local -a MYFUNCS
 		local exists total i RET0
 		LOG_FILENAME=.myforbiddenfunc
@@ -14,6 +15,7 @@ then
 		local tab_local=(${!tab_str})
 		IFS=$OLD_IFS
 
+		LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
 		rm -f "$LOG_FILENAME"
 		touch "$LOG_FILENAME"
 		if [ -f "$2" ]
@@ -36,22 +38,22 @@ then
 				then
 					for i in $(find "$MYPATH" | grep -E \\.\[c\]$)
 					do
-						RET0=`echo "cat \"$i\" | awk '\\$0 ~ /[\(\)= \t]${MYFUNCS[$item]}[ \t]*\(/ {print}'"`
+						LPATH="echo \"$i\" | sed 's/$LHOME/~/'"
+						LPATH=`eval $LPATH`
+						RET0=`echo "cat \"$i\" | awk 'BEGIN{ORS=\"\"} \\$0 ~ /[\(\)= \t]${MYFUNCS[$item]}[ \\t]*\(/ {gsub(/[\\t]/, \" \"); gsub(/[ ]+/, \" \"); gsub(/^ /, \"\"); printf(\"%s%s%s%s\", \"-> \", \"${MYFUNCS[$item]}\\\\\\n\\\\\\n\", \"   line \"NR\" in $LPATH:\\\\\\n\", \"   \"\\$0\"\\\\\\n\\\\\\n\")}'"`
 						RET0=`eval "$RET0"`
 						if [ "$RET0" != "" ]
 						then
+							(( total += 1 ))
+							if (( total == 1 ))
+							then
+								printf "%s\n\n" "You should justify the use of the following functions:" > $LOG_FILENAME
+							fi
+							#echo "-> ${MYFUNCS[$item]}" >> $LOG_FILENAME
+							printf "%s\n\n" "$RET0" >> $LOG_FILENAME
 							exists=1
 						fi
 					done
-					if [ "$exists" == "1" ]
-					then
-						(( total += 1 ))
-						if (( total == 1 ))
-						then
-							echo "You should justify the use of the following functions:" > $LOG_FILENAME
-						fi
-						echo "-> ${MYFUNCS[$item]}" >> $LOG_FILENAME
-					fi
 				fi
 			done
 			if (( total == 0 ))
