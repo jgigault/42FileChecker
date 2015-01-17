@@ -24,6 +24,7 @@ then
 		C_BLACK="\033[30;1m"
 		C_INVERT="\033[48;5;17m""\033[38;5;104m"
 		C_INVERTGREY="\033[48;5;233m""\033[38;5;95m"
+		C_INVERTRED="\033[48;5;88m""\033[38;5;107m"
 	fi
 
 	function display_error
@@ -94,7 +95,12 @@ then
 		echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 		echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n "
 		clear
-		printf $C_INVERT""
+		if [ "$1" != "" ]
+		then
+			printf "$1"
+		else
+			printf $C_INVERT""
+		fi
 		display_righttitle "V1.r$CVERSION"
 		display_center "  _  _  ____  _____ _ _       ____ _               _              "
 		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  "
@@ -154,8 +160,13 @@ then
 		local -a MENU FUNCS
 		local TOTAL SEL LEN SELN TITLE i TESTSA TESTSI
 		SEL=""
+		if [ "$1" != "" ]
+		then
+			printf $1
+		else
+			printf $C_INVERT""
+		fi
 		shift 1
-		printf $C_INVERT""
 		printf "%"$COLUMNS"s" " "
 		printf "\n"
 		while (( $# > 0 ))

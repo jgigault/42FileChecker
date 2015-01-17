@@ -18,14 +18,14 @@ function update
 	then
 		(check_for_moulitest > .myret) &
 		display_spinner $!
-		display_header
+		display_header "$C_INVERTRED"
 		printf "\n\n"
 		MOULIDATE=`cat .myret`
 		if [ "$MOULIDATE" == "0" ]
 		then
 			printf $C_RED"  Your version of 'moulitest' (https://github.com/yyang42/moulitest) is out-of-date.\n  Choose UPDATE MOULITEST (1) for installing the latest version or SKIP UPDATE (2) if you want to skip this warning.\n\n"$C_CLEAR
 			display_menu\
-			   	""\
+			   	"$C_INVERTRED"\
                 install_update_moulitest "UPDATE MOULITEST"\
 				main "SKIP UPDATE"\
                 exit_checker "EXIT"
@@ -34,7 +34,7 @@ function update
 		then
 			printf $C_RED"  The 'moulitest' (https://github.com/yyang42/moulitest) is not installed.\n  Choose INSTALL MOULITEST (1) for installing it or SKIP INSTALL (2) if you want to skip this warning.\n\n"$C_CLEAR
 			display_menu\
-             	""\
+             	"$C_INVERTRED"\
                 install_update_moulitest "INSTALL MOULITEST"\
 				main "SKIP INSTALL"\
                 exit_checker "EXIT"
@@ -55,7 +55,7 @@ function update
 			LOCALHASH=`git show-ref | grep -v remotes | cut -d" " -f1`
 			REMOTEHASH=`git ls-remote 2>/dev/null | grep HEAD | cut -f1`
 			VERSION=$(git shortlog origin/master -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
-			display_header
+			display_header "$C_INVERTRED"
 			printf "\n\n"
 			printf $C_RED""
 			if [ "$REMOTEHASH" != "$LOCALHASH" ]
@@ -77,7 +77,7 @@ function update
 			fi
 			printf "\n\n  Choose UPDATE 42FILECHECKER (1) for installing the last version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
 			display_menu\
-              	""\
+              	"$C_INVERTRED"\
                 install_update "UPDATE 42FILECHECKER"\
 				main "SKIP UPDATE"\
                 exit_checker "EXIT"
