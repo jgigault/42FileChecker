@@ -39,6 +39,6 @@ int  main(void)
   line = NULL;
   get_next_line(fd, &line);
   close(fd);
-  while (1);
+  sleep(15);
   return (0);
 }
