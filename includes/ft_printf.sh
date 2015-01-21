@@ -248,7 +248,6 @@ function check_ft_printf_basictests_gcc
 	LOGFILENAME="$2"
 	if [ ! -f "./tmp/ft_$FILEN" -o ! -f "./tmp/$FILEN" ]
 	then
-		make re -C "$MYPATH" &>/dev/null
 		if [ -f "$MYPATH/libftprintf.a" ]
 		then
 			RET0=`gcc -Wall -Werror -Wextra "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
