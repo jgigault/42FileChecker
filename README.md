@@ -7,10 +7,18 @@ The script is designed as a reminder:
 * count and names of files
 * code's standard
 * required and forbidden functions
-* macro and static variables declarations
+* macro definitions
+* static variables & functions declarations
 * makefile rules
 
-Basic tests with compilation are also available for get_next_line and ft_printf (beta), whilst complete unit tests are handled by the "moulitest" (https://github.com/yyang42/moulitest) which is automatically installed and updated.
+Extra tests are also available:
+* memory leaks detection
+* speed test comparison
+* basic unit tests
+
+Complete unit tests are handled by the [moulitest](https://github.com/yyang42/moulitest), a C project developed by [yyand42](https://github.com/yyang42) and other contributors, whose sources are automatically downloaded, configured and updated when you run the script.
+
+At launch, an auto-update feature enables you to keep the latest version of 42FileChecker without manually cloning or merging. 
 
 ## install & launch
 	git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
@@ -113,5 +121,5 @@ Basic tests with compilation are also available for get_next_line and ft_printf 
 	--no-timeout  // Disable time-out child process
 
 ## dependencies
-* The script may automatically install and update the latest version of the "moulitest" project: https://github.com/yyang42/moulitest
-* The "norminette" program from 42 school is required
+* [moulitest](https://github.com/yyang42/moulitest): [@yyand42](https://github.com/yyang42) and other contributors
+* norminette: 42 school program for code's standard detection
