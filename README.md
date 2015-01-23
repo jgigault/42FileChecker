@@ -16,9 +16,9 @@ Extra tests are also available:
 * speed test comparison
 * basic unit tests
 
-Complete unit tests are handled by the [moulitest](https://github.com/yyang42/moulitest), a C project developed by [yyand42](https://github.com/yyang42) and other contributors, whose sources are automatically downloaded, configured and updated when you run the script.
+Complete unit tests are handled by the [moulitest](https://github.com/yyang42/moulitest), a C project developed by [yyang42](https://github.com/yyang42) and other contributors, whose sources are automatically downloaded, configured and updated when you run the script.
 
-At launch, an auto-update feature enables you to keep the latest version of 42FileChecker without manually cloning or merging. 
+At launch, an auto-update feature enables you to keep the latest version of 42FileChecker without manually cloning or merging.
 
 ## install & launch
 	git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
@@ -121,5 +121,5 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 	--no-timeout  // Disable time-out child process
 
 ## dependencies
-* [moulitest](https://github.com/yyang42/moulitest): [@yyand42](https://github.com/yyang42) and other contributors
-* norminette: 42 school program for code's standard detection
+* [moulitest](https://github.com/yyang42/moulitest): [@yyang42](https://github.com/yyang42) and other contributors: unit tests
+* norminette: [@42born2code](https://twitter.com/42born2code): program for code's standard check
