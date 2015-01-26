@@ -4,7 +4,7 @@ if [ "$FILECHECKER_SH" == "1" ]
 then
 
 
-declare -a CHK_GNL='( "check_libft_all" "all" "check_author" "auteur" "check_norme" "norminette" "check_gnl_macro" "BUFF_SIZE macro" "check_gnl_bonus" "bonus: static var" "check_gnl_forbidden_func" "forbidden functions" "check_gnl_basics" "basic tests" "check_gnl_multiple_fd" "bonus: multiple file descriptor" "check_gnl_leaks" "leaks" "check_gnl_moulitest" "moulitest (https://github.com/yyang42/moulitest)" )'
+declare -a CHK_GNL='( "check_author" "auteur" "check_norme" "norminette" "check_gnl_macro" "BUFF_SIZE macro" "check_gnl_bonus" "bonus: static var" "check_gnl_forbidden_func" "forbidden functions" "check_gnl_basics" "basic tests" "check_gnl_multiple_fd" "bonus: multiple file descriptor" "check_gnl_leaks" "leaks" "check_gnl_moulitest" "moulitest (https://github.com/yyang42/moulitest)" )'
 
 declare -a CHK_GNL_BASICS='("gnl1_1" "1 line 8 chars with Line Feed" "" "gnl1_2" "2 lines 8 chars with Line Feed" "" "gnl1_3" "4 lines 8 chars with Line Feed" "" "gnl2_1" "STDIN: 1 line 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_1.txt | SPEC0" "gnl2_2" "STDIN: 2 lines 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_2.txt | SPEC0" "gnl2_3" "STDIN: 4 lines 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_3.txt | SPEC0" "gnl3_1" "1 line 16 chars with Line Feed" "" "gnl3_2" "2 lines 16 chars with Line Feed" "" "gnl3_3" "4 lines 16 chars with Line Feed" "" "gnl4_1" "STDIN: 1 line 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_1.txt | SPEC0" "gnl4_2" "STDIN: 2 lines 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_2.txt | SPEC0" "gnl4_3" "STDIN: 4 lines 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_3.txt | SPEC0" "gnl5_1" "1 line 4 chars with Line Feed" "" "gnl5_2" "2 lines 4 chars with Line Feed" "" "gnl5_3" "4 lines 4 chars with Line Feed" "" "gnl6_1" "STDIN: 1 line 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_1.txt | SPEC0" "gnl6_2" "STDIN: 2 lines 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_2.txt | SPEC0" "gnl6_3" "STDIN: 4 lines 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_3.txt | SPEC0" "gnl7_1" "1 lines 8 chars without Line Feed" "" "gnl7_2" "2 lines 8 chars without Line Feed" "" "gnl7_3" "4 lines 8 chars without Line Feed" "" "gnl8_1" "STDIN: 1 line 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_1.txt | SPEC0" "gnl8_2" "STDIN: 2 lines 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_2.txt | SPEC0" "gnl8_3" "STDIN: 4 lines 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_3.txt | SPEC0" "gnl9" "Bad file descriptor" "")'
 
@@ -12,11 +12,13 @@ declare -a CHK_GNL_AUTHORIZED_FUNCS='(read malloc free get_next_line main)'
 
 function check_gnl_all
 {
-	local FUNC TITLE i j RET0 MYPATH
+	local FUNC TITLE i j j2 k RET0 MYPATH TESTONLY
+	TESTONLY="$1"
 	MYPATH=$(get_config "gnl")
 	configure_moulitest "gnl" "$MYPATH"
-	i=2
-	j=1;
+	i=0
+	j=1
+	k=0
 	display_header
 	display_righttitle ""
 	check_gnl_top "$MYPATH"
@@ -24,19 +26,27 @@ function check_gnl_all
 	do
 		FUNC=${CHK_GNL[$i]}
 		(( i += 1 ))
-		TITLE=${CHK_GNL[$i]}
-		printf "  $C_WHITE$j -> $TITLE$C_CLEAR\n"
-		(eval "$FUNC" "all" > .myret) &
-		display_spinner $!
-		RET0=`cat .myret | sed 's/%/%%/g'`
-		printf "$RET0\n"
-		printf "\n"
+		TITLE=`echo "${CHK_GNL[$i]}"  | sed 's/%/%%/g'`
+		j2=`ft_itoa "$j"`
+		printf "  $C_WHITE${j2} -> $TITLE$C_CLEAR\n"
+		if [ "$TESTONLY" == "" -o "$TESTONLY" == "$k" ]
+		then
+			(eval "$FUNC" "all" > .myret) &
+			display_spinner $!
+			RET0=`cat .myret | sed 's/%/%%/g'`
+			printf "$RET0\n"
+			printf "\n"
+		else
+			printf $C_GREY"  --Not performed--\n"$C_CLEAR
+			printf "\n"
+		fi
 		(( j += 1 ))
 		(( i += 1 ))
+		(( k += 1 ))
 	done
 	display_menu\
 		""\
-		main "OK"\
+		check_gnl "OK"\
 		"open .mynorminette" "more info: norminette"\
 		"open .mymacro" "more info: BUFF_SIZE macro"\
 		"open .mybonusstatic" "more info: bonus: static var"\
@@ -44,7 +54,10 @@ function check_gnl_all
 		"open .mybasictests" "more info: basic tests"\
 		"open .mymultiplefd" "more info: bonus: multiple file descriptor"\
 		"open .myleaks" "more info: leaks"\
-		"open .mymoulitest" "more info: moulitest"
+		"open .mymoulitest" "more info: moulitest"\
+		"_"\
+		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
+		main "BACK TO MAIN MENU"
 }
 
 function check_gnl_forbidden_func
@@ -295,7 +308,10 @@ function check_gnl
 	then
 		display_menu\
             ""\
-			check_gnl_all "check it!"\
+			check_gnl_all "check all!"\
+			"_"\
+			"TESTS" "CHK_GNL" "check_gnl_all"\
+			"_"\
 			config_gnl "change path"\
 			main "BACK TO MAIN MENU"
 	else
