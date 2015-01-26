@@ -25,7 +25,6 @@ function check_ft_ls_all
 		FUNC=${CHK_FT_LS[$i]}
 		(( i += 1 ))
 		TITLE=`echo "${CHK_FT_LS[$i]}"  | sed 's/%/%%/g'`
-		TITLE=${CHK_FT_LS[$i]}
 		j2=`ft_itoa "$j"`
 		printf "  $C_WHITE${j2} -> $TITLE$C_CLEAR\n"
 		if [ "$TESTONLY" == "" -o "$TESTONLY" == "$k" ]
