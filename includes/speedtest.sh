@@ -11,6 +11,7 @@ then
 		LOGFILENAME="$RETURNPATH/tmp/speedtest"
 		rm -f $LOGFILENAME
 		touch $LOGFILENAME
+		check_kill_by_name "$PROGNAME $PROGARGS"
 		(eval "$PROGNAME $PROGARGS" 1> $LOGFILENAME 2>&1 &)
 		PROCESSID=`ps | grep "$PROGNAME $PROGARGS" | grep -v "grep" | sed 's/^[ ]*//g' | cut -d" " -f1`
 		if [ "$PROCESSID" != "" ]
