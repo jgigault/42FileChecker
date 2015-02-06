@@ -66,8 +66,8 @@ then
 						if [ "$RET0" != "" ]
 						then
 							RET0=`make all -C "$LPATH" 2>&1 | sed 's/\^\[\[[0-9;]*m//g' | sed 's/\^\[\[0m//g' | sed 's/\$$//'`
-							RET2=`echo "$RET0" | grep "$LBINARY' is up to date"`
-							RET0=`echo "$RET0" | grep "make: Nothing to be done"`
+							RET2=`echo "$RET0" | grep -i "is up to date"`
+							RET0=`echo "$RET0" | grep -i "Nothing to be done"`
 							if [ "$RET0" != "" -o "$RET2" != "" ]
 							then
 								printf $C_GREEN"  Makefile seems to work perfectly"$C_CLEAR
