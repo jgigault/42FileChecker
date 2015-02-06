@@ -266,6 +266,8 @@ function check_gnl_macro
     local RET0 RET2 HEADERF GNLC VAL0
     HEADERF="$MYPATH/get_next_line.h"
 	GNLC="$MYPATH/get_next_line.c"
+	rm -f .mymacro
+	touch .mymacro
 	if [ -f "$HEADERF" -a -f "$GNLC" ]
     then
         RET0=`cat "$HEADERF" | grep define | grep BUFF_SIZE`
@@ -273,12 +275,12 @@ function check_gnl_macro
         then
             printf $C_RED"  BUFF_SIZE is not defined"$C_CLEAR | tee "$RETURNPATH"/.mymacro
         else
-			RET2=`cat "$GNLC" | grep -E 'read[ 	]*\([ 	&->a-zA-Z0-1]*,[ 	&->a-zA-Z0-1]*,[ 	]*BUFF_SIZE[ 	]*)'`
+			RET2=`cat "$GNLC" | grep -E 'read[ \t]*\([ \t&->a-zA-Z0-1_]*,[ \t&->a-zA-Z0-1_]*,[ \t]*BUFF_SIZE[ \t]*)'`
 			VAL0=`echo "$RET0" | sed 's/#//' | sed 's/BUFF_SIZE//' | sed 's/define//' | sed 's/ //g'`
 			if [ "$RET2" == "" ]
 			then
 				printf $C_RED"  BUFF_SIZE is defined as: $VAL0, but seems to be used not properly"$C_CLEAR
-				echo "BUFF_SIZE should be used as the third parameter of the function 'read' without any handling! read([*], [*], BUFF_SIZE)\n\nCheck the line where the function 'read' is used:\n$(cat "$GNLC" | grep -E 'read[ ]*\(' | sed 's/^[ 	]*//g')" > "$RETURNPATH"/.mymacro
+				echo "BUFF_SIZE should be used as the third parameter of the function 'read' without any handling! read([*], [*], BUFF_SIZE)\n\nCheck the line(s) where the function 'read' is used:\n$(cat "$GNLC" | grep -E 'read[\t]*\(' | sed 's/^[ \t]*//g')" > "$RETURNPATH"/.mymacro
 			else
 				printf $C_GREEN"  BUFF_SIZE is defined as: $VAL0"$C_CLEAR
 				echo "BUFF_SIZE is defined with value: $VAL0" > "$RETURNPATH"/.mymacro
