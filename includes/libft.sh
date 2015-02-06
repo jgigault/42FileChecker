@@ -16,31 +16,40 @@ declare -a CHK_LIBFT_AUTHORIZED_FUNCS='(free malloc write main)'
 
 function check_libft_all
 {
-	local FUNC TITLE i j RET0 MYPATH
+	local FUNC TITLE i j k j2 RET0 MYPATH TESTONLY
+	TESTONLY="$1"
 	MYPATH=$(get_config "libft")
 	configure_moulitest "libft" "$MYPATH"
 	i=0
 	j=1
+	k=0
 	display_header
-	display_righttitle ""
 	check_libft_top "$MYPATH"
 	while [ "${CHK_LIBFT[$i]}" != "" ]
 	do
 		FUNC="${CHK_LIBFT[$i]}"
 		(( i += 1 ))
-		TITLE="${CHK_LIBFT[$i]}"
+		TITLE=`echo "${CHK_LIBFT[$i]}"  | sed 's/%/%%/g'`
+		j2=`ft_itoa "$j"`
 		printf "  $C_WHITE$j -> $TITLE$C_CLEAR\n"
-		(eval "$FUNC" > .myret) &
-		display_spinner $!
-		RET0=`cat .myret | sed 's/%/%%/g'`
-		printf "$RET0\n"
-		printf "\n"
+		if [ "$TESTONLY" == "" -o "$TESTONLY" == "$k" ]
+		then
+			(eval "$FUNC" > .myret) &
+			display_spinner $!
+			RET0=`cat .myret | sed 's/%/%%/g'`
+			printf "$RET0\n"
+			printf "\n"
+		else
+			printf $C_GREY"  --Not performed--\n"$C_CLEAR;
+			printf "\n"
+		fi
 		(( j += 1 ))
 		(( i += 1 ))
+		(( k += 1 ))
 	done
 	display_menu\
 		""\
-		main "OK"\
+		"check_libft" "RETRY"\
 		"open .myLIBFT_MANDATORIES" "more info: required functions"\
 		"open .myLIBFT_BONUS" "more info: bonus functions"\
 		"open .myextra" "more info: extra functions"\
@@ -48,7 +57,10 @@ function check_libft_all
 		"open .mystatic" "more info: static declarations"\
 		"open .mymakefile" "more info: makefile"\
 		"open .myforbiddenfunc" "more info: forbidden functions"\
-		"open .mymoulitest" "more info: moulitest"
+		"open .mymoulitest" "more info: moulitest"\
+		"_"\
+		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
+		main "BACK TO MAIN MENU"
 }
 
 function check_libft_makefile
@@ -147,7 +159,7 @@ function check_libft_forbidden_func
 		echo "return (1); }" >> $F
 		cd "$RETURNPATH"/tmp
 		make re -C "$MYPATH" >/dev/null
-		rm -f "$FILEN"
+		$CMD_RM -f "$FILEN"
 		RET0=`gcc "$F" -L"$MYPATH" -lft -o "$FILEN"`
 		cd "$RETURNPATH"
 		check_forbidden_func CHK_LIBFT_AUTHORIZED_FUNCS "./tmp/$FILEN"
@@ -159,7 +171,10 @@ function check_libft_forbidden_func
 
 function check_libft_extra
 {	if [ "$OPT_NO_LIBFTFILESEXIST" == "0" ]; then
-	local i j exists TOTAL TOTAL2 RET0
+	local i j exists TOTAL TOTAL2 RET0 LOGFILENAME
+	LOGFILENAME=.myLIBFT_BONUS
+	$CMD_RM -f $LOGFILENAME $LOGFILENAME
+	$CMD_TOUCH $LOGFILENAME $LOGFILENAME
 	TOTAL=0
 	TOTAL2=0
 	for i in $(ls -1 "$MYPATH" | sed '/^\.\/\./d' | grep -E \\.\[c\]$)
@@ -191,7 +206,7 @@ function check_libft_extra
 			RET0=$RET0"Extra function: $i\n"
 		fi
 	done
-	printf "$RET0" > "$RETURNPATH"/.myextra
+	echo "$RET0" > $LOGFILENAME
 	if [ "$TOTAL2" == "0" ]
 	then
 		printf $C_RED"  No extra functions were found"$C_CLEAR
@@ -219,10 +234,12 @@ function check_libft_moulitest
 }
 
 function check_libft_static
-{
-	if [ "$OPT_NO_STATICDECLARATIONS" == "0" ]; then
-	local RET0 TOTAL
-	RET0=`check_statics "$MYPATH" | tee .mystatic`
+{	if [ "$OPT_NO_STATICDECLARATIONS" == "0" ]; then
+	local RET0 TOTAL LOGFILENAME
+	LOGFILENAME=.mystatic
+	$CMD_RM -f $LOGFILENAME $LOGFILENAME
+	$CMD_TOUCH $LOGFILENAME $LOGFILENAME
+	RET0=`check_statics "$MYPATH" | tee $LOGFILENAME`
 	TOTAL=`echo "$RET0" | wc -l | sed 's/ //g'`
 	if [ "$RET0" == "" ]
 	then
@@ -268,85 +285,20 @@ function check_statics
 	fi
 }
 
-function check_norme_recursively
-{
-	check_norme_dir "$1" "$2"
-    for i in $(ls -1F $1 | grep '/$')
-    do
-		DIRPATH=$1"/"$i
-#		check_norme_dir "$DIRPATH" "$2"
-		check_norme_recursively "$DIRPATH" "$2"
-	done
-}
-
-function check_norme_dir
-{
-	ERRORS=""
-	for i in $(ls -1 "$1" | grep '\.[ch]$')
-	do
-		FILEN=$i
-		FILEPATH=$1"/"$i
-		RESULT=$(check_norme "$FILEPATH")
-		if [ "$RESULT" != "" ]
-		then
-			ERRORS=1
-			printf "$RESULT" | sed -e 's/^[ ]*//'
-		fi
-	done
-	if [ "$ERRORS" == "" ]
-	then
-		if [ "$2" != "" ]
-		then
-			echo "$2: \033[0;32mOK\033[m";
-		else
-			echo "$1: \033[0;32mOK\033[m";
-		fi
-	fi
-}
-
-function check_norme_file
-{
-    RESULT=$(check_norme "$1")
-    if [ "$RESULT" != "" ]
-    then
-        printf "$RESULT" | sed -e 's/^[ ]*//'
-	else
-        if [ "$2" != "" ]
-        then
-            echo "$2: \033[0;32mOK\033[m";
-        else
-            echo "\033[0;32mOK\033[m";
-        fi
-    fi
-}
-
-function check_norme0
-{
-	norminette $1 | \
-		sed "/Norme:/d" | \
-		sed "/Norminette can't check this file/d" | \
-		awk -v FILEPATH="$1" 'BEGIN \
-		{ \
-		OFS = "" \
-		} \
-		{ \
-			if ( $0 != "" )
-				print FILEPATH, " : \033[31m", $0, "\033[0m " \
-		}'
-}
-
 function check_libft
 {
 	local MYPATH
 	MYPATH=$(get_config "libft")
 	display_header
-	display_righttitle ""
 	check_libft_top "$MYPATH"
 	if [ -d "$MYPATH" ]
 	then
 		display_menu\
             ""\
-			check_libft_all "check it!"\
+			check_libft_all "check all!"\
+			"_"\
+			"TESTS" "CHK_LIBFT" "check_libft_all"\
+			"_"\
 			config_libft "change path"\
 			main "BACK TO MAIN MENU"
 	else
@@ -362,9 +314,8 @@ function config_libft
 	local AB0 AB2 MYPATH
 	MYPATH=$(get_config "libft")
 	display_header
-	display_righttitle ""
 	check_libft_top "$MYPATH"
-	echo "  Please type the absolute path to your project:"$C_WHITE
+	printf "  Please type the absolute path to your project:\n"$C_WHITE
 	cd "$HOME/"
 	tput cnorm
 	read -p "  $HOME/" -e AB0
@@ -374,12 +325,11 @@ function config_libft
 	while [ "$AB0" == "" -o ! -d "$AB2" ]
 	do
 		display_header
-		display_righttitle ""
-		check_libft_top
-		echo "  Please type the absolute path to your project:"
+		check_libft_top "$MYPATH"
+		printf "  Please type the absolute path to your project:\n"
 		if [ "$AB0" != "" ]
 		then
-			echo $C_RED"  $AB2: No such file or directory"$C_CLEAR$C_WHITE
+			printf $C_RED"  $AB2: No such file or directory\n"$C_CLEAR$C_WHITE
 		else
 			printf $C_WHITE""
 		fi
@@ -395,26 +345,6 @@ function config_libft
 	check_libft
 }
 
-function check_libft_sum
-{
-	local MYPATH MYMENU i
-	MYPATH=$(get_config "libft")
-	configure_moulitest "libft" "$MYPATH"
-	display_header
-	display_righttitle "LIBFT"
-	check_libft_top "$MYPATH"
-	i=0
-	while [ "${CHK_LIBFT[$i]}" != "" ]
-    do
-		MYMENU="${MYMENU} \""${CHK_LIBFT[$i]}"\""
-        (( i += 1 ))
-		MYMENU="${MYMENU} \""${CHK_LIBFT[$i]}"\""
-        (( i += 1 ))
-	done
-    display_menu "" "${CHK_LIBFT[@]}" "check_libft" "BACK TO CONFIG" "main" "BACK TO MAIN MENU"
-
-}
-
 function check_libft_top
 {
 	local LPATH=$1
@@ -422,7 +352,7 @@ function check_libft_top
 	LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
 	LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
 	LPATH=`eval $LPATH`
-	printf $C_WHITE"\n"
+	printf $C_WHITE"\n\n"
 	if [ "$1" != "" ]
 	then
 		printf "  Current configuration:"

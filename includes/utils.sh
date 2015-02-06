@@ -27,6 +27,10 @@ then
 		C_INVERTRED="\033[48;5;88m""\033[38;5;107m"
 	fi
 
+	CMD_RM=/bin/rm
+	CMD_TOUCH=/usr/bin/touch
+	CMD_GCC=/usr/bin/gcc
+
 	function display_error
 	{
 		echo $C_RED"  !!! $1 !!!"$C_CLEAR
