@@ -197,10 +197,11 @@ function check_gnl_multiple_fd
 
 function check_gnl_leaks
 {	if [ "$OPT_NO_LEAKS" == "0" ]; then
-	local GNLC GNL_LIBFT EXTRA0 RET0 LOGFILENAME PROGNAME
+	local GNLC GNL_LIBFT EXTRA0 RET0 LOGFILENAME PROGNAME HEADERF VAL0
 	check_create_tmp_dir
 	check_gnl_create_header
 	GNLC="$MYPATH/get_next_line.c"
+	HEADERF="$MYPATH/get_next_line.h"
 	GNL_LIBFT="$MYPATH/libft"
 	EXTRA0=
 	LOGFILENAME=.myleaks
@@ -211,16 +212,24 @@ function check_gnl_leaks
 	fi
 	rm -f $LOGFILENAME
 	touch $LOGFILENAME
-	rm -f "./tmp/gnl10"
-	RET0=`gcc -Wall -Werror -Wextra -I ./tmp $GNLC $EXTRA0 ./srcs/gnl/gnl10.c -o ./tmp/gnl10 2>&1`
-	if [ -f "./tmp/gnl10" ]
+	RET0=`cat "$HEADERF" | grep define | grep BUFF_SIZE`
+	VAL0=`echo "$RET0" | sed 's/#//' | sed 's/BUFF_SIZE//' | sed 's/define//' | sed 's/ //g'`
+	if (( "$VAL0" > 11000 ))
 	then
-		RET0=`cat ./srcs/gnl/gnl10.c | sed 's/\\\\/\\\\\\\\/g'`
-		NOTICE="Here is the main() test:\n-----------------------------\n$RET0\n-----------------------------\n\n\n"
-		check_leaks "./tmp/gnl10" "" "$LOGFILENAME" "$NOTICE"
+		echo "Please use a smaller BUFF_SIZE!\nMaximmum is 11000." > $LOGFILENAME
+		printf $C_RED"  Unable to perform the test (read more info)"$C_CLEAR
 	else
-		echo "$RET0" > $LOGFILENAME
-		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
+		rm -f "./tmp/gnl10"
+		RET0=`gcc -Wall -Werror -Wextra -I ./tmp $GNLC $EXTRA0 ./srcs/gnl/gnl10.c -o ./tmp/gnl10 2>&1`
+		if [ -f "./tmp/gnl10" ]
+		then
+			RET0=`cat ./srcs/gnl/gnl10.c | sed 's/\\\\/\\\\\\\\/g'`
+			NOTICE="Here is the main() test:\n-----------------------------\n$RET0\n-----------------------------\n\n\n"
+			check_leaks "./tmp/gnl10" "" "$LOGFILENAME" "$NOTICE"
+		else
+			echo "$RET0" > $LOGFILENAME
+			printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
+		fi
 	fi
 	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
