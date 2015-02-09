@@ -68,7 +68,7 @@ function update
 					RET1=`git log origin/master --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  -> "$0}'`
 					if [ "$RET1" != "" ]
 					then
-						printf "\n\n  Last commits:\n$RET1"
+						printf "\n\n  Last commits:\n%s" "$RET1"
 					fi
 				fi
 			else
