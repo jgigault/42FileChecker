@@ -21,9 +21,9 @@ then
 	{	if [ "$OPT_NO_MOULITEST" == "0" ]; then
 		local RET0 RET1 TOTAL
 		rm -f .mymoulitest
-		if [ -d moulitest ]
+		if [ -d "${MOULITEST_DIR}" ]
 		then
-			make "$1" -C moulitest 1> .mymoulitest 2>&1
+			make "$1" -C "${MOULITEST_DIR}" 1> .mymoulitest 2>&1
 			check_moulitest_cleanlog .mymoulitest
 			RET1=`cat .mymoulitest`
 			RET0=`echo "$RET1" | grep "STARTING ALL UNIT TESTS"`
@@ -56,16 +56,16 @@ then
     {
         case "$1" in
             "libft")
-                echo "LIBFT_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
+                echo "LIBFT_PATH = \"$2\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
                 ;;
             "gnl")
-                echo "GET_NEXT_LINE_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
+                echo "GET_NEXT_LINE_PATH = \"$2\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
                 ;;
             "ft_ls")
-                echo "FT_LS_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
+                echo "FT_LS_PATH = \"$2\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
                 ;;
             "ft_printf")
-                echo "FT_PRINTF_PATH = \"$2\"" > "$RETURNPATH"/moulitest/config.ini
+                echo "FT_PRINTF_PATH = \"$2\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
                 ;;
         esac
     }

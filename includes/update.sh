@@ -140,17 +140,12 @@ function install_update
 
 function check_for_moulitest
 {
-	local DIFF0 RET0
-	if [ ! -d moulitest ]
+	local DIFF0
+	if [ ! -d "${MOULITEST_DIR}" ]
 	then
 		printf "2"
 	else
-		cd moulitest
-		RET0=`git config --get remote.origin.url`
-		if [ "$RET0" != "${MOULITEST_URL}" ]
-		then
-			RET0=`git remote set-url origin "${MOULITEST_URL}"`
-		fi
+		cd "${MOULITEST_DIR}"
 		DIFF0=`git fetch origin 1>/dev/null 2>&1`
 		DIFF0=`git diff origin/master 2>&1 | sed 's/\"//'`
 		cd ..
@@ -167,12 +162,12 @@ function check_for_moulitest
 function install_update_moulitest
 {
 	local RES0 RES2
-	if [ ! -d moulitest ]
+	if [ ! -d "${MOULITEST_DIR}" ]
 	then
 		display_header
 		printf "\n\n"
 		printf "  Installing moulitest...\n"
-		(git clone "${MOULITEST_URL}" moulitest > .myret 2>&1) &
+		(git clone "${MOULITEST_URL}" "${MOULITEST_DIR}" > .myret 2>&1) &
 		display_spinner $!
 		RES0=`cat .myret`
 		RES2=`echo "$RES0" | grep fatal`
@@ -190,7 +185,7 @@ function install_update_moulitest
 	else
 		display_header
 		printf "\n\n"
-		cd moulitest
+		cd "${MOULITEST_DIR}"
 		printf "  Updating moulitest...\n"
 		((git reset --hard origin/master > ../.myret 2>&1) && git merge origin/master > ../.myrest 2>&1) &
 		RES0=`cat ../.myret`
