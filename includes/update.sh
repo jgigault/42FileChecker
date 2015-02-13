@@ -149,19 +149,16 @@ function check_for_moulitest
 		RET0=`git config --get remote.origin.url`
 		if [ "$RET0" != "${MOULITEST_URL}" ]
 		then
-			rm -rf ./
-			cd ..
-			printf "2"
+			RET0=`git remote set-url origin "${MOULITEST_URL}"`
+		fi
+		DIFF0=`git fetch origin 1>/dev/null 2>&1`
+		DIFF0=`git diff origin/master 2>&1 | sed 's/\"//'`
+		cd ..
+		if [ "$DIFF0" != "" ]
+		then
+			printf "0"
 		else
-			DIFF0=`git fetch origin 1>/dev/null 2>&1`
-			DIFF0=`git diff origin/master 2>&1 | sed 's/\"//'`
-			cd ..
-			if [ "$DIFF0" != "" ]
-			then
-				printf "0"
-			else
-				printf "1"
-			fi
+			printf "1"
 		fi
 	fi
 }
