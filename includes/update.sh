@@ -11,6 +11,10 @@ function update
 	display_header
 	printf "\n\n"
 	printf "  Checking for updates...\n"
+	if [ "$CVERSION" == "???" -o "$CVERSION" -lt 192 ]
+	then
+		rm -rf ./moulitest
+	fi
 	(check_for_update > .myret) &
 	display_spinner $!
 	UPTODATE=`cat .myret`
