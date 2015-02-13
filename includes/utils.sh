@@ -30,6 +30,7 @@ then
 	CMD_RM=/bin/rm
 	CMD_TOUCH=/usr/bin/touch
 	CMD_GCC=/usr/bin/gcc
+	MOULITEST_URL="https://github.com/yyang42/moulitest_42projects"
 
 	function display_error
 	{

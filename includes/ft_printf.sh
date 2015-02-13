@@ -5,7 +5,7 @@ then
 
 source includes/ft_printf_list.sh
 
-declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests (beta)" "check_ft_printf_leaks" "leaks" "check_ft_printf_speedtest" "speed test" "check_ft_printf_moulitest" "moulitest (https://github.com/yyang42/moulitest)" )'
+declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests (beta)" "check_ft_printf_leaks" "leaks" "check_ft_printf_speedtest" "speed test" "check_ft_printf_moulitest" "moulitest (${MOULITEST_URL})" )'
 
 declare -a CHK_FT_PRINTF_AUTHORIZED_FUNCS='(write malloc free exit main)'
 

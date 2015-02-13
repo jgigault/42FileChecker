@@ -23,7 +23,7 @@ function update
 		MOULIDATE=`cat .myret`
 		if [ "$MOULIDATE" == "0" ]
 		then
-			printf $C_RED"  Your version of 'moulitest' (https://github.com/yyang42/moulitest) is out-of-date.\n  Choose UPDATE MOULITEST (1) for installing the latest version or SKIP UPDATE (2) if you want to skip this warning.\n\n"$C_CLEAR
+			printf $C_RED"  Your version of 'moulitest' (${MOULITEST_URL}) is out-of-date.\n  Choose UPDATE MOULITEST (1) for installing the latest version or SKIP UPDATE (2) if you want to skip this warning.\n\n"$C_CLEAR
 			display_menu\
 			   	"$C_INVERTRED"\
                 install_update_moulitest "UPDATE MOULITEST"\
@@ -32,7 +32,7 @@ function update
 		fi
 		if [ "$MOULIDATE" == "2" ]
 		then
-			printf $C_RED"  The 'moulitest' (https://github.com/yyang42/moulitest) is not installed.\n  Choose INSTALL MOULITEST (1) for installing it or SKIP INSTALL (2) if you want to skip this warning.\n\n"$C_CLEAR
+			printf $C_RED"  The 'moulitest' (${MOULITEST_URL}) is not installed.\n  Choose INSTALL MOULITEST (1) for installing it or SKIP INSTALL (2) if you want to skip this warning.\n\n"$C_CLEAR
 			display_menu\
              	"$C_INVERTRED"\
                 install_update_moulitest "INSTALL MOULITEST"\
@@ -166,7 +166,7 @@ function install_update_moulitest
 		display_header
 		printf "\n\n"
 		printf "  Installing moulitest...\n"
-		(git clone https://github.com/yyang42/moulitest > .myret 2>&1) &
+		(git clone "${MOULITEST_URL}" > .myret 2>&1) &
 		display_spinner $!
 		RES0=`cat .myret`
 		RES2=`echo "$RES0" | grep fatal`
