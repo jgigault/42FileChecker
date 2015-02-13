@@ -11,10 +11,7 @@ function update
 	display_header
 	printf "\n\n"
 	printf "  Checking for updates...\n"
-	if [ "$CVERSION" == "???" -o "$CVERSION" -lt 192 ]
-	then
-		rm -rf ./moulitest
-	fi
+
 	(check_for_update > .myret) &
 	display_spinner $!
 	UPTODATE=`cat .myret`
@@ -143,20 +140,28 @@ function install_update
 
 function check_for_moulitest
 {
-	local DIFF0
+	local DIFF0 RET0
 	if [ ! -d moulitest ]
 	then
 		printf "2"
 	else
 		cd moulitest
-		DIFF0=`git fetch origin 1>/dev/null 2>&1`
-		DIFF0=`git diff origin/master 2>&1 | sed 's/\"//'`
-		cd ..
-		if [ "$DIFF0" != "" ]
+		RET0=`git config --get remote.origin.url`
+		if [ "$RET0" != "${MOULITEST_URL}" ]
 		then
-			printf "0"
+			rm -rf ./
+			cd ..
+			printf "2"
 		else
-			printf "1"
+			DIFF0=`git fetch origin 1>/dev/null 2>&1`
+			DIFF0=`git diff origin/master 2>&1 | sed 's/\"//'`
+			cd ..
+			if [ "$DIFF0" != "" ]
+			then
+				printf "0"
+			else
+				printf "1"
+			fi
 		fi
 	fi
 }
