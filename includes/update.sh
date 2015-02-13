@@ -170,7 +170,7 @@ function install_update_moulitest
 		display_header
 		printf "\n\n"
 		printf "  Installing moulitest...\n"
-		(git clone "${MOULITEST_URL}" > .myret 2>&1) &
+		(git clone "${MOULITEST_URL}" moulitest > .myret 2>&1) &
 		display_spinner $!
 		RES0=`cat .myret`
 		RES2=`echo "$RES0" | grep fatal`
