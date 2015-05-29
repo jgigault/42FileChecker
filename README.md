@@ -30,22 +30,22 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 <thead>
 <tr>
 <td width="30%" height="60px"></td>
-<td width="14%" align="center" cellpadding="0">
+<td width="12%" align="center" cellpadding="0">
 <strong>libft</strong>
 </td>
-<td width="14%" align="center" cellpadding="0">
+<td width="12%" align="center" cellpadding="0">
 <strong>libftasm</strong>
 </td>
-<td width="14%" align="center" cellpadding="0">
+<td width="12%" align="center" cellpadding="0">
 <strong>gnl</strong>
 </td>
-<td width="14%" align="center" cellpadding="0">
+<td width="12%" align="center" cellpadding="0">
 <strong size="5">ft_ls</strong></ins>
 </td>
-<td width="14%" align="center" cellpadding="0">
+<td width="12%" align="center" cellpadding="0">
 <strong>ft_printf</strong>
 </td>
-<td width="14%" align="center" cellpadding="0">
+<td width="12%" align="center" cellpadding="0">
 <strong>fdf</strong>
 </td>
 </tr>
