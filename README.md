@@ -34,6 +34,9 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 <strong>libft</strong>
 </td>
 <td width="14%" align="center" cellpadding="0">
+<strong>libftasm</strong>
+</td>
+<td width="14%" align="center" cellpadding="0">
 <strong>gnl</strong>
 </td>
 <td width="14%" align="center" cellpadding="0">
@@ -55,10 +58,12 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 </tr>
 <tr>
 <td valign="top" height="60px">norminette</td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
@@ -71,6 +76,7 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 </tr>
 <tr>
 <td valign="top" height="60px">forbidden functions</td>
@@ -79,9 +85,11 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 </tr>
 <tr>
 <td valign="top" height="60px">leaks</td>
+<td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
@@ -92,6 +100,7 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 <td valign="top" height="60px">speed test</td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
+<td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
@@ -100,6 +109,7 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 <td valign="top" height="60px">tests with compilation</td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
@@ -107,6 +117,7 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 <tr>
 <td valign="top" height="60px">moulitest</td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
