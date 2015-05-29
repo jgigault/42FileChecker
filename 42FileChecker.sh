@@ -57,6 +57,7 @@ done
 
 source includes/utils.sh
 source includes/libft.sh
+source includes/libftasm.sh
 source includes/get_next_line.sh
 source includes/ft_ls.sh
 source includes/ft_printf.sh
@@ -78,6 +79,7 @@ function main
 	display_menu\
 		""\
 		check_libft "libft"\
+		check_libftasm "libftasm"\
 		check_gnl "get_next_line"\
 		check_ft_ls "ft_ls"\
 		check_ft_printf "ft_printf"\
