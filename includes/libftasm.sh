@@ -4,7 +4,7 @@ if [ "$FILECHECKER_SH" == "1" ]
 then
 
 
-declare -a CHK_LIBFTASM='( "check_author" "auteur" "check_libftasm_required_exists" "required functions" "check_libftasm_extra" "extra functions" "check_libftasm_makefile" "makefile" "check_libftasm_forbidden_func" "forbidden functions" "check_libftasm_moulitest" "moulitest (${MOULITEST_URL})" )'
+declare -a CHK_LIBFTASM='( "check_author" "auteur" "check_libftasm_required_exists" "required functions" "check_libftasm_extra" "bonus functions" "check_libftasm_makefile" "makefile" "check_libftasm_forbidden_func" "forbidden functions" )'
 
 declare -a LIBFTASM_MANDATORIES='(ft_bzero.s ft_strcat.s ft_isalpha.s ft_isdigit.s ft_isalnum.s ft_isascii.s ft_isprint.s ft_toupper.s ft_tolower.s ft_puts.s ft_strlen.s ft_memset.s ft_memcpy.s ft_strdup.s ft_cat.s)'
 
@@ -47,31 +47,28 @@ function check_libftasm_all
 		""\
 		"check_libftasm" "RETRY"\
 		"open .myLIBFTASM_MANDATORIES" "more info: required functions"\
-		"open .myextra" "more info: extra functions"\
+		"open .myLIBFTASM_BONUS" "more info: bonus functions"\
 		"open .mymakefile" "more info: makefile"\
 		"open .myforbiddenfunc" "more info: forbidden functions"\
-		"open .mymoulitest" "more info: moulitest"\
 		"_"\
 		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
 		main "BACK TO MAIN MENU"
 }
 
 function check_libftasm_makefile
-{	if [ "$OPT_NO_MAKEFILE" == "0" ]; then
+{
 	local MYPATH
 	MYPATH=$(get_config "libftasm")
 	check_makefile "$MYPATH" libftasm.a
-	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_libftasm_required_exists
-{	if [ "$OPT_NO_LIBFTFILESEXIST" == "0" ]; then
-	check_fileexists LIBFT_MANDATORIES
-	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+{
+	check_fileexists LIBFTASM_MANDATORIES
 }
 
 function check_libftasm_forbidden_func
-{	if [ "$OPT_NO_FORBIDDEN" == "0" ]; then
+{
 	local F LOG_FILENAME
 	LOG_FILENAME=.myforbiddenfunc
 	if [ -f "$MYPATH/Makefile" ]
@@ -132,18 +129,17 @@ function check_libftasm_forbidden_func
 	else
 		printf $C_RED"  Makefile not found"$C_CLEAR
 	fi
-	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_libftasm_extra
-{	if [ "$OPT_NO_LIBFTASMFILESEXIST" == "0" ]; then
+{
 	local i j exists TOTAL TOTAL2 RET0 LOGFILENAME
 	LOGFILENAME=.myLIBFTASM_BONUS
 	$CMD_RM -f $LOGFILENAME $LOGFILENAME
 	$CMD_TOUCH $LOGFILENAME $LOGFILENAME
 	TOTAL=0
 	TOTAL2=0
-	for i in $(ls -1 "$MYPATH" | sed '/^\.\/\./d' | grep -E \\.\[c\]$)
+	for i in $(ls -1 "$MYPATH" | sed '/^\.\/\./d' | grep -E \\.\[s\]$)
 	do
 		j=0
 		exists=0
@@ -184,7 +180,6 @@ function check_libftasm_extra
 			printf $C_GREEN"  $TOTAL2 extra functions were found"$C_CLEAR
 		fi
 	fi
-	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_libftasm
