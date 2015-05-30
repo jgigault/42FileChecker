@@ -16,7 +16,7 @@ Extra tests are also available:
 * speed test comparison
 * basic unit tests
 
-Complete unit tests are handled by the [moulitest](https://github.com/yyang42/moulitest), a C project developed by [yyang42](https://github.com/yyang42) and other contributors, whose sources are automatically downloaded, configured and updated when you run the script.
+     Updated: 2015/05/30 21:53:38 by jgigault         ###   ########.fr         
 
 At launch, an auto-update feature enables you to keep the latest version of 42FileChecker without manually cloning or merging.
 
@@ -72,7 +72,7 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 <tr>
 <td valign="top" height="60px">makefile</td>
 <td></td>
-<td></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
