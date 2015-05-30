@@ -5,7 +5,7 @@ then
 
 	function check_forbidden_func
 	{
-		local LPATH LHOME
+		local LPATH LHOME EXTENSION
 		local -a MYFUNCS
 		local exists total i RET0
 		LOG_FILENAME=.myforbiddenfunc
@@ -14,6 +14,12 @@ then
 		local tab_str="$1[*]"
 		local tab_local=(${!tab_str})
 		IFS=$OLD_IFS
+		if [ -z $3 ]
+		then
+			EXTENSION=c
+		else
+			EXTENSION=$3
+		fi
 
 		LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
 		rm -f "$LOG_FILENAME"
@@ -36,11 +42,16 @@ then
 				done
 				if [ "$exists" == "0" ]
 				then
-					for i in $(find "$MYPATH" | grep -E \\.\[c\]$)
+					for i in $(find "$MYPATH" | grep -E \\.\[$EXTENSION\]$)
 					do
 						LPATH="echo \"$i\" | sed 's/$LHOME/~/'"
 						LPATH=`eval $LPATH`
-						RET0=`echo "cat \"$i\" | awk 'BEGIN{ORS=\"\"} \\$0 ~ /[\(\)= \t]${MYFUNCS[$item]}[ \\t]*\(/ {gsub(/[\\t]/, \" \"); gsub(/[ ]+/, \" \"); gsub(/^ /, \"\"); printf(\"%s%s%s%s\", \"-> \", \"${MYFUNCS[$item]}\\\\\\n\\\\\\n\", \"   line \"NR\" in $LPATH:\\\\\\n\", \"   \"\\$0\"\\\\\\n\\\\\\n\")}'"`
+						if [ "$EXTENSION" == "s" ]
+						then
+							RET0=`echo "cat \"$i\" | awk 'BEGIN{ORS=\"\"} \\$0 ~ /call[ \t\_]*${MYFUNCS[$item]}/ {gsub(/[\\t]/, \" \"); gsub(/[ ]+/, \" \"); gsub(/^ /, \"\"); printf(\"%s%s%s%s\", \"-> \", \"${MYFUNCS[$item]}\\\\\\n\\\\\\n\", \"   line \"NR\" in $LPATH:\\\\\\n\", \"   \"\\$0\"\\\\\\n\\\\\\n\")}'"`
+						else
+							RET0=`echo "cat \"$i\" | awk 'BEGIN{ORS=\"\"} \\$0 ~ /[\(\)= \t]${MYFUNCS[$item]}[ \\t]*\(/ {gsub(/[\\t]/, \" \"); gsub(/[ ]+/, \" \"); gsub(/^ /, \"\"); printf(\"%s%s%s%s\", \"-> \", \"${MYFUNCS[$item]}\\\\\\n\\\\\\n\", \"   line \"NR\" in $LPATH:\\\\\\n\", \"   \"\\$0\"\\\\\\n\\\\\\n\")}'"`
+						fi
 						RET0=`eval "$RET0"`
 						if [ "$RET0" != "" ]
 						then
@@ -49,7 +60,6 @@ then
 							then
 								printf "%s\n\n" "You should justify the use of the following functions:" > $LOG_FILENAME
 							fi
-							#echo "-> ${MYFUNCS[$item]}" >> $LOG_FILENAME
 							printf "%s\n\n" "$RET0" >> $LOG_FILENAME
 							exists=1
 						fi
