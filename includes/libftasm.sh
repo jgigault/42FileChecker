@@ -72,14 +72,31 @@ function check_libftasm_required_exists
 
 function check_libftasm_forbidden_func
 {	if [ "$OPT_NO_FORBIDDEN" == "0" ]; then
-	local F
+	local F LOG_FILENAME
+	LOG_FILENAME=.myforbiddenfunc
 	if [ -f "$MYPATH/Makefile" ]
 	then
 		FILEN=forbiddenfuncs
 		F=$RETURNPATH/tmp/$FILEN.c
-		LIBFTH=`find $MYPATH -name libft.h`
 		check_create_tmp_dir
-		echo "#define NULL ((void *)0)\n#include \"$LIBFTH\"\nint main(void) {" > $F
+		echo "#include <sys/types.h>" > $F
+		echo "#define NULL ((void *)0)" >> $F
+		echo "void *ft_memset(void *b, int c, size_t len);" >> $F
+		echo "void *ft_memcpy(void *restrict dst, const void *restrict src, size_t n);" >> $F
+		echo "void ft_bzero(void *s, size_t n);" >> $F
+		echo "size_t ft_strlen(const char *s);" >> $F
+		echo "char *ft_strdup(const char *s1);" >> $F
+		echo "char *ft_strcat(char *restrict s1, const char *restrict s2);" >> $F
+		echo "int ft_isalpha(int c);" >> $F
+		echo "int ft_isdigit(int c);" >> $F
+		echo "int ft_isalnum(int c);" >> $F
+		echo "int ft_isascii(int c);" >> $F
+		echo "int ft_isprint(int c);" >> $F
+		echo "int ft_toupper(int c);" >> $F
+		echo "int ft_tolower(int c);" >> $F
+		echo "void ft_puts(char *str);" >> $F
+		echo "void ft_cat(int fd);" >> $F
+		echo "int main(void) {" >> $F
 		echo "ft_memset(NULL, 0, 0);" >> $F
 		echo "ft_memcpy(NULL, NULL, 0);" >> $F
 		echo "ft_bzero(NULL, 0);" >> $F
@@ -97,11 +114,21 @@ function check_libftasm_forbidden_func
 		echo "ft_cat(0);" >> $F
 		echo "return (1); }" >> $F
 		cd "$RETURNPATH"/tmp
-		make re -C "$MYPATH" >/dev/null
-		$CMD_RM -f "$FILEN"
-		RET0=`gcc "$F" -L"$MYPATH" -lft -o "$FILEN"`
-		cd "$RETURNPATH"
-		check_forbidden_func CHK_LIBFTASM_AUTHORIZED_FUNCS "./tmp/$FILEN"
+		make re -C "$MYPATH" 1>../$LOG_FILENAME 2>&1
+		if [ -f "$MYPATH"/libftasm.a ]
+		then
+			$CMD_RM -f "$FILEN"
+			$CMD_GCC "$F" -L"$MYPATH" -lftasm -o "$FILEN" >../$LOG_FILENAME 2>/dev/null
+			cd "$RETURNPATH"
+			if [ -f "./tmp/$FILEN" ]
+			then
+				check_forbidden_func CHK_LIBFTASM_AUTHORIZED_FUNCS "./tmp/$FILEN" s
+			else
+				printf $C_RED"  An error occured"$C_CLEAR
+			fi
+		else
+			printf $C_RED"  Makefile does not compile"$C_CLEAR
+		fi
 	else
 		printf $C_RED"  Makefile not found"$C_CLEAR
 	fi
