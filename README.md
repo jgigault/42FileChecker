@@ -16,7 +16,7 @@ Extra tests are also available:
 * speed test comparison
 * basic unit tests
 
-     Updated: 2015/05/30 21:53:38 by jgigault         ###   ########.fr         
+     Updated: 2015/05/30 21:58:20 by jgigault         ###   ########.fr         
 
 At launch, an auto-update feature enables you to keep the latest version of 42FileChecker without manually cloning or merging.
 
@@ -108,7 +108,7 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 <tr>
 <td valign="top" height="60px">tests with compilation</td>
 <td valign="top" align="center"></td>
-<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
