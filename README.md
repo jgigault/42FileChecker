@@ -16,7 +16,7 @@ Extra tests are also available:
 * speed test comparison
 * basic unit tests
 
-     Updated: 2015/05/30 21:59:14 by jgigault         ###   ########.fr         
+Complete unit tests are handled by the [moulitest](https://github.com/yyang42/moulitest), a C project developed by [yyang42](https://github.com/yyang42) and other contributors, whose sources are automatically downloaded, configured and updated when you run the script.
 
 At launch, an auto-update feature enables you to keep the latest version of 42FileChecker without manually cloning or merging.
 
