@@ -3,8 +3,9 @@
 if [ "$FILECHECKER_SH" == "1" ]
 then
 
+source includes/libftasm_list.sh
 
-declare -a CHK_LIBFTASM='( "check_author" "auteur" "check_libftasm_required_exists" "required functions" "check_libftasm_extra" "bonus functions" "check_libftasm_makefile" "makefile" "check_libftasm_forbidden_func" "forbidden functions" )'
+declare -a CHK_LIBFTASM='( "check_author" "auteur" "check_libftasm_required_exists" "required functions" "check_libftasm_extra" "bonus functions" "check_libftasm_makefile" "makefile" "check_libftasm_forbidden_func" "forbidden functions" "check_libftasm_basictests" "basic tests (beta)" )'
 
 declare -a LIBFTASM_MANDATORIES='(ft_bzero.s ft_strcat.s ft_isalpha.s ft_isdigit.s ft_isalnum.s ft_isascii.s ft_isprint.s ft_toupper.s ft_tolower.s ft_puts.s ft_strlen.s ft_memset.s ft_memcpy.s ft_strdup.s ft_cat.s)'
 
@@ -50,9 +51,118 @@ function check_libftasm_all
 		"open .myLIBFTASM_BONUS" "more info: bonus functions"\
 		"open .mymakefile" "more info: makefile"\
 		"open .myforbiddenfunc" "more info: forbidden functions"\
+		"open .mybasictests" "more info: basic tests (beta)"\
 		"_"\
 		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
 		main "BACK TO MAIN MENU"
+}
+
+function check_libftasm_basictests
+{	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
+	local total errors fatal success i TTYPE TINDEX TVAL TARGS FILEN RET1 RET2 RET0 TYPE TVAL0
+    i=0
+    index=0
+    total=0
+    errors=0
+    success=0
+    fatal=0
+    TYPE="$1"
+    LOGFILENAME=".mybasictests"
+    $CMD_RM -f $LOGFILENAME $LOGFILENAME"success"
+    touch $LOGFILENAME $LOGFILENAME"success"
+    check_create_tmp_dir
+    make re -C "$MYPATH" &>$LOGFILENAME
+	if [ -f "$MYPATH"/libftasm.a ]
+	then
+		$CMD_RM -f $LOGFILENAME $LOGFILENAME
+		echo "SUCCESS TESTS:\n" >> $LOGFILENAME"success"
+		while [ "${CHK_LIBFTASM_LIST[$i]}" != "" -a $fatal -eq 0 ]
+		do
+			(( index += 1 ))
+			TTYPE="${CHK_LIBFTASM_LIST[$i]}"
+			(( i += 1 ))
+			TINDEX="${CHK_LIBFTASM_LIST[$i]}"
+			(( i += 1 ))
+			TVAL0="${CHK_LIBFTASM_LIST[$i]}"
+			TVAL=`printf "%s" "${CHK_LIBFTASM_LIST[$i]}" | sed 's/\\\\/\\\\\\\\/g'`
+			(( i += 1 ))
+			(( total += 1 ))
+			RET0=`check_libftasm_basictests_gcc "${TTYPE}" "$LOGFILENAME"`
+			if [ "$RET0" != "" ]
+			then
+				(( fatal += 1 ));
+			else
+				TARGS=`echo "\"$TVAL0\"" | sed 's/|/\" \"/g'`
+				TARGSV=`echo "\"$TVAL\"" | sed 's/|/\", \"/g'`
+				FILEN1="./tmp/ft_${TTYPE}"
+                FILEN2="./tmp/${TTYPE}"
+                RET1=`eval "$FILEN1 $TINDEX $TARGS" 2>&1`
+                RET2=`eval "$FILEN2 $TINDEX $TARGS" 2>&1`
+                RET1=`printf "%s" "$RET1" | awk 'BEGIN{ORS="[BR]"}{print}' | sed 's/\[BR\]$//'`
+                RET2=`printf "%s" "$RET2" | awk 'BEGIN{ORS="[BR]"}{print}' | sed 's/\[BR\]$//'`
+				if [ "$RET1" != "$RET2" ]
+				then
+					if (( $errors == 0 ))
+                    then
+                        echo "FAILED TESTS:\n" >> $LOGFILENAME
+                        echo "# TEST NUMBER (TYPE OF ARG)" >> $LOGFILENAME
+                        echo "  INSTRUCTION();" >> $LOGFILENAME
+                        echo "  1. your function" >> $LOGFILENAME
+                        echo "  2. unix function" >> $LOGFILENAME
+                        echo "     (returned value) -->written on stdout<--" >> $LOGFILENAME
+                    fi
+					(( errors += 1 ))
+					printf "\n# %04d %s\n" "$index" "$TTYPEV" >> $LOGFILENAME
+                    printf "  %s(%s);\n" "$TTYPE" "$TARGSV" >> $LOGFILENAME
+                    RET0=`printf "%s" "$RET1" | sed 's/\\\\/\\\\\\\\/g'`
+                    printf "  1. %s\n" "$RET0" >> $LOGFILENAME 2>&1
+                    RET0=`printf "%s" "$RET2" | sed 's/\\\\/\\\\\\\\/g'`
+                    printf "  2. %s\n\n" "$RET0" >> $LOGFILENAME 2>&1
+					printf "%4d. FAIL %-45s -> \"%s\"\n" "$index" "ft_"$TTYPE"($TARGSV);" "$RET2" >> $LOGFILENAME"success"
+				else
+					(( success += 1 ))
+                    printf "%4d.      %-45s -> \"%s\"\n" "$index" "ft_"$TTYPE"($TARGSV);" "$RET2" >> $LOGFILENAME"success"
+				fi
+			fi
+		done
+		if (( $fatal == 0 ))
+		then
+			if (( $errors == 0 ))
+			then
+				cat $LOGFILENAME"success" > $LOGFILENAME
+				printf $C_GREEN"  All tests passed ($total tests)"$C_CLEAR
+			else
+				echo "\n--------------\n" >> $LOGFILENAME
+				cat $LOGFILENAME"success" >> $LOGFILENAME
+				printf $C_RED"  $errors failed test(s) out of $total tests"$C_CLEAR
+			fi
+		else
+			printf $C_RED"  Fatal error : Cannot compile"$C_CLEAR
+		fi
+	else
+		printf $C_RED"  Makefile does not compile"$C_CLEAR
+	fi
+else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+}
+
+function check_libftasm_basictests_gcc
+{
+    local FILEN RET0 LOGFILENAME
+    FILEN="$1"
+    LOGFILENAME="$2"
+    if [ ! -f "./tmp/ft_$FILEN" -o ! -f "./tmp/$FILEN" ]
+    then
+        if [ -f "$MYPATH/libftasm.a" ]
+        then
+            RET0=`gcc -Wall -Werror -Wextra "./srcs/libftasm/ft_$FILEN.c" -L"$MYPATH" -lftasm -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
+            if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
+            RET0=`gcc "./srcs/libftasm/$FILEN.c" -o "./tmp/$FILEN" 2>&1 1>/dev/null`
+            if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
+        else
+            echo "$MYPATH/libftasm.a was not found" > $LOGFILENAME; printf "error"; return;
+        fi
+    fi
+    return 1
 }
 
 function check_libftasm_makefile
