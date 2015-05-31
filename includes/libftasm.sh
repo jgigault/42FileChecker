@@ -327,29 +327,42 @@ function config_libftasm
 	tput cnorm
 	read -p "  $HOME/" -e AB0
 	tput civis
-	AB0=`echo "$AB0" | sed 's/\/$//'`
-	AB2="$HOME/$AB0"
-	while [ "$AB0" == "" -o ! -d "$AB2" ]
-	do
-		display_header
-		check_libftasm_top "$MYPATH"
-		printf "  Please type the absolute path to your project:\n"
-		if [ "$AB0" != "" ]
-		then
-			printf $C_RED"  $AB2: No such file or directory\n"$C_CLEAR$C_WHITE
-		else
-			printf $C_WHITE""
-		fi
-		tput cnorm
-		read -p "  $HOME/" -e AB0
-		tput civis
+	if [ "$AB0" == "" ]
+	then
+		cd "$RETURNPATH"
+		check_libftasm
+		return
+	else
 		AB0=`echo "$AB0" | sed 's/\/$//'`
 		AB2="$HOME/$AB0"
-	done
-	cd "$RETURNPATH"
-	save_config "libftasm" "$AB2"
-	printf $C_CLEAR""
-	check_libftasm
+		while [ "$AB0" == "" -o ! -d "$AB2" ]
+		do
+			display_header
+			check_libftasm_top "$MYPATH"
+			printf "  Please type the absolute path to your project:\n"
+			if [ "$AB0" != "" ]
+			then
+				printf $C_RED"  $AB2: No such file or directory\n"$C_CLEAR$C_WHITE
+			else
+				printf $C_WHITE""
+			fi
+			tput cnorm
+			read -p "  $HOME/" -e AB0
+			tput civis
+			if [ "$AB0" == "" ]
+			then
+				cd "$RETURNPATH"
+				check_libftasm
+				return
+			fi
+			AB0=`echo "$AB0" | sed 's/\/$//'`
+			AB2="$HOME/$AB0"
+		done
+		cd "$RETURNPATH"
+		save_config "libftasm" "$AB2"
+		printf $C_CLEAR""
+		check_libftasm
+	fi
 }
 
 function check_libftasm_top
