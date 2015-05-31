@@ -117,7 +117,7 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 <tr>
 <td valign="top" height="60px">tests with compilation</td>
 <td valign="top" align="center"></td>
-<td valign="top" align="center"></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
