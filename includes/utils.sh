@@ -71,7 +71,12 @@ then
 		if [ "$1" != "" ]
 		then
 			LEN=${#1}
-			(( MARGIN= $COLUMNS - $LEN))
+			if [ ! -z $2 ]
+			then
+				(( MARGIN= $COLUMNS - $LEN - $2))
+			else
+				(( MARGIN= $COLUMNS - $LEN))
+			fi
 			printf "%"$MARGIN"s" " "
 			printf "$1\n"
 		else
@@ -107,7 +112,7 @@ then
 		else
 			printf $C_INVERT""
 		fi
-		display_righttitle "V1.r$CVERSION"
+		display_righttitle "PRESS ESCAPE TO EXIT - V1.r$CVERSION"
 		display_center "  _  _  ____  _____ _ _       ____ _               _              "
 		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  "
 		display_center " | || |_ __) | |_  | | |/ _ \ |   | '_ \ / _ \/ __| |/ / _ \ '__| "
@@ -140,24 +145,29 @@ then
 	function ft_atoi
 	{
 		local SELN
-		if [ "$1" != "1" -a "$1" != "2" -a "$1" != "3" -a "$1" != "4" -a "$1" != "5" -a "$1" != "6" -a "$1" != "7" -a "$1" != "8" -a "$1" != "9" ]
+		if [ "$1" == "NULL" ]
 		then
-			SELN=`LC_CTYPE=C printf '%d' "'$1"`
-			if (( $SELN >= 65 )) && (( $SELN <= 90 ))
+			printf "0"
+		else
+			if [ "$1" != "1" -a "$1" != "2" -a "$1" != "3" -a "$1" != "4" -a "$1" != "5" -a "$1" != "6" -a "$1" != "7" -a "$1" != "8" -a "$1" != "9" ]
 			then
-				(( SELN=$SELN - 65 + 10 ))
-				printf "$SELN"
-			else
-				if (( $SELN >= 97 )) && (( $SELN <= 122 ))
+				SELN=`LC_CTYPE=C printf '%d' "'$1"`
+				if (( $SELN >= 65 )) && (( $SELN <= 90 ))
 				then
-					(( SELN=$SELN - 97 + 10 ))
+					(( SELN=$SELN - 65 + 10 ))
 					printf "$SELN"
 				else
-					printf "0"
+					if (( $SELN >= 97 )) && (( $SELN <= 122 ))
+					then
+						(( SELN=$SELN - 97 + 10 ))
+						printf "$SELN"
+					else
+						printf "0"
+					fi
 				fi
+			else
+				printf "$1"
 			fi
-		else
-			printf "$1"
 		fi
 	}
 
@@ -232,9 +242,16 @@ then
 				fi
 			fi
         done
+
+
 		printf "%"$COLUMNS"s" " "
 		printf $C_CLEAR"\n"
-		read -s -n 1 SEL
+		read -r -s -n 1 SEL
+		SEL=$(get_key $SEL)
+		if [ "$SEL" == "ESC" ]
+		then
+			exit_checker
+		fi
 		SEL=`ft_atoi "$SEL"`
 		while [ -z "${MENU[$SEL]}" -o "$(echo "${FUNCS[$SEL]}" | grep '^open ')" != "" ]
 		do
@@ -248,12 +265,37 @@ then
 			fi
 			SEL=""
 			read -s -n 1 SEL
+			SEL=$(get_key $SEL)
+			if [ "$SEL" == "ESC" ]
+			then
+				exit_checker
+			fi
 			SEL=`ft_atoi "$SEL"`
 		done
 		printf "\n"
 		if [ "${FUNCS[$SEL]}" != "" ]
 		then
 			eval ${FUNCS[$SEL]}
+		fi
+	}
+
+	function get_key
+	{
+		local ord_value old_tty_settings
+		ord_value=$(printf '%d' "'$1")
+		if [[ $ord_value -eq 27 ]]; then
+			old_tty_settings=`stty -g`
+			stty -icanon min 0 time 0
+			read -s key
+			if [[ ${#key} -eq 0 ]]
+			then
+				printf "ESC"
+			else
+				printf "NULL"
+			fi
+			stty "$old_tty_settings"
+		else
+			printf "%s" "$1"
 		fi
 	}
 
