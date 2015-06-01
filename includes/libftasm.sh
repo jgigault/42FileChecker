@@ -123,10 +123,6 @@ function check_libftasm_basictests
 				else
 					(( success += 1 ))
                     printf "%4d.      %s\n" "$index" "ft_"$TTYPE"(); $TNAME" >> $LOGFILENAME"success"
-                    RET0=`printf "%s" "$RET1" | sed 's/\\\\/\\\\\\\\/g'`
-                    printf "  1. %s\n" "$RET0" >> $LOGFILENAME"success" 2>&1
-                    RET0=`printf "%s" "$RET2" | sed 's/\\\\/\\\\\\\\/g'`
-                    printf "  2. %s\n\n" "$RET0" >> $LOGFILENAME"success" 2>&1
 				fi
 			fi
 		done
