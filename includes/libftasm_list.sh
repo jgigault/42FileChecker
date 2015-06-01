@@ -17,7 +17,19 @@ then
 	CHK_LIBFTASM_LIST+=("memset" 0 "Nothing to be done" "65|")
 	CHK_LIBFTASM_LIST+=("memset" 0 "Short string" "65|This is a string")
 	CHK_LIBFTASM_LIST+=("memset" 0 "bzero style" "0|This is a string")
-	CHK_LIBFTASM_LIST+=("memset" 1 "Replace begining of a string" "66|42 is a number")
+	CHK_LIBFTASM_LIST+=("memset" 1 "Replace beginning of a string" "66|42 is a number")
+
+	CHK_LIBFTASM_LIST+=("strcat" 0 "Short strings" "This is |a string")
+	CHK_LIBFTASM_LIST+=("strcat" 0 "Empty string at the end" "This is a string|")
+	CHK_LIBFTASM_LIST+=("strcat" 0 "Empty string at the beginning" "|This is a string")
+
+	CHK_LIBFTASM_LIST+=("is" 0 "isalpha" "")
+	CHK_LIBFTASM_LIST+=("is" 1 "isdigit" "")
+	CHK_LIBFTASM_LIST+=("is" 2 "isalnum" "")
+	CHK_LIBFTASM_LIST+=("is" 3 "isascii" "")
+	CHK_LIBFTASM_LIST+=("is" 4 "isprint" "")
+	CHK_LIBFTASM_LIST+=("is" 5 "toupper" "")
+	CHK_LIBFTASM_LIST+=("is" 6 "tolower" "")
 
 
 fi;
