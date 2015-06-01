@@ -59,7 +59,7 @@ function check_libftasm_all
 
 function check_libftasm_basictests
 {	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
-	local total errors fatal success i TTYPE TINDEX TVAL TARGS FILEN RET1 RET2 RET0 TYPE TVAL0
+	local total errors fatal success i TTYPE TINDEX TVAL TARGS FILEN RET1 RET2 RET0 TYPE TVAL0 TNAME
     i=0
     index=0
     total=0
@@ -83,6 +83,8 @@ function check_libftasm_basictests
 			(( i += 1 ))
 			TINDEX="${CHK_LIBFTASM_LIST[$i]}"
 			(( i += 1 ))
+			TNAME="${CHK_LIBFTASM_LIST[$i]}"
+			(( i += 1 ))
 			TVAL0="${CHK_LIBFTASM_LIST[$i]}"
 			TVAL=`printf "%s" "${CHK_LIBFTASM_LIST[$i]}" | sed 's/\\\\/\\\\\\\\/g'`
 			(( i += 1 ))
@@ -105,23 +107,26 @@ function check_libftasm_basictests
 					if (( $errors == 0 ))
                     then
                         echo "FAILED TESTS:\n" >> $LOGFILENAME
-                        echo "# TEST NUMBER (TYPE OF ARG)" >> $LOGFILENAME
-                        echo "  INSTRUCTION();" >> $LOGFILENAME
-                        echo "  1. your function" >> $LOGFILENAME
-                        echo "  2. unix function" >> $LOGFILENAME
-                        echo "     (returned value) -->written on stdout<--" >> $LOGFILENAME
+                        echo "# TEST NUMBER" >> $LOGFILENAME
+                        echo "  FUNCTION(); / DESCRIPTION" >> $LOGFILENAME
+                        echo "  1. your function returned value" >> $LOGFILENAME
+                        echo "  2. unix function returned value" >> $LOGFILENAME
                     fi
 					(( errors += 1 ))
 					printf "\n# %04d %s\n" "$index" "$TTYPEV" >> $LOGFILENAME
-                    printf "  %s(%s);\n" "$TTYPE" "$TARGSV" >> $LOGFILENAME
+                    printf "  ft_%s() / %s\n" "$TTYPE" "$TNAME" >> $LOGFILENAME
                     RET0=`printf "%s" "$RET1" | sed 's/\\\\/\\\\\\\\/g'`
                     printf "  1. %s\n" "$RET0" >> $LOGFILENAME 2>&1
                     RET0=`printf "%s" "$RET2" | sed 's/\\\\/\\\\\\\\/g'`
                     printf "  2. %s\n\n" "$RET0" >> $LOGFILENAME 2>&1
-					printf "%4d. FAIL %-45s -> \"%s\"\n" "$index" "ft_"$TTYPE"($TARGSV);" "$RET2" >> $LOGFILENAME"success"
+					printf "%4d. FAIL %s\n" "$index" "ft_"$TTYPE"(); $TNAME" >> $LOGFILENAME"success"
 				else
 					(( success += 1 ))
-                    printf "%4d.      %-45s -> \"%s\"\n" "$index" "ft_"$TTYPE"($TARGSV);" "$RET2" >> $LOGFILENAME"success"
+                    printf "%4d.      %s\n" "$index" "ft_"$TTYPE"(); $TNAME" >> $LOGFILENAME"success"
+                    RET0=`printf "%s" "$RET1" | sed 's/\\\\/\\\\\\\\/g'`
+                    printf "  1. %s\n" "$RET0" >> $LOGFILENAME"success" 2>&1
+                    RET0=`printf "%s" "$RET2" | sed 's/\\\\/\\\\\\\\/g'`
+                    printf "  2. %s\n\n" "$RET0" >> $LOGFILENAME"success" 2>&1
 				fi
 			fi
 		done
