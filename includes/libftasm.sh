@@ -98,10 +98,10 @@ function check_libftasm_basictests
 				TARGSV=`echo "\"$TVAL\"" | sed 's/|/\", \"/g'`
 				FILEN1="./tmp/ft_${TTYPE}"
                 FILEN2="./tmp/${TTYPE}"
-                RET1=`eval "$FILEN1 $TINDEX $TARGS" 2>&1`
-                RET2=`eval "$FILEN2 $TINDEX $TARGS" 2>&1`
-                RET1=`printf "%s" "$RET1" | awk 'BEGIN{ORS="[BR]"}{print}' | sed 's/\[BR\]$//'`
-                RET2=`printf "%s" "$RET2" | awk 'BEGIN{ORS="[BR]"}{print}' | sed 's/\[BR\]$//'`
+                RET1=`eval "$FILEN1 $TINDEX $TARGS" 2>/dev/null`
+                RET2=`eval "$FILEN2 $TINDEX $TARGS" 2>/dev/null`
+                RET1=`printf "%s" "$RET1" | awk 'BEGIN{ORS="[EOL]"}{print}' | sed 's/\[EOL\]$//'`
+                RET2=`printf "%s" "$RET2" | awk 'BEGIN{ORS="[EOL]"}{print}' | sed 's/\[EOL\]$//'`
 				if [ "$RET1" != "$RET2" ]
 				then
 					if (( $errors == 0 ))
