@@ -123,6 +123,29 @@ then
 		printf $C_CLEAR""
 	}
 
+	function display_top
+	{
+		local LPATH=$1
+	    local LHOME LEN PROJECTNAME MYPATH
+		MYPATH=$1
+		PROJECTNAME=$2
+		LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
+		LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
+		LPATH=`eval $LPATH`
+		printf $C_WHITE"\n\n"
+		if [ "$MYPATH" != "" ]
+		then
+		    printf "  Current configuration:"
+		    (( LEN=$COLUMNS - 24 ))
+	        printf "%"$LEN"s" "$PROJECTNAME  "
+		    printf $C_CLEAR"  $LPATH\n\n"
+	    else
+		    printf "  $PROJECTNAME\n"
+		    printf "\n"
+		fi
+		printf ""$C_CLEAR
+	}
+
 	function display_footer
 	{
 		echo $C_WHITE""

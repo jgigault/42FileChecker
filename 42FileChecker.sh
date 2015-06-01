@@ -69,6 +69,7 @@ source includes/forbidden.sh
 source includes/makefile.sh
 source includes/leaks.sh
 source includes/speedtest.sh
+source includes/configure.sh
 source includes/moulitest.sh
 
 function main

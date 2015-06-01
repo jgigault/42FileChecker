@@ -21,7 +21,7 @@ function check_libftasm_all
 	j=1
 	k=0
 	display_header
-	check_libftasm_top "$MYPATH"
+	display_top "$MYPATH" LIBFTASM
 	while [ "${CHK_LIBFTASM[$i]}" != "" ]
 	do
 		FUNC="${CHK_LIBFTASM[$i]}"
@@ -298,7 +298,7 @@ function check_libftasm
 	local MYPATH
 	MYPATH=$(get_config "libftasm")
 	display_header
-	check_libftasm_top "$MYPATH"
+	display_top "$MYPATH" LIBFTASM
 	if [ -d "$MYPATH" ]
 	then
 		display_menu\
@@ -307,7 +307,7 @@ function check_libftasm
 			"_"\
 			"TESTS" "CHK_LIBFTASM" "check_libftasm_all"\
 			"_"\
-			config_libftasm "change path"\
+			"check_configure check_libftasm libftasm LIBFTASM" "change path"\
 			main "BACK TO MAIN MENU"
 	else
 		display_menu\
@@ -315,76 +315,6 @@ function check_libftasm
 			config_libftasm "configure"\
 			main "BACK TO MAIN MENU"
 	fi
-}
-
-function config_libftasm
-{
-	local AB0 AB2 MYPATH
-	MYPATH=$(get_config "libftasm")
-	display_header
-	check_libftasm_top "$MYPATH"
-	printf "  Please type the absolute path to your project:\n"$C_WHITE
-	cd "$HOME/"
-	tput cnorm
-	read -p "  $HOME/" -e AB0
-	tput civis
-	if [ "$AB0" == "" ]
-	then
-		cd "$RETURNPATH"
-		check_libftasm
-		return
-	else
-		AB0=`echo "$AB0" | sed 's/\/$//'`
-		AB2="$HOME/$AB0"
-		while [ "$AB0" == "" -o ! -d "$AB2" ]
-		do
-			display_header
-			check_libftasm_top "$MYPATH"
-			printf "  Please type the absolute path to your project:\n"
-			if [ "$AB0" != "" ]
-			then
-				printf $C_RED"  $AB2: No such file or directory\n"$C_CLEAR$C_WHITE
-			else
-				printf $C_WHITE""
-			fi
-			tput cnorm
-			read -p "  $HOME/" -e AB0
-			tput civis
-			if [ "$AB0" == "" ]
-			then
-				cd "$RETURNPATH"
-				check_libftasm
-				return
-			fi
-			AB0=`echo "$AB0" | sed 's/\/$//'`
-			AB2="$HOME/$AB0"
-		done
-		cd "$RETURNPATH"
-		save_config "libftasm" "$AB2"
-		printf $C_CLEAR""
-		check_libftasm
-	fi
-}
-
-function check_libftasm_top
-{
-	local LPATH=$1
-	local LHOME LEN
-	LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
-	LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
-	LPATH=`eval $LPATH`
-	printf $C_WHITE"\n\n"
-	if [ "$1" != "" ]
-	then
-		printf "  Current configuration:"
-		(( LEN=$COLUMNS - 24 ))
-		printf "%"$LEN"s" "LIBFTASM  "
-		printf $C_CLEAR"  $LPATH\n\n"
-	else
-		printf "  LIBFTASM\n"
-		printf "\n"
-	fi
-    printf ""$C_CLEAR
 }
 
 fi;
