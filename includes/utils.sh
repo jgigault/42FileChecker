@@ -9,29 +9,67 @@ then
 		$COLUMNS=80;
 	fi
 
-	if [ "$OPT_NO_COLOR" == "0" ]
-	then
-		C_BLACKBG="\033[40m\033[37m"
-		C_CLEAR="\033[0m"$C_BLACKBG
-		C_YELLOW=$C_BLACKBG"\033[33;1m"
-		C_RED=$C_BLACKBG"\033[31m\033[38;5;160m"
-		C_GREEN=$C_BLACKBG"\033[32m\033[38;5;70m"
-		C_CYAN=$C_BLACKBG"\033[36;1m"
-		C_WHITE=$C_BLACKBG"\033[37;1m"
-		C_BLUE=$C_BLACKBG"\033[34;1m"
-		C_GREY=$C_BLACKBG"\033[1;30m"
-		C_GREY=$C_BLACKBG"\033[38;5;239m"
-		C_BLACK="\033[30;1m"
-		C_INVERT="\033[48;5;17m""\033[38;5;104m"
-		C_INVERTGREY="\033[48;5;233m""\033[38;5;95m"
-		C_INVERTRED="\033[48;5;88m""\033[38;5;107m"
-	fi
+	function check_set_colors
+	{
+		if [ "$OPT_NO_COLOR" == "0" ]
+		then
+			C_BLACKBG="\033[40m\033[37m"
+			C_CLEAR="\033[0m"$C_BLACKBG
+			C_YELLOW=$C_BLACKBG"\033[33;1m"
+			C_RED=$C_BLACKBG"\033[31m\033[38;5;160m"
+			C_GREEN=$C_BLACKBG"\033[32m\033[38;5;70m"
+			C_CYAN=$C_BLACKBG"\033[36;1m"
+			C_WHITE=$C_BLACKBG"\033[37;1m"
+			C_BLUE=$C_BLACKBG"\033[34;1m"
+			C_GREY=$C_BLACKBG"\033[1;30m"
+			C_GREY=$C_BLACKBG"\033[38;5;239m"
+			C_BLACK="\033[30;1m"
+			C_INVERT="\033[48;5;17m""\033[38;5;104m"
+			C_INVERTGREY="\033[48;5;233m""\033[38;5;95m"
+			C_INVERTRED="\033[48;5;88m""\033[38;5;107m"
+		else
+			C_BLACKBG=
+			C_CLEAR="\033[0m"
+			C_YELLOW=
+			C_RED=
+			C_GREEN=
+			C_CYAN=
+			C_WHITE=
+			C_BLUE=
+			C_GREY=
+			C_GREY=
+			C_BLACK=
+			C_INVERT=
+			C_INVERTGREY=
+			C_INVERTRED=
+		fi
+	}
 
 	CMD_RM=/bin/rm
 	CMD_TOUCH=/usr/bin/touch
 	CMD_GCC=/usr/bin/gcc
 	MOULITEST_URL="https://github.com/yyang42/moulitest_42projects"
 	MOULITEST_DIR="moulitest_42projects"
+
+	function check_option_set
+	{
+		case "$1" in
+			"OPT_NO_TIMEOUT")
+				if [ "$OPT_NO_TIMEOUT" == 1 ]; then OPT_NO_TIMEOUT=0; else OPT_NO_TIMEOUT=1; fi
+				;;
+			"OPT_NO_NORMINETTE")
+				if [ "$OPT_NO_NORMINETTE" == 1 ]; then OPT_NO_NORMINETTE=0; else OPT_NO_NORMINETTE=1; fi
+				;;
+			"OPT_NO_MOULITEST")
+				if [ "$OPT_NO_MOULITEST" == 1 ]; then OPT_NO_MOULITEST=0; else OPT_NO_MOULITEST=1; fi
+				;;
+			"OPT_NO_COLOR")
+				if [ "$OPT_NO_COLOR" == 1 ]; then OPT_NO_COLOR=0; else OPT_NO_COLOR=1; fi
+				check_set_colors
+				;;
+		esac
+		main
+	}
 
 	function display_error
 	{

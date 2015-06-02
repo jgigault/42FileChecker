@@ -86,11 +86,17 @@ function main
 		check_ft_printf "ft_printf"\
 		check_fdf "fdf"\
 		"_"\
+		"check_option_set OPT_NO_TIMEOUT" "$(if [ "$OPT_NO_TIMEOUT" == 0 ]; then echo "disable timeout      (--no-timeout)"; else echo "enable timeout"; fi)"\
+		"check_option_set OPT_NO_COLOR" "$(if [ "$OPT_NO_COLOR" == 0 ]; then echo "disable color        (--no-color)"; else echo "enable color"; fi)"\
+		"check_option_set OPT_NO_NORMINETTE" "$(if [ "$OPT_NO_NORMINETTE" == 0 ]; then echo "disable norminette   (--no-norminette)"; else echo "enable norminette"; fi)"\
+		"check_option_set OPT_NO_MOULITEST" "$(if [ "$OPT_NO_MOULITEST" == 0 ]; then echo "disable moulitest    (--no-moulitest)"; else echo "enable moulitest"; fi)"\
+		"_"\
 		display_credits "CREDITS"\
 		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
 		exit_checker "EXIT"
 }
 
+check_set_colors
 display_header_transition
 if [ "$OPT_NO_UPDATE" == "0" ]
 then
