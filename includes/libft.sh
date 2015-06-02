@@ -182,7 +182,7 @@ function check_libft_forbidden_func
 function check_libft_extra
 {	if [ "$OPT_NO_LIBFTFILESEXIST" == "0" ]; then
 	local i j exists TOTAL TOTAL2 RET0 LOGFILENAME
-	LOGFILENAME=.myLIBFT_BONUS
+	LOGFILENAME=.myextra
 	$CMD_RM -f $LOGFILENAME $LOGFILENAME
 	$CMD_TOUCH $LOGFILENAME $LOGFILENAME
 	TOTAL=0
