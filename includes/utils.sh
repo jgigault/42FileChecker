@@ -63,6 +63,12 @@ then
 			"OPT_NO_NORMINETTE")
 				if [ "$OPT_NO_NORMINETTE" == 1 ]; then OPT_NO_NORMINETTE=0; else OPT_NO_NORMINETTE=1; fi
 				;;
+			"OPT_NO_SPEEDTEST")
+				if [ "$OPT_NO_SPEEDTEST" == 1 ]; then OPT_NO_SPEEDTEST=0; else OPT_NO_SPEEDTEST=1; fi
+				;;
+			"OPT_NO_LEAKS")
+				if [ "$OPT_NO_LEAKS" == 1 ]; then OPT_NO_LEAKS=0; else OPT_NO_LEAKS=1; fi
+				;;
 			"OPT_NO_MOULITEST")
 				if [ "$OPT_NO_MOULITEST" == 1 ]; then OPT_NO_MOULITEST=0; else OPT_NO_MOULITEST=1; fi
 				;;
