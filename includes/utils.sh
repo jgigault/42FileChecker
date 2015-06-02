@@ -3,11 +3,14 @@
 if [ "$FILECHECKER_SH" == "1" ]
 then
 
-	COLUMNS=`tput cols`
-	if [ "$COLUMNS" == "" ]
-	then
-		$COLUMNS=80;
-	fi
+	function check_set_env
+	{
+		COLUMNS=`tput cols`
+		if [ "$COLUMNS" == "" ]
+		then
+			$COLUMNS=80;
+		fi
+	}
 
 	function check_set_colors
 	{
@@ -141,6 +144,7 @@ then
 	function display_header
 	{
 		local MARGIN
+		check_set_env
 		echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 		echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n "
 		clear
@@ -251,6 +255,7 @@ then
 			if [ "$1" == "_" ]
 			then
 				printf "%"$COLUMNS"s" " "
+						printf "\n"
 				shift 1
 			else
 				if [ "$1" == "TESTS" ]

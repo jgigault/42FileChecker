@@ -96,6 +96,7 @@ function main
 		exit_checker "EXIT"
 }
 
+check_set_env
 check_set_colors
 display_header_transition
 if [ "$OPT_NO_UPDATE" == "0" ]
