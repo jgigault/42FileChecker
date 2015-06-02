@@ -20,7 +20,7 @@ function check_gnl_all
 	j=1
 	k=0
 	display_header
-	check_gnl_top "$MYPATH"
+	display_top "$MYPATH" GET_NEXT_LINE
 	while [ "${CHK_GNL[$i]}" != "" ]
 	do
 		FUNC=${CHK_GNL[$i]}
@@ -322,7 +322,7 @@ function check_gnl
 	local MYPATH
 	MYPATH=$(get_config "gnl")
 	display_header
-	check_gnl_top "$MYPATH"
+	display_top "$MYPATH" GET_NEXT_LINE
 	if [ -d "$MYPATH" ]
 	then
 		display_menu\
@@ -331,71 +331,14 @@ function check_gnl
 			"_"\
 			"TESTS" "CHK_GNL" "check_gnl_all"\
 			"_"\
-			config_gnl "change path"\
+			"check_configure check_gnl gnl GET_NEXT_LINE" "change path"\
 			main "BACK TO MAIN MENU"
 	else
 		display_menu\
 			""\
-			config_gnl "configure"\
+			"check_configure check_gnl gnl GET_NEXT_LINE" "configure"\
 			main "BACK TO MAIN MENU"
 	fi
-}
-
-function config_gnl
-{
-	local AB0 AB2 MYPATH
-	MYPATH=$(get_config "gnl")
-	display_header
-	check_gnl_top "$MYPATH"
-	printf "  Please type the absolute path to your project:\n"$C_WHITE
-	cd "$HOME/"
-	tput cnorm
-	read -p "  $HOME/" -e AB0
-	tput civis
-	AB0=`echo "$AB0" | sed 's/\/$//'`
-	AB2="$HOME/$AB0"
-	while [ "$AB0" == "" -o ! -d "$AB2" ]
-	do
-		display_header
-		check_gnl_top "$MYPATH"
-		printf "  Please type the absolute path to your project:\n"
-		if [ "$AB0" != "" ]
-		then
-			printf $C_RED"  $AB2: No such file or directory\n"$C_CLEAR$C_WHITE
-		else
-			printf $C_WHITE
-		fi
-		tput cnorm
-		read -p "  $HOME/" -e AB0
-		tput civis
-		AB0=`echo "$AB0" | sed 's/\/$//'`
-		AB2="$HOME/$AB0"
-	done
-	cd "$RETURNPATH"
-	save_config "gnl" "$AB2"
-	printf $C_CLEAR""
-	check_gnl
-}
-
-function check_gnl_top
-{
-	local LPATH=$1
-	local LHOME
-	LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
-	LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
-	LPATH=`eval $LPATH`
-	printf $C_WHITE"\n\n"
-    if [ "$1" != "" ]
-    then
-        printf "  Current configuration:"
-        (( LEN=$COLUMNS - 24 ))
-        printf "%"$LEN"s" "GET_NEXT_LINE  "
-        printf $C_CLEAR"  $LPATH\n\n"
-    else
-        printf "  GET_NEXT_LINE\n"
-        printf "\n"
-    fi
-    printf ""$C_CLEAR
 }
 
 fi;

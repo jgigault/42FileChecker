@@ -18,8 +18,7 @@ function check_ft_ls_all
 	j=1
 	k=0
 	display_header
-	display_righttitle ""
-	check_ft_ls_top "$MYPATH"
+	display_top "$MYPATH" FT_LS
 	while [ "${CHK_FT_LS[$i]}" != "" ]
 	do
 		FUNC=${CHK_FT_LS[$i]}
@@ -121,8 +120,7 @@ function check_ft_ls
 	local MYPATH
 	MYPATH=$(get_config "ft_ls")
 	display_header
-	display_righttitle ""
-	check_ft_ls_top "$MYPATH"
+	display_top "$MYPATH" FT_LS
 	if [ -d "$MYPATH" ]
 	then
 		display_menu\
@@ -131,73 +129,14 @@ function check_ft_ls
 			"_"\
 			"TESTS" "CHK_FT_LS" "check_ft_ls_all"\
 			"_"\
-			config_ft_ls "change path"\
+			"check_configure check_ft_ls ft_ls FT_LS" "change path"\
 			main "BACK TO MAIN MENU"
 	else
 		display_menu\
 			""\
-			config_ft_ls "configure"\
+			"check_configure check_ft_ls ft_ls FT_LS" "configure"\
 			main "BACK TO MAIN MENU"
 	fi
-}
-
-function config_ft_ls
-{
-	local AB0 AB2 MYPATH
-	MYPATH=$(get_config "ft_ls")
-	display_header
-	display_righttitle ""
-	check_ft_ls_top "$MYPATH"
-	echo "  Please type the absolute path to your project:"$C_WHITE
-	cd "$HOME/"
-	tput cnorm
-	read -p "  $HOME/" -e AB0
-	tput civis
-	AB0=`echo "$AB0" | sed 's/\/$//'`
-	AB2="$HOME/$AB0"
-	while [ "$AB0" == "" -o ! -d "$AB2" ]
-	do
-		display_header
-		display_righttitle ""
-		check_ft_ls_top
-		echo "  Please type the absolute path to your project:"
-		if [ "$AB0" != "" ]
-		then
-			echo $C_RED"  $AB2: No such file or directory"$C_CLEAR$C_WHITE
-		else
-			printf $C_WHITE
-		fi
-		tput cnorm
-		read -p "  $HOME/" -e AB0
-		tput civis
-		AB0=`echo "$AB0" | sed 's/\/$//'`
-		AB2="$HOME/$AB0"
-	done
-	cd "$RETURNPATH"
-	save_config "ft_ls" "$AB2"
-	printf $C_CLEAR""
-	check_ft_ls
-}
-
-function check_ft_ls_top
-{
-	local LPATH=$1
-	local LHOME LEN
-	LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
-	LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
-	LPATH=`eval $LPATH`
-	printf $C_WHITE"\n"
-	if [ "$1" != "" ]
-	then
-		printf "  Current configuration:"
-		(( LEN=$COLUMNS - 24 ))
-		printf "%"$LEN"s" "FT_LS  "
-		printf $C_CLEAR"  $LPATH\n\n"
-	else
-		printf "  FT_LS\n"
-		printf "\n"
-	fi
-	printf ""$C_CLEAR
 }
 
 fi;

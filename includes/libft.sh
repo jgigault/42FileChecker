@@ -24,7 +24,7 @@ function check_libft_all
 	j=1
 	k=0
 	display_header
-	check_libft_top "$MYPATH"
+	display_top "$MYPATH" LIBFT
 	while [ "${CHK_LIBFT[$i]}" != "" ]
 	do
 		FUNC="${CHK_LIBFT[$i]}"
@@ -158,11 +158,21 @@ function check_libft_forbidden_func
 		fi
 		echo "return (1); }" >> $F
 		cd "$RETURNPATH"/tmp
-		make re -C "$MYPATH" >/dev/null
-		$CMD_RM -f "$FILEN"
-		RET0=`gcc "$F" -L"$MYPATH" -lft -o "$FILEN"`
-		cd "$RETURNPATH"
-		check_forbidden_func CHK_LIBFT_AUTHORIZED_FUNCS "./tmp/$FILEN"
+		make re -C "$MYPATH" 1>../.myforbiddenfunc 2>&1
+		if [ -f "$MYPATH/libft.a" ]
+		then
+			$CMD_RM -f "$FILEN"
+			RET0=`gcc "$F" -L"$MYPATH" -lft -o "$FILEN" 1>../.myforbiddenfunc 2>&1`
+			cd "$RETURNPATH"
+			if [ -f "./tmp/$FILEN" ]
+			then
+				check_forbidden_func CHK_LIBFT_AUTHORIZED_FUNCS "./tmp/$FILEN"
+			else
+				printf $C_RED"  Compilation has failed"$C_CLEAR
+			fi
+		else
+			printf $C_RED"  libft.a not found"$C_CLEAR
+		fi
 	else
 		printf $C_RED"  Makefile not found"$C_CLEAR
 	fi
@@ -290,7 +300,7 @@ function check_libft
 	local MYPATH
 	MYPATH=$(get_config "libft")
 	display_header
-	check_libft_top "$MYPATH"
+	display_top "$MYPATH" LIBFT
 	if [ -d "$MYPATH" ]
 	then
 		display_menu\
@@ -299,71 +309,14 @@ function check_libft
 			"_"\
 			"TESTS" "CHK_LIBFT" "check_libft_all"\
 			"_"\
-			config_libft "change path"\
+			"check_configure check_libft libft LIBFT" "change path"\
 			main "BACK TO MAIN MENU"
 	else
 		display_menu\
 			""\
-			config_libft "configure"\
+			"check_configure check_libft libft LIBFT" "configure"\
 			main "BACK TO MAIN MENU"
 	fi
-}
-
-function config_libft
-{
-	local AB0 AB2 MYPATH
-	MYPATH=$(get_config "libft")
-	display_header
-	check_libft_top "$MYPATH"
-	printf "  Please type the absolute path to your project:\n"$C_WHITE
-	cd "$HOME/"
-	tput cnorm
-	read -p "  $HOME/" -e AB0
-	tput civis
-	AB0=`echo "$AB0" | sed 's/\/$//'`
-	AB2="$HOME/$AB0"
-	while [ "$AB0" == "" -o ! -d "$AB2" ]
-	do
-		display_header
-		check_libft_top "$MYPATH"
-		printf "  Please type the absolute path to your project:\n"
-		if [ "$AB0" != "" ]
-		then
-			printf $C_RED"  $AB2: No such file or directory\n"$C_CLEAR$C_WHITE
-		else
-			printf $C_WHITE""
-		fi
-		tput cnorm
-		read -p "  $HOME/" -e AB0
-		tput civis
-		AB0=`echo "$AB0" | sed 's/\/$//'`
-		AB2="$HOME/$AB0"
-	done
-	cd "$RETURNPATH"
-	save_config "libft" "$AB2"
-	printf $C_CLEAR""
-	check_libft
-}
-
-function check_libft_top
-{
-	local LPATH=$1
-	local LHOME LEN
-	LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
-	LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
-	LPATH=`eval $LPATH`
-	printf $C_WHITE"\n\n"
-	if [ "$1" != "" ]
-	then
-		printf "  Current configuration:"
-		(( LEN=$COLUMNS - 24 ))
-		printf "%"$LEN"s" "LIBFT  "
-		printf $C_CLEAR"  $LPATH\n\n"
-	else
-		printf "  LIBFT\n"
-		printf "\n"
-	fi
-    printf ""$C_CLEAR
 }
 
 fi;

@@ -26,9 +26,9 @@ then
 		then
 			check_configure_read $RETURNFUNC $PROJECTNAME $PROJECTNAME_DISPLAY
 			cd "$RETURNPATH"
-			if [ "$STARTDIR" != "*" -a ! -f "$STARTDIR/auteur" ]
+			MYPATH=$(get_config "$PROJECTNAME")
+			if [ "$STARTDIR" != "*" -a ! -f "$MYPATH/auteur" ]
 			then
-				MYPATH=$(get_config "$PROJECTNAME")
 				display_header "$C_INVERTRED"
 				display_top "$MYPATH" "${PROJECTNAME_DISPLAY}"
 				printf ""$C_RED
