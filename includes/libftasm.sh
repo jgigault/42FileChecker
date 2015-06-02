@@ -312,7 +312,7 @@ function check_libftasm
 	else
 		display_menu\
 			""\
-			config_libftasm "configure"\
+			"check_configure check_libftasm libftasm LIBFTASM" "configure"\
 			main "BACK TO MAIN MENU"
 	fi
 }

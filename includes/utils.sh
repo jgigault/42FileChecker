@@ -55,7 +55,7 @@ then
 	function display_hr2
     {
         local MARGIN
-        (( MARGIN= $COLUMNS ))
+		(( MARGIN= $COLUMNS ))
         printf $C_GREY""
 	    printf "%"$MARGIN"s" "" | sed s/' '/"${c:=¯ }"/g | cut -c1-$MARGIN
 	    printf $C_CLEAR""
