@@ -136,7 +136,7 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 </table>
 
 ## options
-```bash
+```
 --no-update      // Do not check for updates at launch
 --no-color       // Do not display color tags
 --no-timeout     // Disable time-out
@@ -144,8 +144,10 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 --no-leaks       // Disable memory leaks detection
 --no-speedtest   // Disable speed test comparison
 --no-moulitest   // Disable moulitest
-
-sh 42FileChecker --no-update --no-timeout
+```
+Add your options as arguments before launch:
+```bash
+sh ./42FileChecker --no-update --no-timeout
 ```
 
 ## dependencies
