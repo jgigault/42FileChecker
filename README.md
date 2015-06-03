@@ -136,9 +136,17 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 </table>
 
 ## options
-	--no-update   // Do not check for updates at launch
-	--no-color    // Do not display color tags
-	--no-timeout  // Disable time-out child process
+```bash
+--no-update      // Do not check for updates at launch
+--no-color       // Do not display color tags
+--no-timeout     // Disable time-out
+--no-norminette  // Disable code's standard check
+--no-leaks       // Disable memory leaks detection
+--no-speedtest   // Disable speed test comparison
+--no-moulitest   // Disable moulitest
+
+sh 42FileChecker --no-update --no-timeout
+```
 
 ## dependencies
 * [moulitest](https://github.com/yyang42/moulitest): [@yyang42](https://github.com/yyang42) and other contributors: unit tests
