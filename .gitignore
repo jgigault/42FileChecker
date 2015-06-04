@@ -1,5 +1,6 @@
 .DS_Store
 moulitest/
+moulitest_42projects/
 .my*
 *~
 srcs/gnl/gnl.h
