@@ -59,7 +59,7 @@ function check_libftasm_all
 
 function check_libftasm_basictests
 {	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
-	local total errors fatal success i TTYPE TINDEX TVAL TARGS FILEN RET1 RET2 RET0 TYPE TVAL0 TNAME
+	local total errors fatal success i TTYPE TINDEX TVAL TARGS FILEN RET1 RET2 RET0 TYPE TVAL0 TNAME DIR
     i=0
     index=0
     total=0
@@ -68,6 +68,7 @@ function check_libftasm_basictests
     fatal=0
     TYPE="$1"
     LOGFILENAME=".mybasictests"
+	DIR=$( cd "$( dirname "$0" )" && pwd )
     $CMD_RM -f $LOGFILENAME $LOGFILENAME"success"
     touch $LOGFILENAME $LOGFILENAME"success"
     check_create_tmp_dir
@@ -115,6 +116,8 @@ function check_libftasm_basictests
 					(( errors += 1 ))
 					printf "\n# %04d %s\n" "$index" "$TTYPEV" >> $LOGFILENAME
                     printf "  ft_%s() / %s\n" "$TTYPE" "$TNAME" >> $LOGFILENAME
+                    printf "  (source: %s)\n" "$DIR/srcs/libftasm/ft_${TTYPE}.c" >> $LOGFILENAME
+                    printf "  (arguments: %s)\n" "$TINDEX $TARGS" >> $LOGFILENAME
                     RET0=`printf "%s" "$RET1" | sed 's/\\\\/\\\\\\\\/g'`
                     printf "  1. %s\n" "$RET0" >> $LOGFILENAME 2>&1
                     RET0=`printf "%s" "$RET2" | sed 's/\\\\/\\\\\\\\/g'`
