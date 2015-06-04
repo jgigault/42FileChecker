@@ -250,7 +250,7 @@ function check_libftasm_extra
 	$CMD_TOUCH $LOGFILENAME $LOGFILENAME
 	TOTAL=0
 	TOTAL2=0
-	for i in $(ls -1 "$MYPATH" | sed '/^\.\/\./d' | grep -E \\.\[s\]$)
+	for i in $(ls -R1 "$MYPATH" | sed '/^\.\/\./d' | grep -E \\.\[s\]$)
 	do
 		j=0
 		exists=0
