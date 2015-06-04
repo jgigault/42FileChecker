@@ -187,7 +187,7 @@ function check_libft_extra
 	$CMD_TOUCH $LOGFILENAME $LOGFILENAME
 	TOTAL=0
 	TOTAL2=0
-	for i in $(ls -1 "$MYPATH" | sed '/^\.\/\./d' | grep -E \\.\[c\]$)
+	for i in $(ls -R1 "$MYPATH" | sed '/^\.\/\./d' | grep -E \\.\[c\]$)
 	do
 		j=0
 		exists=0
