@@ -72,7 +72,7 @@ function check_libftasm_basictests
     touch $LOGFILENAME $LOGFILENAME"success"
     check_create_tmp_dir
     make re -C "$MYPATH" &>$LOGFILENAME
-	if [ -f "$MYPATH"/libftasm.a ]
+	if [ -f "$MYPATH"/libfts.a ]
 	then
 		$CMD_RM -f $LOGFILENAME $LOGFILENAME
 		echo "SUCCESS TESTS:\n" >> $LOGFILENAME"success"
@@ -153,14 +153,14 @@ function check_libftasm_basictests_gcc
     LOGFILENAME="$2"
     if [ ! -f "./tmp/ft_$FILEN" -o ! -f "./tmp/$FILEN" ]
     then
-        if [ -f "$MYPATH/libftasm.a" ]
+        if [ -f "$MYPATH/libfts.a" ]
         then
-            RET0=`gcc -Wall -Werror -Wextra "./srcs/libftasm/ft_$FILEN.c" -L"$MYPATH" -lftasm -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
+            RET0=`gcc -Wall -Werror -Wextra "./srcs/libftasm/ft_$FILEN.c" -L"$MYPATH" -lfts -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
             if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
             RET0=`gcc "./srcs/libftasm/$FILEN.c" -o "./tmp/$FILEN" 2>&1 1>/dev/null`
             if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
         else
-            echo "$MYPATH/libftasm.a was not found" > $LOGFILENAME; printf "error"; return;
+            echo "$MYPATH/libfts.a was not found" > $LOGFILENAME; printf "error"; return;
         fi
     fi
     return 1
@@ -170,7 +170,7 @@ function check_libftasm_makefile
 {
 	local MYPATH
 	MYPATH=$(get_config "libftasm")
-	check_makefile "$MYPATH" libftasm.a
+	check_makefile "$MYPATH" libfts.a
 }
 
 function check_libftasm_required_exists
@@ -223,10 +223,10 @@ function check_libftasm_forbidden_func
 		echo "return (1); }" >> $F
 		cd "$RETURNPATH"/tmp
 		make re -C "$MYPATH" 1>../$LOG_FILENAME 2>&1
-		if [ -f "$MYPATH"/libftasm.a ]
+		if [ -f "$MYPATH"/libfts.a ]
 		then
 			$CMD_RM -f "$FILEN"
-			$CMD_GCC "$F" -L"$MYPATH" -lftasm -o "$FILEN" >../$LOG_FILENAME 2>/dev/null
+			$CMD_GCC "$F" -L"$MYPATH" -lfts -o "$FILEN" >../$LOG_FILENAME 2>/dev/null
 			cd "$RETURNPATH"
 			if [ -f "./tmp/$FILEN" ]
 			then
@@ -235,7 +235,7 @@ function check_libftasm_forbidden_func
 				printf $C_RED"  An error occured"$C_CLEAR
 			fi
 		else
-			printf $C_RED"  Makefile does not compile"$C_CLEAR
+			printf $C_RED"  lifts.a was not found"$C_CLEAR
 		fi
 	else
 		printf $C_RED"  Makefile not found"$C_CLEAR

@@ -510,14 +510,15 @@ then
 
 	function check_fileexists
 	{
-		local i TOTAL RET0 VALPARAM
+		local i TOTAL RET0 VALPARAM RET1
 		if [ "$1" != "" ]
 		then
 			i=0
 			VALPARAM=`eval echo \$1[\$i]`
 			while [ "${!VALPARAM}" != "" ]
 			do
-				if [ ! -f "$MYPATH/${!VALPARAM}" ]
+				RET1=`find "$MYPATH" -name "${!VALPARAM}" 2>/dev/null`
+				if [ "$RET1" == "" ]
 				then
 					(( TOTAL += 1 ))
 					RET0=$RET0"Not Found: ${!VALPARAM}\n"
