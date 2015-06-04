@@ -53,35 +53,45 @@ function update
 			tput cnorm
 			printf "UPTODATE2" > .myret
 		else
-			LOCALHASH=`git show-ref | grep -v remotes | cut -d" " -f1`
-			REMOTEHASH=`git ls-remote 2>/dev/null | grep HEAD | cut -f1`
-			VERSION=$(git shortlog origin/master -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
-			display_header "$C_INVERTRED"
-			printf "\n\n"
-			printf $C_RED""
-			if [ "$REMOTEHASH" != "$LOCALHASH" ]
+			if [ "$UPTODATE" == "3" ]
 			then
-				display_center "Your version of '42FileChecker' is out-of-date."
-				display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
-				RET0=`git show-ref | grep -v remotes | cut -d" " -f1`
-				if [ "$RET0" != "" ]
-				then
-					RET1=`git log origin/master --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  -> "$0}'`
-					if [ "$RET1" != "" ]
-					then
-						printf "\n\n  Last commits:\n%s" "$RET1"
-					fi
-				fi
+				display_header "$C_INVERTRED"
+				printf "\n\n  Can not check for updates: It appears that your Internet connection is not working...\n\n"$C_CLEAR
+				display_menu\
+              		"$C_INVERTRED"\
+					main "OK"\
+                	exit_checker "EXIT"
 			else
-				display_center "Your copy of '42FileChecker' has been modified locally."
-				display_center "Skip update if you don't want to erase your changes."
+				LOCALHASH=`git show-ref | grep -v remotes | cut -d" " -f1`
+				REMOTEHASH=`git ls-remote 2>/dev/null | grep HEAD | cut -f1`
+				VERSION=$(git shortlog origin/master -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
+				display_header "$C_INVERTRED"
+				printf "\n\n"
+				printf $C_RED""
+				if [ "$REMOTEHASH" != "$LOCALHASH" ]
+				then
+					display_center "Your version of '42FileChecker' is out-of-date."
+					display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
+					RET0=`git show-ref | grep -v remotes | grep master | cut -d" " -f1`
+					if [ "$RET0" != "" ]
+					then
+						RET1=`git log origin/master --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  -> "$0}'`
+						if [ "$RET1" != "" ]
+						then
+							printf "\n\n  Last commits:\n%s" "$RET1"
+						fi
+					fi
+				else
+					display_center "Your copy of '42FileChecker' has been modified locally."
+					display_center "Skip update if you don't want to erase your changes."
+				fi
+				printf "\n\n  Choose UPDATE 42FILECHECKER (1) for installing the last version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
+				display_menu\
+              		"$C_INVERTRED"\
+					install_update "UPDATE 42FILECHECKER"\
+					main "SKIP UPDATE"\
+                	exit_checker "EXIT"
 			fi
-			printf "\n\n  Choose UPDATE 42FILECHECKER (1) for installing the last version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
-			display_menu\
-              	"$C_INVERTRED"\
-                install_update "UPDATE 42FILECHECKER"\
-				main "SKIP UPDATE"\
-                exit_checker "EXIT"
 		fi
 	fi
 }
@@ -93,7 +103,12 @@ function check_for_update
 	DIFF0=`git fetch origin 2>&1 | tee .myret2 | grep fatal`
 	if [ "$DIFF0" != "" ]
 	then
-		printf "2"
+		if [ "$(echo "$DIFF0" | grep 'unable to access')" != "" ]
+		then
+			printf "3"
+		else
+			printf "2"
+		fi
 	else
 		DIFF0=`git diff origin/master 2>&1 | sed 's/\"//'`
 		if [ "$DIFF0" != "" ]
