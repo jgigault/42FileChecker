@@ -93,6 +93,7 @@ function main
 		"check_option_set OPT_NO_SPEEDTEST" "$(if [ "$OPT_NO_SPEEDTEST" == 0 ]; then echo "disable speedtest    (--no-speedtest)"; else echo "enable speedtest"; fi)"\
 		"check_option_set OPT_NO_MOULITEST" "$(if [ "$OPT_NO_MOULITEST" == 0 ]; then echo "disable moulitest    (--no-moulitest)"; else echo "enable moulitest"; fi)"\
 		"_"\
+		"open https://github.com/jgigault/42FileChecker/wiki" "MANUAL"\
 		display_credits "CREDITS"\
 		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
 		exit_checker "EXIT"
