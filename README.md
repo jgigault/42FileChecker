@@ -150,6 +150,10 @@ Add your options as arguments before launch:
 sh ./42FileChecker --no-update --no-timeout
 ```
 
+## manual
+
+42FileChecker has an [online wiki](https://github.com/jgigault/42FileChecker/wiki) on github that gives you tips and lessons in Bash programming.
+
 ## dependencies
 * [moulitest](https://github.com/yyang42/moulitest): [@yyang42](https://github.com/yyang42) and other contributors: unit tests
 * norminette: [@42born2code](https://twitter.com/42born2code): program for code's standard check
