@@ -59,7 +59,7 @@ function check_libftasm_all
 
 function check_libftasm_basictests
 {	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
-	local total errors fatal success i TTYPE TINDEX TVAL TARGS FILEN RET1 RET2 RET0 TYPE TVAL0 TNAME DIR
+	local total errors fatal success i TTYPE TINDEX TVAL TARGS FILEN RET1 RET2 RET0 TYPE TVAL0 TNAME DIR TPART
     i=0
     index=0
     total=0
@@ -80,6 +80,8 @@ function check_libftasm_basictests
 		while [ "${CHK_LIBFTASM_LIST[$i]}" != "" -a $fatal -eq 0 ]
 		do
 			(( index += 1 ))
+			TPART="${CHK_LIBFTASM_LIST[$i]}"
+			(( i += 1 ))
 			TTYPE="${CHK_LIBFTASM_LIST[$i]}"
 			(( i += 1 ))
 			TINDEX="${CHK_LIBFTASM_LIST[$i]}"
@@ -87,45 +89,48 @@ function check_libftasm_basictests
 			TNAME="${CHK_LIBFTASM_LIST[$i]}"
 			(( i += 1 ))
 			TVAL0="${CHK_LIBFTASM_LIST[$i]}"
-			TVAL=`printf "%s" "${CHK_LIBFTASM_LIST[$i]}" | sed 's/\\\\/\\\\\\\\/g'`
 			(( i += 1 ))
-			(( total += 1 ))
-			RET0=`check_libftasm_basictests_gcc "${TTYPE}" "$LOGFILENAME"`
-			if [ "$RET0" != "" ]
+			if [ "$TPART" != "bonus" -o "$(find "$MYPATH" -name "ft_${TTYPE}.s")" != "" ]
 			then
-				(( fatal += 1 ));
-			else
-				TARGS=`echo "\"$TVAL0\"" | sed 's/|/\" \"/g'`
-				TARGSV=`echo "\"$TVAL\"" | sed 's/|/\", \"/g'`
-				FILEN1="./tmp/ft_${TTYPE}"
-                FILEN2="./tmp/${TTYPE}"
-                RET1=`eval "$FILEN1 $TINDEX $TARGS" 2>/dev/null`
-                RET2=`eval "$FILEN2 $TINDEX $TARGS" 2>/dev/null`
-                RET1=`printf "%s" "$RET1" | awk 'BEGIN{ORS="[EOL]"}{print}' | sed 's/\[EOL\]$//'`
-                RET2=`printf "%s" "$RET2" | awk 'BEGIN{ORS="[EOL]"}{print}' | sed 's/\[EOL\]$//'`
-				if [ "$RET1" != "$RET2" ]
+				TVAL=`printf "%s" "$TVAL0" | sed 's/\\\\/\\\\\\\\/g'`
+				(( total += 1 ))
+				RET0=`check_libftasm_basictests_gcc "${TTYPE}" "$LOGFILENAME"`
+				if [ "$RET0" != "" ]
 				then
-					if (( $errors == 0 ))
-                    then
-                        echo "FAILED TESTS:\n" >> $LOGFILENAME
-                        echo "# TEST NUMBER" >> $LOGFILENAME
-                        echo "  FUNCTION(); / DESCRIPTION" >> $LOGFILENAME
-                        echo "  1. your function returned value" >> $LOGFILENAME
-                        echo "  2. unix function returned value" >> $LOGFILENAME
-                    fi
-					(( errors += 1 ))
-					printf "\n# %04d %s\n" "$index" "$TTYPEV" >> $LOGFILENAME
-                    printf "  ft_%s() / %s\n" "$TTYPE" "$TNAME" >> $LOGFILENAME
-                    printf "  (source: %s)\n" "$DIR/srcs/libftasm/ft_${TTYPE}.c" >> $LOGFILENAME
-                    printf "  (arguments: %s)\n" "$TINDEX $TARGS" >> $LOGFILENAME
-                    RET0=`printf "%s" "$RET1" | sed 's/\\\\/\\\\\\\\/g'`
-                    printf "  1. %s\n" "$RET0" >> $LOGFILENAME 2>&1
-                    RET0=`printf "%s" "$RET2" | sed 's/\\\\/\\\\\\\\/g'`
-                    printf "  2. %s\n\n" "$RET0" >> $LOGFILENAME 2>&1
-					printf "%4d. FAIL %s\n" "$index" "ft_"$TTYPE"(); $TNAME" >> $LOGFILENAME"success"
+					(( fatal += 1 ));
 				else
-					(( success += 1 ))
-                    printf "%4d.      %s\n" "$index" "ft_"$TTYPE"(); $TNAME" >> $LOGFILENAME"success"
+					TARGS=`echo "\"$TVAL0\"" | sed 's/|/\" \"/g'`
+					TARGSV=`echo "\"$TVAL\"" | sed 's/|/\", \"/g'`
+					FILEN1="./tmp/ft_${TTYPE}"
+					FILEN2="./tmp/${TTYPE}"
+					RET1=`eval "$FILEN1 $TINDEX $TARGS" 2>/dev/null`
+					RET2=`eval "$FILEN2 $TINDEX $TARGS" 2>/dev/null`
+					RET1=`printf "%s" "$RET1" | awk 'BEGIN{ORS="[EOL]"}{print}' | sed 's/\[EOL\]$//'`
+					RET2=`printf "%s" "$RET2" | awk 'BEGIN{ORS="[EOL]"}{print}' | sed 's/\[EOL\]$//'`
+					if [ "$RET1" != "$RET2" ]
+					then
+						if (( $errors == 0 ))
+						then
+							echo "FAILED TESTS:\n" >> $LOGFILENAME
+							echo "# TEST NUMBER" >> $LOGFILENAME
+							echo "  PART / FUNCTION() / DESCRIPTION" >> $LOGFILENAME
+							echo "  1. your function returned value" >> $LOGFILENAME
+							echo "  2. unix function returned value" >> $LOGFILENAME
+						fi
+						(( errors += 1 ))
+						printf "\n# %04d %s\n" "$index" "$TTYPEV" >> $LOGFILENAME
+						printf "  %s / ft_%s() / %s\n" "$TPART" "$TTYPE" "$TNAME" >> $LOGFILENAME
+						printf "  (source: %s)\n" "$DIR/srcs/libftasm/ft_${TTYPE}.c" >> $LOGFILENAME
+						printf "  (arguments: %s)\n" "$TINDEX $TARGS" >> $LOGFILENAME
+						RET0=`printf "%s" "$RET1" | sed 's/\\\\/\\\\\\\\/g'`
+						printf "  1. %s\n" "$RET0" >> $LOGFILENAME 2>&1
+						RET0=`printf "%s" "$RET2" | sed 's/\\\\/\\\\\\\\/g'`
+						printf "  2. %s\n\n" "$RET0" >> $LOGFILENAME 2>&1
+						printf "%4d. FAIL %s\n" "$index" "ft_"$TTYPE"(); $TNAME" >> $LOGFILENAME"success"
+					else
+						(( success += 1 ))
+						printf "%4d.      %s\n" "$index" "ft_"$TTYPE"(); $TNAME" >> $LOGFILENAME"success"
+					fi
 				fi
 			fi
 		done
