@@ -121,7 +121,7 @@ function check_libftasm_basictests
 						printf "\n# %04d %s\n" "$index" "$TTYPEV" >> $LOGFILENAME
 						printf "  %s / ft_%s() / %s\n" "$TPART" "$TTYPE" "$TNAME" >> $LOGFILENAME
 						printf "  (source: %s)\n" "$DIR/srcs/libftasm/ft_${TTYPE}.c" >> $LOGFILENAME
-						printf "  (arguments: %s)\n" "$TINDEX $TARGS" >> $LOGFILENAME
+						printf "  (arguments: %s)\n" "\"$TINDEX\" $TARGSV" >> $LOGFILENAME
 						RET0=`printf "%s" "$RET1" | sed 's/\\\\/\\\\\\\\/g'`
 						printf "  1. %s\n" "$RET0" >> $LOGFILENAME 2>&1
 						RET0=`printf "%s" "$RET2" | sed 's/\\\\/\\\\\\\\/g'`
