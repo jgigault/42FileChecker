@@ -100,7 +100,7 @@ function check_libftasm_basictests
 					(( fatal += 1 ));
 				else
 					TARGS=`echo "\"$TVAL0\"" | sed 's/|/\" \"/g'`
-					TARGSV=`echo "\"$TVAL\"" | sed 's/|/\", \"/g'`
+					TARGSV=`echo "\"$TVAL\"" | sed 's/|/\" \"/g'`
 					FILEN1="./tmp/ft_${TTYPE}"
 					FILEN2="./tmp/${TTYPE}"
 					RET1=`eval "$FILEN1 $TINDEX $TARGS" 2>/dev/null`
