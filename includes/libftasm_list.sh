@@ -85,6 +85,25 @@ then
 	CHK_LIBFTASM_LIST+=("bonus" "memcmp" 0 "Long strings #2" "Montpellier, first mentioned in a document of 985, was founded under a local feudal dynasty, the Guilhem, who combined two hamlets and built a castle and walls around the united settlement. The two surviving towers of the city walls, the Tour des Pins and the Tour de la Babotte, were built later, around the year 1200.|Montpellier, first mentioned in a document of 985, was founded under a local feudal dynasty, the Guilhem, who combined two hamlets and built a castle and walls around the united settlement. The two surviving towers of the city walls, the Tour des Pins and the Tour de la Babotte, were built later, around the year 1201.|319")
 	CHK_LIBFTASM_LIST+=("bonus" "memcmp" 1 "\\200 character" "\200|\0|1")
 
+	CHK_LIBFTASM_LIST+=("bonus" "memchr" 0 "Locate end of string" "42FileChecker|0|14")
+	CHK_LIBFTASM_LIST+=("bonus" "memchr" 0 "Locate beginning of string" "42FileChecker|52|14")
+	CHK_LIBFTASM_LIST+=("bonus" "memchr" 0 "Locate inside of string" "42FileChecker|107|13")
+	CHK_LIBFTASM_LIST+=("bonus" "memchr" 0 "Size too small" "42FileChecker|107|4")
+	CHK_LIBFTASM_LIST+=("bonus" "memchr" 0 "Size null" "42FileChecker|52|0")
+	CHK_LIBFTASM_LIST+=("bonus" "memchr" 0 "Byte not found" "42FileChecker|122|13")
+
+	CHK_LIBFTASM_LIST+=("bonus" "strchr" 0 "Locate end of string" "42FileChecker|0")
+	CHK_LIBFTASM_LIST+=("bonus" "strchr" 0 "Locate beginning of string" "42FileChecker|52")
+	CHK_LIBFTASM_LIST+=("bonus" "strchr" 0 "Locate inside of string" "42FileChecker|107")
+	CHK_LIBFTASM_LIST+=("bonus" "strchr" 0 "Locate first occurence" "42FileChecker|101")
+	CHK_LIBFTASM_LIST+=("bonus" "strchr" 0 "Byte not found" "42FileChecker|122")
+
+	CHK_LIBFTASM_LIST+=("bonus" "strrchr" 0 "Locate end of string" "42FileChecker|0")
+	CHK_LIBFTASM_LIST+=("bonus" "strrchr" 0 "Locate beginning of string" "42FileChecker|52")
+	CHK_LIBFTASM_LIST+=("bonus" "strrchr" 0 "Locate beginning of string" "42FileChecker|50")
+	CHK_LIBFTASM_LIST+=("bonus" "strrchr" 0 "Locate inside of string" "42FileChecker|107")
+	CHK_LIBFTASM_LIST+=("bonus" "strrchr" 0 "Locate last occurence" "42FileChecker|101")
+	CHK_LIBFTASM_LIST+=("bonus" "strrchr" 0 "Byte not found" "42FileChecker|122")
 
 fi;
 
