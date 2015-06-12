@@ -152,7 +152,40 @@ sh ./42FileChecker --no-update --no-timeout
 
 ## manual
 
-42FileChecker has an [online wiki](https://github.com/jgigault/42FileChecker/wiki) on github that gives you tips and lessons in Bash programming.
+42FileChecker has an [online wiki](https://github.com/jgigault/42FileChecker/wiki) on github that gives you tips and lessons in Bash programming:
+* [**What is Bash**](https://github.com/jgigault/42FileChecker/wiki/What-is-Bash)
+* [**What is a bash script**](https://github.com/jgigault/42FileChecker/wiki/What-is-a-Bash-script)
+* [**Bash syntax: Variables**](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Variables)
+    - [1. Declaration](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Variables#part1)
+    - [2. Substitution](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Variables#part2)
+    - [3. Positional and special parameters](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Variables#part3)
+* [**Bash syntax: Conditions**](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Conditions)
+    - [1. Conditional expressions](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Conditions#part1)
+    - [2. If-then-else](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Conditions#part2)
+    - [3. Case-in](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Conditions#part3)
+* [**Bash syntax: Functions**](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions)
+    - [1. Syntax of a function](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions#part1)
+    - [2. Local and global variables](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions#part2)
+    - [3. Arguments of a function](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions#part3)
+    - [4. Passing an array as argument](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions#part4)
+* Bash builtin commands
+* Bash tools: Grep, Awk, Sed, Cat
+* 42FileChecker: auto-update (git tool)
+* [**42FileChecker: interactive menu**](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu)
+    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu#code)
+    - [Tip: Convert ASCII number into numeric value](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu#tip1)
+    - [Tip: Check if an index is valid](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu#tip2)
+    - [Tip: Evaluate a string as a command line](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu#tip3)
+* [**42FileChecker: animated spinner with a time out**](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out)
+    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out#code)
+    - [Tip: Arithmetic operation with floating numbers](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out#tip1)
+    - [Tip: Check if a process ID has terminated](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out#tip2)
+    - [Tip: Move the first character to the end of a string](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out#tip3)
+* 42FileChecker: static var test
+* 42FileChecker: makefile test
+* 42FileChecker: forbidden functions test
+* 42FileChecker: leaks test
+* 42FileChecker: speed test
 
 ## dependencies
 * [moulitest](https://github.com/yyang42/moulitest): [@yyang42](https://github.com/yyang42) and other contributors: unit tests
