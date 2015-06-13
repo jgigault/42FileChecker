@@ -185,7 +185,11 @@ sh ./42FileChecker --no-update --no-timeout
 * 42FileChecker: makefile test
 * 42FileChecker: forbidden functions test
 * 42FileChecker: leaks test
-* 42FileChecker: speed test
+* [**42FileChecker: speed test**](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-speed-test)
+    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-speed-test#code)
+    - [Tip: Redirect outputs of a command line](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-speed-test#tip1)
+    - [Tip: Count the number of lines of a file](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-speed-test#tip2)
+    - [Tip: Execute a command and save the result in a variable](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-speed-test#tip3)
 
 ## dependencies
 * [moulitest](https://github.com/yyang42/moulitest): [@yyang42](https://github.com/yyang42) and other contributors: unit tests
