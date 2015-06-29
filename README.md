@@ -24,6 +24,8 @@ At launch, an auto-update feature enables you to keep the latest version of 42Fi
 	git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
 	cd ~/42FileChecker && sh ./42FileChecker.sh
 
+Note: Do not change access rights or use aliases to prevent from undefined behaviors.
+
 ## supported projects
 
 <table width="100%">
