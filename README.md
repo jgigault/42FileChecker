@@ -169,7 +169,10 @@ sh ./42FileChecker --no-update --no-timeout
     - [3. Arguments of a function](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions#part3)
     - [4. Passing an array as argument](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions#part4)
 * Bash builtin commands
-* Bash tools: Grep, Awk, Sed, Cat
+* [**Bash tools: Awk**](https://github.com/jgigault/42FileChecker/wiki/Bash-tools:-Awk)
+* Bash tools: Cat
+* Bash tools: Grep
+* Bash tools: Sed
 * 42FileChecker: auto-update (git tool)
 * [**42FileChecker: interactive menu**](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu)
     - [Sample code](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu#code)
@@ -182,7 +185,12 @@ sh ./42FileChecker --no-update --no-timeout
     - [Tip: Check if a process ID has terminated](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out#tip2)
     - [Tip: Move the first character to the end of a string](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out#tip3)
 * 42FileChecker: static var test
-* 42FileChecker: makefile test
+* [**42FileChecker: makefile test**](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test)
+    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test#code)
+    - [Tip: Check if a file or a directory exists](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test#tip1)
+    - [Tip: Read a whole file into a variable](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test#tip2)
+    - [Tip: Find a string in a file using awk](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test#tip3)
+    - [Tip: Get inode of a file](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test#tip4)
 * 42FileChecker: forbidden functions test
 * 42FileChecker: leaks test
 * [**42FileChecker: speed test**](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-speed-test)
