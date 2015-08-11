@@ -172,35 +172,35 @@ sh ./42FileChecker --no-update --no-timeout
     - [4. Passing an array as argument](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions#part4)
 * Bash builtin commands
 * [**Bash tools: Awk**](https://github.com/jgigault/42FileChecker/wiki/Bash-tools:-Awk)
+    - [1. How to use AWK](https://github.com/jgigault/42FileChecker/wiki/Bash-tools:-Awk#part1)
+    - [2. How works AWK](https://github.com/jgigault/42FileChecker/wiki/Bash-tools:-Awk#part2)
+    - [3. AWK built-in variables](https://github.com/jgigault/42FileChecker/wiki/Bash-tools:-Awk#part3)
+    - [4. Simple AWK examples](https://github.com/jgigault/42FileChecker/wiki/Bash-tools:-Awk#part4)
 * Bash tools: Cat
 * Bash tools: Grep
 * Bash tools: Sed
-* 42FileChecker: auto-update (git tool)
-* [**42FileChecker: interactive menu**](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu)
-    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu#code)
-    - [Tip: Convert ASCII number into numeric value](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu#tip1)
-    - [Tip: Check if an index is valid](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu#tip2)
-    - [Tip: Evaluate a string as a command line](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-interactive-menu#tip3)
-* [**42FileChecker: animated spinner with a time out**](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out)
-    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out#code)
-    - [Tip: Arithmetic operation with floating numbers](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out#tip1)
-    - [Tip: Check if a process ID has terminated](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out#tip2)
-    - [Tip: Move the first character to the end of a string](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-animated-spinner-with-a-time-out#tip3)
-* 42FileChecker: static var test
-* [**42FileChecker: makefile test**](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test)
-    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test#code)
-    - [Tip: Check if a file or a directory exists](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test#tip1)
-    - [Tip: Read a whole file into a variable](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test#tip2)
-    - [Tip: Find a string in a file using awk](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test#tip3)
-    - [Tip: Get inode of a file](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-makefile-test#tip4)
-* 42FileChecker: forbidden functions test
-* 42FileChecker: leaks test
-* [**42FileChecker: speed test**](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-speed-test)
-    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-speed-test#code)
-    - [Tip: Redirect outputs of a command line](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-speed-test#tip1)
-    - [Tip: Count the number of lines of a file](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-speed-test#tip2)
-    - [Tip: Execute a command and save the result in a variable](https://github.com/jgigault/42FileChecker/wiki/42FileChecker:-speed-test#tip3)
-
-## dependencies
-* [moulitest](https://github.com/yyang42/moulitest): [@yyang42](https://github.com/yyang42) and other contributors: unit tests
-* norminette: [@42born2code](https://twitter.com/42born2code): program for code's standard check
+* Bash sample code: auto-update (git tool)
+* [**Bash sample code: Create an interactive menu**](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-an-interactive-menu)
+    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-an-interactive-menu#code)
+    - [Tip: Convert ASCII number into numeric value](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-an-interactive-menu#tip1)
+    - [Tip: Check if an index is valid](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-an-interactive-menu#tip2)
+    - [Tip: Evaluate a string as a command line](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-an-interactive-menu#tip3)
+* [**Bash sample code: Animated spinner with a time out**](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Animated-spinner-with-a-time-out)
+    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Animated-spinner-with-a-time-out#code)
+    - [Tip: Arithmetic operation with floating numbers](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Animated-spinner-with-a-time-out#tip1)
+    - [Tip: Check if a process ID has terminated](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Animated-spinner-with-a-time-out#tip2)
+    - [Tip: Move the first character to the end of a string](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Animated-spinner-with-a-time-out#tip3)
+* Bash sample code: static var test
+* [**Bash sample code: Check the basic rules of a makefile**](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile)
+    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile#code)
+    - [Tip: Check if a file or a directory exists](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile#tip1)
+    - [Tip: Read a whole file into a variable](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile#tip2)
+    - [Tip: Find a string in a file using awk](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile#tip3)
+    - [Tip: Get inode of a file](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile#tip4)
+* Bash sample code: forbidden functions test
+* Bash sample code: leaks test
+* [**Bash sample code: Create a speed test**](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test)
+    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test#code)
+    - [Tip: Redirect outputs of a command line](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test#tip1)
+    - [Tip: Count the number of lines of a file](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test#tip2)
+    - [Tip: Execute a command and save the result in a variable](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test#tip3)
