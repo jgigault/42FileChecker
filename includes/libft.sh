@@ -4,7 +4,7 @@ if [ "$FILECHECKER_SH" == "1" ]
 then
 
 
-declare -a CHK_LIBFT='( "check_author" "auteur" "check_libft_required_exists" "required functions" "check_libft_bonus_exists" "bonus" "check_libft_extra" "extra functions" "check_norme" "norminette" "check_libft_static" "static declarations" "check_libft_makefile" "makefile" "check_libft_forbidden_func" "forbidden functions" "check_libft_moulitest" "moulitest (${MOULITEST_URL})" )'
+declare -a CHK_LIBFT='( "check_author" "auteur" "check_libft_required_exists" "required functions" "check_libft_bonus_exists" "bonus" "check_libft_extra" "extra functions" "check_norme" "norminette" "check_libft_static" "static declarations" "check_libft_makefile" "makefile" "check_libft_forbidden_func" "forbidden functions" "check_libft_moulitest" "moulitest (${MOULITEST_URL})" "check_libft_libftunittest" "libft-unit-test (${LIBFTUNITTEST_URL})" )'
 
 declare -a LIBFT_MANDATORIES='(libft.h ft_strcat.c ft_strncat.c ft_strlcat.c ft_strchr.c ft_strnstr.c ft_strrchr.c ft_strclr.c ft_strcmp.c ft_strncmp.c ft_strcpy.c ft_strncpy.c ft_strdel.c ft_strdup.c ft_strequ.c ft_strnequ.c ft_striter.c ft_striteri.c ft_strjoin.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strnew.c ft_strstr.c ft_strsplit.c ft_strsub.c ft_strtrim.c ft_atoi.c ft_itoa.c ft_tolower.c ft_toupper.c ft_putchar.c ft_putchar_fd.c ft_putstr.c ft_putstr_fd.c ft_putnbr.c ft_putnbr_fd.c ft_putendl.c ft_putendl_fd.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_memalloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memccpy.c ft_memdel.c ft_memmove.c ft_memset.c ft_bzero.c)'
 
@@ -58,6 +58,7 @@ function check_libft_all
 		"open .mymakefile" "more info: makefile"\
 		"open .myforbiddenfunc" "more info: forbidden functions"\
 		"open .mymoulitest" "more info: moulitest"\
+		"open .mylibftunittest" "more info: libft-unit-test"\
 		"_"\
 		"open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
 		main "BACK TO MAIN MENU"
@@ -243,6 +244,12 @@ function check_libft_moulitest
 	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
+function check_libft_libftunittest
+{	if [ "${OPT_NO_LIBFTUNITTEST}" == "0" ]; then
+	check_libftunittest
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+}
+
 function check_libft_static
 {	if [ "$OPT_NO_STATICDECLARATIONS" == "0" ]; then
 	local RET0 TOTAL LOGFILENAME
@@ -268,7 +275,7 @@ function check_libft_static
 function check_statics
 {
 	local TOTAL
-	TOTAL=$(ls -1 $1 | sed '/^\.\/\./d' | grep -E \\.\[c\]$ | grep -E ^ft_)
+	TOTAL=$(ls -1R $1 | sed '/^\.\/\./d' | grep -E \\.\[c\]$ | grep -E ^ft_)
 	if [ "$TOTAL" == "" ]
 	then
 		printf "Files not found"

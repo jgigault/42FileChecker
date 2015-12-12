@@ -134,22 +134,32 @@ Note: Do not change access rights or use aliases to prevent from undefined behav
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
 </tr>
+<tr>
+<td valign="top" height="60px">libft-unit-test</td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"></td>
+</tr>
 </tbody>
 </table>
 
 ## options
 ```
---no-update      // Do not check for updates at launch
---no-color       // Do not display color tags
---no-timeout     // Disable time-out
---no-norminette  // Disable code's standard check
---no-leaks       // Disable memory leaks detection
---no-speedtest   // Disable speed test comparison
---no-moulitest   // Disable moulitest
+--no-update         // Do not check for updates at launch
+--no-color          // Do not display color tags
+--no-timeout        // Disable time-out
+--no-norminette     // Disable code's standard check
+--no-leaks          // Disable memory leaks detection
+--no-speedtest      // Disable speed test comparison
+--no-moulitest      // Disable moulitest
+--no-libftunittest  // Disable libft-unit-test
 ```
 Add your options as arguments before launch:
 ```bash
-sh ./42FileChecker --no-update --no-timeout
+sh ./42FileChecker.sh --no-update --no-timeout
 ```
 
 ## manual

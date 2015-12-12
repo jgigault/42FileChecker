@@ -53,6 +53,8 @@ then
 	CMD_GCC=/usr/bin/gcc
 	MOULITEST_URL="https://github.com/yyang42/moulitest_42projects"
 	MOULITEST_DIR="moulitest_42projects"
+	LIBFTUNITTEST_URL="https://github.com/alelievr/libft-unit-test"
+	LIBFTUNITTEST_DIR="libft-unit-test"
 
 	function check_option_set
 	{
@@ -257,7 +259,7 @@ then
 		printf "%"$COLUMNS"s" " "
 		printf "\n"
 		while (( $# > 0 ))
-        do
+		do
 			if [ "$1" == "_" ]
 			then
 				printf "%"$COLUMNS"s" " "
@@ -272,10 +274,9 @@ then
 					while [ "${!TESTSA}" != "" ]
 					do
 						(( TOTAL += 1 ))
-						#FUNCS[$TOTAL]="${!TESTSA}"
 						(( i++ ))
 						TESTSA="$2[$i]"
-						FUNCS[$TOTAL]="$3 $TESTSI"
+						FUNCS[$TOTAL]="$3 $TESTSI RUN_ALONE"
 						MENU[$TOTAL]="${!TESTSA}"
 						(( i++ ))
 						(( TESTSI++ ))
@@ -313,8 +314,7 @@ then
 					shift 2
 				fi
 			fi
-        done
-
+		done
 
 		printf "%"$COLUMNS"s" " "
 		printf $C_CLEAR"\n"
@@ -574,4 +574,14 @@ then
 		fi
 	}
 
+        function check_cleanlog
+        {
+                local RET0 LOGFILENAME
+                LOGFILENAME="$1"
+                if [ -f "$LOGFILENAME" ]
+                then
+                        RET0=`cat -e "$LOGFILENAME" | awk '{gsub(/\^M.*\^M/, "");  gsub(/\^@/, "");  gsub(/\^\[\[[0-9;]*m/, "");  gsub(/[\$]$/, ""); print}'`
+                        echo "$RET0" > "$LOGFILENAME"
+                fi
+        }
 fi

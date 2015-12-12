@@ -3,20 +3,6 @@
 if [ "$FILECHECKER_SH" == "1" ]
 then
 
-	function check_moulitest_cleanlog
-	{
-		local RET0 LOGFILENAME
-		LOGFILENAME="$1"
-		if [ -f "$LOGFILENAME" ]
-		then
-			RET0=`cat -e "$LOGFILENAME"`
-			RET0=`echo "$RET0" | awk '{gsub(/\^M.*\^M/, ""); print}'`
-			RET0=`echo "$RET0" | awk '{gsub(/\^\[\[[0-9;]*m/, ""); print}'`
-			RET0=`echo "$RET0" | awk '{gsub(/[\$]$/, ""); print}'`
-			echo "$RET0" > "$LOGFILENAME"
-		fi
-	}
-
 	function check_moulitest
 	{	if [ "$OPT_NO_MOULITEST" == "0" ]; then
 		local RET0 RET1 TOTAL
@@ -24,7 +10,7 @@ then
 		if [ -d "${MOULITEST_DIR}" ]
 		then
 			make "$1" -C "${MOULITEST_DIR}" 1> .mymoulitest 2>&1
-			check_moulitest_cleanlog .mymoulitest
+			check_cleanlog .mymoulitest
 			RET1=`cat .mymoulitest`
 			RET0=`echo "$RET1" | grep "STARTING ALL UNIT TESTS"`
 			if [ "$RET0" == "" ]

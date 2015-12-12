@@ -3,101 +3,142 @@
 if [ "$FILECHECKER_SH" == "1" ]
 then
 
-
-function update
+function check_update
 {
-	local UPTODATE MOULIDATE VERSION RET0 RET1 LOCALHASH REMOTEHASH
+	local RET0
 	tput civis
+	${CMD_RM} -f .myret
+	check_update_42filechecker
+	RET0=`cat .myret`
+	case "$RET0" in
+		"exit") exit_checker; return ;;
+		"nothing") tput cnorm; return ;;
+	esac
+	if [ "${OPT_NO_MOULITEST}" == "0" ]
+	then
+		${CMD_RM} -f .myret
+		check_update_external_repository 'moulitest' ${MOULITEST_URL} ${MOULITEST_DIR}
+		RET0=`cat .myret`
+		case "$RET0" in
+			"exit") exit_checker; return ;;
+			"nothing") tput cnorm; return ;;
+		esac
+	fi
+	if [ "${OPT_NO_LIBFTUNITTEST}" == "0" ]
+	then
+		${CMD_RM} -f .myret
+		check_update_external_repository 'libft-unit-test' ${LIBFTUNITTEST_URL} ${LIBFTUNITTEST_DIR}
+		RET0=`cat .myret`
+		case "$RET0" in
+			"exit") exit_checker; return ;;
+			"nothing") tput cnorm; return ;;
+		esac
+	fi
+	main
+}
+
+function check_update_42filechecker
+{	if [ "${OPT_NO_UPDATE}" == "0" ]; then
+	local UPTODATE MOULIDATE VERSION RET0 RET1 LOCALHASH REMOTEHASH
 	display_header
 	printf "\n\n"
-	printf "  Checking for updates...\n"
-
-	(check_for_update > .myret) &
+	printf "  Checking for updates (42FileChecker)...\n"
+	(check_for_updates_42filechecker > .myret) &
 	display_spinner $!
 	UPTODATE=`cat .myret`
-	if [ "$UPTODATE" == "1" ]
-	then
-		(check_for_moulitest > .myret) &
-		display_spinner $!
+	case "${UPTODATE}" in
+	"1")
+		printf "continue" > .myret
+	;;
+	"2")
+		display_error "An error occured."
+		printf $C_RED"$(cat .myret2 | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
+		printf "\n"
+		printf "nothing" > .myret
+	;;
+	"3")
+		display_header "$C_INVERTRED"
+		printf "\n\n  Can not check for updates: It appears that your Internet connection is not working...\n\n"$C_CLEAR
+		display_menu\
+			"$C_INVERTRED"\
+			"printf 'nothing' > .myret" "SKIP UPDATE"\
+			"printf 'exit' > .myret" "EXIT"
+	;;
+	"0")
+		LOCALHASH=`git show-ref | grep refs/heads/master | cut -d" " -f1`
+		REMOTEHASH=`git ls-remote 2>/dev/null | grep refs/heads/master | cut -f1`
+		VERSION=$(git shortlog origin/master -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
 		display_header "$C_INVERTRED"
 		printf "\n\n"
-		MOULIDATE=`cat .myret`
-		if [ "$MOULIDATE" == "0" ]
+		printf $C_RED""
+		if [ "$REMOTEHASH" != "$LOCALHASH" ]
 		then
-			printf $C_RED"  Your version of 'moulitest' (${MOULITEST_URL}) is out-of-date.\n  Choose UPDATE MOULITEST (1) for installing the latest version or SKIP UPDATE (2) if you want to skip this warning.\n\n"$C_CLEAR
-			display_menu\
-			   	"$C_INVERTRED"\
-                install_update_moulitest "UPDATE MOULITEST"\
-				main "SKIP UPDATE"\
-                exit_checker "EXIT"
-		fi
-		if [ "$MOULIDATE" == "2" ]
-		then
-			printf $C_RED"  The 'moulitest' (${MOULITEST_URL}) is not installed.\n  Choose INSTALL MOULITEST (1) for installing it or SKIP INSTALL (2) if you want to skip this warning.\n\n"$C_CLEAR
-			display_menu\
-             	"$C_INVERTRED"\
-                install_update_moulitest "INSTALL MOULITEST"\
-				main "SKIP INSTALL"\
-                exit_checker "EXIT"
-		fi
-		if [ "$MOULIDATE" == "1" ]
-		then
-			main
-		fi
-	else
-		if [ "$UPTODATE" == "2" ]
-		then
-			display_error "An error occured."
-			printf $C_RED"$(cat .myret2 | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
-			printf "\n"
-			tput cnorm
-			printf "UPTODATE2" > .myret
-		else
-			if [ "$UPTODATE" == "3" ]
+			display_center "Your version of '42FileChecker' is out-of-date."
+			display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
+			RET0=`git show-ref | grep -v remotes | grep master | cut -d" " -f1`
+			if [ "$RET0" != "" ]
 			then
-				display_header "$C_INVERTRED"
-				printf "\n\n  Can not check for updates: It appears that your Internet connection is not working...\n\n"$C_CLEAR
-				display_menu\
-              		"$C_INVERTRED"\
-					main "OK"\
-                	exit_checker "EXIT"
-			else
-				LOCALHASH=`git show-ref | grep -v remotes | cut -d" " -f1`
-				REMOTEHASH=`git ls-remote 2>/dev/null | grep HEAD | cut -f1`
-				VERSION=$(git shortlog origin/master -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
-				display_header "$C_INVERTRED"
-				printf "\n\n"
-				printf $C_RED""
-				if [ "$REMOTEHASH" != "$LOCALHASH" ]
+				RET1=`git log origin/master --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  -> "$0}'`
+				if [ "$RET1" != "" ]
 				then
-					display_center "Your version of '42FileChecker' is out-of-date."
-					display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
-					RET0=`git show-ref | grep -v remotes | grep master | cut -d" " -f1`
-					if [ "$RET0" != "" ]
-					then
-						RET1=`git log origin/master --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  -> "$0}'`
-						if [ "$RET1" != "" ]
-						then
-							printf "\n\n  Last commits:\n%s" "$RET1"
-						fi
-					fi
-				else
-					display_center "Your copy of '42FileChecker' has been modified locally."
-					display_center "Skip update if you don't want to erase your changes."
+					printf "\n\n  Last commits:\n%s" "$RET1"
 				fi
-				printf "\n\n  Choose UPDATE 42FILECHECKER (1) for installing the last version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
-				display_menu\
-              		"$C_INVERTRED"\
-					install_update "UPDATE 42FILECHECKER"\
-					main "SKIP UPDATE"\
-                	exit_checker "EXIT"
 			fi
+		else
+			display_center "Your copy of '42FileChecker' has been modified locally."
+			display_center "Skip update if you don't want to erase your changes."
 		fi
+		printf "\n\n  Choose UPDATE 42FILECHECKER (1) for installing the latest version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
+		display_menu\
+			"$C_INVERTRED"\
+			check_install_42filechecker "UPDATE 42FILECHECKER"\
+			"printf 'continue' > .myret" "SKIP UPDATE"\
+			"printf 'exit' > .myret" "EXIT"
+	;;
+	esac
 	fi
 }
 
+function check_update_external_repository
+{
+	local MOULIDATE
+	local REPONAME=$1
+	local URL=$2
+	local DIR=$3
+	display_header
+	printf "\n\n"
+	printf "  Checking for updates (${REPONAME})...\n"
+	(check_for_updates_external_repository ${DIR} > .myret) &
+	display_spinner $!
+	MOULIDATE=`cat .myret`
+	case "${MOULIDATE}" in
+	"1") 
+		printf "continue" > .myret
+	;;
+	"0")
+		display_header "$C_INVERTRED"
+		printf "\n\n"
+		printf $C_RED"  Your version of '${REPONAME}' (${URL}) is out-of-date.\n  Choose UPDATE EXTERNAL REPOSITORY (1) for installing the latest version or SKIP UPDATE (2) if you want to skip this warning.\n\n"$C_CLEAR
+		display_menu\
+			"$C_INVERTRED"\
+			"check_install_external_repository ${REPONAME} ${URL} ${DIR}" "UPDATE EXTERNAL REPOSITORY"\
+			"printf 'continue' > .myret" "SKIP UPDATE"\
+			"printf 'exit' > .myret" "EXIT"
+	;;		
+	"2")	
+		display_header "$C_INVERTRED"
+		printf "\n\n"
+		printf $C_RED"  The '${REPONAME}' (${URL}) is not installed.\n  Choose INSTALL EXTERNAL REPOSITORY (1) for installing it or SKIP INSTALL (2) if you want to skip this warning.\n\n"$C_CLEAR
+		display_menu\
+			"$C_INVERTRED"\
+			"check_install_external_repository ${REPONAME} ${URL} ${DIR}" "INSTALL EXTERNAL REPOSITORY"\
+			"printf 'continue' > .myret" "SKIP INSTALL"\
+			"printf 'exit' > .myret" "EXIT"
+	;;
+	esac
+}
 
-function check_for_update
+function check_for_updates_42filechecker
 {
 	local DIFF0
 	DIFF0=`git fetch origin 2>&1 | tee .myret2 | grep fatal`
@@ -120,48 +161,45 @@ function check_for_update
 	fi
 }
 
-function install_update
+function check_install_42filechecker
 {
 	local RES0
+	local LOGFILENAME=".myret"
 	display_header
 	printf "\n\n"
 	printf "  Updating 42FileChecker\n"
-	(git merge origin/master 2>&1 > .myret) &
+	${CMD_RM} -f ${LOGFILENAME}
+	(git fetch --all 2>&1 >/dev/null) &
 	display_spinner $!
-	RES0=`cat .myret`
+	(git reset --hard origin/master 2>&1 | grep -v 'HEAD is now at' >${LOGFILENAME}) &
+	display_spinner $!
+	RES0=`cat ${LOGFILENAME}`
 	sleep 0.5
-	if [ "$RES0" == "" ]
+	if [ "${RES0}" == "" ]
 	then
-		printf $C_BLUE"  Done.\n"$C_CLEAR
-		git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev"\n"}' > .myrev 2>/dev/null
+		printf ${C_BLUE}"  Done.\n"${C_CLEAR}
+		(git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev"\n"}' >.myrev 2>/dev/null) &
+		display_spinner $!
 		sleep 0.5
 		sh ./42FileChecker.sh
 	else
-		RES0=`git reset --hard origin/master 2>&1`
-		RES0=`git merge origin/master 2>&1`
-		if [ "$RES0" == "" ]
-		then
-			display_error "An error occured."
-			printf $C_RED"\n  You should better discard your repository and clone again.\n"$C_CLEAR
-			tput cnorm
-		else
-			printf $C_BLUE"  Done.\n"$C_CLEAR
-			git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev"\n"}' > .myrev 2>/dev/null
-			sleep 0.5
-			sh ./42FileChecker.sh
-		fi
+		display_error "An error occured."
+		printf ${C_RED}"\n  If the error persists, try discard this directory and clone again.\n"${C_CLEAR}
+		tput cnorm
 	fi
+	printf "nothing" >.myret
 }
 
-function check_for_moulitest
+function check_for_updates_external_repository
 {
 	local DIFF0
-	if [ ! -d "${MOULITEST_DIR}" ]
+	local DIR=$1
+	if [ ! -d "${DIR}" ]
 	then
 		printf "2"
 	else
-		cd "${MOULITEST_DIR}"
-		DIFF0=`git fetch origin 1>/dev/null 2>&1`
+		cd "${DIR}"
+		DIFF0=`git fetch origin 2>&1 1>/dev/null`
 		DIFF0=`git diff origin/master 2>&1 | sed 's/\"//'`
 		cd ..
 		if [ "$DIFF0" != "" ]
@@ -174,50 +212,39 @@ function check_for_moulitest
 }
 
 
-function install_update_moulitest
+function check_install_external_repository
 {
 	local RES0 RES2
-	if [ ! -d "${MOULITEST_DIR}" ]
+	local REPONAME=$1
+	local URL=$2
+	local DIR=$3
+	display_header
+	printf "\n\n"
+	if [ ! -d "${DIR}" ]
 	then
-		display_header
-		printf "\n\n"
-		printf "  Installing moulitest...\n"
-		(git clone "${MOULITEST_URL}" "${MOULITEST_DIR}" > .myret 2>&1) &
+		printf "  Installing ${REPONAME}...\n"
+		(git clone "${URL}" "${DIR}" > .myret 2>&1) &
 		display_spinner $!
-		RES0=`cat .myret`
-		RES2=`echo "$RES0" | grep fatal`
-		if [ "$RES2" != "" ]
-		then
-			display_error "An error occured."
-			printf $C_RED"$(echo "$RES0" | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
-			printf "\n"
-			tput cnorm
-		else
-			printf $C_BLUE"  Done.\n"$C_CLEAR
-			sleep 0.5
-			main
-		fi
 	else
-		display_header
-		printf "\n\n"
-		cd "${MOULITEST_DIR}"
+		cd "${DIR}"
 		printf "  Updating moulitest...\n"
-		((git reset --hard origin/master > ../.myret 2>&1) && git merge origin/master > ../.myrest 2>&1) &
-		RES0=`cat ../.myret`
-		RES2=`echo "$RES0" | grep fatal`
+		(((git reset --hard origin/master 2>&1 >../.myret) && git merge origin/master 2>&1 >../.myret) && git checkout master) &
 		display_spinner $!
 		cd ..
-		if [ "$RES2" != "" ]
-		then
-			display_error "An error occured."
-			printf $C_RED"$(echo "$RES0" | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
-			printf "\n"
-			tput cnorm
-		else
-			printf $C_BLUE"  Done.\n"$C_CLEAR
-			sleep 0.5
-			main
-		fi
+	fi
+	RES0=`cat .myret`
+	RES2=`echo "$RES0" | grep fatal`
+	if [ "$RES2" != "" ]
+	then
+		display_error "An error occured."
+		printf $C_RED"$(echo "$RES0" | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
+		printf "\n"
+		tput cnorm
+		printf "nothing" > .myret
+	else
+		printf $C_BLUE"  Done.\n"$C_CLEAR
+		sleep 0.5
+		printf "continue" > .myret
 	fi
 }
 
