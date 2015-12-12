@@ -20,6 +20,7 @@ OPT_NO_TIMEOUT=0
 OPT_NO_NORMINETTE=0
 OPT_NO_AUTEUR=0
 OPT_NO_MOULITEST=0
+OPT_NO_LIBFTUNITTEST=0
 OPT_NO_SPEEDTEST=0
 OPT_NO_LEAKS=0
 OPT_NO_BASICTESTS=0
@@ -41,6 +42,7 @@ do
 		"--no-norminette") OPT_NO_NORMINETTE=1 ;;
 		"--no-auteur") OPT_NO_AUTEUR=1 ;;
 		"--no-moulitest") OPT_NO_MOULITEST=1 ;;
+		"--no-libftunittest") OPT_NO_LIBFTUNITTEST=1 ;;
 		"--no-speedtest") OPT_NO_SPEEDTEST=1 ;;
 		"--no-leaks") OPT_NO_LEAKS=1 ;;
 		"--no-basictests") OPT_NO_BASICTESTS=1 ;;
@@ -71,6 +73,7 @@ source includes/leaks.sh
 source includes/speedtest.sh
 source includes/configure.sh
 source includes/moulitest.sh
+source includes/libftunittest.sh
 
 function main
 {
@@ -102,9 +105,4 @@ function main
 check_set_env
 check_set_colors
 display_header_transition
-if [ "$OPT_NO_UPDATE" == "0" ]
-then
-	update
-else
-	main
-fi
+check_update

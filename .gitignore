@@ -1,6 +1,7 @@
 .DS_Store
 moulitest/
 moulitest_42projects/
+libft-unit-test/
 .my*
 *~
 srcs/gnl/gnl.h
