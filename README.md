@@ -73,7 +73,7 @@ Note: Do not change access rights or use aliases to prevent from undefined behav
 </tr>
 <tr>
 <td valign="top" height="60px">makefile</td>
-<td></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
