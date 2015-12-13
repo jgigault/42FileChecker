@@ -50,18 +50,12 @@ function check_update_42filechecker
 	"1")
 		printf "continue" > .myret
 	;;
-	"2")
-		display_error "An error occured."
-		printf $C_RED"$(cat .myret2 | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
-		printf "\n"
-		printf "nothing" > .myret
-	;;
 	"3")
 		display_header "$C_INVERTRED"
-		printf "\n\n  Can not check for updates: It appears that your Internet connection is not working...\n\n"$C_CLEAR
+		printf "\n\n  Cannot check for updates: Your Internet connection is probably down...\n\n"$C_CLEAR
 		display_menu\
 			"$C_INVERTRED"\
-			"printf 'nothing' > .myret" "SKIP UPDATE"\
+			"printf 'continue' > .myret" "SKIP UPDATE"\
 			"printf 'exit' > .myret" "EXIT"
 	;;
 	"0")
@@ -117,6 +111,14 @@ function check_update_external_repository
 	"1") 
 		printf "continue" > .myret
 	;;
+	"3")
+		display_header "$C_INVERTRED"
+		printf "\n\n  Cannot check for updates: Your Internet connection is probably down...\n\n"$C_CLEAR
+		display_menu\
+			"$C_INVERTRED"\
+			"printf 'continue' > .myret" "SKIP UPDATE"\
+			"printf 'exit' > .myret" "EXIT"
+	;;
 	"0")
 		display_header "$C_INVERTRED"
 		printf "\n\n"
@@ -147,12 +149,7 @@ function check_for_updates_42filechecker
 	DIFF0=`git fetch --all 2>&1 | tee .myret2 | grep fatal`
 	if [ "$DIFF0" != "" ]
 	then
-		if [ "$(echo "$DIFF0" | grep 'unable to access')" != "" ]
-		then
-			printf "3"
-		else
-			printf "2"
-		fi
+		printf "3"
 	else
 		DIFF0=`git diff "refs/remotes/origin/${LOCALBRANCH}" 2>&1 | grep -E '^\+|^\-' | sed 's/\"//'`
 		if [ "$DIFF0" != "" ]
@@ -202,15 +199,20 @@ function check_for_updates_external_repository
 		printf "2"
 	else
 		cd "${DIR}"
-		DIFF0=`git fetch --all 2>&1 1>/dev/null`
-		DIFF0=`git diff 2>&1 | sed 's/\"//'`
-		cd ..
+		DIFF0=`git fetch --all 2>&1 | grep fatal`
 		if [ "$DIFF0" != "" ]
 		then
-			printf "0"
+			printf "3"
 		else
-			printf "1"
+			DIFF0=`git diff 2>&1 | sed 's/\"//'`
+			if [ "$DIFF0" != "" ]
+			then
+				printf "0"
+			else
+				printf "1"
+			fi
 		fi
+		cd ..
 	fi
 }
 
