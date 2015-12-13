@@ -74,7 +74,7 @@ function check_update_42filechecker
 			RET0=`git show-ref | grep "refs/remotes/origin/${LOCALBRANCH}" | cut -d" " -f1`
 			if [ "$RET0" != "" ]
 			then
-				RET1=`git log --oneline "refs/remotes/origin/${LOCALBRANCH}" 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk 'BEGIN {LIMIT=0} {print "  -> "$0; LIMIT+=1; if(LIMIT==10) {print "  -> (limited to 10 last commits...)"; exit}}'`
+				RET1=`git log --pretty=oneline "refs/remotes/origin/${LOCALBRANCH}" 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk 'BEGIN {LIMIT=0} {print "  -> "$0; LIMIT+=1; if(LIMIT==10) {print "  -> (limited to 10 last commits...)"; exit}}'`
 				if [ "$RET1" != "" ]
 				then
 					printf "\n\n  Most recent commits:\n%s" "$RET1"
