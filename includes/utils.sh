@@ -405,6 +405,7 @@ then
 		printf "\n\n\n\n\033[0m"
 		tput cnorm
 		clear
+		cd "${GLOBAL_ENTRYPATH}"
 		exit
 	}
 

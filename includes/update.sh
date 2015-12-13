@@ -39,7 +39,7 @@ function check_update
 
 function check_update_42filechecker
 {	if [ "${OPT_NO_UPDATE}" == "0" ]; then
-	local UPTODATE MOULIDATE VERSION RET0 RET1 LOCALHASH REMOTEHASH
+	local UPTODATE MOULIDATE VERSION RET0 RET1 LOCALHASH REMOTEHASH LOCALBRANCH
 	display_header
 	printf "\n\n"
 	printf "  Checking for updates (42FileChecker)...\n"
@@ -65,23 +65,25 @@ function check_update_42filechecker
 			"printf 'exit' > .myret" "EXIT"
 	;;
 	"0")
-		LOCALHASH=`git show-ref | grep refs/heads/master | cut -d" " -f1`
-		REMOTEHASH=`git ls-remote 2>/dev/null | grep refs/heads/master | cut -f1`
-		VERSION=$(git shortlog origin/master -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}')
+		LOCALBRANCH=$(git branch | grep '^\*' | cut -d" " -f2)
+		LOCALHASH=`git show-ref | grep "refs/heads/${LOCALBRANCH}" | cut -d" " -f1`
+		REMOTEHASH=`git ls-remote 2>/dev/null | grep refs/heads/${LOCALBRANCH} | cut -f1`
+		CVERSION=$(git log --oneline "refs/heads/${LOCALBRANCH}" | wc -l | sed 's/ //g')
+		VERSION=$(git log --oneline "refs/remotes/origin/${LOCALBRANCH}" | wc -l | sed 's/ //g')
 		display_header "$C_INVERTRED"
 		printf "\n\n"
 		printf $C_RED""
-		if [ "$REMOTEHASH" != "$LOCALHASH" ]
+		if [ "${REMOTEHASH}" != "${LOCALHASH}" -a "${REMOTEHASH}" != "" -a "${CVERSION}" -lt "${VERSION}" ]
 		then
 			display_center "Your version of '42FileChecker' is out-of-date."
 			display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
-			RET0=`git show-ref | grep -v remotes | grep master | cut -d" " -f1`
+			RET0=`git show-ref | grep "refs/remotes/origin/${LOCALBRANCH}" | cut -d" " -f1`
 			if [ "$RET0" != "" ]
 			then
-				RET1=`git log origin/master --pretty=oneline 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk '{print "  -> "$0}'`
+				RET1=`git log --oneline "refs/remotes/origin/${LOCALBRANCH}" 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk 'BEGIN {LIMIT=0} {print "  -> "$0; LIMIT+=1; if(LIMIT==10) {print "  -> (limited to 10 last commits...)"; exit}}'`
 				if [ "$RET1" != "" ]
 				then
-					printf "\n\n  Last commits:\n%s" "$RET1"
+					printf "\n\n  Most recent commits:\n%s" "$RET1"
 				fi
 			fi
 		else
@@ -141,7 +143,8 @@ function check_update_external_repository
 function check_for_updates_42filechecker
 {
 	local DIFF0
-	DIFF0=`git fetch origin 2>&1 | tee .myret2 | grep fatal`
+	local LOCALBRANCH=$(git branch | grep '^\*' | cut -d" " -f2)
+	DIFF0=`git fetch --all 2>&1 | tee .myret2 | grep fatal`
 	if [ "$DIFF0" != "" ]
 	then
 		if [ "$(echo "$DIFF0" | grep 'unable to access')" != "" ]
@@ -151,7 +154,7 @@ function check_for_updates_42filechecker
 			printf "2"
 		fi
 	else
-		DIFF0=`git diff origin/master 2>&1 | sed 's/\"//'`
+		DIFF0=`git diff "refs/remotes/origin/${LOCALBRANCH}" 2>&1 | grep -E '^\+|^\-' | sed 's/\"//'`
 		if [ "$DIFF0" != "" ]
 		then
 			printf "0"
@@ -199,8 +202,8 @@ function check_for_updates_external_repository
 		printf "2"
 	else
 		cd "${DIR}"
-		DIFF0=`git fetch origin 2>&1 1>/dev/null`
-		DIFF0=`git diff origin/master 2>&1 | sed 's/\"//'`
+		DIFF0=`git fetch --all 2>&1 1>/dev/null`
+		DIFF0=`git diff 2>&1 | sed 's/\"//'`
 		cd ..
 		if [ "$DIFF0" != "" ]
 		then
@@ -228,7 +231,7 @@ function check_install_external_repository
 	else
 		cd "${DIR}"
 		printf "  Updating moulitest...\n"
-		(((git reset --hard origin/master 2>&1 >../.myret) && git merge origin/master 2>&1 >../.myret) && git checkout master) &
+		((git reset --hard origin/master 2>&1 >../.myret) && git checkout master 2>/dev/null) &
 		display_spinner $!
 		cd ..
 	fi
