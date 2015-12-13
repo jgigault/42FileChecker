@@ -9,9 +9,27 @@
 #    jgigault @ student.42.fr                    06 51 15 98 82    #
 ####################################################################
 
+
+function check_install_dir
+{
+	local SOURCE="${BASH_SOURCE[0]}"
+	local DIR
+	while [ -h "${SOURCE}" ]
+	do
+		DIR="$(cd -P "$(dirname "${SOURCE}")" && pwd)"
+		SOURCE="$(readlink "${SOURCE}")"
+		[[ "${SOURCE}" != /* ]] && SOURCE="${DIR}/${SOURCE}"
+	done
+	printf "%s" "$(cd -P "$(dirname "${SOURCE}")" && pwd)"
+}
+
+GLOBAL_ENTRYPATH=$(pwd)
+GLOBAL_INSTALLDIR=$(check_install_dir)
+cd "${GLOBAL_INSTALLDIR}"
+
 FILECHECKER_SH=1
 if [ ! -f .myrev ]; then git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}' > .myrev 2>/dev/null; fi
-CVERSION=$(cat .myrev 2>/dev/null)
+CVERSION=$(git log --oneline 2>/dev/null | wc -l | sed 's/ //g')
 if [ "$CVERSION" == "" ]; then CVERSION="???"; fi
 RETURNPATH=$(pwd | sed 's/ /\ /g')
 OPT_NO_UPDATE=0
@@ -106,3 +124,5 @@ check_set_env
 check_set_colors
 display_header_transition
 check_update
+
+cd "${GLOBAL_ENTRYPATH}"
