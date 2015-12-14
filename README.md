@@ -4,27 +4,34 @@
 
 The script is designed as a reminder:
 * author file terminated by a Line Feed
-* count and names of files
+* count and files name
 * code's standard
 * required and forbidden functions
 * macro definitions
 * static variables & functions declarations
 * makefile rules
 
-Extra tests are also available:
+Extra tests may also be performed:
 * memory leaks detection
 * speed test comparison
-* basic unit tests
+* Unit Tests
 
-Complete unit tests are handled by the [moulitest](https://github.com/yyang42/moulitest), a C project developed by [yyang42](https://github.com/yyang42) and other contributors, whose sources are automatically downloaded, configured and updated when you run the script.
-
-At launch, an auto-update feature enables you to keep the latest version of 42FileChecker without manually cloning or merging.
+Complete unit tests are handled through external repositories whose sources are automatically downloaded, configured and updated in background when you run the script:
+* [moulitest](https://github.com/yyang42/moulitest), developed by [@yyang42](https://github.com/yyang42) and other contributors
+* [libft-unit-test](https://github.com/alelievr/libft-unit-test), developped by [@alelievr](https://github.com/alelievr) (for libft only)
 
 ## install & launch
-	git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
-	cd ~/42FileChecker && sh ./42FileChecker.sh
+```bash
+git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
+cd ~/42FileChecker && sh ./42FileChecker.sh
+```
+You may also want to set an alias to run it from everywhere, even in your project path. Add this line of code at the end of your shell initialization file (e.g.: `~/.zshrc`):
+```bash
+alias 42FileChecker='sh ~/42FileChecker/42FileChecker.sh'
+```
 
-Note: Do not change access rights or use aliases to prevent from undefined behaviors.
+## update
+At launch, 42FileChecker invites you to get the latest version of the sources and its dependencies when available. You may just simply accept or skip the message :-)
 
 ## supported projects
 
