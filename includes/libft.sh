@@ -91,7 +91,7 @@ function check_libft_forbidden_func
 	then
 		FILEN=forbiddenfuncs
 		F=$RETURNPATH/tmp/$FILEN.c
-		LIBFTH=`find $MYPATH -name libft.h`
+		LIBFTH=`find "$MYPATH" -name libft.h`
 		check_create_tmp_dir
 		echo "#define NULL ((void *)0)\n#include \"$LIBFTH\"\nint main(void) {" > $F
 		echo "ft_putstr(NULL);" >> $F
@@ -275,12 +275,12 @@ function check_libft_static
 function check_statics
 {
 	local TOTAL
-	TOTAL=$(ls -1R $1 | sed '/^\.\/\./d' | grep -E \\.\[c\]$ | grep -E ^ft_)
+	TOTAL=$(ls -1R "$1" | sed '/^\.\/\./d' | grep -E \\.\[c\]$ | grep -E ^ft_)
 	if [ "$TOTAL" == "" ]
 	then
 		printf "Files not found"
 	else
-		for i in $(ls -1 $1 | sed '/^\.\/\./d' | grep -E \\.\[c\]$)
+		for i in $(ls -1 "$1" | sed '/^\.\/\./d' | grep -E \\.\[c\]$)
 		do
 			FILEN=$i
 			FILEPATH=$1"/"$i
@@ -297,7 +297,7 @@ function check_statics
     	    { \
         	    print FILEN2, " (ligne ", NR, ") : ", $0, "() should be declared as static" \
 	        } \
-    	}' $FILEPATH
+    	}' "$FILEPATH"
 		done
 	fi
 }
