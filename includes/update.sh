@@ -192,19 +192,20 @@ function check_install_42filechecker
 
 function check_for_updates_external_repository
 {
-	local DIFF0
+	local DIFF0 LOCALBRANCH
 	local DIR=$1
 	if [ ! -d "${DIR}" ]
 	then
 		printf "2"
 	else
 		cd "${DIR}"
+		LOCALBRANCH=$(git branch | grep '^\*' | cut -d" " -f2)
 		DIFF0=`git fetch --all 2>&1 | grep fatal`
 		if [ "$DIFF0" != "" ]
 		then
 			printf "3"
 		else
-			DIFF0=`git diff 2>&1 | sed 's/\"//'`
+			DIFF0=`git diff "refs/remotes/origin/${LOCALBRANCH}" 2>&1 | grep -E '^\+|^\-' | sed 's/\"//'`
 			if [ "$DIFF0" != "" ]
 			then
 				printf "0"
