@@ -174,6 +174,9 @@ sh ./42FileChecker.sh --no-update --no-timeout
 42FileChecker has an [online wiki](https://github.com/jgigault/42FileChecker/wiki) on github that gives you tips and lessons in Bash programming:
 * [**What is Bash**](https://github.com/jgigault/42FileChecker/wiki/What-is-Bash)
 * [**What is a bash script**](https://github.com/jgigault/42FileChecker/wiki/What-is-a-Bash-script)
+* What is 42FileChecker
+* [**Contributing to 42FileChecker**](https://github.com/jgigault/42FileChecker/wiki/Contributing-to-42FileChecker)
+    - [Tip: Rebasing a Pull Request](https://github.com/jgigault/42FileChecker/wiki/Contributing-to-42FileChecker#tip1)
 * [**Bash syntax: Variables**](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Variables)
     - [1. Declaration](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Variables#part1)
     - [2. Substitution](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Variables#part2)
