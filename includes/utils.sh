@@ -413,37 +413,40 @@ then
 	{	if [ "$OPT_NO_NORMINETTE" == "0" ]; then
 		local RET0 RET2 RET3 RET4 TOTAL TOTA2
 		rm -f "$RETURNPATH"/.mynorminette
-		cd "$MYPATH"
-		RET0=$(find . -type f | sed '/^\.\/\./d' | grep -E \\.\[hc\]$ | tr '\n' ' ')
-		RET2=`norminette "$RET0" 2>&1`
-		cd "$RETURNPATH"
-		echo "$RET2" > "$RETURNPATH"/.mynorminette
-		RET2=`cat .mynorminette | grep Error`
-		RET3=`cat .mynorminette | grep Warning`
-		RET4=`cat .mynorminette | grep "command not found"`
-		if [ "$RET2" == "" -a "$RET3" == "" -a "$RET4" == "" ]
+		RET0=$(find "${MYPATH}" -type f -name "*.[ch]" | awk 'BEGIN {ORS=" "} {gsub(/\ /, "\\ "); print}')
+		if [ "${RET0}" != "" ]
 		then
-			printf $C_GREEN"  All files passed the tests"$C_CLEAR
-		else
-			if [ "$RET4" != "" ]
+			RET2=`eval norminette $RET0 2>&1`
+			echo "$RET2" > "$RETURNPATH"/.mynorminette
+			RET2=`cat .mynorminette | grep Error`
+			RET3=`cat .mynorminette | grep Warning`
+			RET4=`cat .mynorminette | grep "command not found"`
+			if [ "$RET2" == "" -a "$RET3" == "" -a "$RET4" == "" ]
 			then
-				printf $C_RED"  Command not found"$C_CLEAR
+				printf $C_GREEN"  All files passed the tests"$C_CLEAR
 			else
-				if [ "$RET2" == "" ]
+				if [ "$RET4" != "" ]
 				then
-					TOTAL=0
+					printf $C_RED"  Command not found"$C_CLEAR
 				else
-					TOTAL=`echo "$RET2" | wc -l | sed 's/ //g'`
+					if [ "$RET2" == "" ]
+					then
+						TOTAL=0
+					else
+						TOTAL=`echo "$RET2" | wc -l | sed 's/ //g'`
+					fi
+					if [ "$RET3" == "" ]
+					then
+						TOTA2=0
+					else
+						TOTA2=`echo "$RET3" | wc -l | sed 's/ //g'`
+					fi
+					(( TOTAL = $TOTAL + $TOTA2 ))
+					printf $C_RED"  $TOTAL error(s) or warning(s)"$C_CLEAR
 				fi
-				if [ "$RET3" == "" ]
-				then
-					TOTA2=0
-				else
-					TOTA2=`echo "$RET3" | wc -l | sed 's/ //g'`
-				fi
-				(( TOTAL = $TOTAL + $TOTA2 ))
-				printf $C_RED"  $TOTAL error(s) or warning(s)"$C_CLEAR
 			fi
+		else
+			printf ${C_RED}"  No source file (.c) or header (.h) to check"${C_CLEAR}
 		fi
 		else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 	}
