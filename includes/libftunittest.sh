@@ -5,7 +5,7 @@ then
 
 function check_libftunittest
 {	if [ "${OPT_NO_LIBFTUNITTEST}" == "0" ]; then
-	local RET0 RET1 TOTAL
+	local RET0 RET1 TOTAL MYPATH
 	local RUNNING_MODE=$1
 	local LOGFILENAME=".mylibftunittest"
 	${CMD_RM} -f ${LOGFILENAME}

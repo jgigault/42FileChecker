@@ -274,32 +274,34 @@ function check_libft_static
 
 function check_statics
 {
-	local TOTAL
-	TOTAL=$(ls -1R "$1" | sed '/^\.\/\./d' | grep -E \\.\[c\]$ | grep -E ^ft_)
-	if [ "$TOTAL" == "" ]
+	local TOTAL OLDIFS
+	TOTAL=$(find "$1" -type f -name "*.c")
+	OLDIFS=${IFS}
+	IFS=$'\n'
+	if [ "${TOTAL}" == "" ]
 	then
 		printf "Files not found"
 	else
-		for i in $(ls -1 "$1" | sed '/^\.\/\./d' | grep -E \\.\[c\]$)
+		for i in $(find "$1" -type f -name "*.c")
 		do
-			FILEN=$i
-			FILEPATH=$1"/"$i
-			awk -v FILEN="$FILEN" -v FILEN2="$FILEN" 'BEGIN \
-    	{ \
-        	OFS = ""
-	        sub(/\.c/, "", FILEN)
-	    } \
-    	$0 ~ /^[a-z_]+[	 ]+\**[a-z_]*\(.*/ \
-	    { \
-    	    gsub (/^[a-z_]*[	 ]+\**/, "")
-        	gsub (/ *\(.*$/, "")
-	        if ($1 != FILEN) \
-    	    { \
-        	    print FILEN2, " (ligne ", NR, ") : ", $0, "() should be declared as static" \
-	        } \
-    	}' "$FILEPATH"
+			FILEN=$(basename "$i")
+			awk -v FILEN="${FILEN}" -v FILEN2="${FILEN}" 'BEGIN \
+			{ \
+				OFS = ""
+				sub(/\.c/, "", FILEN)
+			} \
+			$0 ~ /^[a-z_]+[	 ]+\**[a-z_]*\(.*/ \
+			{ \
+				gsub (/^[a-z_]*[	 ]+\**/, "")
+				gsub (/ *\(.*$/, "")
+				if ($1 != FILEN) \
+				{ \
+					print FILEN2, " (line ", NR, ") : ", $0, "() should be declared as static" \
+				} \
+			}' "$i"
 		done
 	fi
+	IFS=${OLDIFS}
 }
 
 function check_libft
@@ -311,7 +313,7 @@ function check_libft
 	if [ -d "$MYPATH" ]
 	then
 		display_menu\
-            ""\
+			""\
 			check_libft_all "check all!"\
 			"_"\
 			"TESTS" "CHK_LIBFT" "check_libft_all"\
