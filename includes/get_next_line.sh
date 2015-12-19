@@ -60,47 +60,40 @@ function check_gnl_all
 }
 
 function check_gnl_forbidden_func
-{	if [ "$OPT_NO_FORBIDDEN" == "0" ]; then
-	local FILEN GNLC GNL_LIBFT EXTRA0 RET0
+{	if [ "${OPT_NO_FORBIDDEN}" == "0" ]; then
+	local FILEN GNL_LIBFT RET0
 	FILEN=forbiddenfuncs
-	GNLC="$MYPATH/get_next_line.c"
-	GNL_LIBFT="$MYPATH/libft"
-	EXTRA0=
+	GNL_LIBFT="${MYPATH}/libft"
 	check_create_tmp_dir
 	check_gnl_create_header
-	if [ -d "$GNL_LIBFT" ]
+	echo "#define NULL ((void *)0)\n#include \"gnl.h\"\nint main(void) { int ret; ret = get_next_line(0, NULL); return (1); }" > ./tmp/${FILEN}.c
+	${CMD_RM} -f "./tmp/${FILEN}"
+	if [ -d "${GNL_LIBFT}" ]
 	then
-		make -C "$GNL_LIBFT" >/dev/null 2>&1
-		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
+		make -C "${GNL_LIBFT}" 2>&1 >/dev/null
+		RET0=`${CMD_GCC} "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./tmp/${FILEN}.c -o ./tmp/${FILEN} 2>&1 >/dev/null`
+	else
+		RET0=`${CMD_GCC} "${MYPATH}/get_next_line.c" ./tmp/${FILEN}.c -o ./tmp/${FILEN} 2>&1 >/dev/null`
+
 	fi
-	echo "#define NULL ((void *)0)\n#include \"gnl.h\"\nint main(void) { int ret; ret = get_next_line(0, NULL); return (1); }" > ./tmp/$FILEN.c
-	$CMD_RM -f "./tmp/$FILEN"
-	RET0=`$CMD_GCC $GNLC $EXTRA0 ./tmp/$FILEN.c -o ./tmp/$FILEN 2>&1`
-	check_forbidden_func CHK_GNL_AUTHORIZED_FUNCS "./tmp/$FILEN"
-	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+	check_forbidden_func CHK_GNL_AUTHORIZED_FUNCS "./tmp/${FILEN}"
+	else printf ${C_GREY}"  --Not performed--"${C_CLEAR}; fi
 }
 
 function check_gnl_basics
-{	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
-	local GNLC GNL_LIBFT EXTRA0 i j FILEN TITLEN RET0 errors fatal SPEC0 LOGFILENAME
+{	if [ "${OPT_NO_BASICTESTS}" == "0" ]; then
+	local GNL_LIBFT i j FILEN TITLEN RET0 errors fatal SPEC0 LOGFILENAME
 	LOGFILENAME=.mybasictests
-	$CMD_RM -f $LOGFILENAME
-	$CMD_TOUCH $LOGFILENAME
+	${CMD_RM} -f ${LOGFILENAME}
+	${CMD_TOUCH} ${LOGFILENAME}
 	check_create_tmp_dir
 	check_gnl_create_header
-	GNLC="$MYPATH/get_next_line.c"
-	GNL_LIBFT="$MYPATH/libft"
-	EXTRA0=
-	if [ -d "$GNL_LIBFT" ]
-	then
-		make -C "$GNL_LIBFT" >/dev/null 2>&1
-		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
-	fi
+	GNL_LIBFT="${MYPATH}/libft"
 	i=0
 	j=0
 	errors=0
 	fatal=0
-	echo "GNL BASIC TESTS:\n" > $LOGFILENAME
+	echo "GNL BASIC TESTS:\n" > ${LOGFILENAME}
 	while [ "${CHK_GNL_BASICS[i]}" != "" ]
 	do
 		(( j += 1 ))
@@ -110,132 +103,137 @@ function check_gnl_basics
 		(( i += 1 ))
 		SPEC0="${CHK_GNL_BASICS[i]}"
 		(( i += 1 ))
-		echo "$j -> $TITLEN ($FILEN.c):" >> $LOGFILENAME
-		$CMD_RM -f "./tmp/$FILEN"
-		RET0=`$CMD_GCC -Wall -Werror -Wextra -I ./tmp $GNLC $EXTRA0 ./srcs/gnl/$FILEN.c -o ./tmp/$FILEN 2>&1`
-		if [ -f ./tmp/$FILEN ]
+		echo "$j -> ${TITLEN} (${FILEN}.c):" >> ${LOGFILENAME}
+		${CMD_RM} -f "./tmp/${FILEN}"
+		if [ -d "${GNL_LIBFT}" ]
 		then
-			if [ "$SPEC0" != "" ]
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/${FILEN}.c -o ./tmp/${FILEN} 2>&1 >/dev/null`
+		else
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/${FILEN}.c -o ./tmp/${FILEN} 2>&1 >/dev/null`
+		fi
+		if [ -f "./tmp/${FILEN}" ]
+		then
+			if [ "${SPEC0}" != "" ]
 			then
-				RET0=`echo "$SPEC0" | sed 's/SPEC0/\.\/\.\/tmp\/$FILEN/'`
-				RET0=`eval $RET0 2>&1`
+				RET0=`echo "${SPEC0}" | sed 's/SPEC0/\.\/\.\/tmp\/${FILEN}/'`
+				RET0=`eval ${RET0} 2>&1`
 			else
-				RET0=`./tmp/$FILEN 2>&1`
+				RET0=`./tmp/${FILEN} 2>&1`
 			fi
-			if [ "$RET0" != "OK" ]
+			if [ "${RET0}" != "OK" ]
 			then
 				(( errors += 1 ))
 			fi
-			echo "$RET0" >> $LOGFILENAME
+			echo "${RET0}" >> ${LOGFILENAME}
 		else
-			echo "Cannot compile" >> $LOGFILENAME
-			echo "$RET0" >> $LOGFILENAME
+			echo "Cannot compile" >> ${LOGFILENAME}
+			echo "${RET0}" >> ${LOGFILENAME}
 			(( fatal += 1 ))
 		fi
-		echo "" >> $LOGFILENAME
+		echo "" >> ${LOGFILENAME}
 	done
-	if (( $fatal > 0 ))
+	if (( ${fatal} > 0 ))
 	then
-		printf $C_RED"  $fatal fatal error(s): Cannot compile"$C_CLEAR
+		printf ${C_RED}"  ${fatal} fatal error(s): Cannot compile"${C_CLEAR}
 	else
-		if (( $errors == 0 ))
+		if (( ${errors} == 0 ))
 		then
-			printf $C_GREEN"  All tests passed"$C_CLEAR
+			printf ${C_GREEN}"  All tests passed"${C_CLEAR}
 		else
-			printf $C_RED"  $errors failed test(s)"$C_CLEAR
+			printf ${C_RED}"  ${errors} failed test(s)"${C_CLEAR}
 		fi
 	fi
-	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+	else printf ${C_GREY}"  --Not performed--"${C_CLEAR}; fi
 }
 
 function check_gnl_multiple_fd
-{	if [ "$OPT_NO_GNLMULTIPLEFD" == "0" ]; then
-	local GNLC GNL_LIBFT EXTRA0 i j FILEN TITLEN RET0 errors fatal GNLID LOGFILENAME
-	LOGFILENAME=.mymultiplefd
-	$CMD_RM -f $LOGFILENAME
-	$CMD_TOUCH $LOGFILENAME
+{	if [ "${OPT_NO_GNLMULTIPLEFD}" == "0" ]; then
+	local GNL_LIBFT i j FILEN TITLEN RET0 errors fatal GNLID LOGFILENAME
+	LOGFILENAME=".mymultiplefd"
+	${CMD_RM} -f ${LOGFILENAME}
+	${CMD_TOUCH} ${LOGFILENAME}
 	check_create_tmp_dir
 	check_gnl_create_header
-	GNLC="$MYPATH/get_next_line.c"
-	GNL_LIBFT="$MYPATH/libft"
-	EXTRA0=
-	if [ -d "$GNL_LIBFT" ]
-	then
-		make -C "$GNL_LIBFT" >/dev/null 2>&1
-		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
-	fi
+	GNL_LIBFT="${MYPATH}/libft"
 	i=0
 	j=0
 	errors=0
 	fatal=0
-	$CMD_RM -f "./tmp/gnl11"
-	RET0=`$CMD_GCC -Wall -Werror -Wextra -I ./tmp $GNLC $EXTRA0 ./srcs/gnl/gnl11.c -o ./tmp/gnl11 1>$LOGFILENAME 2>&1`
+	${CMD_RM} -f "./tmp/gnl11"
+	if [ -d "${GNL_LIBFT}" ]
+	then
+		make -C "${GNL_LIBFT}" 2>&1 >/dev/null
+		RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/gnl11.c -o ./tmp/gnl11 2>&1 1>${LOGFILENAME}`
+	else
+		RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/gnl11.c -o ./tmp/gnl11 2>&1 1>${LOGFILENAME}`
+	fi
 	if [ -f "./tmp/gnl11" ]
 	then
 		RET0=`./tmp/gnl11 2>&1`
-		if [ "$RET0" != "OK" ]
+		if [ "${RET0}" != "OK" ]
 		then
 			(( errors += 1 ))
 		fi
 	else
 		fatal=1
 	fi
-	if (( $fatal > 0 ))
+	if (( ${fatal} > 0 ))
 	then
-		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
+		printf ${C_RED}"  Fatal error: Cannot compile"${C_CLEAR}
 	else
-		if (( $errors == 0 ))
+		if (( ${errors} == 0 ))
 		then
-			printf $C_GREEN"  Multiple file descriptor supported"$C_CLEAR
+			printf ${C_GREEN}"  Multiple file descriptor supported"${C_CLEAR}
 		else
-			if [ "$RET0" != "" ]
+			if [ "${RET0}" != "" ]
 			then
-				printf $C_RED"  $RET0"$C_CLEAR
+				printf ${C_RED}"  ${RET0}"${C_CLEAR}
 			else
-				printf $C_RED"  An error occured"$C_CLEAR
+				printf ${C_RED}"  An error occured"${C_CLEAR}
 			fi
 		fi
 	fi
-	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+	else printf ${C_GREY}"  --Not performed--"${C_CLEAR}; fi
 }
 
 function check_gnl_leaks
-{	if [ "$OPT_NO_LEAKS" == "0" ]; then
-	local GNLC GNL_LIBFT EXTRA0 RET0 LOGFILENAME PROGNAME HEADERF VAL0
+{	if [ "${OPT_NO_LEAKS}" == "0" ]; then
+	local GNL_LIBFT RET0 LOGFILENAME PROGNAME HEADERF VAL0 MACRONAME
 	LOGFILENAME=.myleaks
-	$CMD_RM -f $LOGFILENAME
-	$CMD_TOUCH $LOGFILENAME
+	${CMD_RM} -f ${LOGFILENAME}
+	${CMD_TOUCH} ${LOGFILENAME}
 	check_create_tmp_dir
 	check_gnl_create_header
-	GNLC="$MYPATH/get_next_line.c"
-	HEADERF="$MYPATH/get_next_line.h"
-	GNL_LIBFT="$MYPATH/libft"
-	EXTRA0=
-	if [ -d "$GNL_LIBFT" ]
+	HEADERF="${MYPATH}/get_next_line.h"
+	GNL_LIBFT="${MYPATH}/libft"
+	MACRONAME=$(check_gnl_get_macro_name "${HEADERF}")
+	RET0=`cat "${HEADERF}" | grep define | grep "${MACRONAME}"`
+	VAL0=`printf "%s" "${RET0}" | sed 's/[^0-9]*//g'`
+	if [ $(printf "%d" "${VAL0}") -gt 11000 ]
 	then
-		make -C "$GNL_LIBFT" >/dev/null 2>&1
-		EXTRA0=" -L$GNL_LIBFT -lft -I $GNL_LIBFT/includes"
-	fi
-	RET0=`cat "$HEADERF" | grep define | grep BUFF_SIZE`
-	VAL0=`echo "$RET0" | sed 's/#//' | sed 's/BUFF_SIZE//' | sed 's/define//' | sed 's/ //g'`
-	if (( "$VAL0" > 11000 ))
-	then
-		echo "Please use a smaller BUFF_SIZE!\nMaximum is 11000." > $LOGFILENAME
-		printf $C_RED"  Unable to perform the test (read more info)"$C_CLEAR
+		echo "Please use a smaller ${MACRONAME}!\nMaximum is 11000." > ${LOGFILENAME}
+		printf ${C_RED}"  Unable to perform the test (read more info)"${C_CLEAR}
 	else
-		$CMD_RM -f "./tmp/gnl10"
-		RET0=`$CMD_GCC -Wall -Werror -Wextra -I ./tmp $GNLC $EXTRA0 ./srcs/gnl/gnl10.c -o ./tmp/gnl10 2>&1`
+		${CMD_RM} -f "./tmp/gnl10"
+		if [ -d "${GNL_LIBFT}" ]
+		then
+			make -C "${GNL_LIBFT}" 2>&1 >/dev/null
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/gnl10.c -o ./tmp/gnl10 2>&1 >/dev/null`
+		else
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/gnl10.c -o ./tmp/gnl10 2>&1 /dev/null`
+		fi
+
 		if [ -f "./tmp/gnl10" ]
 		then
 			RET0=`cat ./srcs/gnl/gnl10.c | sed 's/\\\\/\\\\\\\\/g'`
-			NOTICE="Here is the main() test:\n-----------------------------\n$RET0\n-----------------------------\n\n\n"
-			check_leaks "./tmp/gnl10" "" "$LOGFILENAME" "$NOTICE"
+			NOTICE="Here is the main() test:\n-----------------------------\n${RET0}\n-----------------------------\n\n\n"
+			check_leaks "./tmp/gnl10" "" "${LOGFILENAME}" "${NOTICE}"
 		else
-			echo "$RET0" > $LOGFILENAME
-			printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
+			echo "${RET0}" > ${LOGFILENAME}
+			printf ${C_RED}"  Fatal error: Cannot compile"${C_CLEAR}
 		fi
 	fi
-	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+	else printf ${C_GREY}"  --Not performed--"${C_CLEAR}; fi
 }
 
 function check_gnl_create_header
@@ -254,7 +252,7 @@ function check_gnl_bonus
 	GNLC="$MYPATH/get_next_line.c"
 	if [ -f "$GNLC" ]
 	then
-		RET0=`awk 'BEGIN { OFS=""; BLOCK=0 } { if ($0 == "{") { BLOCK=1 } if ($0 == "}") { BLOCK=0 } if (BLOCK == 1) { if ($0 ~ /^[\t ]*static[\t ]/) { gsub(/^[\t ]*/, ""); print "line ", NR, ": ", $0 }}}' $GNLC`
+		RET0=`awk 'BEGIN { OFS=""; BLOCK=0 } { if ($0 == "{") { BLOCK=1 } if ($0 == "}") { BLOCK=0 } if (BLOCK == 1) { if ($0 ~ /^[\t ]*static[\t ]/) { gsub(/^[\t ]*/, ""); print "line ", NR, ": ", $0 }}}' "$GNLC"`
 		TOTAL=`echo "$RET0" | wc -l | sed 's/[ 	]*//g'`
 		if (( TOTAL > 1 ))
 		then
@@ -278,37 +276,37 @@ function check_gnl_bonus
 }
 
 function check_gnl_macro
-{	if [ "$OPT_NO_GNLMACRO" == "0" ]; then
-    local RET0 RET2 HEADERF GNLC VAL0 LOGFILENAME
-	LOGFILENAME=.mymacro
-	$CMD_RM -f $LOGFILENAME
-	$CMD_TOUCH $LOGFILENAME
-    HEADERF="$MYPATH/get_next_line.h"
-	GNLC="$MYPATH/get_next_line.c"
-	if [ -f "$HEADERF" -a -f "$GNLC" ]
-    then
-        RET0=`cat "$HEADERF" | grep define | grep BUFF_SIZE`
-        if [ "$(echo "$RET0" | wc -l | sed 's/ //g')" == "0" ]
-        then
-            printf $C_RED"  BUFF_SIZE is not defined"$C_CLEAR
-			echo "BUFF_SIZE is not defined" > $LOGFILENAME
-        else
-			RET2=`cat "$GNLC" | grep -E 'read[ \t]*\([ \t&->a-zA-Z0-1_]*,[ \t&->a-zA-Z0-1_]*,[ \t]*BUFF_SIZE[ \t]*)'`
-			VAL0=`echo "$RET0" | sed 's/#//' | sed 's/BUFF_SIZE//' | sed 's/define//' | sed 's/ //g'`
-			if [ "$RET2" == "" ]
+{	if [ "${OPT_NO_GNLMACRO}" == "0" ]; then
+	local RET0 RET2 HEADERF VAL0 LOGFILENAME MACRONAME
+	LOGFILENAME=".mymacro"
+	${CMD_RM} -f ${LOGFILENAME}
+	${CMD_TOUCH} ${LOGFILENAME}
+	HEADERF="${MYPATH}/get_next_line.h"
+	if [ -f "${HEADERF}" -a -f "${MYPATH}/get_next_line.c" ]
+	then
+		MACRONAME=$(check_gnl_get_macro_name "${HEADERF}")
+	        if [ "${MACRONAME}" == "" ]
+        	then
+	        	printf ${C_RED}"  BUFF_SIZE is not defined"${C_CLEAR}
+			echo "BUFF_SIZE is not defined" > ${LOGFILENAME}
+	        else
+			RET2=`cat "${MYPATH}/get_next_line.c" | grep -E "[^*]{2}.*read[ \t]*\([^,]*,[^,]*,[ \t]*${MACRONAME}[ \t]*)"`
+			RET0=`cat "${HEADERF}" | grep 'define' | grep "${MACRONAME}"`
+			VAL0=`echo "${RET0}" | sed 's/[^0-9]*//g'`
+			if [ "${RET2}" == "" ]
 			then
-				printf $C_RED"  BUFF_SIZE is defined as: $VAL0, but seems to be used not properly"$C_CLEAR
-				echo "BUFF_SIZE should be used as the third parameter of the function 'read' without any handling! read([*], [*], BUFF_SIZE)\n\nCheck the line(s) where the function 'read' is used:\n$(cat "$GNLC" | grep -E 'read[\t]*\(' | sed 's/^[ \t]*//g')" > $LOGFILENAME
+				printf ${C_RED}"  ${MACRONAME} is defined with value: ${VAL0}, but seems to be used not properly"${C_CLEAR}
+				echo "${MACRONAME} should be used as the third parameter of the function 'read' without any handling! read([*], [*], ${MACRONAME})\n\nCheck the line(s) where the function 'read' is used:\n$(cat "${MYPATH}/get_next_line.c" | grep -E '[^*]{2}.*read[ \t]*\(' | sed 's/^[ 	]*//g')\n\nNote: When multiple lines are used for calling 'read', this test fails!" > ${LOGFILENAME}
 			else
-				printf $C_GREEN"  BUFF_SIZE is defined as: $VAL0"$C_CLEAR
-				echo "BUFF_SIZE is defined with value: $VAL0" > $LOGFILENAME
+				printf ${C_GREEN}"  ${MACRONAME} is defined with value: ${VAL0}"${C_CLEAR}
+				echo "${MACRONAME} is defined with value: ${VAL0}" > ${LOGFILENAME}
 			fi
-        fi
-    else
-        printf $C_RED"  get_next_line.h: File Not Found"$C_CLEAR
-		echo "get_next_line.h: File Not Found" > $LOGFILENAME
-    fi
-	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+        	fi
+	else
+		printf ${C_RED}"  get_next_line.[ch]: File Not Found"${C_CLEAR}
+		echo "get_next_line.[ch]: File Not Found" > ${LOGFILENAME}
+	fi
+	else printf ${C_GREY}"  --Not performed--"${C_CLEAR}; fi
 }
 
 function check_gnl_moulitest
@@ -338,6 +336,43 @@ function check_gnl
 			""\
 			"check_configure check_gnl gnl GET_NEXT_LINE" "configure"\
 			main "BACK TO MAIN MENU"
+	fi
+}
+
+function check_gnl_get_macro_name
+{
+	local RET0 RET0 LPATH
+	LPATH="$1"
+	RET0=$(cat "${LPATH}" | grep -E '#[ ]*define')
+	if [ "$(echo "${RET0}" | grep 'BUFF_SIZE')" != "" ]
+	then
+		printf "BUFF_SIZE"
+		return
+	fi
+	if [ "$(echo "${RET0}" | grep 'BUF_SIZE')" != "" ]
+	then
+		printf "BUF_SIZE"
+		return
+	fi
+	if [ "$(echo "${RET0}" | grep 'BUFFER_SIZE')" != "" ]
+	then
+		printf "BUFFER_SIZE"
+		return
+	fi
+	if [ "$(echo "${RET0}" | grep 'BUFFSIZE')" != "" ]
+	then
+		printf "BUFFSIZE"
+		return
+	fi
+	if [ "$(echo "${RET0}" | grep 'BUFSIZE')" != "" ]
+	then
+		printf "BUFSIZE"
+		return
+	fi
+	if [ "$(echo "${RET0}" | grep 'BUFFERSIZE')" != "" ]
+	then
+		printf "BUFFERSIZE"
+		return
 	fi
 }
 

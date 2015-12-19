@@ -40,19 +40,19 @@ then
 
     function configure_moulitest
     {
-	local MYPATH=$(printf "%s" "$2" | sed 's/ /\\ /g')
+	local LPATH=$(printf "%s" "$2" | sed 's/ /\\ /g')
         case "$1" in
             "libft")
-                echo "LIBFT_PATH = \"${MYPATH}\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
+                echo "LIBFT_PATH = \"${LPATH}\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
                 ;;
             "gnl")
-                echo "GET_NEXT_LINE_PATH = \"${MYPATH}\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
+                echo "GET_NEXT_LINE_PATH = \"${LPATH}\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
                 ;;
             "ft_ls")
-                echo "FT_LS_PATH = \"${MYPATH}\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
+                echo "FT_LS_PATH = \"${LPATH}\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
                 ;;
             "ft_printf")
-                echo "FT_PRINTF_PATH = \"${MYPATH}\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
+                echo "FT_PRINTF_PATH = \"${LPATH}\"" > "$RETURNPATH"/"${MOULITEST_DIR}"/config.ini
                 ;;
         esac
     }

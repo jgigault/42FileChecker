@@ -373,20 +373,19 @@ then
 
 	function get_config
 	{
-		local MYFILE MYPATH RET0
+		local MYFILE LPATH RET0
 		MYFILE=`printf "$RETURNPATH/.my$1" | sed 's/ /\\ /g'`
-#		MYFILE="$RETURNPATH/.my"$1
 		if [ ! -f "$MYFILE" ]
 		then
 			touch "$MYFILE"
 		fi
-		MYPATH=`cat "$MYFILE"`
-		if [ ! -d "$MYPATH" ]
+		LPATH=`cat "$MYFILE"`
+		if [ ! -d "$LPATH" ]
 		then
 			printf "" > "$MYFILE"
-			MYPATH=""
+			LPATH=""
 		fi
-		printf "$MYPATH"
+		printf "$LPATH"
 	}
 
 	function save_config
