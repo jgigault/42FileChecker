@@ -71,14 +71,10 @@ function check_update_42filechecker
 		then
 			display_center "Your version of '42FileChecker' is out-of-date."
 			display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
-			RET0=`git show-ref | grep "refs/remotes/origin/${LOCALBRANCH}" | cut -d" " -f1`
-			if [ "$RET0" != "" ]
+			RET1=`git log --pretty=oneline "refs/remotes/origin/${LOCALBRANCH}" 2>/dev/null | awk -v lhash=${LOCALHASH} '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk 'BEGIN {LIMIT=0} {print "  -> "$0; LIMIT+=1; if(LIMIT==10) {print "  -> (limited to 10 last commits...)"; exit}}'`
+			if [ "$RET1" != "" ]
 			then
-				RET1=`git log --pretty=oneline "refs/remotes/origin/${LOCALBRANCH}" 2>/dev/null | awk -v lhash=$RET0 '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk 'BEGIN {LIMIT=0} {print "  -> "$0; LIMIT+=1; if(LIMIT==10) {print "  -> (limited to 10 last commits...)"; exit}}'`
-				if [ "$RET1" != "" ]
-				then
-					printf "\n\n  Most recent commits:\n%s" "$RET1"
-				fi
+				printf "\n\n  Most recent commits:\n%s" "$RET1"
 			fi
 		else
 			display_center "Your copy of '42FileChecker' has been modified locally."
