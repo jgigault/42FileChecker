@@ -7,7 +7,7 @@ The script is designed as a reminder:
 * count and files name
 * code's standard
 * required and forbidden functions
-* macro definitions
+* macro definitionsl
 * static variables & functions declarations
 * makefile rules
 
@@ -16,9 +16,9 @@ Extra tests may also be performed:
 * speed test comparison
 * Unit Tests
 
-Complete unit tests are handled through external repositories whose sources are automatically downloaded, configured and updated in background when you run the script:
-* [moulitest](https://github.com/yyang42/moulitest), developed by [@yyang42](https://github.com/yyang42) and other contributors
-* [libft-unit-test](https://github.com/alelievr/libft-unit-test), developped by [@alelievr](https://github.com/alelievr) (for libft only)
+Complete unit tests are handled through external frameworks whose sources are automatically downloaded, configured and updated in background when you run the script:
+* [**moulitest**](https://github.com/yyang42/moulitest), developed by [@yyang42](https://github.com/yyang42) and other contributors
+* [**libft-unit-test**](https://github.com/alelievr/libft-unit-test), developped by [@alelievr](https://github.com/alelievr) (for libft only)
 
 ## install & launch
 ```bash
@@ -30,8 +30,21 @@ You may also want to set an alias to run it from everywhere, even in your projec
 alias 42FileChecker='sh ~/42FileChecker/42FileChecker.sh'
 ```
 
-## update
-At launch, 42FileChecker invites you to get the latest version of the sources and its dependencies when available. You may just simply accept or skip the message :-)
+## options
+```
+--no-update         // Do not check for updates at launch
+--no-color          // Do not display color tags
+--no-timeout        // Disable time-out
+--no-norminette     // Disable code's standard check
+--no-leaks          // Disable memory leaks detection
+--no-speedtest      // Disable speed test comparison
+--no-moulitest      // Disable moulitest
+--no-libftunittest  // Disable libft-unit-test
+```
+Add your options as arguments before launch:
+```bash
+sh ./42FileChecker.sh --no-update --no-timeout
+```
 
 ## supported projects
 
@@ -153,25 +166,15 @@ At launch, 42FileChecker invites you to get the latest version of the sources an
 </tbody>
 </table>
 
-## options
-```
---no-update         // Do not check for updates at launch
---no-color          // Do not display color tags
---no-timeout        // Disable time-out
---no-norminette     // Disable code's standard check
---no-leaks          // Disable memory leaks detection
---no-speedtest      // Disable speed test comparison
---no-moulitest      // Disable moulitest
---no-libftunittest  // Disable libft-unit-test
-```
-Add your options as arguments before launch:
-```bash
-sh ./42FileChecker.sh --no-update --no-timeout
-```
+## update
+At launch, 42FileChecker invites you to get the latest version of the sources and dependencies when available. You may just simply accept or skip the message.
 
-## manual
+## contribute
+If you want to fix or to improve the 42FileChecker, follow the guide lines [**Contributing to 42FileChecker**](https://github.com/jgigault/42FileChecker/wiki/Contributing-to-42FileChecker), or if you want your own unit testing framework to be integrated in the 42FileChecker, just let me know at **jgigault@student.42.fr**
 
-42FileChecker has an [online wiki](https://github.com/jgigault/42FileChecker/wiki) on github that gives you tips and lessons in Bash programming:
+## bash tips and tricks
+
+42FileChecker has an [**online wiki**](https://github.com/jgigault/42FileChecker/wiki) on github that gives you tips and lessons in Bash programming:
 * [**What is Bash**](https://github.com/jgigault/42FileChecker/wiki/What-is-Bash)
 * [**What is a bash script**](https://github.com/jgigault/42FileChecker/wiki/What-is-a-Bash-script)
 * What is 42FileChecker
