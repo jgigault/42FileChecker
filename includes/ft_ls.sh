@@ -61,7 +61,7 @@ function check_ft_ls_speedtest
 	LOGFILENAME=.myspeedtest
 	rm -f $LOGFILENAME
 	touch $LOGFILENAME
-	make re -C "$MYPATH" >/dev/null
+	make re -C "$MYPATH" >/dev/null 2>&1
 	if [ -f "$MYPATH/ft_ls" ]
 	then
 		check_speedtest "$MYPATH/ft_ls" "ls" "-1lR /" "$LOGFILENAME" "Your program is compared with the original 'ls'.\n\n"
@@ -77,7 +77,7 @@ function check_ft_ls_leaks
 	LOGFILENAME=.myleaks
 	rm -f $LOGFILENAME
 	touch $LOGFILENAME
-	make re -C "$MYPATH" >/dev/null
+	make re -C "$MYPATH" >/dev/null 2>&1
 	if [ -f "$MYPATH/ft_ls" ]
 	then
 		check_leaks "$MYPATH/ft_ls" "-1R /" "$LOGFILENAME" ""

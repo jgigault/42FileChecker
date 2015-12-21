@@ -128,17 +128,17 @@ function check_fdf_top
 	LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
 	LPATH=`eval $LPATH`
 	printf $C_WHITE"\n\n"
-    if [ "$1" != "" ]
-    then
-        printf "  Current configuration:"
-        (( LEN=$COLUMNS - 24 ))
-        printf "%"$LEN"s" "FDF  "
-        printf $C_CLEAR"  $LPATH\n\n"
-    else
-        printf "  FDF\n"
-        printf "\n"
-    fi
-    printf ""$C_CLEAR
+	if [ "$1" != "" ]
+		then
+		printf "  Current configuration:"
+		(( LEN=$COLUMNS - 24 ))
+		printf "%"$LEN"s" "FDF  "
+		printf $C_CLEAR"  $LPATH\n\n"
+	else
+		printf "  FDF\n"
+		printf "\n"
+	fi
+	printf ""$C_CLEAR
 }
 
 fi;

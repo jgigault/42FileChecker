@@ -102,15 +102,15 @@ then
 	}
 
 	function display_hr2
-    {
-        local MARGIN
+	{
+		local MARGIN
 		(( MARGIN= $COLUMNS ))
-        printf $C_GREY""
-	    printf "%"$MARGIN"s" "" | sed s/' '/"${c:=¯ }"/g | cut -c1-$MARGIN
-	    printf $C_CLEAR""
-	    if [ "$1" != "" ]
-	    then
-		    echo "$1";
+		printf $C_GREY""
+		printf "%"$MARGIN"s" "" | sed s/' '/"${c:=¯ }"/g | cut -c1-$MARGIN
+		printf $C_CLEAR""
+		if [ "$1" != "" ]
+		then
+			echo "$1";
 		fi
 	}
 
@@ -135,12 +135,12 @@ then
 
 	function display_center
 	{
-	    local LEN MARGIN
-	    if [ "$1" != "" ]
+		local LEN MARGIN
+		if [ "$1" != "" ]
 		then
-		    LEN=${#1}
-		    (( MARGIN= ($COLUMNS - $LEN) / 2 ))
-		    printf "%"$MARGIN"s" " "
+			LEN=${#1}
+			(( MARGIN= ($COLUMNS - $LEN) / 2 ))
+			printf "%"$MARGIN"s" " "
 			printf "$1"
 			(( MARGIN= $MARGIN + ($COLUMNS - $LEN - $MARGIN * 2) ))
 			printf "%"$MARGIN"s" " "
@@ -176,7 +176,7 @@ then
 	function display_top
 	{
 		local LPATH=$1
-	    local LHOME LEN PROJECTNAME MYPATH
+		local LHOME LEN PROJECTNAME MYPATH
 		MYPATH=$1
 		PROJECTNAME=$2
 		LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
@@ -185,13 +185,13 @@ then
 		printf $C_WHITE"\n\n"
 		if [ "$MYPATH" != "" ]
 		then
-		    printf "  Current configuration:"
-		    (( LEN=$COLUMNS - 24 ))
-	        printf "%"$LEN"s" "$PROJECTNAME  "
-		    printf $C_CLEAR"  $LPATH\n\n"
-	    else
-		    printf "  $PROJECTNAME\n"
-		    printf "\n"
+			printf "  Current configuration:"
+			(( LEN=$COLUMNS - 24 ))
+			printf "%"$LEN"s" "$PROJECTNAME  "
+			printf $C_CLEAR"  $LPATH\n\n"
+		else
+			printf "  $PROJECTNAME\n"
+			printf "\n"
 		fi
 		printf ""$C_CLEAR
 	}

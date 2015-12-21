@@ -165,7 +165,7 @@ function check_install_42filechecker
 	printf "\n\n"
 	printf "  Updating 42FileChecker\n"
 	${CMD_RM} -f ${LOGFILENAME}
-	(git fetch --all 2>&1 >/dev/null) &
+	(git fetch --all >/dev/null 2>&1) &
 	display_spinner $!
 	(git reset --hard origin/master 2>&1 | grep -v 'HEAD is now at' >${LOGFILENAME}) &
 	display_spinner $!
@@ -225,12 +225,12 @@ function check_install_external_repository
 	if [ ! -d "${DIR}" ]
 	then
 		printf "  Installing ${REPONAME}...\n"
-		(git clone "${URL}" "${DIR}" > .myret 2>&1) &
+		(git clone "${URL}" "${DIR}" >.myret 2>&1) &
 		display_spinner $!
 	else
 		cd "${DIR}"
 		printf "  Updating moulitest...\n"
-		((git reset --hard origin/master 2>&1 >../.myret) && git checkout master 2>/dev/null) &
+		((git reset --hard origin/master >../.myret 2>&1) && git checkout master 2>/dev/null) &
 		display_spinner $!
 		cd ..
 	fi

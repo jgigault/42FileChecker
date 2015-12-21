@@ -60,19 +60,19 @@ function check_libftasm_all
 function check_libftasm_basictests
 {	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
 	local total errors fatal success i TTYPE TINDEX TVAL TARGS FILEN RET1 RET2 RET0 TYPE TVAL0 TNAME DIR TPART
-    i=0
-    index=0
-    total=0
-    errors=0
-    success=0
-    fatal=0
-    TYPE="$1"
-    LOGFILENAME=".mybasictests"
+	i=0
+	index=0
+	total=0
+	errors=0
+	success=0
+	fatal=0
+	TYPE="$1"
+	LOGFILENAME=".mybasictests"
 	DIR=$( cd "$( dirname "$0" )" && pwd )
-    $CMD_RM -f $LOGFILENAME $LOGFILENAME"success"
-    touch $LOGFILENAME $LOGFILENAME"success"
-    check_create_tmp_dir
-    make re -C "$MYPATH" &>$LOGFILENAME
+	$CMD_RM -f $LOGFILENAME $LOGFILENAME"success"
+	touch $LOGFILENAME $LOGFILENAME"success"
+	check_create_tmp_dir
+	make re -C "$MYPATH" >$LOGFILENAME 2>&1
 	if [ -f "$MYPATH"/libfts.a ]
 	then
 		$CMD_RM -f $LOGFILENAME $LOGFILENAME
@@ -151,27 +151,27 @@ function check_libftasm_basictests
 	else
 		printf $C_RED"  Makefile does not compile"$C_CLEAR
 	fi
-else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 }
 
 function check_libftasm_basictests_gcc
 {
-    local FILEN RET0 LOGFILENAME
-    FILEN="$1"
-    LOGFILENAME="$2"
-    if [ ! -f "./tmp/ft_$FILEN" -o ! -f "./tmp/$FILEN" ]
-    then
-        if [ -f "$MYPATH/libfts.a" ]
-        then
-            RET0=`gcc -Wall -Werror -Wextra "./srcs/libftasm/ft_$FILEN.c" -L"$MYPATH" -lfts -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
-            if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
-            RET0=`gcc "./srcs/libftasm/$FILEN.c" -o "./tmp/$FILEN" 2>&1 1>/dev/null`
-            if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
-        else
-            echo "$MYPATH/libfts.a was not found" > $LOGFILENAME; printf "error"; return;
-        fi
-    fi
-    return 1
+	local FILEN RET0 LOGFILENAME
+	FILEN="$1"
+	LOGFILENAME="$2"
+	if [ ! -f "./tmp/ft_$FILEN" -o ! -f "./tmp/$FILEN" ]
+	then
+		if [ -f "$MYPATH/libfts.a" ]
+		then
+			RET0=`gcc -Wall -Werror -Wextra "./srcs/libftasm/ft_$FILEN.c" -L"$MYPATH" -lfts -o "./tmp/ft_$FILEN" >/dev/null 2>&1`
+			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
+			RET0=`gcc "./srcs/libftasm/$FILEN.c" -o "./tmp/$FILEN" >/dev/null 2>&1`
+			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
+		else
+			echo "$MYPATH/libfts.a was not found" > $LOGFILENAME; printf "error"; return;
+		fi
+	fi
+	return 1
 }
 
 function check_libftasm_makefile

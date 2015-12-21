@@ -72,7 +72,7 @@ function check_ft_printf_basictests
 	touch $LOGFILENAME $LOGFILENAME"success"
 	check_create_tmp_dir
 	check_ft_printf_create_header
-	make re -C "$MYPATH" &>/dev/null
+	make re -C "$MYPATH" >/dev/null 2>&1
 	echo "SUCCESS TESTS:\n" >> $LOGFILENAME"success"
 	while [ "${CHK_FT_PRINTF_LIST[$i]}" != "" -a $fatal -eq 0 ]
 	do
@@ -191,13 +191,13 @@ function check_ft_printf_speedtest
 	rm -f $LOGFILENAME
 	touch $LOGFILENAME
 	check_create_tmp_dir
-    make re -C "$MYPATH" &>$LOGFILENAME
+	make re -C "$MYPATH" >$LOGFILENAME 2>&1
 	if [ -f "$MYPATH/libftprintf.a" ]
 	then
-		RET0=`gcc -Wall -Werror -Wextra "$CSRC1" -L "$MYPATH" -lftprintf -o "$BSRC1" &>$LOGFILENAME`
+		RET0=`gcc -Wall -Werror -Wextra "$CSRC1" -L "$MYPATH" -lftprintf -o "$BSRC1" >$LOGFILENAME 2>&1`
 		if [ -f "$BSRC1" ]
 		then
-			RET0=`gcc -Wall -Werror -Wextra "$CSRC2" -o "$BSRC2" &>$LOGFILENAME`
+			RET0=`gcc -Wall -Werror -Wextra "$CSRC2" -o "$BSRC2" >$LOGFILENAME 2>&1`
 			if [ -f "$BSRC2" ]
 			then
 				check_speedtest "$BSRC1" "$BSRC2" "null" "$LOGFILENAME" "Your program is compared with the original 'printf'.\n\n"
@@ -222,10 +222,10 @@ function check_ft_printf_leaks
 	rm -f $LOGFILENAME
 	touch $LOGFILENAME
 	check_create_tmp_dir
-	make re -C "$MYPATH" &>$LOGFILENAME
+	make re -C "$MYPATH" >$LOGFILENAME 2>&1
 	if [ -f "$MYPATH/libftprintf.a" ]
 	then
-		RET0=`gcc -Wall -Werror -Wextra "$CSRC" -L "$MYPATH" -lftprintf -o "$BSRC" &>$LOGFILENAME`
+		RET0=`gcc -Wall -Werror -Wextra "$CSRC" -L "$MYPATH" -lftprintf -o "$BSRC" >$LOGFILENAME 2>&1`
 		if [ -f "$BSRC" ]
 		then
 			RET0=`cat "$CSRC" | sed 's/\\\\/\\\\\\\\/g'`
@@ -249,9 +249,9 @@ function check_ft_printf_basictests_gcc
 	then
 		if [ -f "$MYPATH/libftprintf.a" ]
 		then
-			RET0=`gcc -Wall -Werror -Wextra "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN" 2>&1 1>/dev/null`
+			RET0=`gcc -Wall -Werror -Wextra "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN" >/dev/null 2>&1`
 			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
-			RET0=`gcc "./srcs/printf/$FILEN.c" -o "./tmp/$FILEN" 2>&1 1>/dev/null`
+			RET0=`gcc "./srcs/printf/$FILEN.c" -o "./tmp/$FILEN" >/dev/null 2>&1`
 			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
 		else
 			echo "$MYPATH/libftprintf.a was not found" > $LOGFILENAME; printf "error"; return;
@@ -286,7 +286,7 @@ function check_ft_printf_forbidden_func
 		echo "int ft_printf(char const *format, ...);\nint main(void) {" > $F
 		echo "ft_printf(\"\");" >> $F
 		echo "return (1); }" >> $F
-		make re -C "$MYPATH" 1>.myforbiddenfunc 2>&1
+		make re -C "$MYPATH" >.myforbiddenfunc 2>&1
 		rm -f "$RETURNPATH/tmp/$FILEN"
 		if [ -f "$MYPATH/libftprintf.a" ]
 		then
@@ -310,7 +310,7 @@ function check_ft_printf
 	if [ -d "$MYPATH" ]
 	then
 		display_menu\
-            ""\
+			""\
 			check_ft_printf_all "check all!"\
 			"_"\
 			"TESTS" "CHK_FT_PRINTF" "check_ft_printf_all"\

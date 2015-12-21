@@ -70,10 +70,10 @@ function check_gnl_forbidden_func
 	${CMD_RM} -f "./tmp/${FILEN}"
 	if [ -d "${GNL_LIBFT}" ]
 	then
-		make -C "${GNL_LIBFT}" 2>&1 >/dev/null
-		RET0=`${CMD_GCC} "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./tmp/${FILEN}.c -o ./tmp/${FILEN} 2>&1 >/dev/null`
+		make -C "${GNL_LIBFT}" >/dev/null 2>&1
+		RET0=`${CMD_GCC} "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./tmp/${FILEN}.c -o ./tmp/${FILEN} >/dev/null 2>&1`
 	else
-		RET0=`${CMD_GCC} "${MYPATH}/get_next_line.c" ./tmp/${FILEN}.c -o ./tmp/${FILEN} 2>&1 >/dev/null`
+		RET0=`${CMD_GCC} "${MYPATH}/get_next_line.c" ./tmp/${FILEN}.c -o ./tmp/${FILEN} >/dev/null 2>&1`
 
 	fi
 	check_forbidden_func CHK_GNL_AUTHORIZED_FUNCS "./tmp/${FILEN}"
@@ -107,9 +107,9 @@ function check_gnl_basics
 		${CMD_RM} -f "./tmp/${FILEN}"
 		if [ -d "${GNL_LIBFT}" ]
 		then
-			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/${FILEN}.c -o ./tmp/${FILEN} 2>&1 >/dev/null`
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/${FILEN}.c -o ./tmp/${FILEN} >/dev/null 2>&1`
 		else
-			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/${FILEN}.c -o ./tmp/${FILEN} 2>&1 >/dev/null`
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/${FILEN}.c -o ./tmp/${FILEN} >/dev/null 2>&1`
 		fi
 		if [ -f "./tmp/${FILEN}" ]
 		then
@@ -162,10 +162,10 @@ function check_gnl_multiple_fd
 	${CMD_RM} -f "./tmp/gnl11"
 	if [ -d "${GNL_LIBFT}" ]
 	then
-		make -C "${GNL_LIBFT}" 2>&1 >/dev/null
-		RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/gnl11.c -o ./tmp/gnl11 2>&1 1>${LOGFILENAME}`
+		make -C "${GNL_LIBFT}" >/dev/null 2>&1
+		RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/gnl11.c -o ./tmp/gnl11 >${LOGFILENAME} 2>&1`
 	else
-		RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/gnl11.c -o ./tmp/gnl11 2>&1 1>${LOGFILENAME}`
+		RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/gnl11.c -o ./tmp/gnl11 >${LOGFILENAME} 2>&1`
 	fi
 	if [ -f "./tmp/gnl11" ]
 	then
@@ -217,10 +217,10 @@ function check_gnl_leaks
 		${CMD_RM} -f "./tmp/gnl10"
 		if [ -d "${GNL_LIBFT}" ]
 		then
-			make -C "${GNL_LIBFT}" 2>&1 >/dev/null
-			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/gnl10.c -o ./tmp/gnl10 2>&1 >/dev/null`
+			make -C "${GNL_LIBFT}" >/dev/null 2>&1
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/gnl10.c -o ./tmp/gnl10 >/dev/null 2>&1`
 		else
-			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/gnl10.c -o ./tmp/gnl10 2>&1 /dev/null`
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/gnl10.c -o ./tmp/gnl10 >/dev/null 2>&1`
 		fi
 
 		if [ -f "./tmp/gnl10" ]
@@ -324,7 +324,7 @@ function check_gnl
 	if [ -d "$MYPATH" ]
 	then
 		display_menu\
-            ""\
+			""\
 			check_gnl_all "check all!"\
 			"_"\
 			"TESTS" "CHK_GNL" "check_gnl_all"\

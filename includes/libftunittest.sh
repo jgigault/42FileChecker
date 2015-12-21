@@ -14,9 +14,9 @@ function check_libftunittest
 		MYPATH=$(get_config "libft")
 		if [ "${OPT_NO_MAKEFILE}" == "0" -o "${RUNNING_MODE}" == "RUN_ALONE" ]
 		then
-			make re -C "${MYPATH}" 2>&1 1>/dev/null
+			make re -C "${MYPATH}" 1>/dev/null 2>&1
 		fi
-		make re f -C "${LIBFTUNITTEST_DIR}" LIBFTDIR="${MYPATH}" 2>&1 >${LOGFILENAME}
+		make re f -C "${LIBFTUNITTEST_DIR}" LIBFTDIR="${MYPATH}" >${LOGFILENAME} 2>&1
 		check_cleanlog ${LOGFILENAME}
 		RET0=`cat ${LOGFILENAME}`
 		RET1=`echo "${RET0}" | grep 'RUNING TESTS:'`
