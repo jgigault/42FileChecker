@@ -214,30 +214,31 @@ function check_ft_printf_speedtest
 }
 
 function check_ft_printf_leaks
-{	if [ "$OPT_NO_LEAKS" == "0" ]; then
+{	if [ "${OPT_NO_LEAKS}" == "0" ]; then
 	local LOGFILENAME RET0 CSRC BSRC
-	CSRC=./srcs/printf/ft_printf_leaks.c
-	BSRC=./tmp/ft_printf_leaks
-	LOGFILENAME=.myleaks
-	rm -f $LOGFILENAME
-	touch $LOGFILENAME
+	CSRC="./srcs/printf/ft_printf_leaks.c"
+	BSRC="./tmp/ft_printf_leaks"
+	LOGFILENAME=".myleaks"
+	$CMD_RM} -f ${LOGFILENAME}
+	${CMD_TOUCH} ${LOGFILENAME}
 	check_create_tmp_dir
-	make re -C "$MYPATH" >$LOGFILENAME 2>&1
-	if [ -f "$MYPATH/libftprintf.a" ]
+	make re -C "${MYPATH}" >${LOGFILENAME} 2>&1
+	if [ -f "${MYPATH}/libftprintf.a" ]
 	then
-		RET0=`gcc -Wall -Werror -Wextra "$CSRC" -L "$MYPATH" -lftprintf -o "$BSRC" >$LOGFILENAME 2>&1`
+		RET0=`gcc -Wall -Werror -Wextra "${CSRC}" -L "${MYPATH}" -lftprintf -o "${BSRC}" 2>&1`
 		if [ -f "$BSRC" ]
 		then
-			RET0=`cat "$CSRC" | sed 's/\\\\/\\\\\\\\/g'`
-			NOTICE="Here is the main() test:\n-----------------------------\n$RET0\n-----------------------------\n\n\n"
-			check_leaks "$BSRC" "" "$LOGFILENAME" "$NOTICE"
+			RET0=`cat "${CSRC}" | sed 's/\\\\/\\\\\\\\/g'`
+			NOTICE="Here is the main() test:\n-----------------------------\n${RET0}\n-----------------------------\n\n\n"
+			check_leaks "${BSRC}" "" "${LOGFILENAME}" "${NOTICE}"
 		else
-			printf $C_RED"  Fatal error : Cannot compile"$C_CLEAR
+			echo "${RET0}" >>${LOGFILENAME}
+			printf ${C_RED}"  Fatal error : Cannot compile"${C_CLEAR}
 		fi
 	else
-		printf $C_RED"  Fatal error : Cannot compile"$C_CLEAR
+		printf ${C_RED}"  Fatal error : Cannot compile"${C_CLEAR}
 	fi
-	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+	else printf ${C_GREY}"  --Not performed--"${C_CLEAR}; fi
 }
 
 function check_ft_printf_basictests_gcc

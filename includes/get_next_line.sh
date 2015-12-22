@@ -199,7 +199,7 @@ function check_gnl_multiple_fd
 function check_gnl_leaks
 {	if [ "${OPT_NO_LEAKS}" == "0" ]; then
 	local GNL_LIBFT RET0 LOGFILENAME PROGNAME HEADERF VAL0 MACRONAME
-	LOGFILENAME=.myleaks
+	LOGFILENAME=".myleaks"
 	${CMD_RM} -f ${LOGFILENAME}
 	${CMD_TOUCH} ${LOGFILENAME}
 	check_create_tmp_dir
@@ -217,10 +217,10 @@ function check_gnl_leaks
 		${CMD_RM} -f "./tmp/gnl10"
 		if [ -d "${GNL_LIBFT}" ]
 		then
-			make -C "${GNL_LIBFT}" >/dev/null 2>&1
-			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/gnl10.c -o ./tmp/gnl10 >/dev/null 2>&1`
+			make -C "${GNL_LIBFT}" >${LOGFILENAME} 2>&1
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/gnl10.c -o ./tmp/gnl10 2>&1`
 		else
-			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/gnl10.c -o ./tmp/gnl10 >/dev/null 2>&1`
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/gnl10.c -o ./tmp/gnl10 2>&1`
 		fi
 
 		if [ -f "./tmp/gnl10" ]
@@ -229,7 +229,7 @@ function check_gnl_leaks
 			NOTICE="Here is the main() test:\n-----------------------------\n${RET0}\n-----------------------------\n\n\n"
 			check_leaks "./tmp/gnl10" "" "${LOGFILENAME}" "${NOTICE}"
 		else
-			echo "${RET0}" > ${LOGFILENAME}
+			echo "${RET0}" >> ${LOGFILENAME}
 			printf ${C_RED}"  Fatal error: Cannot compile"${C_CLEAR}
 		fi
 	fi

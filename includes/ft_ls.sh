@@ -72,19 +72,19 @@ function check_ft_ls_speedtest
 }
 
 function check_ft_ls_leaks
-{	if [ "$OPT_NO_LEAKS" == "0" ]; then
+{	if [ "${OPT_NO_LEAKS}" == "0" ]; then
 	local RET0 LOGFILENAME PROGNAME
-	LOGFILENAME=.myleaks
-	rm -f $LOGFILENAME
-	touch $LOGFILENAME
-	make re -C "$MYPATH" >/dev/null 2>&1
-	if [ -f "$MYPATH/ft_ls" ]
+	LOGFILENAME=".myleaks"
+	${CMD_RM} -f ${LOGFILENAME}
+	${CMD_TOUCH} ${LOGFILENAME}
+	make re -C "${MYPATH}" >${LOGFILENAME} 2>&1
+	if [ -f "${MYPATH}/ft_ls" ]
 	then
-		check_leaks "$MYPATH/ft_ls" "-1R /" "$LOGFILENAME" ""
+		check_leaks "${MYPATH}/ft_ls" "-R /" "${LOGFILENAME}" ""
 	else
-		printf $C_RED"  Fatal error: Cannot compile"$C_CLEAR
+		printf ${C_RED}"  Fatal error: Cannot compile"${C_CLEAR}
 	fi
-	else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+	else printf ${C_GREY}"  --Not performed--"${C_CLEAR}; fi
 }
 
 function check_ft_ls_makefile
