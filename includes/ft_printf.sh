@@ -219,7 +219,7 @@ function check_ft_printf_leaks
 	CSRC="./srcs/printf/ft_printf_leaks.c"
 	BSRC="./tmp/ft_printf_leaks"
 	LOGFILENAME=".myleaks"
-	$CMD_RM} -f ${LOGFILENAME}
+	${CMD_RM} -f ${LOGFILENAME}
 	${CMD_TOUCH} ${LOGFILENAME}
 	check_create_tmp_dir
 	make re -C "${MYPATH}" >${LOGFILENAME} 2>&1
