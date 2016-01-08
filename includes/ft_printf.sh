@@ -5,7 +5,7 @@ then
 
 source includes/ft_printf_list.sh
 
-declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests (beta)" "check_ft_printf_leaks" "leaks" "check_ft_printf_speedtest" "speed test" "check_ft_printf_moulitest" "moulitest (${MOULITEST_URL})" )'
+declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests" "check_ft_printf_bastardtests" "bastard tests" "check_ft_printf_leaks" "leaks" "check_ft_printf_speedtest" "speed test" "check_ft_printf_moulitest" "moulitest (${MOULITEST_URL})" )'
 
 declare -a CHK_FT_PRINTF_AUTHORIZED_FUNCS='(write malloc free exit main)'
 
@@ -48,7 +48,8 @@ function check_ft_printf_all
 		"open .mynorminette" "more info: norminette"\
 		"open .mymakefile" "more info: makefile"\
 		"open .myforbiddenfunc" "more info: forbidden functions"\
-		"open .mybasictests" "more info: basic tests (beta)"\
+		"open .mybasictests" "more info: basic tests"\
+		"open .mybasictests2" "more info: bastard tests"\
 		"open .myleaks" "more info: leaks"\
 		"open .myspeedtest" "more info: speed test"\
 		"open .mymoulitest" "more info: moulitest"\
@@ -58,8 +59,18 @@ function check_ft_printf_all
 }
 
 function check_ft_printf_basictests
-{	if [ "$OPT_NO_BASICTESTS" == "0" ]; then
-	local total errors fatal success i TTYPE TVAL TARGS FILEN RET1 RET2 RET0 TYPE TVAL0
+{
+	check_ft_printf_compiltests ""
+}
+
+function check_ft_printf_bastardtests
+{
+	check_ft_printf_compiltests "2"
+}
+
+function check_ft_printf_compiltests
+{	if [ "${OPT_NO_BASICTESTS}" == "0" ]; then
+	local total errors fatal success i TTYPE TVAL TARGS FILEN RET1 RET2 RET0 TYPE TVAL0 TABTESTS
 	i=0
 	index=0
 	total=0
@@ -67,20 +78,26 @@ function check_ft_printf_basictests
 	success=0
 	fatal=0
 	TYPE="$1"
-	LOGFILENAME=".mybasictests"
-	rm -f $LOGFILENAME $LOGFILENAME"success"
-	touch $LOGFILENAME $LOGFILENAME"success"
+	if [ "${TYPE}" == "" ]
+	then
+		TABTESTS=("${CHK_FT_PRINTF_LIST[@]}")
+	else
+		TABTESTS=("${CHK_FT_PRINTF_LIST2[@]}")
+	fi
+	LOGFILENAME=".mybasictests${TYPE}"
+	${CMD_RM} -f ${LOGFILENAME} "${LOGFILENAME}success"
+	${CMD_TOUCH} ${LOGFILENAME} "${LOGFILENAME}success"
 	check_create_tmp_dir
 	check_ft_printf_create_header
-	make re -C "$MYPATH" >/dev/null 2>&1
-	echo "SUCCESS TESTS:\n" >> $LOGFILENAME"success"
-	while [ "${CHK_FT_PRINTF_LIST[$i]}" != "" -a $fatal -eq 0 ]
+	make re -C "${MYPATH}" >/dev/null 2>&1
+	echo "SUCCESS TESTS:\n" >> "${LOGFILENAME}success"
+	while [ "${TABTESTS[$i]}" != "" -a $fatal -eq 0 ]
 	do
 		(( index += 1 ))
-		TTYPE="${CHK_FT_PRINTF_LIST[$i]}"
+		TTYPE="${TABTESTS[$i]}"
 		(( i += 1 ))
-		TVAL0="${CHK_FT_PRINTF_LIST[$i]}"
-		TVAL=`printf "%s" "${CHK_FT_PRINTF_LIST[$i]}" | sed 's/\\\\/\\\\\\\\/g'`
+		TVAL0="${TABTESTS[$i]}"
+		TVAL=`printf "%s" "${TABTESTS[$i]}" | sed 's/\\\\/\\\\\\\\/g'`
 		(( i += 1 ))
 		#if [ "$TYPE" == "${TTYPE:0:1}" ]
 		#then
