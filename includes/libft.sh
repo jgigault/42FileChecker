@@ -93,7 +93,9 @@ function check_libft_forbidden_func
 		F=$RETURNPATH/tmp/$FILEN.c
 		LIBFTH=`find "$MYPATH" -name libft.h`
 		check_create_tmp_dir
-		echo "#define NULL ((void *)0)\n#include \"$LIBFTH\"\nint main(void) {" > $F
+		echo "#define NULL ((void *)0)" > $F
+		echo "#include \"$LIBFTH\"" >> $F
+		echo "int main(void) {" >> $F
 		echo "ft_putstr(NULL);" >> $F
 		echo "ft_memset(NULL, 0, 0);" >> $F
 		echo "ft_bzero(NULL, 0);" >> $F
