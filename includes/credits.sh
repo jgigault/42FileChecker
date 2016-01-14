@@ -15,6 +15,8 @@ then
 		printf "     http://www.42.fr\n\n"
 		printf "  $C_WHITE-> moulitest (yyang42)\n"$C_CLEAR
 		printf "     ${MOULITEST_URL}\n\n"
+		printf "  $C_WHITE-> libft-unit-test (alelievr)\n"$C_CLEAR
+		printf "     ${LIBFTUNITTEST_URL}\n\n"
 		printf "  Other credits:\n\n"
 		printf "  $C_WHITE-> Text to ASCII Art Generator (patorjk@gmail.com)\n"$C_CLEAR
 		printf "     http://patorjk.com/software/taag/\n\n"
