@@ -98,6 +98,13 @@ function main
 	tput civis
 	display_header
 	printf "\n\n"
+	printf "${C_INVERTRED}"
+	display_center " "
+	display_center "Failing tests does not necessary mean you're wrong!"
+	display_center "42FileChecker does not substitute a corrector"
+	display_center "and was not made for that at first!"
+	display_center " "
+	printf "\n\n"
 	display_menu\
 		""\
 		check_libft "libft"\
