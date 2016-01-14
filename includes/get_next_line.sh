@@ -61,12 +61,15 @@ function check_gnl_all
 
 function check_gnl_forbidden_func
 {	if [ "${OPT_NO_FORBIDDEN}" == "0" ]; then
-	local FILEN GNL_LIBFT RET0
+	local FILEN GNL_LIBFT RET0 SOURCEF
 	FILEN=forbiddenfuncs
 	GNL_LIBFT="${MYPATH}/libft"
+	SOURCEF="./tmp/${FILEN}.c"
 	check_create_tmp_dir
 	check_gnl_create_header
-	echo "#define NULL ((void *)0)\n#include \"gnl.h\"\nint main(void) { int ret; ret = get_next_line(0, NULL); return (1); }" > ./tmp/${FILEN}.c
+	echo "#define NULL ((void *)0)" > ${SOURCEF}
+	echo "#include \"gnl.h\"" >> ${SOURCEF}
+	echo "int main(void) { int ret; ret = get_next_line(0, NULL); return (1); }" >> ${SOURCEF}
 	${CMD_RM} -f "./tmp/${FILEN}"
 	if [ -d "${GNL_LIBFT}" ]
 	then
