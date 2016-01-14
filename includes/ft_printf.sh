@@ -5,7 +5,7 @@ then
 
 source includes/ft_printf_list.sh
 
-declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests" "check_ft_printf_bastardtests" "bastard tests" "check_ft_printf_leaks" "leaks" "check_ft_printf_speedtest" "speed test" "check_ft_printf_moulitest" "moulitest (${MOULITEST_URL})" )'
+declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests" "check_ft_printf_bastardtests" "undefined behavior tests" "check_ft_printf_leaks" "leaks" "check_ft_printf_speedtest" "speed test" "check_ft_printf_moulitest" "moulitest (${MOULITEST_URL})" )'
 
 declare -a CHK_FT_PRINTF_AUTHORIZED_FUNCS='(write malloc free exit main)'
 
@@ -49,7 +49,7 @@ function check_ft_printf_all
 		"open .mymakefile" "more info: makefile"\
 		"open .myforbiddenfunc" "more info: forbidden functions"\
 		"open .mybasictests" "more info: basic tests"\
-		"open .mybasictests2" "more info: bastard tests"\
+		"open .mybasictests2" "more info: undefined behavior tests"\
 		"open .myleaks" "more info: leaks"\
 		"open .myspeedtest" "more info: speed test"\
 		"open .mymoulitest" "more info: moulitest"\
