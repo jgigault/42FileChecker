@@ -1,71 +1,52 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   gnl1_1.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jgigault <jgigault@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/12/10 09:42:43 by jgigault          #+#    #+#             */
-/*   Updated: 2014/12/30 12:25:17 by jgigault         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <string.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include "gnl.h"
 
-int				main(int argc, char **argv)
+/*
+** 4 lines with 8 chars with Line Feed
+*/
+
+int				main(void)
 {
 	char		*line;
 	int			fd;
 	int			ret;
-	int			count;
+	int			count_lines;
 	char		*filename;
 	int			errors;
 
-	filename = "./srcs/gnl/gnl1_3.txt";
+	filename = "gnl1_3.txt";
 	fd = open(filename, O_RDONLY);
-	if (argc && argv && fd > 2)
+	if (fd > 2)
 	{
-		count = 0;
+		count_lines = 0;
 		errors = 0;
 		line = NULL;
 		while ((ret = get_next_line(fd, &line)) > 0)
 		{
-			if (count == 0 && strcmp(line, "1234567") != 0)
+			if (count_lines == 0 && strcmp(line, "1234567") != 0)
 				errors++;
-			if (count == 1 && strcmp(line, "abcdefg") != 0)
+			if (count_lines == 1 && strcmp(line, "abcdefg") != 0)
 				errors++;
-			if (count == 2 && strcmp(line, "4567890") != 0)
+			if (count_lines == 2 && strcmp(line, "4567890") != 0)
 				errors++;
-			if (count == 3 && strcmp(line, "defghij") != 0)
+			if (count_lines == 3 && strcmp(line, "defghij") != 0)
 				errors++;
-			count++;
+			count_lines++;
+			if (count_lines > 50)
+				break;
 		}
-		if (count == 3)
-		{
-			if (strcmp(line, "defghij") != 0)
-				errors++;
-			else
-				count++;
-		}
-		if (count != 4)
-			errors++;
 		close(fd);
+		if (count_lines != 4)
+			printf("-> must have returned '1' four times instead of %d time(s)\n", count_lines);
 		if (errors > 0)
-		{
-			printf("%d lines read | %d errors", count, errors);
-		}
-		else
-		{
-			printf("OK");
-		}
+			printf("-> must have read \"1234567\", \"abcdefg\", \"4567890\" and \"defghij\"\n");
+		if (count_lines == 4 && errors == 0)
+			printf("OK\n");
 	}
 	else
-	{
-		printf("An error occured while opening file %s", filename);
-	}
+		printf("An error occured while opening file %s\n", filename);
 	return (0);
 }

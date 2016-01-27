@@ -6,7 +6,7 @@ then
 
 declare -a CHK_GNL='( "check_author" "auteur" "check_norme" "norminette" "check_gnl_macro" "BUFF_SIZE macro" "check_gnl_bonus" "bonus: static var" "check_gnl_forbidden_func" "forbidden functions" "check_gnl_basics" "basic tests" "check_gnl_multiple_fd" "bonus: multiple file descriptor" "check_gnl_leaks" "leaks" "check_gnl_moulitest" "moulitest (${MOULITEST_URL})" )'
 
-declare -a CHK_GNL_BASICS='("gnl1_1" "1 line 8 chars with Line Feed" "" "gnl1_2" "2 lines 8 chars with Line Feed" "" "gnl1_3" "4 lines 8 chars with Line Feed" "" "gnl2_1" "STDIN: 1 line 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_1.txt | SPEC0" "gnl2_2" "STDIN: 2 lines 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_2.txt | SPEC0" "gnl2_3" "STDIN: 4 lines 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_3.txt | SPEC0" "gnl3_1" "1 line 16 chars with Line Feed" "" "gnl3_2" "2 lines 16 chars with Line Feed" "" "gnl3_3" "4 lines 16 chars with Line Feed" "" "gnl4_1" "STDIN: 1 line 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_1.txt | SPEC0" "gnl4_2" "STDIN: 2 lines 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_2.txt | SPEC0" "gnl4_3" "STDIN: 4 lines 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_3.txt | SPEC0" "gnl5_1" "1 line 4 chars with Line Feed" "" "gnl5_2" "2 lines 4 chars with Line Feed" "" "gnl5_3" "4 lines 4 chars with Line Feed" "" "gnl6_1" "STDIN: 1 line 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_1.txt | SPEC0" "gnl6_2" "STDIN: 2 lines 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_2.txt | SPEC0" "gnl6_3" "STDIN: 4 lines 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_3.txt | SPEC0" "gnl7_1" "1 lines 8 chars without Line Feed" "" "gnl7_2" "2 lines 8 chars without Line Feed" "" "gnl7_3" "4 lines 8 chars without Line Feed" "" "gnl8_1" "STDIN: 1 line 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_1.txt | SPEC0" "gnl8_2" "STDIN: 2 lines 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_2.txt | SPEC0" "gnl8_3" "STDIN: 4 lines 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_3.txt | SPEC0" "gnl9" "Bad file descriptor" "")'
+declare -a CHK_GNL_BASICS='("gnl1_1" "1 line 8 chars with Line Feed" "" "gnl1_2" "2 lines 8 chars with Line Feed" "" "gnl1_3" "4 lines 8 chars with Line Feed" "" "gnl2_1" "STDIN: 1 line 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_1.txt | SPEC0" "gnl2_2" "STDIN: 2 lines 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_2.txt | SPEC0" "gnl2_3" "STDIN: 4 lines 8 chars with Line Feed" "cat ./srcs/gnl/gnl1_3.txt | SPEC0" "gnl3_1" "1 line 16 chars with Line Feed" "" "gnl3_2" "2 lines 16 chars with Line Feed" "" "gnl3_3" "4 lines 16 chars with Line Feed" "" "gnl4_1" "STDIN: 1 line 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_1.txt | SPEC0" "gnl4_2" "STDIN: 2 lines 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_2.txt | SPEC0" "gnl4_3" "STDIN: 4 lines 16 chars with Line Feed" "cat ./srcs/gnl/gnl3_3.txt | SPEC0" "gnl5_1" "1 line 4 chars with Line Feed" "" "gnl5_2" "2 lines 4 chars with Line Feed" "" "gnl5_3" "4 lines 4 chars with Line Feed" "" "gnl6_1" "STDIN: 1 line 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_1.txt | SPEC0" "gnl6_2" "STDIN: 2 lines 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_2.txt | SPEC0" "gnl6_3" "STDIN: 4 lines 4 chars with Line Feed" "cat ./srcs/gnl/gnl5_3.txt | SPEC0" "gnl7_1" "1 lines 8 chars without Line Feed" "" "gnl7_2" "2 lines 8 chars without Line Feed" "" "gnl7_3" "4 lines 8 chars without Line Feed" "" "gnl8_1" "STDIN: 1 line 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_1.txt | SPEC0" "gnl8_2" "STDIN: 2 lines 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_2.txt | SPEC0" "gnl8_3" "STDIN: 4 lines 8 chars without Line Feed" "cat ./srcs/gnl/gnl7_3.txt | SPEC0" "gnl9_1" "Bad file descriptor #1" "" "gnl9_2" "Bad file descriptor #2" "")'
 
 declare -a CHK_GNL_AUTHORIZED_FUNCS='(read malloc free get_next_line main)'
 
@@ -106,13 +106,14 @@ function check_gnl_basics
 		(( i += 1 ))
 		SPEC0="${CHK_GNL_BASICS[i]}"
 		(( i += 1 ))
-		echo "$j -> ${TITLEN} (${FILEN}.c):" >> ${LOGFILENAME}
+		echo "---------------------" >> ${LOGFILENAME}
+		echo "TEST #$j: ${TITLEN} (${FILEN}.c):" >> ${LOGFILENAME}
 		${CMD_RM} -f "./tmp/${FILEN}"
 		if [ -d "${GNL_LIBFT}" ]
 		then
-			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/${FILEN}.c -o ./tmp/${FILEN} >/dev/null 2>&1`
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/${FILEN}.c -o ./tmp/${FILEN} 2>&1`
 		else
-			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/${FILEN}.c -o ./tmp/${FILEN} >/dev/null 2>&1`
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/${FILEN}.c -o ./tmp/${FILEN} 2>&1`
 		fi
 		if [ -f "./tmp/${FILEN}" ]
 		then
@@ -121,7 +122,13 @@ function check_gnl_basics
 				RET0=`echo "${SPEC0}" | sed 's/SPEC0/\.\/\.\/tmp\/${FILEN}/'`
 				RET0=`eval ${RET0} 2>&1`
 			else
-				RET0=`./tmp/${FILEN} 2>&1`
+				if [ -f "./srcs/gnl/${FILEN}.txt" ]
+				then
+					cp "./srcs/gnl/${FILEN}.txt" "./tmp/${FILEN}.txt"
+				fi
+				cd "./tmp"
+				RET0=`./${FILEN} 2>&1`
+				cd ".."
 			fi
 			if [ "${RET0}" != "OK" ]
 			then
@@ -166,35 +173,31 @@ function check_gnl_multiple_fd
 	if [ -d "${GNL_LIBFT}" ]
 	then
 		make -C "${GNL_LIBFT}" >/dev/null 2>&1
-		RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/gnl11.c -o ./tmp/gnl11 >${LOGFILENAME} 2>&1`
+		RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" -L"${GNL_LIBFT}" -lft -I "${GNL_LIBFT}/includes" ./srcs/gnl/gnl11.c -o ./tmp/gnl11 2>&1`
 	else
-		RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/gnl11.c -o ./tmp/gnl11 >${LOGFILENAME} 2>&1`
+		RET0=`${CMD_GCC} -Wall -Werror -Wextra -I ./tmp "${MYPATH}/get_next_line.c" ./srcs/gnl/gnl11.c -o ./tmp/gnl11 2>&1`
 	fi
 	if [ -f "./tmp/gnl11" ]
 	then
 		RET0=`./tmp/gnl11 2>&1`
-		if [ "${RET0}" != "OK" ]
-		then
-			(( errors += 1 ))
-		fi
-	else
-		fatal=1
-	fi
-	if (( ${fatal} > 0 ))
-	then
-		printf ${C_RED}"  Fatal error: Cannot compile"${C_CLEAR}
-	else
-		if (( ${errors} == 0 ))
+		echo "${RET0}" >> ${LOGFILENAME}
+		if [ "${RET0}" == "OK" ]
 		then
 			printf ${C_GREEN}"  Multiple file descriptor supported"${C_CLEAR}
 		else
 			if [ "${RET0}" != "" ]
 			then
-				printf ${C_RED}"  ${RET0}"${C_CLEAR}
+				printf ${C_RED}"  Multiple file descriptor not supported"${C_CLEAR}
+				echo "\n-----------------------------------" >> ${LOGFILENAME}
+				echo "Here is the main test ($(pwd)/srcs/gnl/gnl11.c):\n" >> ${LOGFILENAME}
+				cat "./srcs/gnl/gnl11.c" >> ${LOGFILENAME}
 			else
 				printf ${C_RED}"  An error occured"${C_CLEAR}
 			fi
 		fi
+	else
+		printf ${C_RED}"  Fatal error: Cannot compile"${C_CLEAR}
+		echo "${RET0}" >> ${LOGFILENAME}
 	fi
 	else printf ${C_GREY}"  --Not performed--"${C_CLEAR}; fi
 }
