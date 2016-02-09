@@ -7,4 +7,4 @@ The caller may provide a pointer to a malloced buffer for the line in
 *linep, and the capacity of that buffer in *linecapp.  These functions
 expand the buffer as needed, as if via realloc().  If linep points to a NULL
 pointer, a new buffer will be allocated.  In either case, *linep and
-*linecapp will be updated accordingly.
+*linecapp will be up-dated accordingly.

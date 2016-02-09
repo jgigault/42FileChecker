@@ -130,9 +130,9 @@ int				main(void)
 		}
 
 		ret1 = get_next_line(fd1, &line1);
-		if (ret1 != 1 || strcmp(line1, "*linecapp will be updated accordingly.") != 0)
+		if (ret1 != 1 || strcmp(line1, "*linecapp will be up-dated accordingly.") != 0)
 		{
-			printf("-> must have returned '1' and read line #10 \"*linecapp will be updated accordingly.\" from file %s\n", filename1);
+			printf("-> must have returned '1' and read line #10 \"*linecapp will be up-dated accordingly.\" from file %s\n", filename1);
 			errors++;
 		}
 
