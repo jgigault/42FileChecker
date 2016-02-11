@@ -220,133 +220,6 @@ then
 		fi
 	}
 
-	function display_menu
-	{
-		local -a MENU FUNCS
-		local TOTAL SEL LEN SELN TITLE i TESTSA TESTSI
-		SEL=""
-		if [ "$1" != "" ]
-		then
-			printf $1
-		else
-			printf $C_INVERT""
-		fi
-		shift 1
-		printf "%"$COLUMNS"s" " "
-		printf "\n"
-		while (( $# > 0 ))
-		do
-			if [ "$1" == "_" ]
-			then
-				printf "%"$COLUMNS"s" " "
-						printf "\n"
-				shift 1
-			else
-				if [ "$1" == "TESTS" ]
-				then
-					i=2
-					TESTSI=1
-					TESTSA="$2[$i]"
-					while [ "${!TESTSA}" != "" ]
-					do
-						(( TOTAL += 1 ))
-						(( i++ ))
-						TESTSA="$2[$i]"
-						FUNCS[$TOTAL]="$3 $TESTSI RUN_ALONE"
-						MENU[$TOTAL]="${!TESTSA}"
-						(( i++ ))
-						(( TESTSI++ ))
-						TITLE=`echo "${!TESTSA}" | sed 's/%/%%/g'`
-						if (( $TOTAL < 10 ))
-						then
-							SELN=$TOTAL
-						else
-							(( SELN=65 + $TOTAL - 10 ))
-							SELN=`echo "$SELN" | awk '{printf("%c", $0)}'`
-						fi
-						(( LEN=$COLUMNS - ${#TITLE} - 9 ))
-						printf "  "$SELN")    $TITLE "
-						printf "%"$LEN"s" " "
-						printf "\n"
-						TESTSA="$2[$i]"
-					done
-					shift 3
-				else
-					(( TOTAL += 1 ))
-					FUNCS[$TOTAL]="$1"
-					MENU[$TOTAL]="$2"
-					TITLE=`echo "$2" | sed 's/%/%%/g'`
-					if (( $TOTAL < 10 ))
-					then
-						SELN=$TOTAL
-					else
-						(( SELN=65 + $TOTAL - 10 ))
-						SELN=`echo "$SELN" | awk '{printf("%c", $0)}'`
-					fi
-					(( LEN=$COLUMNS - ${#TITLE} - 9 ))
-					printf "  "$SELN")    $TITLE "
-					printf "%"$LEN"s" " "
-					printf "\n"
-					shift 2
-				fi
-			fi
-		done
-
-		printf "%"$COLUMNS"s" " "
-		printf $C_CLEAR"\n"
-		read -r -s -n 1 SEL
-		SEL=$(get_key $SEL)
-		if [ "$SEL" == "ESC" ]
-		then
-			exit_checker
-		fi
-		SEL=`ft_atoi "$SEL"`
-		while [ -z "${MENU[$SEL]}" -o "$(echo "${FUNCS[$SEL]}" | grep '^open ')" != "" ]
-		do
-			printf "\a"
-			if [ "$(echo "${FUNCS[$SEL]}" | grep '^open ')" != "" ]
-			then
-				if [ -f "$(echo "${FUNCS[$SEL]}" | sed 's/^open //')" -o "$(echo "${FUNCS[$SEL]}" | grep http)" != "" ]
-				then
-					eval ${FUNCS[$SEL]}
-				fi
-			fi
-			SEL=""
-			read -s -n 1 SEL
-			SEL=$(get_key $SEL)
-			if [ "$SEL" == "ESC" ]
-			then
-				exit_checker
-			fi
-			SEL=`ft_atoi "$SEL"`
-		done
-		printf "\n"
-		if [ "${FUNCS[$SEL]}" != "" ]
-		then
-			eval ${FUNCS[$SEL]}
-		fi
-	}
-
-	function get_key
-	{
-		local ord_value old_tty_settings
-		ord_value=$(printf '%d' "'$1")
-		if [[ $ord_value -eq 27 ]]; then
-			old_tty_settings=`stty -g`
-			stty -icanon min 0 time 0
-			read -s key
-			if [[ ${#key} -eq 0 ]]
-			then
-				printf "ESC"
-			else
-				printf "NULL"
-			fi
-			stty "$old_tty_settings"
-		else
-			printf "%s" "$1"
-		fi
-	}
-
 	function get_config
 	{
 		local MYFILE LPATH RET0
@@ -371,17 +244,6 @@ then
 		RET0=`printf "$RETURNPATH/$MYFILE" | sed 's/ /\\ /g'`
 		RET0=`echo "printf \"$2\" > \"$RET0\""`
 		eval $RET0
-	}
-
-	function exit_checker
-	{
-		printf "\n"
-		display_hr
-		printf "\n\n\n\n\033[0m"
-		tput cnorm
-		clear
-		cd "${GLOBAL_ENTRYPATH}"
-		exit
 	}
 
 	function check_norme
@@ -445,46 +307,6 @@ then
 			fi
 		fi
 		else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
-	}
-
-	function display_spinner
-	{
-		local pid=$1
-		local total_delay=0
-		local total_delay2=340
-		local delay=0.2
-		local spinstr='|/-\'
-		printf $C_BLUE""
-		while [ "$(ps a | awk '{print $1}' | grep $pid)" ];
-		do
-			if (( $total_delay2 < 1 ))
-			then
-				kill $pid
-				wait $! 2>/dev/null
-				(( total_delay2 = $total_delay / 5 ))
-				printf $C_RED"  Time out ($total_delay2 sec)"$C_CLEAR > $RETURNPATH/.myret
-			fi
-			if [ "$OPT_NO_TIMEOUT" == "0" ]
-			then
-				(( total_delay += 1 ))
-			fi
-			local temp=${spinstr#?}
-			printf "  [%c] " "$spinstr"
-			local spinstr=$temp${spinstr%"$temp"}
-			if (( $total_delay >= 5 ))
-			then
-				(( total_delay2 = ( 309 - $total_delay ) / 5 ))
-				printf "[time out: %02d]" "$total_delay2"
-			fi
-			sleep $delay
-			printf "\b\b\b\b\b\b"
-			if (( $total_delay >= 5 ))
-			then
-				printf "\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
-			fi
-		done
-		printf "                     \b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
-		printf $C_CLEAR""
 	}
 
 	function check_fileexists

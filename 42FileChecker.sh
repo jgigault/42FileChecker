@@ -93,8 +93,12 @@ source includes/speedtest.sh
 source includes/configure.sh
 source includes/moulitest.sh
 source includes/libftunittest.sh
+source includes/exit.sh
+source includes/display_spinner.sh
+source includes/display_menu.sh
 source includes/display_header.sh
 source includes/display_leftandright.sh
+source includes/signals.sh
 
 function main
 {
@@ -130,9 +134,11 @@ function main
 		exit_checker "EXIT"
 }
 
+tput civis
+tput smcup
 check_set_env
 check_set_colors
+catch_signals
 display_header_transition
 check_update
-
-cd "${GLOBAL_ENTRYPATH}"
+exit_checker
