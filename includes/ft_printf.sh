@@ -89,20 +89,20 @@ function check_ft_printf_compiltests
 	${CMD_TOUCH} ${LOGFILENAME} "${LOGFILENAME}success"
 	check_create_tmp_dir
 	check_ft_printf_create_header
-	make re -C "${MYPATH}" >/dev/null 2>&1
-	echo "SUCCESS TESTS:\n" >> "${LOGFILENAME}success"
-	while [ "${TABTESTS[$i]}" != "" -a $fatal -eq 0 ]
-	do
-		(( index += 1 ))
-		TTYPE="${TABTESTS[$i]}"
-		(( i += 1 ))
-		TVAL0="${TABTESTS[$i]}"
-		TVAL=`printf "%s" "${TABTESTS[$i]}" | sed 's/\\\\/\\\\\\\\/g'`
-		(( i += 1 ))
-		#if [ "$TYPE" == "${TTYPE:0:1}" ]
-		#then
+	make re -C "${MYPATH}" >${LOGFILENAME} 2>&1
+	if [ -f "${MYPATH}/libftprintf.a" ]
+	then
+		echo "SUCCESS TESTS:\n" >> "${LOGFILENAME}success"
+		while [ "${TABTESTS[$i]}" != "" -a $fatal -eq 0 ]
+		do
+			(( index += 1 ))
+			TTYPE="${TABTESTS[$i]}"
+			(( i += 1 ))
+			TVAL0="${TABTESTS[$i]}"
+			TVAL=`printf "%s" "${TABTESTS[$i]}" | sed 's/\\\\/\\\\\\\\/g'`
+			(( i += 1 ))
 			(( total += 1 ))
-			RET0=`check_ft_printf_basictests_gcc "${TTYPE:0:1}" "$LOGFILENAME"`
+			RET0=`check_ft_printf_basictests_gcc "${TTYPE:0:1}" "${LOGFILENAME}"`
 			if [ "$RET0" != "" ]
 			then
 				(( fatal += 1 ));
@@ -178,8 +178,10 @@ function check_ft_printf_compiltests
 					printf "%4d.      %-45s -> \"%s\"\n" "$index" "ft_printf($TARGSV);" "$RET0" >> $LOGFILENAME"success"
 				fi
 			fi
-		#fi
-	done
+		done
+	else
+		fatal=1
+	fi
 	if (( $fatal == 0 ))
 	then
 		if (( $errors == 0 ))
@@ -200,24 +202,24 @@ function check_ft_printf_compiltests
 function check_ft_printf_speedtest
 {	if [ "$OPT_NO_SPEEDTEST" == "0" ]; then
 	local LOGFILENAME
-	LOGFILENAME=.myspeedtest
-	CSRC1=./srcs/printf/speedtest_ft_printf.c
-	CSRC2=./srcs/printf/speedtest_printf.c
-	BSRC1=./tmp/ft_printf_speedtest
-	BSRC2=./tmp/printf_speedtest
-	rm -f $LOGFILENAME
-	touch $LOGFILENAME
+	LOGFILENAME=".myspeedtest"
+	CSRC1="./srcs/printf/speedtest_ft_printf.c"
+	CSRC2="./srcs/printf/speedtest_printf.c"
+	BSRC1="./tmp/ft_printf_speedtest"
+	BSRC2="./tmp/printf_speedtest"
+	${CMD_RM} -f ${LOGFILENAME}
+	${CMD_TOUCH} ${LOGFILENAME}
 	check_create_tmp_dir
-	make re -C "$MYPATH" >$LOGFILENAME 2>&1
-	if [ -f "$MYPATH/libftprintf.a" ]
+	make re -C "${MYPATH}" >${LOGFILENAME} 2>&1
+	if [ -f "${MYPATH}/libftprintf.a" ]
 	then
-		RET0=`gcc -Wall -Werror -Wextra "$CSRC1" -L "$MYPATH" -lftprintf -o "$BSRC1" >$LOGFILENAME 2>&1`
-		if [ -f "$BSRC1" ]
+		RET0=`gcc -Wall -Werror -Wextra "${CSRC1}" -L "${MYPATH}" -lftprintf -o "${BSRC1}" >${LOGFILENAME} 2>&1`
+		if [ -f "${BSRC1}" ]
 		then
-			RET0=`gcc -Wall -Werror -Wextra "$CSRC2" -o "$BSRC2" >$LOGFILENAME 2>&1`
+			RET0=`gcc -Wall -Werror -Wextra "${CSRC2}" -o "${BSRC2}" >${LOGFILENAME} 2>&1`
 			if [ -f "$BSRC2" ]
 			then
-				check_speedtest "$BSRC1" "$BSRC2" "null" "$LOGFILENAME" "Your program is compared with the original 'printf'.\n\n"
+				check_speedtest "${BSRC1}" "${BSRC2}" "null" "${LOGFILENAME}" "Your program is compared with the original 'printf'.\n\n"
 			else
 				printf $C_RED"  Fatal error : Cannot compile"$C_CLEAR
 			fi
@@ -263,16 +265,16 @@ function check_ft_printf_basictests_gcc
 	local FILEN RET0 LOGFILENAME
 	FILEN="printf_$1"
 	LOGFILENAME="$2"
-	if [ ! -f "./tmp/ft_$FILEN" -o ! -f "./tmp/$FILEN" ]
+	if [ ! -f "./tmp/ft_${FILEN}" -o ! -f "./tmp/${FILEN}" ]
 	then
-		if [ -f "$MYPATH/libftprintf.a" ]
+		if [ -f "${MYPATH}/libftprintf.a" ]
 		then
-			RET0=`gcc -Wall -Werror -Wextra "./srcs/printf/ft_$FILEN.c" -L"$MYPATH" -lftprintf -o "./tmp/ft_$FILEN" >/dev/null 2>&1`
-			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
-			RET0=`gcc "./srcs/printf/$FILEN.c" -o "./tmp/$FILEN" >/dev/null 2>&1`
-			if [ "$RET0" != "" ]; then echo "$RET0" > $LOGFILENAME; printf "error"; return; fi
+			RET0=`${CMD_GCC} -Wall -Werror -Wextra "./srcs/printf/ft_${FILEN}.c" -L"${MYPATH}" -lftprintf -o "./tmp/ft_${FILEN}" 2>&1`
+			if [ "${RET0}" != "" ]; then echo "${RET0}" > ${LOGFILENAME}; printf "error"; return; fi
+			RET0=`${CMD_GCC} "./srcs/printf/${FILEN}.c" -o "./tmp/${FILEN}" 2>&1`
+			if [ "${RET0}" != "" ]; then echo "${RET0}" > ${LOGFILENAME}; printf "error"; return; fi
 		else
-			echo "$MYPATH/libftprintf.a was not found" > $LOGFILENAME; printf "error"; return;
+			echo "${MYPATH}/libftprintf.a was not found" > ${LOGFILENAME}; printf "error"; return;
 		fi
 	fi
 	return 1

@@ -6,3 +6,4 @@ libft-unit-test/
 *~
 srcs/gnl/gnl.h
 tmp/*
+.idea
