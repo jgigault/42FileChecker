@@ -80,7 +80,9 @@ then
       "open .mymoulitest" "more info: moulitest"\
       "open .mylibftunittest" "more info: libft-unit-test"\
       "_"\
-      "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
+      "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
+      "open ${MOULITEST_URL}/issues/new" "REPORT A BUG ON MOULITEST"\
+      "open ${LIBFTUNITTEST_URL}/issues/new" "REPORT A BUG ON LIBFT-UNIT-TEST"\
       main "BACK TO MAIN MENU"
   }
 

@@ -67,7 +67,8 @@ then
       "open .myspeedtest" "more info: speed test"\
       "open .mymoulitest" "more info: moulitest"\
       "_"\
-      "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
+      "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
+      "open ${MOULITEST_URL}/issues/new" "REPORT A BUG ON MOULITEST"\
       main "BACK TO MAIN MENU"
   }
 
