@@ -33,7 +33,7 @@ function check_libftunittest
 				echo "42FILECHECKER INFO:\n\nHere is the full standard output of the libft-unit-test running with your libft.\nSee also the clean logfile provided by the library at the following path:\n${RETURNPATH}/${LIBFTUNITTEST_DIR}/result.log\n\n\n\n------------------------------------------------\n\n\n\n${RET0}" >${LOGFILENAME}
 				if [ "${RET1}" != "" ]
 				then
-					TOTAL=`printf "%s\n" "${RET1}" | wc -l | sed 's/ //g'`
+					TOTAL=`printf "%s\n" "${RET1}" | awk 'END {print NR}'`
 					printf ${C_RED}"  ${TOTAL} failed test(s)"${C_CLEAR}
 				else
 					printf ${C_GREEN}"  All Unit Tests passed"${C_CLEAR}

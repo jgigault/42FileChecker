@@ -25,12 +25,13 @@ function check_install_dir
 
 GLOBAL_ENTRYPATH=$(pwd)
 GLOBAL_INSTALLDIR=$(check_install_dir)
+GLOBAL_LOCALBRANCH=$(git branch | awk '$0 ~ /^\*/ {print $2; exit}')
 cd "${GLOBAL_INSTALLDIR}"
 
 FILECHECKER_SH=1
 if [ ! -f .myrev ]; then git shortlog -s | awk 'BEGIN {rev=0} {rev+=$1} END {printf rev}' > .myrev 2>/dev/null; fi
-CVERSION=$(git log --oneline 2>/dev/null | wc -l | sed 's/ //g')
-if [ "$CVERSION" == "" ]; then CVERSION="???"; fi
+GLOBAL_CVERSION=$(git log --oneline 2>/dev/null | awk 'END {print NR}')
+if [ "${GLOBAL_CVERSION}" == "" ]; then GLOBAL_CVERSION="???"; fi
 RETURNPATH=$(pwd | sed 's/ /\ /g')
 OPT_NO_UPDATE=0
 OPT_NO_COLOR=0
@@ -92,6 +93,8 @@ source includes/speedtest.sh
 source includes/configure.sh
 source includes/moulitest.sh
 source includes/libftunittest.sh
+source includes/display_header.sh
+source includes/display_leftandright.sh
 
 function main
 {

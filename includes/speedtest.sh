@@ -21,7 +21,7 @@ then
 			if [ "$PROCESSID" != "" ]
 			then
 				check_kill_by_name "$PROGNAME $PROGARGS"
-				RET0=`cat "$LOGFILENAME" | wc -l | sed 's/[ \t]*//g'`
+				RET0=`cat "$LOGFILENAME" | awk 'END {print NR}'`
 				printf $RET0
 			else
 				printf "%s" "-2"

@@ -259,7 +259,7 @@ function check_gnl_bonus
 	if [ -f "$GNLC" ]
 	then
 		RET0=`awk 'BEGIN { OFS=""; BLOCK=0 } { if ($0 == "{") { BLOCK=1 } if ($0 == "}") { BLOCK=0 } if (BLOCK == 1) { if ($0 ~ /^[\t ]*static[\t ]/) { gsub(/^[\t ]*/, ""); print "line ", NR, ": ", $0 }}}' "$GNLC"`
-		TOTAL=`echo "$RET0" | wc -l | sed 's/[ 	]*//g'`
+		TOTAL=`echo "$RET0" | awk 'END {print NR}'`
 		if (( TOTAL > 1 ))
 		then
 			printf $C_RED"  $TOTAL static variables were found"$C_CLEAR

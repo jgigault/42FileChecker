@@ -39,7 +39,7 @@ function check_update
 
 function check_update_42filechecker
 {	if [ "${OPT_NO_UPDATE}" == "0" ]; then
-	local UPTODATE MOULIDATE VERSION RET0 RET1 LOCALHASH REMOTEHASH LOCALBRANCH
+	local UPTODATE MOULIDATE VERSION RET0 RET1 LOCALHASH REMOTEHASH
 	display_header
 	printf "\n\n"
 	printf "  Checking for updates (42FileChecker)...\n"
@@ -59,19 +59,17 @@ function check_update_42filechecker
 			"printf 'exit' > .myret" "EXIT"
 	;;
 	"0")
-		LOCALBRANCH=$(git branch | grep '^\*' | cut -d" " -f2)
-		LOCALHASH=`git show-ref | grep "refs/heads/${LOCALBRANCH}" | cut -d" " -f1`
-		REMOTEHASH=`git ls-remote 2>/dev/null | grep refs/heads/${LOCALBRANCH} | cut -f1`
-		CVERSION=$(git log --oneline "refs/heads/${LOCALBRANCH}" | wc -l | sed 's/ //g')
-		VERSION=$(git log --oneline "refs/remotes/origin/${LOCALBRANCH}" | wc -l | sed 's/ //g')
+		LOCALHASH=`git show-ref | grep "refs/heads/${GLOBAL_LOCALBRANCH}" | cut -d" " -f1`
+		REMOTEHASH=`git ls-remote 2>/dev/null | grep refs/heads/${GLOBAL_LOCALBRANCH} | cut -f1`
+		VERSION=$(git log --oneline "refs/remotes/origin/${GLOBAL_LOCALBRANCH}" | awk 'END {print NR}')
 		display_header "$C_INVERTRED"
 		printf "\n\n"
 		printf $C_RED""
-		if [ "${REMOTEHASH}" != "${LOCALHASH}" -a "${REMOTEHASH}" != "" -a "${CVERSION}" -lt "${VERSION}" ]
+		if [ "${REMOTEHASH}" != "${LOCALHASH}" -a "${REMOTEHASH}" != "" -a "${GLOBAL_CVERSION}" -lt "${VERSION}" ]
 		then
 			display_center "Your version of '42FileChecker' is out-of-date."
-			display_center "REMOTE: r$VERSION       LOCAL: r$CVERSION"
-			RET1=`git log --pretty=oneline "refs/remotes/origin/${LOCALBRANCH}" 2>/dev/null | awk -v lhash=${LOCALHASH} '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk 'BEGIN {LIMIT=0} {print "  -> "$0; LIMIT+=1; if(LIMIT==10) {print "  -> (limited to 10 last commits...)"; exit}}'`
+			display_center "REMOTE: r$VERSION       LOCAL: r${GLOBAL_CVERSION}"
+			RET1=`git log --pretty=oneline "refs/remotes/origin/${GLOBAL_LOCALBRANCH}" 2>/dev/null | awk -v lhash=${LOCALHASH} '{if ($1 == lhash) {exit} print}' | cut -d" " -f2- | awk 'BEGIN {LIMIT=0} {print "  -> "$0; LIMIT+=1; if(LIMIT==10) {print "  -> (limited to 10 last commits...)"; exit}}'`
 			if [ "$RET1" != "" ]
 			then
 				printf "\n\n  Most recent commits:\n%s" "$RET1"
@@ -141,18 +139,23 @@ function check_update_external_repository
 function check_for_updates_42filechecker
 {
 	local DIFF0
-	local LOCALBRANCH=$(git branch | grep '^\*' | cut -d" " -f2)
-	DIFF0=`git fetch --all 2>&1 | tee .myret2 | grep fatal`
-	if [ "$DIFF0" != "" ]
+	if [ "${GLOBAL_LOCALBRANCH}" != "master" ]
 	then
-		printf "3"
+		exit 0
+		printf "1"
 	else
-		DIFF0=`git diff "refs/remotes/origin/${LOCALBRANCH}" 2>&1 | grep -E '^\+|^\-' | sed 's/\"//'`
+		DIFF0=`git fetch --all 2>&1 | tee .myret2 | grep fatal`
 		if [ "$DIFF0" != "" ]
 		then
-			printf "0"
+			printf "3"
 		else
-			printf "1"
+			DIFF0=`git diff "refs/remotes/origin/${GLOBAL_LOCALBRANCH}" 2>&1 | grep -E '^\+|^\-' | sed 's/\"//'`
+			if [ "$DIFF0" != "" ]
+			then
+				printf "0"
+			else
+				printf "1"
+			fi
 		fi
 	fi
 }
@@ -167,7 +170,7 @@ function check_install_42filechecker
 	${CMD_RM} -f ${LOGFILENAME}
 	(git fetch --all >/dev/null 2>&1) &
 	display_spinner $!
-	(git reset --hard origin/master 2>&1 | grep -v 'HEAD is now at' >${LOGFILENAME}) &
+	(git reset --hard "origin/master" 2>&1 | grep -v 'HEAD is now at' >${LOGFILENAME}) &
 	display_spinner $!
 	RES0=`cat ${LOGFILENAME}`
 	sleep 0.5

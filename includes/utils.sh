@@ -149,30 +149,6 @@ then
 		fi
 	}
 
-	function display_header
-	{
-		local MARGIN
-		check_set_env
-		echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-		echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n "
-		clear
-		if [ "$1" != "" ]
-		then
-			printf "$1"
-		else
-			printf $C_INVERT""
-		fi
-		display_righttitle "PRESS ESCAPE TO EXIT - V1.r$CVERSION"
-		display_center "  _  _  ____  _____ _ _       ____ _               _              "
-		display_center " | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  "
-		display_center " | || |_ __) | |_  | | |/ _ \ |   | '_ \ / _ \/ __| |/ / _ \ '__| "
-		display_center " |__   _/ __/|  _| | | |  __/ |___| | | |  __/ (__|   <  __/ |    "
-		display_center "    |_||_____|_|   |_|_|\___|\____|_| |_|\___|\___|_|\_\___|_|    "
-		display_center "    jgigault @ student.42.fr                    06 51 15 98 82    "
-		display_center " "
-		printf $C_CLEAR""
-	}
-
 	function display_top
 	{
 		local LPATH=$1
@@ -432,13 +408,13 @@ then
 					then
 						TOTAL=0
 					else
-						TOTAL=`echo "$RET2" | wc -l | sed 's/ //g'`
+						TOTAL=`echo "$RET2" | awk 'END {print NR}'`
 					fi
 					if [ "$RET3" == "" ]
 					then
 						TOTA2=0
 					else
-						TOTA2=`echo "$RET3" | wc -l | sed 's/ //g'`
+						TOTA2=`echo "$RET3" | awk 'END {print NR}'`
 					fi
 					(( TOTAL = $TOTAL + $TOTA2 ))
 					printf $C_RED"  $TOTAL error(s) or warning(s)"$C_CLEAR
@@ -565,7 +541,7 @@ then
 			PROCESSID=`ps | grep "$1" | grep -v "grep" | sed 's/^[ ]*//g' | cut -d" " -f1`
 			if [ "$PROCESSID" != "" ]
 			then
-				PROCESSCOUNT=`echo "$PROCESSID" | wc -l`
+				PROCESSCOUNT=`echo "$PROCESSID" | awk 'END {print NR}'`
 				while (( $PROCESSCOUNT > 0 ))
 				do
 					(( PROCESSCOUNT -= 1 ))
