@@ -5,6 +5,10 @@ then
 
 	function display_header_transition
 	{
+		if [ "${GLOBAL_LOCALBRANCH}" != "master" ]
+		then
+			return
+		fi
 		utils_clear
 		display_center "|"
 		echo ""

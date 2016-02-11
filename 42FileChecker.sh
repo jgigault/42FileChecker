@@ -40,6 +40,7 @@ OPT_NO_NORMINETTE=0
 OPT_NO_AUTEUR=0
 OPT_NO_MOULITEST=0
 OPT_NO_LIBFTUNITTEST=0
+OPT_NO_FILLITCHECKER=0
 OPT_NO_SPEEDTEST=0
 OPT_NO_LEAKS=0
 OPT_NO_BASICTESTS=0
@@ -62,6 +63,7 @@ do
 		"--no-auteur") OPT_NO_AUTEUR=1 ;;
 		"--no-moulitest") OPT_NO_MOULITEST=1 ;;
 		"--no-libftunittest") OPT_NO_LIBFTUNITTEST=1 ;;
+		"--no-fillitchecker") OPT_NO_FILLITCHECKER=1 ;;
 		"--no-speedtest") OPT_NO_SPEEDTEST=1 ;;
 		"--no-leaks") OPT_NO_LEAKS=1 ;;
 		"--no-basictests") OPT_NO_BASICTESTS=1 ;;
@@ -77,6 +79,7 @@ do
 done
 
 source includes/utils.sh
+source includes/fillit.sh
 source includes/libft.sh
 source includes/libftasm.sh
 source includes/get_next_line.sh
@@ -92,6 +95,7 @@ source includes/leaks.sh
 source includes/speedtest.sh
 source includes/configure.sh
 source includes/moulitest.sh
+source includes/fillit_checker.sh
 source includes/libftunittest.sh
 source includes/exit.sh
 source includes/display_spinner.sh
@@ -114,6 +118,7 @@ function main
 	printf "\n\n"
 	display_menu\
 		""\
+		check_fillit_main "fillit"\
 		check_libft_main "libft"\
 		check_libftasm "libftasm"\
 		check_gnl_main "get_next_line"\

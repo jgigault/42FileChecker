@@ -55,6 +55,8 @@ then
 	MOULITEST_DIR="moulitest_42projects"
 	LIBFTUNITTEST_URL="https://github.com/alelievr/libft-unit-test"
 	LIBFTUNITTEST_DIR="libft-unit-test"
+	EXTERNAL_REPOSITORY_FILLITCHECKER_URL="https://github.com/anisg/fillit_checker"
+	EXTERNAL_REPOSITORY_FILLITCHECKER_DIR="fillit_checker"
 
 	function check_option_set
 	{
@@ -289,7 +291,7 @@ then
 	}
 
 	function check_author
-	{	if [ "$OPT_NO_AUTEUR" == "0" ]; then
+	{	if [ "$OPT_NO_AUTEUR" == "0" -a "${1}" != "optional" ]; then
 		local AUTHORF AUTHORC AUTHORE AUTHORG
 		AUTHORF="$MYPATH/auteur"
 		if [ ! -f "$AUTHORF" ]
