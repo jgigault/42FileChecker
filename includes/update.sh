@@ -12,28 +12,8 @@ function check_update
 	RET0=`cat .myret`
 	case "$RET0" in
 		"exit") exit_checker; return ;;
-		"nothing") tput cnorm; return ;;
+		"nothing") utils_before_exit; return ;;
 	esac
-	if [ "${OPT_NO_MOULITEST}" == "0" ]
-	then
-		${CMD_RM} -f .myret
-		check_update_external_repository 'moulitest' ${MOULITEST_URL} ${MOULITEST_DIR}
-		RET0=`cat .myret`
-		case "$RET0" in
-			"exit") exit_checker; return ;;
-			"nothing") tput cnorm; return ;;
-		esac
-	fi
-	if [ "${OPT_NO_LIBFTUNITTEST}" == "0" ]
-	then
-		${CMD_RM} -f .myret
-		check_update_external_repository 'libft-unit-test' ${LIBFTUNITTEST_URL} ${LIBFTUNITTEST_DIR}
-		RET0=`cat .myret`
-		case "$RET0" in
-			"exit") exit_checker; return ;;
-			"nothing") tput cnorm; return ;;
-		esac
-	fi
 	main
 }
 
@@ -55,8 +35,8 @@ function check_update_42filechecker
 		printf "\n\n  Cannot check for updates: Your Internet connection is probably down...\n\n"$C_CLEAR
 		display_menu\
 			"$C_INVERTRED"\
-			"printf 'continue' > .myret" "SKIP UPDATE"\
-			"printf 'exit' > .myret" "EXIT"
+			"check_update_set_return continue" "SKIP UPDATE"\
+			"check_update_set_return exit" "EXIT"
 	;;
 	"0")
 		LOCALHASH=`git show-ref | grep "refs/heads/${GLOBAL_LOCALBRANCH}" | cut -d" " -f1`
@@ -82,8 +62,8 @@ function check_update_42filechecker
 		display_menu\
 			"$C_INVERTRED"\
 			check_install_42filechecker "UPDATE 42FILECHECKER"\
-			"printf 'continue' > .myret" "SKIP UPDATE"\
-			"printf 'exit' > .myret" "EXIT"
+			"check_update_set_return continue" "SKIP UPDATE"\
+			"check_update_set_return exit" "EXIT"
 	;;
 	esac
 	fi
@@ -110,8 +90,8 @@ function check_update_external_repository
 		printf "\n\n  Cannot check for updates: Your Internet connection is probably down...\n\n"$C_CLEAR
 		display_menu\
 			"$C_INVERTRED"\
-			"printf 'continue' > .myret" "SKIP UPDATE"\
-			"printf 'exit' > .myret" "EXIT"
+			"check_update_set_return continue" "SKIP UPDATE"\
+			"check_update_set_return exit" "EXIT"
 	;;
 	"0")
 		display_header "$C_INVERTRED"
@@ -120,8 +100,8 @@ function check_update_external_repository
 		display_menu\
 			"$C_INVERTRED"\
 			"check_install_external_repository ${REPONAME} ${URL} ${DIR}" "UPDATE EXTERNAL REPOSITORY"\
-			"printf 'continue' > .myret" "SKIP UPDATE"\
-			"printf 'exit' > .myret" "EXIT"
+			"check_update_set_return continue" "SKIP UPDATE"\
+			"check_update_set_return exit" "EXIT"
 	;;		
 	"2")	
 		display_header "$C_INVERTRED"
@@ -130,8 +110,8 @@ function check_update_external_repository
 		display_menu\
 			"$C_INVERTRED"\
 			"check_install_external_repository ${REPONAME} ${URL} ${DIR}" "INSTALL EXTERNAL REPOSITORY"\
-			"printf 'continue' > .myret" "SKIP INSTALL"\
-			"printf 'exit' > .myret" "EXIT"
+			"check_update_set_return continue" "SKIP INSTALL"\
+			"check_update_set_return exit" "EXIT"
 	;;
 	esac
 }
@@ -186,7 +166,7 @@ function check_install_42filechecker
 		printf ${C_RED}"\n  If the error persists, try discard this directory and clone again.\n"${C_CLEAR}
 		tput cnorm
 	fi
-	printf "nothing" >.myret
+	check_update_set_return "nothing"
 }
 
 function check_for_updates_external_repository
@@ -198,7 +178,7 @@ function check_for_updates_external_repository
 		printf "2"
 	else
 		cd "${DIR}"
-		LOCALBRANCH=$(git branch | grep '^\*' | cut -d" " -f2)
+		LOCALBRANCH=$(git branch | awk '$0 ~ /^\*/ {print $2}')
 		DIFF0=`git fetch --all 2>&1 | grep fatal`
 		if [ "$DIFF0" != "" ]
 		then
@@ -219,10 +199,7 @@ function check_for_updates_external_repository
 
 function check_install_external_repository
 {
-	local RES0 RES2
-	local REPONAME=$1
-	local URL=$2
-	local DIR=$3
+	local RES0 RES2 REPONAME="${1}" URL="${2}" DIR="${3}" LOCALBRANCH
 	display_header
 	printf "\n\n"
 	if [ ! -d "${DIR}" ]
@@ -232,8 +209,9 @@ function check_install_external_repository
 		display_spinner $!
 	else
 		cd "${DIR}"
-		printf "  Updating moulitest...\n"
-		((git reset --hard origin/master >../.myret 2>&1) && git checkout master 2>/dev/null) &
+		LOCALBRANCH=$(git branch | awk '$0 ~ /^\*/ {print $2}')
+		printf "  Updating ${REPONAME}...\n"
+		(git reset --hard "origin/${LOCALBRANCH}" 1>../.myret 2>&1) &
 		display_spinner $!
 		cd ..
 	fi
@@ -244,13 +222,19 @@ function check_install_external_repository
 		display_error "An error occured."
 		printf $C_RED"$(echo "$RES0" | awk 'BEGIN {OFS=""} {print "  ",$0}')"$C_CLEAR
 		printf "\n"
-		tput cnorm
-		printf "nothing" > .myret
+		sleep 5
+		check_update_set_return "nothing"
 	else
 		printf $C_BLUE"  Done.\n"$C_CLEAR
 		sleep 0.5
-		printf "continue" > .myret
+		check_update_set_return "continue"
 	fi
+}
+
+function check_update_set_return
+{
+	printf "${1}" > .myret
+	LOCAL_UPDATE_RETURN="${1}"
 }
 
 fi

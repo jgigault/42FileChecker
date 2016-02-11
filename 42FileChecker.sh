@@ -114,11 +114,11 @@ function main
 	printf "\n\n"
 	display_menu\
 		""\
-		check_libft "libft"\
+		check_libft_main "libft"\
 		check_libftasm "libftasm"\
-		check_gnl "get_next_line"\
-		check_ft_ls "ft_ls"\
-		check_ft_printf "ft_printf"\
+		check_gnl_main "get_next_line"\
+		check_ft_ls_main "ft_ls"\
+		check_ft_printf_main "ft_printf"\
 		check_fdf "fdf"\
 		"_"\
 		"check_option_set OPT_NO_TIMEOUT" "$(if [ "$OPT_NO_TIMEOUT" == 0 ]; then echo "disable timeout      (--no-timeout)"; else echo "enable timeout"; fi)"\
