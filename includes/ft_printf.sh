@@ -280,9 +280,8 @@ function check_ft_printf_basictests_gcc
 
 function check_ft_printf_create_header
 {
-	local FTPRINTFH
-	FTPRINTFH=`find "$MYPATH" -name \*printf\*.h`
-	echo "#include <stdarg.h>\nint ft_printf(char const *format, ...);" > "$RETURNPATH"/tmp/printf.h
+	echo "#include <stdarg.h>" > "${RETURNPATH}/tmp/printf.h"
+	echo "int ft_printf(char const *format, ...);" >> "${RETURNPATH}/tmp/printf.h"
 }
 
 function check_ft_printf_makefile
