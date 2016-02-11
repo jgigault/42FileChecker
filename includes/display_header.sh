@@ -6,10 +6,8 @@ then
   function display_header
   {
     local MARGIN COLOR
+    utils_clear
     check_set_env
-    echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-    echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n "
-    clear
     if [ "${1}" != "" ]
     then
       COLOR="${1}"

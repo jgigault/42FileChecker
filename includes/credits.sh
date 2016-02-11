@@ -6,7 +6,6 @@ then
 	function display_credits
 	{
 		local SEL LEN
-		clear
 		display_header
 		printf "\n\n"
 		printf "  42FileChecker is a tiny bash script developped at 42 school for testing and checking the files according to the rules of the subjects.\n\n"

@@ -5,40 +5,29 @@ then
 
 	function display_header_transition
 	{
-		tput civis
-		clear
-		#printf $C_BLUE
+		utils_clear
 		display_center "|"
 		echo ""
 		sleep 0.006s
-		clear
-		display_center "|"
-		display_center "|"
-		echo ""
-		sleep 0.006s
-		clear
-		display_center "|"
+		utils_clear
 		display_center "|"
 		display_center "|"
 		echo ""
 		sleep 0.006s
-		clear
-		display_center "|"
+		utils_clear
 		display_center "|"
 		display_center "|"
 		display_center "|"
 		echo ""
 		sleep 0.006s
-		clear
-		display_center "|"
+		utils_clear
 		display_center "|"
 		display_center "|"
 		display_center "|"
 		display_center "|"
 		echo ""
 		sleep 0.006s
-		clear
-		display_center "|"
+		utils_clear
 		display_center "|"
 		display_center "|"
 		display_center "|"
@@ -46,7 +35,16 @@ then
 		display_center "|"
 		echo ""
 		sleep 0.006s
-		clear
+		utils_clear
+		display_center "|"
+		display_center "|"
+		display_center "|"
+		display_center "|"
+		display_center "|"
+		display_center "|"
+		echo ""
+		sleep 0.006s
+		utils_clear
 		echo ""
 		display_center "|"
 		display_center "|"
@@ -56,7 +54,7 @@ then
 		display_center "|"
 		echo ""
 		sleep 0.006s
-		clear
+		utils_clear
 		echo ""
 		display_center " _|"
 		display_center "| |"
@@ -66,7 +64,7 @@ then
 		display_center "  |"
 		echo ""
 		sleep 0.006s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _|"
 		display_center "| || |"
@@ -76,7 +74,7 @@ then
 		display_center "   jg|"
 		echo ""
 		sleep 0.006s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  _|"
 		display_center "| || ||_|"
@@ -86,7 +84,7 @@ then
 		display_center "   jgiga|"
 		echo ""
 		sleep 0.006s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _|"
 		display_center "| || ||___ \| |"
@@ -96,7 +94,7 @@ then
 		display_center "   jgigault @ |"
 		echo ""
 		sleep 0.006s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  ____|"
 		display_center "| || ||___ \|  __|"
@@ -106,7 +104,7 @@ then
 		display_center "   jgigault @ stu|"
 		echo ""
 		sleep 0.006s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _|"
 		display_center "| || ||___ \|  ___(_|"
@@ -116,7 +114,7 @@ then
 		display_center "   jgigault @ studen|"
 		echo ""
 		sleep 0.006s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _ |"
 		display_center "| || ||___ \|  ___(_) ||"
@@ -126,7 +124,7 @@ then
 		display_center "   jgigault @ student.4|"
 		echo ""
 		sleep 0.006s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _    |"
 		display_center "| || ||___ \|  ___(_) | __|"
@@ -136,7 +134,7 @@ then
 		display_center "   jgigault @ student.42.f|"
 		echo ""
 		sleep 0.012s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       |"
 		display_center "| || ||___ \|  ___(_) | ___ /|"
@@ -146,7 +144,7 @@ then
 		display_center "   jgigault @ student.42.fr  |"
 		echo ""
 		sleep 0.018s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       ___|"
 		display_center "| || ||___ \|  ___(_) | ___ / __|"
@@ -156,7 +154,7 @@ then
 		display_center "   jgigault @ student.42.fr     |"
 		echo ""
 		sleep 0.024s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       ____ _|"
 		display_center "| || ||___ \|  ___(_) | ___ / ___| |"
@@ -166,7 +164,7 @@ then
 		display_center "   jgigault @ student.42.fr        |"
 		echo ""
 		sleep 0.03s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       ____ _   |"
 		display_center "| || ||___ \|  ___(_) | ___ / ___| |__|"
@@ -176,7 +174,7 @@ then
 		display_center "   jgigault @ student.42.fr           |"
 		echo ""
 		sleep 0.036s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       ____ _      |"
 		display_center "| || ||___ \|  ___(_) | ___ / ___| |__   |"
@@ -186,7 +184,7 @@ then
 		display_center "   jgigault @ student.42.fr              |"
 		echo ""
 		sleep 0.042s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       ____ _         |"
 		display_center "| || ||___ \|  ___(_) | ___ / ___| |__   ___|"
@@ -196,7 +194,7 @@ then
 		display_center "   jgigault @ student.42.fr                 |"
 		echo ""
 		sleep 0.05s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       ____ _            |"
 		display_center "| || ||___ \|  ___(_) | ___ / ___| |__   ___  _|"
@@ -206,7 +204,7 @@ then
 		display_center "   jgigault @ student.42.fr                    |"
 		echo ""
 		sleep 0.056s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       ____ _               |"
 		display_center "| || ||___ \|  ___(_) | ___ / ___| |__   ___  ___||"
@@ -216,7 +214,7 @@ then
 		display_center "   jgigault @ student.42.fr                    06 |"
 		echo ""
 		sleep 0.062s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       ____ _               _  |"
 		display_center "| || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | |"
@@ -226,7 +224,7 @@ then
 		display_center "   jgigault @ student.42.fr                    06 51 |"
 		echo ""
 		sleep 0.068s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       ____ _               _     |"
 		display_center "| || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | ___|"
@@ -236,7 +234,7 @@ then
 		display_center "   jgigault @ student.42.fr                    06 51 15 |"
 		echo ""
 		sleep 0.072s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       ____ _               _        |"
 		display_center "| || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ |"
@@ -246,7 +244,7 @@ then
 		display_center "   jgigault @ student.42.fr                    06 51 15 98 |"
 		echo ""
 		sleep 0.076s
-		clear
+		utils_clear
 		echo ""
 		display_center " _  _  ____  _____ _ _       ____ _               _           |"
 		display_center "| || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ _|"
@@ -256,7 +254,7 @@ then
 		display_center "   jgigault @ student.42.fr                    06 51 15 98 82 |"
 		echo ""
 		sleep 0.078s
-		clear
+		utils_clear
 		echo ""
 		display_center "   _  _  ____  _____ _ _       ____ _               _              |"
 		display_center "  | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  |"
@@ -266,7 +264,7 @@ then
 		display_center "     jgigault @ student.42.fr                    06 51 15 98 82    |"
 		echo ""
 		sleep 0.08s
-		clear
+		utils_clear
 		echo ""
 		display_center "   _  _  ____  _____ _ _       ____ _               _               "
 		display_center "  | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __  |"
@@ -276,7 +274,7 @@ then
 		display_center "     jgigault @ student.42.fr                    06 51 15 98 82     "
 		echo ""
 		sleep 0.08s
-		clear
+		utils_clear
 		echo ""
 		display_center "   _  _  ____  _____ _ _       ____ _               _               "
 		display_center "  | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __   "
@@ -286,7 +284,7 @@ then
 		display_center "     jgigault @ student.42.fr                    06 51 15 98 82     "
 		echo ""
 		sleep 0.08s
-		clear
+		utils_clear
 		echo ""
 		display_center "   _  _  ____  _____ _ _       ____ _               _               "
 		display_center "  | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __   "
@@ -296,7 +294,7 @@ then
 		display_center "     jgigault @ student.42.fr                    06 51 15 98 82     "
 		echo ""
 		sleep 0.08s
-		clear
+		utils_clear
 		echo ""
 		display_center "   _  _  ____  _____ _ _       ____ _               _               "
 		display_center "  | || ||___ \|  ___(_) | ___ / ___| |__   ___  ___| | _____ _ __   "
@@ -306,8 +304,7 @@ then
 		display_center "     jgigault @ student.42.fr                    06 51 15 98 82     "
 		echo ""
 		sleep 0.08s
-
-		printf $C_CLEAR
+		printf "${C_CLEAR}"
 	}
 
 fi;
