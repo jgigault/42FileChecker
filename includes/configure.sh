@@ -5,7 +5,7 @@ then
 
 	function check_configure
 	{
-		local AB0 AB2 MYPATH RETURNFUNC PROJECTNAME PROJECTNAME_DISPLAY STARTDIR
+		local AB0 AB2 MYPATH RETURNFUNC PROJECTNAME PROJECTNAME_DISPLAY STARTDIR OPTIONAL_AUTHORFILE="${4}"
 		RETURNFUNC=$1
 		PROJECTNAME=$2
 		PROJECTNAME_DISPLAY=$3
@@ -27,7 +27,7 @@ then
 			check_configure_read $RETURNFUNC $PROJECTNAME $PROJECTNAME_DISPLAY
 			cd "$RETURNPATH"
 			MYPATH=$(get_config "$PROJECTNAME")
-			if [ "$STARTDIR" != "*" -a ! -f "$MYPATH/auteur" ]
+			if [ "${STARTDIR}" != "*" -a ! -f "${MYPATH}/auteur" -a "${OPTIONAL_AUTHORFILE}" != "optional" ]
 			then
 				display_header "$C_INVERTRED"
 				display_top "$MYPATH" "${PROJECTNAME_DISPLAY}"
