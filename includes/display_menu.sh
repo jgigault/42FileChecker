@@ -78,6 +78,7 @@ then
     printf "%"$COLUMNS"s" " "
     printf $C_CLEAR"\n"
     read -r -s -n 1 SEL
+    [ $? != 0 ] && exit 0
     SEL=$(display_menu_get_key $SEL)
     if [ "$SEL" == "ESC" ]
     then
