@@ -120,7 +120,10 @@ then
       old_tty_settings=`stty -g`
       stty -icanon min 0 time 0
       read -s key
-      [ $? != 0 ] && exit_checker
+      if [ $? != 0 ];then
+        stty "$old_tty_settings"
+        exit_checker
+      fi
       if [[ ${#key} -eq 0 ]]
       then
         printf "ESC"
