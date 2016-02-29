@@ -78,6 +78,7 @@ then
     printf "%"$COLUMNS"s" " "
     printf $C_CLEAR"\n"
     read -r -s -n 1 SEL
+    [ $? != 0 ] && exit_checker
     SEL=$(display_menu_get_key $SEL)
     if [ "$SEL" == "ESC" ]
     then
@@ -96,6 +97,7 @@ then
       fi
       SEL=""
       read -s -n 1 SEL
+      [ $? != 0 ] && exit_checker
       SEL=$(display_menu_get_key $SEL)
       if [ "$SEL" == "ESC" ]
       then
@@ -118,6 +120,10 @@ then
       old_tty_settings=`stty -g`
       stty -icanon min 0 time 0
       read -s key
+      if [ $? != 0 ];then
+        stty "$old_tty_settings"
+        exit_checker
+      fi
       if [[ ${#key} -eq 0 ]]
       then
         printf "ESC"
