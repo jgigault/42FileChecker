@@ -114,25 +114,21 @@ then
 
   function display_menu_get_key
   {
-    local ord_value old_tty_settings
-    ord_value=$(printf '%d' "'$1")
-    if [[ $ord_value -eq 27 ]]; then
-      old_tty_settings=`stty -g`
+    local ORD_VALUE OLD_TTY_SETTINGS KEYCODE
+    ORD_VALUE=$(printf '%d' "'${1}")
+    if [[ ${ORD_VALUE} -eq 27 ]]; then
+      OLD_TTY_SETTINGS=`stty -g`
       stty -icanon min 0 time 0
-      read -s key
-      if [ $? != 0 ];then
-        stty "$old_tty_settings"
-        exit_checker
-      fi
-      if [[ ${#key} -eq 0 ]]
+      read -s KEYCODE
+      if [ "${#KEYCODE}" == 0 ]
       then
         printf "ESC"
       else
         printf "NULL"
       fi
-      stty "$old_tty_settings"
+      stty "${OLD_TTY_SETTINGS}"
     else
-      printf "%s" "$1"
+      printf "%s" "${1}"
     fi
   }
 
