@@ -3,7 +3,7 @@
 if [ "${FILECHECKER_SH}" == "1" ]
 then
 
-  declare -a CHK_FILLIT='( "check_author optional" "auteur" "check_norme" "norminette" "check_fillit_makefile" "makefile" "check_fillit_forbidden_func" "forbidden functions" "check_fillit_extern_file" "extern file" "check_fillit_fillitchecker" "fillit_checker (${EXTERNAL_REPOSITORY_FILLITCHECKER_URL})" )'
+  declare -a CHK_FILLIT='( "check_author" "auteur" "check_norme" "norminette" "check_fillit_makefile" "makefile" "check_fillit_forbidden_func" "forbidden functions" "check_fillit_extern_file" "extern file" "check_fillit_fillitchecker" "fillit_checker (${EXTERNAL_REPOSITORY_FILLITCHECKER_URL})" )'
 
   declare -a CHK_FILLIT_AUTHORIZED_FUNCS='(exit open close write read malloc free main)'
 
@@ -110,19 +110,29 @@ then
 
   function check_fillit_extern_file
   {
-    local LOGFILENAME=".myexternfile" ALLOWED_FILE="extern_file.txt" F TOTAL=0 EXTERNFILEFOUND="0" ALLOWED_FILEERROR="0"
+    local LOGFILENAME=".myexternfile" F AF HAS_AF TOTAL=0 EXTERNFILEFOUND="0" ALLOWED_FILESERRORS="" I
+    local -a ALLOWED_FILES='( "extern_file.txt" "auteur" )'
     ${CMD_RM} -f "${LOGFILENAME}"
     make fclean -C "${MYPATH}" &>/dev/null
     for F in $(find "${MYPATH}" -type f ! -name '*.[ch]' ! -name 'Makefile' ! -regex "${MYPATH}/\.git.*")
     do
-      if [[ "${F}" =~ "${ALLOWED_FILE}" ]]
-      then
-        EXTERNFILEFOUND="1"
-        if [ "${F}" != "${MYPATH}/${ALLOWED_FILE}" ]
+      I=0
+      HAS_AF="0"
+      while [ "${ALLOWED_FILES[I]}" != "" ]
+      do
+        if [[ "${F}" =~ "${ALLOWED_FILES[I]}" ]]
         then
-          ALLOWED_FILEERROR="${F}"
+          HAS_AF="1"
+          EXTERNFILEFOUND="1"
+          if [ "${F}" != "${MYPATH}/${ALLOWED_FILES[I]}" ]
+          then
+            ALLOWED_FILESERRORS="${ALLOWED_FILESERRORS} ${F}"
+          fi
         fi
-      else
+        (( I += 1 ))
+      done
+      if [[ "${HAS_AF}" == "0" ]]
+      then
         if [ "${TOTAL}" == "0" ]
         then
           echo "These extra files were found in your project directory but don't seem to be necessary to compile your project:" >"${LOGFILENAME}"
@@ -131,29 +141,29 @@ then
         (( TOTAL+=1 ))
       fi
     done
-    if [ "${TOTAL}" == "0" -a "${ALLOWED_FILEERROR}" == "0" ]
+    if [ "${TOTAL}" == "0" -a "${ALLOWED_FILESERRORS}" == "" ]
     then
       if [ "${EXTERNFILEFOUND}" == "1" ]
       then
-          printf "${C_GREEN}  %s${C_CLEAR}" "No extra file found except '${ALLOWED_FILE}'"
+          printf "${C_GREEN}  %s${C_CLEAR}" "No extra file found except '${ALLOWED_FILES[@]}'"
       else
           printf "${C_GREEN}  %s${C_CLEAR}" "No extra file found"
       fi
     else
-      if [ "${ALLOWED_FILEERROR}" != "0" ]
+      if [ "${ALLOWED_FILESERRORS}" != "" ]
       then
         if [ "${TOTAL}" != "0" ]
         then
           echo "" >>"${LOGFILENAME}"
         fi
-        echo "'${ALLOWED_FILE}' must be placed at root folder but was found here:" >>"${LOGFILENAME}"
-        echo "-> ${ALLOWED_FILEERROR#${MYPATH}}" >>"${LOGFILENAME}"
+        echo "'${ALLOWED_FILES}' must be placed at root folder but was found here:" >>"${LOGFILENAME}"
+        echo "-> ${ALLOWED_FILESERRORS#${MYPATH}}" >>"${LOGFILENAME}"
       fi
-      if [ "${TOTAL}" == "0" -a "${ALLOWED_FILEERROR}" != "0" ]
+      if [ "${TOTAL}" == "0" -a "${ALLOWED_FILESERRORS}" != "" ]
       then
-        printf "${C_RED}  %s${C_CLEAR}" "'${ALLOWED_FILE}' must be placed at root folder"
+        printf "${C_RED}  %s${C_CLEAR}" "'${ALLOWED_FILES}' must be placed at root folder"
       else
-        if [ "${ALLOWED_FILEERROR}" != "0" ]
+        if [ "${ALLOWED_FILESERRORS}" != "" ]
         then
           printf "${C_RED}  %s${C_CLEAR}" "${TOTAL} extra file(s) found + 1 error"
         else
