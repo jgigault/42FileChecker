@@ -256,15 +256,15 @@ then
 		if [ "${RET0}" != "" ]
 		then
 			RET2=`eval norminette $RET0 2>&1`
+			RET4=$?
 			echo "$RET2" > "$RETURNPATH"/.mynorminette
 			RET2=`cat .mynorminette | grep Error`
 			RET3=`cat .mynorminette | grep Warning`
-			RET4=`cat .mynorminette | grep "command not found"`
-			if [ "$RET2" == "" -a "$RET3" == "" -a "$RET4" == "" ]
+			if [ "$RET2" == "" -a "$RET3" == "" -a "$RET4" == 0 ]
 			then
 				printf $C_GREEN"  All files passed the tests"$C_CLEAR
 			else
-				if [ "$RET4" != "" ]
+				if [ "$RET4" != 0 ]
 				then
 					printf $C_RED"  Command not found"$C_CLEAR
 				else
