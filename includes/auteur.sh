@@ -7,7 +7,7 @@ then
   {
     if [ "${OPT_NO_AUTEUR}" == "0" -a "${1}" != "optional" ]
     then
-      local AUTHORF AUTHORC AUTHORE
+      local AUTHORF AUTHORC AUTHORE AUTHORD
       AUTHORF="${MYPATH}/auteur"
       if [ ! -f "${AUTHORF}" ]
       then
@@ -15,11 +15,17 @@ then
       else
         AUTHORC=`cat -e "${AUTHORF}" | awk '{if (NR == 1) print}'`
         AUTHORE=`cat -e "${AUTHORF}" | awk '$0 ~ /\\$\$/ {print}'`
-        if [ "${AUTHORE}" != "${AUTHORC}" ]
+        AUTHORD=`awk 'END {printf NR}' "${AUTHORF}"`
+        if [ ${AUTHORD} -eq 1 ]
         then
-          printf "${C_RED}  %s${C_CLEAR}"  "No [Line Feed] character at the end of line"
+          if [ "${AUTHORE}" != "${AUTHORC}" ]
+          then
+            printf "${C_RED}  %s${C_CLEAR}"  "No [Line Feed] character at the end of line"
+          else
+            printf "${C_GREEN}  %s${C_CLEAR}" "${AUTHORC}"
+          fi
         else
-          printf "${C_GREEN}  %s${C_CLEAR}" "${AUTHORC}"
+          printf "${C_RED}  %s${C_CLEAR}"  "Empty file or too much lines in the file"
         fi
       fi
     else
