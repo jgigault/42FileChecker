@@ -79,6 +79,7 @@ do
 done
 
 source includes/utils.sh
+source includes/auteur.sh
 source includes/fillit.sh
 source includes/libft.sh
 source includes/libftasm.sh

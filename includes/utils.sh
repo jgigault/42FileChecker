@@ -290,27 +290,6 @@ then
 		else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
 	}
 
-	function check_author
-	{	if [ "$OPT_NO_AUTEUR" == "0" -a "${1}" != "optional" ]; then
-		local AUTHORF AUTHORC AUTHORE AUTHORG
-		AUTHORF="$MYPATH/auteur"
-		if [ ! -f "$AUTHORF" ]
-		then
-			printf $C_RED"  File not found"$C_CLEAR
-		else
-			AUTHORC=`cat -e "$AUTHORF" | awk '{if (NR == 1) print}'`
-			AUTHORE=`cat -e "$AUTHORF" | sed 's/\$$//' | awk '{if (NR == 1) print}'`
-			AUTHORG=`cat -e "$AUTHORF" | awk '{if (NR == 1) print}'`
-			if [ "$AUTHORE" == "$AUTHORG" ]
-			then
-				printf $C_RED"  No [Line Feed] character at the end of line"$C_CLEAR
-			else
-				printf $C_GREEN"  $AUTHORC"$C_CLEAR
-			fi
-		fi
-		else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
-	}
-
 	function check_fileexists
 	{
 		local i TOTAL RET0 VALPARAM RET1
