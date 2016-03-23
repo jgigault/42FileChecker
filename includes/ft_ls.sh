@@ -74,6 +74,7 @@ then
     LOGFILENAME=.myspeedtest
     rm -f $LOGFILENAME
     touch $LOGFILENAME
+    check_create_tmp_dir
     make re -C "$MYPATH" >/dev/null 2>&1
     if [ -f "$MYPATH/ft_ls" ]
     then
