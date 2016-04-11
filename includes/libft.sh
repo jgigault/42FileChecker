@@ -4,7 +4,7 @@ if [ "${FILECHECKER_SH}" == "1" ]
 then
 
 
-  declare -a CHK_LIBFT='( "check_author" "auteur" "check_libft_required_exists" "required functions" "check_libft_bonus_exists" "bonus" "check_libft_extra" "extra functions" "check_norme" "norminette" "check_libft_static" "static declarations" "check_libft_makefile" "makefile" "check_libft_forbidden_func" "forbidden functions" "check_libft_moulitest" "moulitest (${MOULITEST_URL})" "check_libft_libftunittest" "libft-unit-test (${LIBFTUNITTEST_URL})" )'
+  declare -a CHK_LIBFT='( "check_author" "auteur" "check_libft_required_exists" "required functions" "check_libft_bonus_exists" "bonus" "check_libft_extra" "extra functions" "check_norme" "norminette" "check_libft_static" "static declarations" "check_libft_makefile" "makefile" "check_libft_forbidden_func" "forbidden functions" "check_libft_moulitest" "moulitest (${MOULITEST_URL})" "check_libft_libftunittest" "libft-unit-test (${LIBFTUNITTEST_URL})" "check_libft_extrep_maintest" "Maintest (${EXTERNAL_REPOSITORY_MAINTEST_URL})" )'
 
   declare -a LIBFT_MANDATORIES='(libft.h ft_strcat.c ft_strncat.c ft_strlcat.c ft_strchr.c ft_strnstr.c ft_strrchr.c ft_strclr.c ft_strcmp.c ft_strncmp.c ft_strcpy.c ft_strncpy.c ft_strdel.c ft_strdup.c ft_strequ.c ft_strnequ.c ft_striter.c ft_striteri.c ft_strjoin.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strnew.c ft_strstr.c ft_strsplit.c ft_strsub.c ft_strtrim.c ft_atoi.c ft_itoa.c ft_tolower.c ft_toupper.c ft_putchar.c ft_putchar_fd.c ft_putstr.c ft_putstr_fd.c ft_putnbr.c ft_putnbr_fd.c ft_putendl.c ft_putendl_fd.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_memalloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memccpy.c ft_memdel.c ft_memmove.c ft_memset.c ft_bzero.c)'
 
@@ -27,6 +27,13 @@ then
     if [ "${OPT_NO_LIBFTUNITTEST}" == "0" ]
     then
       check_update_external_repository "libft-unit-test" "${LIBFTUNITTEST_URL}" "${LIBFTUNITTEST_DIR}"
+      case "${LOCAL_UPDATE_RETURN}" in
+        "exit") main; return ;;
+      esac
+    fi
+    if [ "${OPT_NO_MAINTEST}" == "0" ]
+    then
+      check_update_external_repository "Maintest" "${EXTERNAL_REPOSITORY_MAINTEST_URL}" "${EXTERNAL_REPOSITORY_MAINTEST_DIR}"
       case "${LOCAL_UPDATE_RETURN}" in
         "exit") main; return ;;
       esac
@@ -79,10 +86,12 @@ then
       "open .myforbiddenfunc" "more info: forbidden functions"\
       "open .mymoulitest" "more info: moulitest"\
       "open .mylibftunittest" "more info: libft-unit-test"\
+      "open .mymaintest_libft" "more info: Maintest"\
       "_"\
       "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
       "open ${MOULITEST_URL}/issues/new" "REPORT A BUG ON MOULITEST"\
       "open ${LIBFTUNITTEST_URL}/issues/new" "REPORT A BUG ON LIBFT-UNIT-TEST"\
+      "open ${EXTERNAL_REPOSITORY_MAINTEST_URL}/issues/new" "REPORT A BUG ON MAINTEST"\
       main "BACK TO MAIN MENU"
   }
 
@@ -96,13 +105,13 @@ then
 
   function check_libft_bonus_exists
   {	if [ "$OPT_NO_LIBFTFILESEXIST" == "0" ]; then
-    check_fileexists LIBFT_BONUS
+    check_fileexists LIBFT_BONUS "${MYPATH}"
     else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
   }
 
   function check_libft_required_exists
   {	if [ "$OPT_NO_LIBFTFILESEXIST" == "0" ]; then
-    check_fileexists LIBFT_MANDATORIES
+    check_fileexists LIBFT_MANDATORIES "${MYPATH}"
     else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
   }
 
@@ -171,7 +180,7 @@ then
       echo "ft_putendl_fd(NULL, 0);" >> $F
       echo "ft_putnbr(0);" >> $F
       echo "ft_putnbr_fd(0, 0);" >> $F
-      RET0=`check_fileexists LIBFT_BONUS | grep 'All files were found'`
+      RET0=`check_fileexists LIBFT_BONUS "${MYPATH}" | grep 'All files were found'`
       if [ "$RET0" != "" ]
       then
         echo "ft_lstnew(NULL, 0);" >> $F
@@ -258,7 +267,7 @@ then
 
   function check_libft_moulitest
   {	if [ "$OPT_NO_MOULITEST" == "0" ]; then
-    RET0=`check_fileexists LIBFT_BONUS | grep 'All files were found'`
+    RET0=`check_fileexists LIBFT_BONUS "${MYPATH}" | grep 'All files were found'`
     if [ "$RET0" == "" ]
     then
       check_moulitest "libft_part2"
@@ -272,6 +281,12 @@ then
   {	if [ "${OPT_NO_LIBFTUNITTEST}" == "0" ]; then
     check_libftunittest
     else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+  }
+
+  function check_libft_extrep_maintest
+  { if [ "${OPT_NO_MAINTEST}" == "0" ]; then
+    check_maintest_libft ".mymaintest_libft" "${MYPATH}"
+    else printf "  ${C_GREY}%s${C_CLEAR}"  "--Not performed--"; fi
   }
 
   function check_libft_static
