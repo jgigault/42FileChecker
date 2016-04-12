@@ -72,7 +72,7 @@ then
           ' "${EXTERNAL_REPOSITORY_MAINTEST_DIR}/libft/main.c" 1>"./tmp/mymaintest_libft/main.c" 2>"${LOGFILENAME}"
         fi
 
-        if [ "${?}" == "0" -o ! -f "./tmp/mymaintest_libft/main.c" ]
+        if [ "${?}" == "0" -a -f "./tmp/mymaintest_libft/main.c" ]
         then
           #compile main.c with libft.a
           ${CMD_GCC} "./tmp/mymaintest_libft/main.c" -L "${MYPATH}" -I "${MYPATH}" -I "${MYPATH}/include" -I "${MYPATH}/includes" -lft -o "./tmp/mymaintest_libft/main" 1>>"${LOGFILENAME}" 2>&1
