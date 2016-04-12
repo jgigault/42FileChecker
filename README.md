@@ -18,7 +18,9 @@ Extra tests may also be performed:
 
 Complete unit tests are handled through external frameworks whose sources are automatically downloaded, configured and updated in background when you run the script:
 * [**moulitest**](https://github.com/yyang42/moulitest), developed by [@yyang42](https://github.com/yyang42) and other contributors
-* [**libft-unit-test**](https://github.com/alelievr/libft-unit-test), developped by [@alelievr](https://github.com/alelievr) (for libft only)
+* [**libft-unit-test**](https://github.com/alelievr/libft-unit-test), developed by [@alelievr](https://github.com/alelievr) (for libft project only)
+* [**fillit_checker**](https://github.com/anisg/fillit_checker), developed by [@anisg](https://github.com/anisg) (for fillit project only)
+* [**libft-unit-test**](https://github.com/QuentinPerez/Maintest), developed by [@QuentinPerez](https://github.com/QuentinPerez) and other contributors
 
 ## install & launch
 ```bash
@@ -40,6 +42,8 @@ alias 42FileChecker='sh ~/42FileChecker/42FileChecker.sh'
 --no-speedtest      // Disable speed test comparison
 --no-moulitest      // Disable moulitest
 --no-libftunittest  // Disable libft-unit-test
+--no-fillitchecker  // Disable fillit_checker
+--no-maintest       // Disable Maintest
 ```
 Add your options as arguments before launch:
 ```bash

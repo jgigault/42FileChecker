@@ -183,7 +183,7 @@ function check_libftasm_makefile
 
 function check_libftasm_required_exists
 {
-	check_fileexists LIBFTASM_MANDATORIES
+	check_fileexists LIBFTASM_MANDATORIES "${MYPATH}"
 }
 
 function check_libftasm_forbidden_func

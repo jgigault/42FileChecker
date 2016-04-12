@@ -3,6 +3,7 @@ moulitest/
 moulitest_42projects/
 libft-unit-test/
 fillit_checker/
+maintest/
 .my*
 *~
 srcs/gnl/gnl.h

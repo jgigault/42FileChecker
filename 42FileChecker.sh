@@ -41,6 +41,7 @@ OPT_NO_AUTEUR=0
 OPT_NO_MOULITEST=0
 OPT_NO_LIBFTUNITTEST=0
 OPT_NO_FILLITCHECKER=0
+OPT_NO_MAINTEST=0
 OPT_NO_SPEEDTEST=0
 OPT_NO_LEAKS=0
 OPT_NO_BASICTESTS=0
@@ -64,6 +65,7 @@ do
 		"--no-moulitest") OPT_NO_MOULITEST=1 ;;
 		"--no-libftunittest") OPT_NO_LIBFTUNITTEST=1 ;;
 		"--no-fillitchecker") OPT_NO_FILLITCHECKER=1 ;;
+		"--no-maintest") OPT_NO_MAINTEST=1 ;;
 		"--no-speedtest") OPT_NO_SPEEDTEST=1 ;;
 		"--no-leaks") OPT_NO_LEAKS=1 ;;
 		"--no-basictests") OPT_NO_BASICTESTS=1 ;;
@@ -79,6 +81,7 @@ do
 done
 
 source includes/utils.sh
+source includes/utils_fileexists.sh
 source includes/auteur.sh
 source includes/fillit.sh
 source includes/libft.sh
@@ -98,11 +101,14 @@ source includes/configure.sh
 source includes/moulitest.sh
 source includes/fillit_checker.sh
 source includes/libftunittest.sh
+source includes/external_repository_maintest.sh
 source includes/exit.sh
 source includes/display_spinner.sh
 source includes/display_menu.sh
 source includes/display_header.sh
 source includes/display_leftandright.sh
+source includes/display_error.sh
+source includes/display_success.sh
 source includes/signals.sh
 
 function main

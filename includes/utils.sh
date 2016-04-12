@@ -57,6 +57,8 @@ then
 	LIBFTUNITTEST_DIR="libft-unit-test"
 	EXTERNAL_REPOSITORY_FILLITCHECKER_URL="https://github.com/anisg/fillit_checker"
 	EXTERNAL_REPOSITORY_FILLITCHECKER_DIR="fillit_checker"
+	EXTERNAL_REPOSITORY_MAINTEST_URL="https://github.com/QuentinPerez/Maintest"
+	EXTERNAL_REPOSITORY_MAINTEST_DIR="maintest"
 
 	function check_option_set
 	{
@@ -288,41 +290,6 @@ then
 			printf ${C_RED}"  No source file (.c) or header (.h) to check"${C_CLEAR}
 		fi
 		else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
-	}
-
-	function check_fileexists
-	{
-		local i TOTAL RET0 VALPARAM RET1
-		if [ "$1" != "" ]
-		then
-			i=0
-			VALPARAM=`eval echo \$1[\$i]`
-			while [ "${!VALPARAM}" != "" ]
-			do
-				RET1=`find "$MYPATH" -name "${!VALPARAM}" 2>/dev/null`
-				if [ "$RET1" == "" ]
-				then
-					(( TOTAL += 1 ))
-					RET0=$RET0"Not Found: ${!VALPARAM}\n"
-				fi
-				(( i += 1 ))
-				VALPARAM=`eval echo \$1[\$i]`
-			done
-			printf "$RET0" > "$RETURNPATH"/.my$1
-			if [ "$RET0" == "" ]
-			then
-				printf $C_GREEN"  All files were found"$C_CLEAR
-			else
-				if (( $TOTAL == 1 ))
-				then
-					printf $C_RED"  1 file is missing"$C_CLEAR
-				else
-					printf $C_RED"  $TOTAL files are missing"$C_CLEAR
-				fi
-			fi
-		else
-			printf $C_RED"  An error occured (Files list missing)"$C_CLEAR
-		fi
 	}
 
 	function check_create_tmp_dir
