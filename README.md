@@ -20,7 +20,7 @@ Complete unit tests are handled through external frameworks whose sources are au
 * [**moulitest**](https://github.com/yyang42/moulitest), developed by [@yyang42](https://github.com/yyang42) and other contributors
 * [**libft-unit-test**](https://github.com/alelievr/libft-unit-test), developed by [@alelievr](https://github.com/alelievr) (for libft project only)
 * [**fillit_checker**](https://github.com/anisg/fillit_checker), developed by [@anisg](https://github.com/anisg) (for fillit project only)
-* [**libft-unit-test**](https://github.com/QuentinPerez/Maintest), developed by [@QuentinPerez](https://github.com/QuentinPerez) and other contributors
+* [**Maintest**](https://github.com/QuentinPerez/Maintest), developed by [@QuentinPerez](https://github.com/QuentinPerez) and other contributors
 
 ## install & launch
 ```bash
