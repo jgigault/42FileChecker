@@ -64,7 +64,7 @@ then
             } else {
               printf "//%s\n", $0;
               RMV++;
-              if (RMV ==s 3) {
+              if (RMV == 3) {
                 RMV=0
               }
             }
