@@ -336,7 +336,7 @@ then
 		LOGFILENAME="$1"
 		if [ -f "$LOGFILENAME" ]
 		then
-			RET0=`cat -e "$LOGFILENAME" | awk '{gsub(/\^M.*\^M/, "");  gsub(/\^@/, "");  gsub(/\^\[\[[0-9;]*m/, "");  gsub(/[\$]$/, ""); print}'`
+			RET0=`cat -e "$LOGFILENAME" | awk '{gsub(/\^M.*\^M/, "");  gsub(/\^@/, "");  gsub(/\^[\[]*[0-9;]*[MmHJ]/, "");  gsub(/[\$]$/, ""); print}'`
 			echo "$RET0" > "$LOGFILENAME"
 		fi
 	}

@@ -3,7 +3,7 @@
 if [ "${FILECHECKER_SH}" == "1" ]
 then
 
-  declare -a CHK_FT_LS='( "check_author" "auteur" "check_norme" "norminette" "check_ft_ls_makefile" "makefile" "check_ft_ls_forbidden_func" "forbidden functions" "check_ft_ls_leaks" "leaks" "check_ft_ls_speedtest" "speed test" "check_ft_ls_moulitest" "moulitest (${MOULITEST_URL})" )'
+  declare -a CHK_FT_LS='( "check_author" "auteur" "check_norme" "norminette" "check_ft_ls_makefile" "makefile" "check_ft_ls_forbidden_func" "forbidden functions" "check_ft_ls_leaks" "leaks" "check_ft_ls_speedtest" "speed test" "check_ft_ls_moulitest" "moulitest (${MOULITEST_URL})" "check_libft_extrep_maintest" "Maintest (${EXTERNAL_REPOSITORY_MAINTEST_URL})" )'
 
   declare -a CHK_FT_LS_AUTHORIZED_FUNCS='(write opendir readdir closedir stat lstat getpwuid getgrgid listxattr getxattr time ctime readlink malloc free perror strerror exit main)'
 
@@ -13,6 +13,13 @@ then
     if [ "${OPT_NO_MOULITEST}" == "0" ]
     then
       check_update_external_repository "moulitest" "${MOULITEST_URL}" "${MOULITEST_DIR}"
+      case "${LOCAL_UPDATE_RETURN}" in
+        "exit") main; return ;;
+      esac
+    fi
+    if [ "${OPT_NO_MAINTEST}" == "0" ]
+    then
+      check_update_external_repository "Maintest" "${EXTERNAL_REPOSITORY_MAINTEST_URL}" "${EXTERNAL_REPOSITORY_MAINTEST_DIR}"
       case "${LOCAL_UPDATE_RETURN}" in
         "exit") main; return ;;
       esac
@@ -62,6 +69,7 @@ then
       "open .myleaks" "more info: leaks"\
       "open .myspeedtest" "more info: speed test"\
       "open .mymoulitest" "more info: moulitest"\
+      "open .mymaintest_ft_ls" "more info: Maintest"\
       "_"\
       "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
       "open ${MOULITEST_URL}/issues/new" "REPORT A BUG ON MOULITEST"\
@@ -127,6 +135,12 @@ then
   {	if [ "$OPT_NO_MOULITEST" == "0" ]; then
     check_moulitest "ft_ls"
     else printf $C_GREY"  --Not performed--"$C_CLEAR; fi
+  }
+
+  function check_libft_extrep_maintest
+  { if [ "${OPT_NO_MAINTEST}" == "0" ]; then
+    check_maintest_ft_ls ".mymaintest_ft_ls" "${MYPATH}"
+    else printf "  ${C_GREY}%s${C_CLEAR}"  "--Not performed--"; fi
   }
 
   function check_ft_ls

@@ -104,4 +104,32 @@ then
     fi
   }
 
+  function check_maintest_ft_ls
+  {
+    local LOCALFILE LOGFILENAME="${1}" PROJECTPATH="${2}" ERROR=0 SUCCESS=0
+    ${CMD_RM} -f "${LOGFILENAME}"
+    if [ -d "${EXTERNAL_REPOSITORY_MAINTEST_DIR}" ]
+    then
+      make re -C "${MYPATH}" 1>"${LOGFILENAME}" 2>&1
+      if [ -f "${MYPATH}/ft_ls" ]
+      then
+        check_create_tmp_dir
+        (cd ./maintest/ft_ls/ && ./diff_me.sh --non-interactive "${PROJECTPATH}/ft_ls" &> "../../${LOGFILENAME}")
+        check_cleanlog "${LOGFILENAME}"
+        ERROR=`awk 'BEGIN {ERROR=0} $0 ~ /^Error:/ {ERROR++} END {printf "%d", ERROR}' "${LOGFILENAME}"`
+        SUCCESS=`awk 'BEGIN {SUCCESS=0} $0 ~ /^Success:/ {SUCCESS++} END {printf "%d", SUCCESS}' "${LOGFILENAME}"`
+        if [ "${ERROR}" == "0" ]
+        then
+          display_success  "All tests passed (${SUCCESS} tests)"
+        else
+          display_error  "$(( ${ERROR} )) failed test(s) out of $(( ${SUCCESS} + ${ERROR} )) tests"
+        fi
+      else
+        display_error  "An error occured while compiling your program"
+      fi
+    else
+      display_error  "'Maintest' is not installed"
+    fi
+  }
+
 fi
