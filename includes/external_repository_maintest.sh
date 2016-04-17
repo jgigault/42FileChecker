@@ -51,7 +51,7 @@ then
         then
           cp "${EXTERNAL_REPOSITORY_MAINTEST_DIR}/libft/main.c" "./tmp/mymaintest_libft/"
         else
-          awk -v RMVFUNCTIONS="^(#define)[\t ]*(${RMVFUNCTIONS})" '
+          awk -v RMVFUNCTIONS="^[\t]?(#define)[\t ]*(${RMVFUNCTIONS})" '
           BEGIN {
             RMV=0
           }
@@ -75,7 +75,7 @@ then
         if [ "${?}" == "0" -a -f "./tmp/mymaintest_libft/main.c" ]
         then
           #compile main.c with libft.a
-          ${CMD_GCC} "./tmp/mymaintest_libft/main.c" -L "${MYPATH}" -I "${MYPATH}" -I "${MYPATH}/include" -I "${MYPATH}/includes" -lft -o "./tmp/mymaintest_libft/main" 1>>"${LOGFILENAME}" 2>&1
+          ${CMD_GCC} -Wall -Werror -Wextra "./tmp/mymaintest_libft/main.c" -L "${MYPATH}" -I "${MYPATH}" -I "${MYPATH}/include" -I "${MYPATH}/includes" -lft -o "./tmp/mymaintest_libft/main" 1>>"${LOGFILENAME}" 2>&1
 
           #launch tests if compilation succeeded
           if [ -f "./tmp/mymaintest_libft/main" ]
