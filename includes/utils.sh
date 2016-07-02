@@ -59,6 +59,8 @@ then
 	EXTERNAL_REPOSITORY_FILLITCHECKER_DIR="fillit_checker"
 	EXTERNAL_REPOSITORY_MAINTEST_URL="https://github.com/QuentinPerez/Maintest"
 	EXTERNAL_REPOSITORY_MAINTEST_DIR="maintest"
+	EXTERNAL_REPOSITORY_42SHELLTESTER_URL="https://github.com/we-sh/42ShellTester"
+	EXTERNAL_REPOSITORY_42SHELLTESTER_DIR="42ShellTester"
 
 	function check_option_set
 	{
@@ -135,45 +137,6 @@ then
 		else
 			printf "\n"
 		fi
-	}
-
-	function display_center
-	{
-		local LEN MARGIN
-		if [ "$1" != "" ]
-		then
-			LEN=${#1}
-			(( MARGIN= ($COLUMNS - $LEN) / 2 ))
-			printf "%"$MARGIN"s" " "
-			printf "$1"
-			(( MARGIN= $MARGIN + ($COLUMNS - $LEN - $MARGIN * 2) ))
-			printf "%"$MARGIN"s" " "
-		else
-			printf "\n"
-		fi
-	}
-
-	function display_top
-	{
-		local LPATH=$1
-		local LHOME LEN PROJECTNAME MYPATH
-		MYPATH=$1
-		PROJECTNAME=$2
-		LHOME=`echo "$HOME" | sed 's/\//\\\\\\//g'`
-		LPATH="echo \"$LPATH\" | sed 's/$LHOME/~/'"
-		LPATH=`eval $LPATH`
-		printf $C_WHITE"\n\n"
-		if [ "$MYPATH" != "" ]
-		then
-			printf "  Current configuration:"
-			(( LEN=$COLUMNS - 24 ))
-			printf "%"$LEN"s" "$PROJECTNAME  "
-			printf $C_CLEAR"  $LPATH\n\n"
-		else
-			printf "  $PROJECTNAME\n"
-			printf "\n"
-		fi
-		printf ""$C_CLEAR
 	}
 
 	function display_footer
@@ -336,7 +299,7 @@ then
 		LOGFILENAME="$1"
 		if [ -f "$LOGFILENAME" ]
 		then
-			RET0=`cat -e "$LOGFILENAME" | awk '{gsub(/\^M.*\^M/, "");  gsub(/\^@/, "");  gsub(/\^[\[]*[0-9;]*[MmHJ]/, "");  gsub(/[\$]$/, ""); print}'`
+			RET0=`cat -e "$LOGFILENAME" | awk '{gsub(/\^M.*\^M/, ""); gsub(/\^@/, ""); gsub(/\^[\[]*[0-9;]*[MmHJ]/, "");  gsub(/[\$]$/, ""); print}'`
 			echo "$RET0" > "$LOGFILENAME"
 		fi
 	}

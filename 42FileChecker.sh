@@ -42,6 +42,7 @@ OPT_NO_MOULITEST=0
 OPT_NO_LIBFTUNITTEST=0
 OPT_NO_FILLITCHECKER=0
 OPT_NO_MAINTEST=0
+OPT_NO_42SHELLTESTER=0
 OPT_NO_SPEEDTEST=0
 OPT_NO_LEAKS=0
 OPT_NO_BASICTESTS=0
@@ -66,6 +67,7 @@ do
 		"--no-libftunittest") OPT_NO_LIBFTUNITTEST=1 ;;
 		"--no-fillitchecker") OPT_NO_FILLITCHECKER=1 ;;
 		"--no-maintest") OPT_NO_MAINTEST=1 ;;
+		"--no-42shelltester") OPT_NO_42SHELLTESTER=1 ;;
 		"--no-speedtest") OPT_NO_SPEEDTEST=1 ;;
 		"--no-leaks") OPT_NO_LEAKS=1 ;;
 		"--no-basictests") OPT_NO_BASICTESTS=1 ;;
@@ -83,6 +85,7 @@ done
 source includes/utils.sh
 source includes/utils_fileexists.sh
 source includes/auteur.sh
+source includes/projects/minishell/minishell_main.sh
 source includes/fillit.sh
 source includes/libft.sh
 source includes/libftasm.sh
@@ -102,10 +105,13 @@ source includes/moulitest.sh
 source includes/fillit_checker.sh
 source includes/libftunittest.sh
 source includes/external_repository_maintest.sh
+source includes/external_repositories/external_repository_42shelltester.sh
 source includes/exit.sh
 source includes/display_spinner.sh
 source includes/display_menu.sh
 source includes/display_header.sh
+source includes/display_center.sh
+source includes/display_top.sh
 source includes/display_leftandright.sh
 source includes/display_error.sh
 source includes/display_success.sh
@@ -115,14 +121,14 @@ function main
 {
 	tput civis
 	display_header
-	printf "\n\n"
+	printf "\n"
 	printf "${C_INVERTRED}"
 	display_center " "
 	display_center "Failing tests does not necessary mean you're wrong!"
 	display_center "42FileChecker does not substitute a corrector"
 	display_center "and was not made for that at first!"
 	display_center " "
-	printf "\n\n"
+	printf "\n"
 	display_menu\
 		""\
 		check_fillit_main "fillit"\
@@ -132,6 +138,7 @@ function main
 		check_ft_ls_main "ft_ls"\
 		check_ft_printf_main "ft_printf"\
 		check_fdf "fdf"\
+		check_project_minishell_main "minishell (beta)"\
 		"_"\
 		"check_option_set OPT_NO_TIMEOUT" "$(if [ "$OPT_NO_TIMEOUT" == 0 ]; then echo "disable timeout      (--no-timeout)"; else echo "enable timeout"; fi)"\
 		"check_option_set OPT_NO_COLOR" "$(if [ "$OPT_NO_COLOR" == 0 ]; then echo "disable color        (--no-color)"; else echo "enable color"; fi)"\

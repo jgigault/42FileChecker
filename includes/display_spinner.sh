@@ -26,7 +26,7 @@ then
       local spinstr=$temp${spinstr%"$temp"}
       if (( $total_delay >= 5 ))
       then
-        (( total_delay2 = 60 - $total_delay ))
+        (( total_delay2 = 100 - $total_delay ))
         printf "[time out: %02d]" "$total_delay2"
       fi
       SEL=""

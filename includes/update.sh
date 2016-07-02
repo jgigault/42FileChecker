@@ -21,7 +21,7 @@ function check_update_42filechecker
 {	if [ "${OPT_NO_UPDATE}" == "0" ]; then
 	local UPTODATE MOULIDATE VERSION RET0 RET1 LOCALHASH REMOTEHASH
 	display_header
-	printf "\n\n"
+	printf "\n"
 	printf "  Checking for updates (42FileChecker)...\n"
 	(check_for_updates_42filechecker > .myret) &
 	display_spinner $!
@@ -32,7 +32,7 @@ function check_update_42filechecker
 	;;
 	"3")
 		display_header "$C_INVERTRED"
-		printf "\n\n  Cannot check for updates: Your Internet connection is probably down...\n\n"$C_CLEAR
+		printf "\n  Cannot check for updates: Your Internet connection is probably down...\n\n"$C_CLEAR
 		display_menu\
 			"$C_INVERTRED"\
 			"check_update_set_return continue" "SKIP UPDATE"\
@@ -43,7 +43,7 @@ function check_update_42filechecker
 		REMOTEHASH=`git ls-remote 2>/dev/null | grep refs/heads/${GLOBAL_LOCALBRANCH} | cut -f1`
 		VERSION=$(git log --oneline "refs/remotes/origin/${GLOBAL_LOCALBRANCH}" | awk 'END {print NR}')
 		display_header "$C_INVERTRED"
-		printf "\n\n"
+		printf "\n"
 		printf $C_RED""
 		if [ "${REMOTEHASH}" != "${LOCALHASH}" -a "${REMOTEHASH}" != "" -a "${GLOBAL_CVERSION}" -lt "${VERSION}" ]
 		then
@@ -58,7 +58,7 @@ function check_update_42filechecker
 			display_center "Your copy of '42FileChecker' has been modified locally."
 			display_center "Skip update if you don't want to erase your changes."
 		fi
-		printf "\n\n  Choose UPDATE 42FILECHECKER (1) for installing the latest version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
+		printf "\n  Choose UPDATE 42FILECHECKER (1) to install the latest version or skip this warning by choosing SKIP UPDATE (2) or by using '--no-update' at launch.\n\n"$C_CLEAR
 		display_menu\
 			"$C_INVERTRED"\
 			check_install_42filechecker "UPDATE 42FILECHECKER"\
@@ -76,7 +76,7 @@ function check_update_external_repository
 	local URL=$2
 	local DIR=$3
 	display_header
-	printf "\n\n"
+	printf "\n"
 	printf "  Checking for updates (${REPONAME})...\n"
 	(check_for_updates_external_repository ${DIR} > .myret) &
 	display_spinner $!
@@ -87,7 +87,7 @@ function check_update_external_repository
 	;;
 	"3")
 		display_header "$C_INVERTRED"
-		printf "\n\n  Cannot check for updates: Your Internet connection is probably down...\n\n"$C_CLEAR
+		printf "\n  Cannot check for updates: Your Internet connection is probably down...\n\n"$C_CLEAR
 		display_menu\
 			"$C_INVERTRED"\
 			"check_update_set_return continue" "SKIP UPDATE"\
@@ -95,8 +95,8 @@ function check_update_external_repository
 	;;
 	"0")
 		display_header "$C_INVERTRED"
-		printf "\n\n"
-		printf $C_RED"  Your version of '${REPONAME}' (${URL}) is out-of-date.\n  Choose UPDATE EXTERNAL REPOSITORY (1) for installing the latest version or SKIP UPDATE (2) if you want to skip this warning.\n\n"$C_CLEAR
+		printf "\n"
+		printf $C_RED"  Your version of '${REPONAME}' (${URL}) is out-of-date.\n  Choose UPDATE EXTERNAL REPOSITORY (1) to install the latest version or SKIP UPDATE (2) if you want to skip this warning.\n\n"$C_CLEAR
 		display_menu\
 			"$C_INVERTRED"\
 			"check_install_external_repository ${REPONAME} ${URL} ${DIR}" "UPDATE EXTERNAL REPOSITORY"\
@@ -105,8 +105,8 @@ function check_update_external_repository
 	;;		
 	"2")	
 		display_header "$C_INVERTRED"
-		printf "\n\n"
-		printf $C_RED"  The '${REPONAME}' (${URL}) is not installed.\n  Choose INSTALL EXTERNAL REPOSITORY (1) for installing it or SKIP INSTALL (2) if you want to skip this warning.\n\n"$C_CLEAR
+		printf "\n"
+		printf $C_RED"  The '${REPONAME}' (${URL}) is not installed.\n  Choose INSTALL EXTERNAL REPOSITORY (1) to install it or SKIP INSTALL (2) if you want to skip this warning.\n\n"$C_CLEAR
 		display_menu\
 			"$C_INVERTRED"\
 			"check_install_external_repository ${REPONAME} ${URL} ${DIR}" "INSTALL EXTERNAL REPOSITORY"\
@@ -145,7 +145,7 @@ function check_install_42filechecker
 	local RES0
 	local LOGFILENAME=".myret"
 	display_header
-	printf "\n\n"
+	printf "\n"
 	printf "  Updating 42FileChecker\n"
 	${CMD_RM} -f ${LOGFILENAME}
 	(git fetch --all >/dev/null 2>&1) &
@@ -201,7 +201,7 @@ function check_install_external_repository
 {
 	local RES0 RES2 REPONAME="${1}" URL="${2}" DIR="${3}" LOCALBRANCH
 	display_header
-	printf "\n\n"
+	printf "\n"
 	if [ ! -d "${DIR}" ]
 	then
 		printf "  Installing ${REPONAME}...\n"

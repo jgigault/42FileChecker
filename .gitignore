@@ -4,6 +4,7 @@ moulitest_42projects/
 libft-unit-test/
 fillit_checker/
 maintest/
+42ShellTester/
 .my*
 *~
 srcs/gnl/gnl.h

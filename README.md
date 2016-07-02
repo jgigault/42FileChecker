@@ -18,9 +18,10 @@ Extra tests may also be performed:
 
 Complete unit tests are handled through external frameworks whose sources are automatically downloaded, configured and updated in background when you run the script:
 * [**moulitest**](https://github.com/yyang42/moulitest), developed by [@yyang42](https://github.com/yyang42) and other contributors
-* [**libft-unit-test**](https://github.com/alelievr/libft-unit-test), developed by [@alelievr](https://github.com/alelievr) (for libft project only)
-* [**fillit_checker**](https://github.com/anisg/fillit_checker), developed by [@anisg](https://github.com/anisg) (for fillit project only)
+* [**libft-unit-test**](https://github.com/alelievr/libft-unit-test), developed by [@alelievr](https://github.com/alelievr)
+* [**fillit_checker**](https://github.com/anisg/fillit_checker), developed by [@anisg](https://github.com/anisg)
 * [**Maintest**](https://github.com/QuentinPerez/Maintest), developed by [@QuentinPerez](https://github.com/QuentinPerez) and other contributors
+* [**42ShellTester**](https://github.com/we-sh/42ShellTester), developed by [@gabkk](https://github.com/gabkk) and [@jgigault](https://github.com/jgigault)
 
 ## install & launch
 ```bash
@@ -44,6 +45,7 @@ alias 42FileChecker='sh ~/42FileChecker/42FileChecker.sh'
 --no-libftunittest  // Disable libft-unit-test
 --no-fillitchecker  // Disable fillit_checker
 --no-maintest       // Disable Maintest
+--no-42shelltester  // Disable 42ShellTester
 ```
 Add your options as arguments before launch:
 ```bash
@@ -55,7 +57,10 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <table width="100%">
 <thead>
 <tr>
-<td width="30%" height="60px"></td>
+<td width="20%" height="60px"></td>
+<td width="12%" align="center" cellpadding="0">
+<strong>fillit</strong>
+</td>
 <td width="12%" align="center" cellpadding="0">
 <strong>libft</strong>
 </td>
@@ -74,11 +79,16 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <td width="12%" align="center" cellpadding="0">
 <strong>fdf</strong>
 </td>
+<td width="12%" align="center" cellpadding="0">
+<strong>minishell</strong>
+</td>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td valign="top" height="60px">auteur</td>
+<td valign="top" align="center"></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
@@ -89,7 +99,9 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <tr>
 <td valign="top" height="60px">norminette</td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
@@ -97,6 +109,8 @@ sh ./42FileChecker.sh --no-update --no-timeout
 </tr>
 <tr>
 <td valign="top" height="60px">makefile</td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
@@ -112,11 +126,15 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 </tr>
 <tr>
 <td valign="top" height="60px">extra functions</td>
+<td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
@@ -126,9 +144,11 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <td valign="top" height="60px">leaks</td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
+<td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 </tr>
 <tr>
@@ -136,36 +156,33 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
+<td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 </tr>
 <tr>
-<td valign="top" height="60px">tests with compilation</td>
+<td valign="top" height="60px">unit tests</td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
+<td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 </tr>
 <tr>
-<td valign="top" height="60px">moulitest</td>
-<td valign="top" align="center"><kbd>Yes</kbd></td>
-<td valign="top" align="center"></td>
-<td valign="top" align="center"><kbd>Yes</kbd></td>
-<td valign="top" align="center"><kbd>Yes</kbd></td>
-<td valign="top" align="center"><kbd>Yes</kbd></td>
-<td valign="top" align="center"></td>
-</tr>
-<tr>
-<td valign="top" height="60px">libft-unit-test</td>
+<td valign="top" height="60px">integration tests</td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
+<td valign="top" align="center"><kbd>Yes</kbd></td>
 </tr>
 </tbody>
 </table>

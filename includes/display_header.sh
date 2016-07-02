@@ -27,7 +27,7 @@ then
     display_center " | || |_ __) | |_  | | |/ _ \ |   | '_ \ / _ \/ __| |/ / _ \ '__| "
     display_center " |__   _/ __/|  _| | | |  __/ |___| | | |  __/ (__|   <  __/ |    "
     display_center "    |_||_____|_|   |_|_|\___|\____|_| |_|\___|\___|_|\_\___|_|    "
-    display_center "    jgigault @ student.42.fr                    06 51 15 98 82    "
+    display_center "                     https://github.com/jgigault/42FileChecker    "
     display_center " "
     printf "${C_CLEAR}"
   }
