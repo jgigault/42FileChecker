@@ -77,9 +77,6 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <strong>ft_printf</strong>
 </td>
 <td width="12%" align="center" cellpadding="0">
-<strong>fdf</strong>
-</td>
-<td width="12%" align="center" cellpadding="0">
 <strong>minishell</strong>
 </td>
 </tr>
@@ -88,7 +85,6 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <tr>
 <td valign="top" height="60px">auteur</td>
 <td valign="top" align="center"></td>
-<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
@@ -105,11 +101,9 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
-<td valign="top" align="center"><kbd>Yes</kbd></td>
 </tr>
 <tr>
 <td valign="top" height="60px">makefile</td>
-<td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
@@ -127,14 +121,12 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
-<td valign="top" align="center"><kbd>Yes</kbd></td>
 </tr>
 <tr>
 <td valign="top" height="60px">extra functions</td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
-<td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
@@ -149,7 +141,6 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
-<td valign="top" align="center"></td>
 </tr>
 <tr>
 <td valign="top" height="60px">speed test</td>
@@ -159,7 +150,6 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
-<td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 </tr>
 <tr>
@@ -171,7 +161,6 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 <td valign="top" align="center"></td>
-<td valign="top" align="center"></td>
 </tr>
 <tr>
 <td valign="top" height="60px">integration tests</td>
@@ -180,7 +169,6 @@ sh ./42FileChecker.sh --no-update --no-timeout
 <td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
-<td valign="top" align="center"></td>
 <td valign="top" align="center"></td>
 <td valign="top" align="center"><kbd>Yes</kbd></td>
 </tr>

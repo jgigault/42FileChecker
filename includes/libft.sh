@@ -12,8 +12,6 @@ then
 
   declare -a LIBFT_EXTRA='()'
 
-  declare -a CHK_LIBFT_AUTHORIZED_FUNCS='(free malloc write main)'
-
   function check_libft_main
   {
     local LOCAL_UPDATE_RETURN=""

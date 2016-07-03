@@ -13,8 +13,6 @@ then
 
   declare -a CHK_MINISHELL='( "check_author" "auteur" "check_norme" "norminette" "check_project_minishell_makefile" "makefile" "check_project_minishell_forbidden_func" "forbidden functions" "check_project_minishell_42shelltester minishell/builtins/ builtins" "42ShellTester: implementation of built-in utilities" "check_project_minishell_42shelltester minishell/binary/ binary" "42ShellTester: execution of binaries" "check_project_minishell_42shelltester minishell/misc/ miscellaneous" "42ShellTester: miscellaneous" )'
 
-  declare -a CHK_MINISHELL_AUTHORIZED_FUNCS='(malloc free access open close read write opendir readdir closedir getcwd chdir stat lstat fstat fork execve wait waitpid wait3 wait4 signal kill exit main)'
-
   function check_project_minishell_main
   {
     local LOCAL_UPDATE_RETURN=""
