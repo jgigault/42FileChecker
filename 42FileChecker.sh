@@ -82,17 +82,18 @@ do
 	(( i += 1 ))
 done
 
+source includes/utils/utils_authorized_functions.sh
 source includes/utils.sh
 source includes/utils_fileexists.sh
 source includes/auteur.sh
 source includes/projects/minishell/minishell_main.sh
 source includes/projects/fillit/fillit_main.sh
+source includes/projects/generic_tests/generic_tests_main.sh
 source includes/libft.sh
 source includes/libftasm.sh
 source includes/get_next_line.sh
 source includes/ft_ls.sh
 source includes/ft_printf.sh
-source includes/fdf.sh
 source includes/transition.sh
 source includes/update.sh
 source includes/credits.sh
@@ -131,21 +132,21 @@ function main
 	printf "\n"
 	display_menu\
 		""\
-		check_fillit_main "fillit"\
-		check_libft_main "libft"\
-		check_libftasm "libftasm"\
-		check_gnl_main "get_next_line"\
-		check_ft_ls_main "ft_ls"\
-		check_ft_printf_main "ft_printf"\
-		check_fdf "fdf"\
-		check_project_minishell_main "minishell (beta)"\
+		check_generic_tests_main "generic tests"\
 		"_"\
-		"check_option_set OPT_NO_TIMEOUT" "$(if [ "$OPT_NO_TIMEOUT" == 0 ]; then echo "disable timeout      (--no-timeout)"; else echo "enable timeout"; fi)"\
-		"check_option_set OPT_NO_COLOR" "$(if [ "$OPT_NO_COLOR" == 0 ]; then echo "disable color        (--no-color)"; else echo "enable color"; fi)"\
-		"check_option_set OPT_NO_NORMINETTE" "$(if [ "$OPT_NO_NORMINETTE" == 0 ]; then echo "disable norminette   (--no-norminette)"; else echo "enable norminette"; fi)"\
-		"check_option_set OPT_NO_LEAKS" "$(if [ "$OPT_NO_LEAKS" == 0 ]; then echo "disable leaks test   (--no-leaks)"; else echo "enable leaks test"; fi)"\
-		"check_option_set OPT_NO_SPEEDTEST" "$(if [ "$OPT_NO_SPEEDTEST" == 0 ]; then echo "disable speedtest    (--no-speedtest)"; else echo "enable speedtest"; fi)"\
-		"check_option_set OPT_NO_MOULITEST" "$(if [ "$OPT_NO_MOULITEST" == 0 ]; then echo "disable moulitest    (--no-moulitest)"; else echo "enable moulitest"; fi)"\
+		check_fillit_main "project: fillit"\
+		check_libft_main "project: libft"\
+		check_libftasm "project: libftasm"\
+		check_gnl_main "project: get_next_line"\
+		check_ft_ls_main "project: ft_ls"\
+		check_ft_printf_main "project: ft_printf"\
+		check_project_minishell_main "project: minishell (beta)"\
+		"_"\
+		"check_option_set OPT_NO_TIMEOUT" "option: $(if [ "$OPT_NO_TIMEOUT" == 0 ]; then echo "disable timeout      (--no-timeout)"; else echo "enable timeout"; fi)"\
+		"check_option_set OPT_NO_COLOR" "option: $(if [ "$OPT_NO_COLOR" == 0 ]; then echo "disable color        (--no-color)"; else echo "enable color"; fi)"\
+		"check_option_set OPT_NO_NORMINETTE" "option: $(if [ "$OPT_NO_NORMINETTE" == 0 ]; then echo "disable norminette   (--no-norminette)"; else echo "enable norminette"; fi)"\
+		"check_option_set OPT_NO_LEAKS" "option: $(if [ "$OPT_NO_LEAKS" == 0 ]; then echo "disable leaks test   (--no-leaks)"; else echo "enable leaks test"; fi)"\
+		"check_option_set OPT_NO_SPEEDTEST" "option: $(if [ "$OPT_NO_SPEEDTEST" == 0 ]; then echo "disable speedtest    (--no-speedtest)"; else echo "enable speedtest"; fi)"\
 		"_"\
 		"open https://github.com/jgigault/42FileChecker/wiki" "MANUAL"\
 		display_credits "CREDITS"\

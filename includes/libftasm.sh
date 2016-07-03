@@ -9,8 +9,6 @@ declare -a CHK_LIBFTASM='( "check_author" "auteur" "check_libftasm_required_exis
 
 declare -a LIBFTASM_MANDATORIES='(ft_bzero.s ft_strcat.s ft_isalpha.s ft_isdigit.s ft_isalnum.s ft_isascii.s ft_isprint.s ft_toupper.s ft_tolower.s ft_puts.s ft_strlen.s ft_memset.s ft_memcpy.s ft_strdup.s ft_cat.s)'
 
-declare -a CHK_LIBFTASM_AUTHORIZED_FUNCS='(malloc write read main)'
-
 function check_libftasm_all
 {
 	local FUNC TITLE i j k j2 RET0 MYPATH TESTONLY
