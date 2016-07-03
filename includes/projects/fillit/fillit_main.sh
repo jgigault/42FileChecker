@@ -3,7 +3,7 @@
 if [ "${FILECHECKER_SH}" == "1" ]
 then
 
-  declare -a CHK_FILLIT='( "check_author" "auteur" "check_norme" "norminette" "check_fillit_makefile" "makefile" "check_fillit_forbidden_func" "forbidden functions" "check_fillit_extern_file" "extern file" "check_fillit_fillitchecker" "fillit_checker (${EXTERNAL_REPOSITORY_FILLITCHECKER_URL})" )'
+  declare -a CHK_FILLIT='( "check_author optional" "auteur" "check_norme" "norminette" "check_fillit_makefile" "makefile" "check_fillit_forbidden_func" "forbidden functions" "check_fillit_extern_file" "extern file" "check_fillit_fillitchecker" "fillit_checker (${EXTERNAL_REPOSITORY_FILLITCHECKER_URL})" )'
 
   declare -a CHK_FILLIT_AUTHORIZED_FUNCS='(exit open close write read malloc free main)'
 

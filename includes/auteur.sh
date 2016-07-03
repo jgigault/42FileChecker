@@ -5,13 +5,19 @@ then
 
   function check_author
   {
-    if [ "${OPT_NO_AUTEUR}" == "0" -a "${1}" != "optional" ]
+    local OPTIONAL="${1}"
+    if [ "${OPT_NO_AUTEUR}" == "0" ]
     then
       local AUTHORF AUTHORC AUTHORE AUTHORD
       AUTHORF="${MYPATH}/auteur"
       if [ ! -f "${AUTHORF}" ]
       then
-        printf "${C_RED}  %s${C_CLEAR}" "File not found"
+        if [ "${OPTIONAL}" == "optional" ]
+        then
+          printf "${C_GREY}  %s${C_CLEAR}" "File not found (optional)"
+        else
+          printf "${C_RED}  %s${C_CLEAR}" "File not found"
+        fi
       else
         AUTHORC=`cat -e "${AUTHORF}" | awk '{if (NR == 1) print}'`
         AUTHORE=`cat -e "${AUTHORF}" | awk '$0 ~ /\\$\$/ {print}'`
@@ -20,12 +26,22 @@ then
         then
           if [ "${AUTHORE}" != "${AUTHORC}" ]
           then
-            printf "${C_RED}  %s${C_CLEAR}"  "No [Line Feed] character at the end of line"
+            if [ "${OPTIONAL}" == "optional" ]
+            then
+              printf "${C_GREY}  %s${C_CLEAR}"  "Missing <newline> character at the end of line (optional)"
+            else
+              printf "${C_RED}  %s${C_CLEAR}"  "Missing <newline> character at the end of line"
+            fi
           else
             printf "${C_GREEN}  %s${C_CLEAR}" "${AUTHORC}"
           fi
         else
-          printf "${C_RED}  %s${C_CLEAR}"  "Empty file or too much lines in the file"
+          if [ "${OPTIONAL}" == "optional" ]
+          then
+            printf "${C_GREY}  %s${C_CLEAR}"  "Empty file or too much lines in the file (optional)"
+          else
+            printf "${C_RED}  %s${C_CLEAR}"  "Empty file or too much lines in the file"
+          fi
         fi
       fi
     else

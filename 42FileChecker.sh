@@ -86,7 +86,7 @@ source includes/utils.sh
 source includes/utils_fileexists.sh
 source includes/auteur.sh
 source includes/projects/minishell/minishell_main.sh
-source includes/fillit.sh
+source includes/projects/fillit/fillit_main.sh
 source includes/libft.sh
 source includes/libftasm.sh
 source includes/get_next_line.sh
@@ -102,7 +102,7 @@ source includes/leaks.sh
 source includes/speedtest.sh
 source includes/configure.sh
 source includes/moulitest.sh
-source includes/fillit_checker.sh
+source includes/external_repositories/external_repository_fillit_checker.sh
 source includes/libftunittest.sh
 source includes/external_repository_maintest.sh
 source includes/external_repositories/external_repository_42shelltester.sh
