@@ -120,7 +120,7 @@ then
       HAS_AF="0"
       while [ "${ALLOWED_FILES[I]}" != "" ]
       do
-        if [[ "${F}" =~ "${ALLOWED_FILES[I]}" ]]
+        if [ "$(basename "${F}")" == "${ALLOWED_FILES[I]}" ]
         then
           HAS_AF="1"
           EXTERNFILEFOUND="1"
