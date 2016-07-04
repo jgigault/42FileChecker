@@ -217,7 +217,7 @@ then
 	{	if [ "$OPT_NO_NORMINETTE" == "0" ]; then
 		local RET0 RET2 RET3 RET4 TOTAL TOTA2
 		rm -f "$RETURNPATH"/.mynorminette
-		RET0=$(find "${MYPATH}" -type f -name "*.[ch]" | awk 'BEGIN {ORS=" "} {gsub(/\ /, "\\ "); print}')
+		RET0=$(find "${MYPATH}" -type f -name "*.[ch]" ! -name 'mlx.h' | awk 'BEGIN {ORS=" "} {gsub(/\ /, "\\ "); print}')
 		if [ "${RET0}" != "" ]
 		then
 			RET2=`eval norminette $RET0 2>&1`
