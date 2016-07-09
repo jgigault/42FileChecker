@@ -127,7 +127,7 @@ function main
 	display_center " "
 	display_center "Failing tests does not necessary mean you're wrong!"
 	display_center "42FileChecker does not substitute a corrector"
-	display_center "and was not made for that at first!"
+	display_center "and was not made for that in the first place!"
 	display_center " "
 	printf "\n"
 	display_menu\
