@@ -18,8 +18,12 @@ then
     then
       display_leftandright "${COLOR}" "${COLOR}" "${COLOR}" "DEVELOPMENT MODE" "${GLOBAL_LOCALBRANCH}"
     else
-      printf "${COLOR}"
-      display_righttitle "PRESS ESCAPE TO EXIT - V1.r${GLOBAL_CVERSION}"
+      if [ "${DISK_USAGE}" -gt "100" ]
+      then
+        display_leftandright "${C_INVERTRED}" "${COLOR}" "${COLOR}" "DISK USAGE: ${DISK_USAGE}M" "PRESS ESCAPE TO EXIT - V1.r${GLOBAL_CVERSION}"
+      else
+        display_leftandright "${COLOR}" "${COLOR}" "${COLOR}" "DISK USAGE: ${DISK_USAGE}M" "PRESS ESCAPE TO EXIT - V1.r${GLOBAL_CVERSION}"
+      fi
     fi
     printf "${COLOR}"
     display_center "  _  _  ____  _____ _ _       ____ _               _              "

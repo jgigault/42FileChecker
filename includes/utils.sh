@@ -10,6 +10,7 @@ then
 		then
 			$COLUMNS=80;
 		fi
+		DISK_USAGE="$(du -ms | awk '$2 == "." {print $1}')"
 	}
 
 	function check_set_colors
