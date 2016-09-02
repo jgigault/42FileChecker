@@ -16,6 +16,7 @@ then
   function check_project_minishell_main
   {
     local LOCAL_UPDATE_RETURN=""
+
     if [ "${OPT_NO_42SHELLTESTER}" == "0" ]
     then
       check_update_external_repository "42ShellTester" "${EXTERNAL_REPOSITORY_42SHELLTESTER_URL}" "${EXTERNAL_REPOSITORY_42SHELLTESTER_DIR}"
@@ -23,12 +24,18 @@ then
         "exit") main; return ;;
       esac
     fi
-    check_project_minishell
+    if [ "${GLOBAL_IS_INTERACTIVE}" == "0" ]
+    then
+      ${CONF_MINISHELL_FUNCTIONTESTALL}
+    else
+      ${CONF_MINISHELL_FUNCTIONMAIN}
+    fi
   }
 
   function check_project_minishell
   {
     local MYPATH="$(get_config "${CONF_MINISHELL_NAME}")"
+
     display_header
     display_top "${MYPATH}" "${CONF_MINISHELL_DISPLAYNAME}"
     display_center "Tests for Shell projects are provided by the script 42ShellTester:"
@@ -57,35 +64,12 @@ then
 
   function check_project_minishell_all
   {
-    local FUNC TITLE i="0" j="1" j2 k="0" RET0 TESTONLY="${1}" TESTVAR
+    local TESTONLY="${1}" MYPATH
+
+    MYPATH="$(get_config "${CONF_MINISHELL_NAME}")"
     display_header
     display_top "${MYPATH}" "${CONF_MINISHELL_DISPLAYNAME}"
-    while [ 1 ]
-    do
-      TESTVAR="${CONF_MINISHELL_TESTS}[${i}]"
-      FUNC="${!TESTVAR}"
-      if [ "${FUNC}" == "" ]
-      then
-        break
-      fi
-      (( i += 1 ))
-      TESTVAR="${CONF_MINISHELL_TESTS}[${i}]"
-      TITLE=`echo "${!TESTVAR}" | sed 's/%/%%/g'`
-      j2=`ft_itoa "${j}"`
-      printf "  ${C_WHITE}%s -> %s${C_CLEAR}\n" "${j2}" "${TITLE}"
-      if [ "${TESTONLY}" == "" -o "${TESTONLY}" == "${k}" ]
-      then
-        (eval "${FUNC}" "all" > .myret) &
-        display_spinner $!
-        RET0=`cat .myret | sed 's/%/%%/g'`
-        printf "%s\n\n" "${RET0}"
-      else
-        printf "${C_GREY}  %s\n${C_CLEAR}\n" "--Not performed--"
-      fi
-      (( j += 1 ))
-      (( i += 1 ))
-      (( k += 1 ))
-    done
+    utils_launch_tests "${TESTONLY}" "${CONF_MINISHELL_TESTS}"
     display_menu\
       ""\
       "${CONF_MINISHELL_FUNCTIONMAIN}" "OK"\
@@ -108,9 +92,10 @@ then
     if [ "${OPT_NO_MAKEFILE}" == "0" ]
     then
       check_makefile "${MYPATH}" "${CONF_MINISHELL_NAME}"
-    else
-      printf "${C_GREY}  %s${C_CLEAR}" "--Not performed--"
+      return "${?}"
     fi
+    printf "%s" "Not performed"
+    return 255
   }
 
   function check_project_minishell_forbidden_func
@@ -121,31 +106,36 @@ then
       if [ -f "${MYPATH}/${CONF_MINISHELL_NAME}" ]
       then
         check_forbidden_func "${CONF_MINISHELL_FORBIDDENFUNCS}" "${MYPATH}/${CONF_MINISHELL_NAME}"
+        return "${?}"
       else
-        printf "${C_RED}  %s${C_CLEAR}" "Executable not found: '${CONF_MINISHELL_NAME}'"
+        printf "%s" "Executable not found: '${CONF_MINISHELL_NAME}'"
       fi
-    else
-      printf "${C_GREY}  %s${C_CLEAR}" "--Not performed--"
+      return 1
     fi
+    printf "%s" "Not performed"
+    return 255
   }
 
   function check_project_minishell_42shelltester
   {
     local FILTER="${1}" LOGFILENAMESUFFIX="${2}"
+    local LOGFILENAME=".my42shelltester_minishell_${LOGFILENAMESUFFIX}"
+
     if [ "${OPT_NO_42SHELLTESTER}" == "0" ]
     then
-      local LOGFILENAME=".my42shelltester_minishell_${LOGFILENAMESUFFIX}"
       ${CMD_RM} -f "${LOGFILENAME}"
-      make re -C "${MYPATH}" >&- 2>&-
-      if [ ! -f "${MYPATH}/${CONF_MINISHELL_NAME}" ]
+      make re -C "${MYPATH}" >"${LOGFILENAME}" 2>&1
+      if [ -f "${MYPATH}/${CONF_MINISHELL_NAME}" ]
       then
-        printf "${C_RED}  %s${C_CLEAR}" "Executable not found: '${CONF_MINISHELL_NAME}'"
-      else
         check_external_repository_42shelltester "${LOGFILENAME}" "${MYPATH}/${CONF_MINISHELL_NAME}" "${FILTER}"
-       fi
-    else
-      printf "${C_GREY}  --Not performed--${C_CLEAR}"
+        return "${?}"
+      else
+        printf "%s" "Executable not found: '${CONF_MINISHELL_NAME}'"
+      fi
+      return 1
     fi
+    printf "%s" "Not performed"
+    return 255
   }
 
 fi

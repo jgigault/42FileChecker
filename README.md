@@ -1,6 +1,6 @@
 # 42FileChecker
 
-<img align="right"  src="http://i.imgur.com/zvqJlnu.png" width="45%" />42FileChecker is a tiny bash script developped at 42 school for testing and checking the files according to the rules of the subjects.
+<img align="right"  src="./assets/42FileChecker_cropped.png" width="45%" />42FileChecker is a tiny bash script developed at 42 school for testing and checking the files according to the rules of the subjects.
 
 The script is designed as a reminder:
 * author file terminated by a Line Feed
@@ -33,24 +33,46 @@ You may also want to set an alias to run it from everywhere, even in your projec
 alias 42FileChecker='sh ~/42FileChecker/42FileChecker.sh'
 ```
 
-## options
-```
---no-update         // Do not check for updates at launch
---no-color          // Do not display color tags
---no-timeout        // Disable time-out
---no-norminette     // Disable code's standard check
---no-leaks          // Disable memory leaks detection
---no-speedtest      // Disable speed test comparison
---no-moulitest      // Disable moulitest
---no-libftunittest  // Disable libft-unit-test
---no-fillitchecker  // Disable fillit_checker
---no-maintest       // Disable Maintest
---no-42shelltester  // Disable 42ShellTester
-```
-Add your options as arguments before launch:
+## non-interactive mode
+
+The non-interactive mode enables you to launch a test suite without any prompt.  
+You must specify the two options `--project` and `--path`.  
+Here is an example of use with the project `libft`:
 ```bash
-sh ./42FileChecker.sh --no-update --no-timeout
+sh ~/42FileChecker/42FileChecker.sh --project "libft" --path "/Users/admin/Projects/libft/"
 ```
+
+## options
+
+#### `--project` + *`$PROJECT`*
+
+Required for non-interactive mode.  
+Specify the name of the project you want to test.  
+e.g.: `sh ./42FileChecker.sh --project "libft"`.  
+Must be one of the following values: `fillit`, `libft`, `libftasm`, `gnl`, `get_next_line`, `ft_ls`, `ft_printf`, `minishell`.
+
+#### `--path` + *`$PATH`*
+
+Required for non-interactive mode.  
+This option has no effect when used without the option `--project`.  
+Specify the absolute path of directory of your project.  
+e.g.: `sh ./42FileChecker.sh --project "libft" --path "/Users/admin/Projects/libft/"`.
+
+#### `--no-update`
+
+Do not check for updates at launch.
+
+#### `--no-color`
+
+Do not display color tags.
+
+#### `--no-timeout`
+
+Disable timeout.
+
+##### `--no-auteur`, `--no-norminette`, `--no-leaks`, `--no-speedtest`, `--no-basictests`, `--no-makefile`, `--no-forbidden`, `--no-staticdeclarations`, `--no-libftfilesexists`, `--no-gnlmultiplefd`, `--no-gnlonestatic`, `--no-gnlmacro`, `--no-moulitest`, `--no-libftunittest`, `--no-fillitchecker`, `--no-maintest`, `--no-42shelltester`
+
+Disable a specific test.
 
 ## supported projects
 
@@ -181,6 +203,12 @@ At launch, 42FileChecker invites you to get the latest version of the sources an
 ## contribute
 If you want to fix or to improve the 42FileChecker, follow the guide lines [**Contributing to 42FileChecker**](https://github.com/jgigault/42FileChecker/wiki/Contributing-to-42FileChecker), or if you want your own unit testing framework to be integrated in the 42FileChecker, just let me know at **jgigault@student.42.fr**
 
+## logo credits
+
+Edouard Audeguy  
+Illustrateur / Infographiste  
+https://edouardaudeguy.wix.com/portfolio
+
 ## bash tips and tricks
 
 42FileChecker has an [**online wiki**](https://github.com/jgigault/42FileChecker/wiki) on github that gives you tips and lessons in Bash programming:
@@ -236,3 +264,42 @@ If you want to fix or to improve the 42FileChecker, follow the guide lines [**Co
     - [Tip: Redirect outputs of a command line](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test#tip1)
     - [Tip: Count the number of lines of a file](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test#tip2)
     - [Tip: Execute a command and save the result in a variable](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test#tip3)
+
+# other scripts
+
+<table width="100%">
+<tr>
+<td align="center">
+<a href="https://github.com/jgigault/42FileChecker">
+<img align="center" src="./assets/42FileChecker_250x250.png" />
+</a>
+</td>
+<td align="center">
+<a href="https://github.com/jgigault/42MapGenerator">
+<img align="center" src="https://github.com/jgigault/42MapGenerator/blob/master/assets/42MapGenerator_250x250.png" />
+</a>
+</td>
+<td align="center">
+<a href="https://github.com/we-sh/42ShellTester">
+<img align="center" src="https://github.com/we-sh/42ShellTester/blob/master/lib/assets/42ShellTester_250x250.png" />
+</a>
+</td>
+</tr>
+<tr>
+<td align="center">
+<strong>
+<a href="https://github.com/jgigault/42FileChecker">42FileChecker</a>
+</strong>
+</td>
+<td align="center">
+<strong>
+<a href="https://github.com/jgigault/42MapGenerator">42MapGenerator</a>
+</strong>
+</td>
+<td align="center">
+<strong>
+<a href="https://github.com/we-sh/42ShellTester">42ShellTester</a>
+</strong>
+</td>
+</tr>
+</table>

@@ -6,6 +6,7 @@ then
   function check_external_repository_42shelltester
   {
     local LOGFILENAME="${1}" BINARY="${2}" FILTER="${3}" TOTAL FAILED SUCCESS
+
     ${CMD_RM} -f "${LOGFILENAME}"
     if [ -d "${EXTERNAL_REPOSITORY_42SHELLTESTER_DIR}" ]
     then
@@ -22,20 +23,25 @@ then
       TOTAL="$(awk '$0 ~ /^Total tests:/ {printf $3}' "${LOGFILENAME}")"
       if [ "${TOTAL}" == "" ]
       then
-        printf "${C_RED}  %s${C_CLEAR}" "An error occured"
+        printf "%s" "An error occured"
       else
         FAILED="$(awk '$0 ~ /^Total failed tests:/ {printf $4}' "${LOGFILENAME}")"
         (( SUCCESS= "${TOTAL}" - "${FAILED}" ))
         if [ "${FAILED}" == "0" ]
         then
-          printf "${C_GREEN}  %s${C_CLEAR}" "All tests passed (${TOTAL} tests)"
+          printf "%s" "All tests passed (${TOTAL} test(s))"
+          return 0
         else
-          printf "${C_RED}  %s${C_CLEAR}" "${FAILED} failed test(s) out of ${TOTAL} tests"
+          printf "%s" "${FAILED} failed test(s) (${TOTAL} test(s))"
         fi
       fi
+      return 1
     else
-      printf "${C_RED}  '42ShellTester' is not installed${C_CLEAR}"
+      printf "%s" "'42ShellTester' is not installed"
+      return 1
     fi
+    printf "%s" "Not performed"
+    return 255
   }
 
 fi

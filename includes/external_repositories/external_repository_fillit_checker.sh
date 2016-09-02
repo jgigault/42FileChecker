@@ -6,6 +6,7 @@ then
   function check_fillit_checker
   {
     local LOGFILENAME="${1}" PROJECTPATH="${2}" SUCCESS TOTAL FAILED
+
     ${CMD_RM} -f "${LOGFILENAME}"
     if [ -d "${EXTERNAL_REPOSITORY_FILLITCHECKER_DIR}" ]
     then
@@ -14,21 +15,26 @@ then
       RET="$(awk '$0 ~ /^NOTE: [0-9]{1,2}[ ]?\/[ ]?[0-9]{1,2}$/ {gsub(/\//, " / "); printf $2 " " $4}' "${LOGFILENAME}")"
       if [ "${RET}" == "" ]
       then
-        printf "${C_RED}  %s${C_CLEAR}" "An error occured"
+        printf "%s" "An error occured"
       else
         SUCCESS="${RET% *}"
         TOTAL="${RET#* }"
         (( FAILED= "${TOTAL}" - "${SUCCESS}" ))
         if [ "${FAILED}" == "0" ]
         then
-          printf "${C_GREEN}  %s${C_CLEAR}" "All tests passed (${TOTAL} tests)"
+          printf "%s" "All tests passed (${TOTAL} tests)"
+          return 0
         else
-          printf "${C_RED}  %s${C_CLEAR}" "${FAILED} failed test(s) out of ${TOTAL} tests"
+          printf "%s" "${FAILED} failed test(s) out of ${TOTAL} tests"
         fi
       fi
+      return 1
     else
-      printf "${C_RED}  'fillit_checker' is not installed${C_CLEAR}"
+      printf "%s" "'fillit_checker' is not installed"
+      return 1
     fi
+    printf "%s" "Not performed"
+    return 255
   }
 
 fi
