@@ -5,7 +5,7 @@ then
 
   function check_forbidden_func
   {
-    local EXTENSION FILEN LOG_FILENAME=".myforbiddenfunc"
+    local EXTENSION FILEN LOG_FILENAME=".myforbiddenfunc" REGEX
     local -a MYFUNCS
     local exists total i RET0
 
@@ -28,8 +28,6 @@ then
       RET0=`nm -m -u "$2" | grep '(from libSystem)' | awk '{OFS=""; ORS=" "} $0 ~ / _/ {gsub(/^[a-zA-Z0-9\(\)_, \[\]]* _[_]*/, ""); gsub(/_chk[ A-Za-z0-9\(\)]*$/, ""); gsub(/\\\$.*$/, "", $1); print $1}'`
       eval "MYFUNCS=(${RET0})"
       total=0
-
-      local REGEX=""
 
       OLD_IFS=${IFS}
       IFS=$'\n'
@@ -55,26 +53,29 @@ then
       done
       IFS=${OLD_IFS}
 
-      for i in $(find "${MYPATH}" -name "*.${EXTENSION}")
-      do
-        FILEN=$(basename "$i")
-        if [ "${EXTENSION}" == "s" ]
-        then
-          RET0=`awk -v FILEN="${FILEN}" -v REGEX="call[ \\\\\t\\\\\_]\*(${REGEX})" 'BEGIN{ORS=""} $0 ~ REGEX {gsub(/[\t ]+/, " "); match($0, REGEX); myfunc=substr($0, RSTART, RLENGTH); gsub(/[ \t\_]/, "", myfunc); gsub(/^ /, ""); printf("-> %s\n   (line #%03s: %s)\n\n", myfunc, NR, $0)}' "$i"`
-        else
-          RET0=`awk -v FILEN="${FILEN}" -v REGEX="[\\\\\(\\\\\)= \\\\\t](${REGEX})[ \\\\\t]\*\\\\\(" 'BEGIN{ORS=""} $0 ~ REGEX {gsub(/[\t ]+/, " "); match($0, REGEX); myfunc=substr($0, RSTART, RLENGTH); gsub(/[\(\)= \t]/, "", myfunc); gsub(/^ /, ""); printf("-> %s\n   (line #%03s: %s)\n\n", myfunc, NR, $0)}' "$i"`
-        fi
-        if [ "${RET0}" != "" ]
-        then
-          (( total += 1 ))
-          if (( total == 1 ))
+      if [ "${REGEX}" != "" ]
+      then
+        for i in $(find "${MYPATH}" -name "*.${EXTENSION}")
+        do
+          FILEN=$(basename "$i")
+          if [ "${EXTENSION}" == "s" ]
           then
-            printf "%s\n\n" "You should justify the use of the following functions:" > ${LOG_FILENAME}
+            RET0=`awk -v FILEN="${FILEN}" -v REGEX="call[ \\\\\t\\\\\_]\*(${REGEX})" 'BEGIN{ORS=""} $0 ~ REGEX {gsub(/[\t ]+/, " "); match($0, REGEX); myfunc=substr($0, RSTART, RLENGTH); gsub(/[ \t\_]/, "", myfunc); gsub(/^ /, ""); printf("-> %s\n   (line #%03s: %s)\n\n", myfunc, NR, $0)}' "$i"`
+          else
+            RET0=`awk -v FILEN="${FILEN}" -v REGEX="[\\\\\(\\\\\)= \\\\\t](${REGEX})[ \\\\\t]\*\\\\\(" 'BEGIN{ORS=""} $0 ~ REGEX {gsub(/[\t ]+/, " "); match($0, REGEX); myfunc=substr($0, RSTART, RLENGTH); gsub(/[\(\)= \t]/, "", myfunc); gsub(/^ /, ""); printf("-> %s\n   (line #%03s: %s)\n\n", myfunc, NR, $0)}' "$i"`
           fi
-          printf -- "------------------------------------\n%s\n\n%s\n\n" "$i" "$RET0" >> ${LOG_FILENAME}
-          exists=1
-        fi
-      done
+          if [ "${RET0}" != "" ]
+          then
+            (( total += 1 ))
+            if (( total == 1 ))
+            then
+              printf "%s\n\n" "You should justify the use of the following functions:" > ${LOG_FILENAME}
+            fi
+            printf -- "------------------------------------\n%s\n\n%s\n\n" "$i" "$RET0" >> ${LOG_FILENAME}
+            exists=1
+          fi
+        done
+      fi
 
       if (( total == 0 ))
       then
