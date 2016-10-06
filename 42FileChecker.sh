@@ -57,6 +57,7 @@ OPT_NO_LIBFTFILESEXIST=0
 OPT_NO_GNLMULTIPLEFD=0
 OPT_NO_GNLONESTATIC=0
 OPT_NO_GNLMACRO=0
+OPT_NO_DISCLAIMER=0
 
 i=1
 while (( i <= $# ))
@@ -90,6 +91,7 @@ do
     "--no-gnlmultiplefd") OPT_NO_GNLMULTIPLEFD=1 ;;
     "--no-gnlonestatic") OPT_NO_GNLONESTATIC=1 ;;
     "--no-gnlmacro") OPT_NO_GNLMACRO=1 ;;
+    "--no-disclaimer") OPT_NO_DISCLAIMER=1 ;;
   esac
   (( i += 1 ))
 done
@@ -142,5 +144,5 @@ check_set_colors
 catch_signals
 display_splash_screen
 utils_update
-[ "${?}" == "0" ] && main
+[ "${?}" == "0" ] && main_disclaimer
 utils_exit

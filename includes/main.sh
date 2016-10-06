@@ -3,7 +3,7 @@
 if [ "$FILECHECKER_SH" == "1" ]
 then
 
-  function main
+  function main_disclaimer
   {
     if [ "${GLOBAL_IS_INTERACTIVE}" == "0" ]
     then
@@ -20,6 +20,27 @@ then
       eval "check_project_${SELECTED_PROJECT}_main"
       return
     fi
+    [ "${OPT_NO_DISCLAIMER}" != "0" ] && main && return
+    display_header "${C_INVERTRED}"
+    printf "${C_INVERTRED}\n"
+    display_center " "
+    display_center "DISCLAIMER"
+    display_center "I am looking for serious and motivated volunteers"
+    display_center "to take over the maintenance of the FileChecker."
+    display_center "I am planning to leave 42 on january 2017 and wish"
+    display_center "someone to take the opportunity being the maintainer"
+    display_center "and to keep the script alive. Please contact me."
+    display_center "If you don't have great skills in Shell scripting,"
+    display_center "I will spend time to train you."
+    display_center " "
+    printf "\n"
+    display_menu\
+      "${C_INVERTRED}"\
+      main "OK"
+  }
+
+  function main
+  {
     tput civis
     display_header
     printf "\n"
