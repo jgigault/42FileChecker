@@ -54,7 +54,7 @@ then
 
     printf "%s\n%s\n" "--------------------------------------------" "CHECKING RULE: all"
     [ "$(awk '$0 ~ /^all[\t ]*:/ {printf "%s", "OK"}' "${CHK_MAKEFILE_FILEPATH}")" != "OK" ] && printf "%s\n" "-> Missing rule" && return 1
-    [ "$(awk '$0 ~ /^all[\t ]*:[\t ]*\$\(NAME\)/ {printf "%s", "OK"}' "${CHK_MAKEFILE_FILEPATH}")" != "OK" ] && printf "%s\n" "-> The rule 'all' should call the rule '\$(NAME)'" && return 1
+    [ "$(awk '$0 ~ /^all[\t ]*:.*\$\(NAME\)/ {printf "%s", "OK"}' "${CHK_MAKEFILE_FILEPATH}")" != "OK" ] && printf "%s\n" "-> The rule 'all' should call the rule '\$(NAME)'" && return 1
     make -C "${CHK_MAKEFILE_PATH}" all &>/dev/null
     [ ! -f "${CHK_MAKEFILE_BINARYPATH}" ] && printf "%s\n" "-> Failing rule: It should have compiled a binary named '${CHK_MAKEFILE_BINARY}'" && RET=1
     [ -z "$(ls -aR1 "${CHK_MAKEFILE_PATH}" | awk '$0 ~ /\.o$/ {print}')" ] && printf "%s\n" "-> Failing rule: It should not have cleaned the objects files" && RET=1
