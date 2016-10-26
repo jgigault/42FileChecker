@@ -221,7 +221,7 @@ then
     local F LOG_FILENAME
 
     LOG_FILENAME=.myforbiddenfunc
-    if [ -f "$MYPATH/Makefile" ]
+    if [ -f "${MYPATH}/Makefile" -o -f "${MYPATH}/makefile" ]
     then
       FILEN=forbiddenfuncs
       F=$RETURNPATH/tmp/$FILEN.c

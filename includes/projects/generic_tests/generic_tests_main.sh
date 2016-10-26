@@ -69,7 +69,7 @@ then
     if [ "${OPT_NO_FORBIDDEN}" == "0" ]
     then
       ${CMD_RM} -f ${LOGFILENAME}
-      if [ -f "${MYPATH}/Makefile" ]
+      if [ -f "${MYPATH}/Makefile" -o -f "${MYPATH}/makefile" ]
       then
         make -C "${MYPATH}" >${LOGFILENAME} 2>&1
         if [ "${?}" == "0" -a -f "${MYPATH}/${SELECTED_PROJECT}" ]

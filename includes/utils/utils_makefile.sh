@@ -5,8 +5,9 @@ then
 
   function check_makefile
   {
-    local CHK_MAKEFILE_PATH="${1}" CHK_MAKEFILE_BINARY="${2}" CHK_MAKEFILE_BINARYPATH="${1}/${2}" CHK_MAKEFILE_FILEPATH="${1}/Makefile" LOGFILENAME=".mymakefile" ERRORS=0 WARNINGS=0
+    local CHK_MAKEFILE_PATH="${1}" CHK_MAKEFILE_BINARY="${2}" CHK_MAKEFILE_BINARYPATH="${1}/${2}" CHK_MAKEFILE_FILEPATH LOGFILENAME=".mymakefile" ERRORS=0 WARNINGS=0
 
+    [ -f "${1}/Makefile" ] && CHK_MAKEFILE_FILEPATH="${1}/Makefile" || CHK_MAKEFILE_FILEPATH="${1}/makefile"
     ${CMD_RM} -f "${LOGFILENAME}"
     ${CMD_TOUCH} "${LOGFILENAME}"
     if [ "${OPT_NO_MAKEFILE}" == "0" ]

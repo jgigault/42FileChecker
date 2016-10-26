@@ -115,7 +115,7 @@ then
 
     ${CMD_RM} -f "${LOGFILENAME}"
     make fclean -C "${MYPATH}" &>/dev/null
-    for F in $(find "${MYPATH}" -type f ! -name '*.[ch]' ! -name 'Makefile' ! -regex "${MYPATH}/\.git.*")
+    for F in $(find "${MYPATH}" -type f ! -name '*.[ch]' ! -name 'Makefile' ! -name 'makefile' ! -regex "${MYPATH}/\.git.*")
     do
       I=0
       HAS_AF="0"

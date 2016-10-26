@@ -146,7 +146,7 @@ then
 
     if [ "$OPT_NO_FORBIDDEN" == "0" ]
     then
-      if [ -f "$MYPATH/Makefile" ]
+      if [ -f "${MYPATH}/Makefile" -o -f "${MYPATH}/makefile" ]
       then
         FILEN=forbiddenfuncs
         F=$RETURNPATH/tmp/$FILEN.c
