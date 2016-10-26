@@ -11,7 +11,7 @@ then
   declare CONF_MINISHELL_TESTS="CHK_MINISHELL"
   declare CONF_MINISHELL_FORBIDDENFUNCS="CHK_MINISHELL_AUTHORIZED_FUNCS"
 
-  declare -a CHK_MINISHELL='( "check_author" "auteur" "check_norme" "norminette" "check_project_minishell_makefile" "makefile" "check_project_minishell_forbidden_func" "forbidden functions" "check_project_minishell_42shelltester minishell/builtins/ builtins" "42ShellTester: implementation of built-in utilities" "check_project_minishell_42shelltester minishell/binary/ binary" "42ShellTester: execution of binaries" "check_project_minishell_42shelltester minishell/misc/ miscellaneous" "42ShellTester: miscellaneous" )'
+  declare -a CHK_MINISHELL='( "check_author" "author file" "check_norme" "norminette" "check_project_minishell_makefile" "makefile" "check_project_minishell_forbidden_func" "forbidden functions" "check_project_minishell_42shelltester minishell/builtins/ builtins" "42ShellTester: implementation of built-in utilities" "check_project_minishell_42shelltester minishell/binary/ binary" "42ShellTester: execution of binaries" "check_project_minishell_42shelltester minishell/misc/ miscellaneous" "42ShellTester: miscellaneous" )'
 
   function check_project_minishell_main
   {

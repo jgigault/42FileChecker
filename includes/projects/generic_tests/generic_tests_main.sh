@@ -8,7 +8,7 @@ then
   declare CONF_GENERIC_TESTS_FUNCTIONMAIN="check_generic_tests"
   declare CONF_GENERIC_TESTS_TESTS="CHK_GENERIC_TESTS"
 
-  declare -a CHK_GENERIC_TESTS='( "check_author" "auteur" "check_norme" "norminette" "check_generic_tests_makefile" "makefile" "check_generic_tests_forbidden_func" "forbidden functions" )'
+  declare -a CHK_GENERIC_TESTS='( "check_author" "author file" "check_norme" "norminette" "check_generic_tests_makefile" "makefile" "check_generic_tests_forbidden_func" "forbidden functions" )'
 
   function check_generic_tests_main
   {

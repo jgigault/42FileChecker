@@ -11,7 +11,7 @@ then
   declare CONF_FILLIT_TESTS="CHK_FILLIT"
   declare CONF_FILLIT_FORBIDDENFUNCS="CHK_FILLIT_AUTHORIZED_FUNCS"
 
-  declare -a CHK_FILLIT='( "check_author optional" "auteur" "check_norme" "norminette" "check_fillit_makefile" "makefile" "check_fillit_forbidden_func" "forbidden functions" "check_fillit_extern_file" "extern file" "check_fillit_fillitchecker" "fillit_checker (${EXTERNAL_REPOSITORY_FILLITCHECKER_URL})" )'
+  declare -a CHK_FILLIT='( "check_author optional" "author file" "check_norme" "norminette" "check_fillit_makefile" "makefile" "check_fillit_forbidden_func" "forbidden functions" "check_fillit_extern_file" "extern file" "check_fillit_fillitchecker" "fillit_checker (${EXTERNAL_REPOSITORY_FILLITCHECKER_URL})" )'
 
   function check_project_fillit_main
   {
@@ -111,7 +111,7 @@ then
   function check_fillit_extern_file
   {
     local LOGFILENAME=".myexternfile" F AF HAS_AF TOTAL=0 EXTERNFILEFOUND="0" ALLOWED_FILESERRORS="" I
-    local -a ALLOWED_FILES='( "extern_file.txt" "auteur" )'
+    local -a ALLOWED_FILES='( "extern_file.txt" "auteur" "author" )'
 
     ${CMD_RM} -f "${LOGFILENAME}"
     make fclean -C "${MYPATH}" &>/dev/null

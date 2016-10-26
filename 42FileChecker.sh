@@ -76,6 +76,7 @@ do
     "--no-timeout") OPT_NO_TIMEOUT=1 ;;
     "--no-norminette") OPT_NO_NORMINETTE=1 ;;
     "--no-auteur") OPT_NO_AUTEUR=1 ;;
+    "--no-author") OPT_NO_AUTEUR=1 ;;
     "--no-moulitest") OPT_NO_MOULITEST=1 ;;
     "--no-libftunittest") OPT_NO_LIBFTUNITTEST=1 ;;
     "--no-fillitchecker") OPT_NO_FILLITCHECKER=1 ;;

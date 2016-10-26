@@ -9,9 +9,10 @@ then
 
     if [ "${OPT_NO_AUTEUR}" == "0" ]
     then
-      local AUTHORF AUTHORC AUTHORE AUTHORD
-      AUTHORF="${MYPATH}/auteur"
-      if [ ! -f "${AUTHORF}" ]
+      local AUTHORFR AUTHORUS AUTHORFILE AUTHORC AUTHORE AUTHORD
+      AUTHORFR="${MYPATH}/auteur"
+      AUTHORUS="${MYPATH}/author"
+      if [ ! -f "${AUTHORFR}" -a ! -f "${AUTHORUS}" ]
       then
         if [ "${OPTIONAL}" == "optional" ]
         then
@@ -22,9 +23,10 @@ then
           return 1
         fi
       else
-        AUTHORC=`cat -e "${AUTHORF}" | awk '{if (NR == 1) print}'`
-        AUTHORE=`cat -e "${AUTHORF}" | awk '$0 ~ /\\$\$/ {print}'`
-        AUTHORD=`awk 'END {printf NR}' "${AUTHORF}"`
+        [ -f "${AUTHORFR}" ] && AUTHORFILE="${AUTHORFR}" || AUTHORFILE="${AUTHORUS}"
+        AUTHORC=`cat -e "${AUTHORFILE}" | awk '{if (NR == 1) print}'`
+        AUTHORE=`cat -e "${AUTHORFILE}" | awk '$0 ~ /\\$\$/ {print}'`
+        AUTHORD=`awk 'END {printf NR}' "${AUTHORFILE}"`
         if [ ${AUTHORD} -eq 1 ]
         then
           if [ "${AUTHORE}" != "${AUTHORC}" ]

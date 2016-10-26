@@ -13,7 +13,7 @@ then
   declare CONF_FT_PRINTF_TESTS="CHK_FT_PRINTF"
   declare CONF_FT_PRINTF_FORBIDDENFUNCS="CHK_FT_PRINTF_AUTHORIZED_FUNCS"
 
-  declare -a CHK_FT_PRINTF='( "check_author" "auteur" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests" "check_ft_printf_bastardtests" "undefined behavior tests" "check_ft_printf_leaks" "leaks" "check_ft_printf_speedtest" "speed test" "check_ft_printf_moulitest" "moulitest (${MOULITEST_URL})" )'
+  declare -a CHK_FT_PRINTF='( "check_author" "author file" "check_norme" "norminette" "check_ft_printf_makefile" "makefile" "check_ft_printf_forbidden_func" "forbidden functions" "check_ft_printf_basictests" "basic tests" "check_ft_printf_bastardtests" "undefined behavior tests" "check_ft_printf_leaks" "leaks" "check_ft_printf_speedtest" "speed test" "check_ft_printf_moulitest" "moulitest (${MOULITEST_URL})" )'
 
   function check_project_ft_printf_main
   {
