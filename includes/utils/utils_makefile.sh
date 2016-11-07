@@ -26,7 +26,7 @@ then
       check_makefile_re >> "${LOGFILENAME}" || (( ERRORS += 1 ))
       check_makefile_fclean >> "${LOGFILENAME}" || (( ERRORS += 1 ))
       check_makefile_name >> "${LOGFILENAME}" || (( ERRORS += 1 ))
-      check_makefile_phony >> "${LOGFILENAME}" || (( WARNINGS += 1 ))
+      #check_makefile_phony >> "${LOGFILENAME}" || (( WARNINGS += 1 ))
       if [ "${ERRORS}" != 0 -a "${WARNINGS}" != 0 ]
       then
         printf "%d %s %d %s" "${ERRORS}" "error(s) and " "${WARNINGS}" "warning(s)"
