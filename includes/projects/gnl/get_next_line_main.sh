@@ -141,6 +141,10 @@ then
       j=0
       errors=0
       fatal=0
+      if [ -d "${GNL_LIBFT}" ]
+      then
+        make -C "${GNL_LIBFT}" >/dev/null 2>&1
+      fi
       echo "GNL BASIC TESTS:\n" > ${LOGFILENAME}
       while [ "${CHK_GNL_BASICS[i]}" != "" ]
       do
