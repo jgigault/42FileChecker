@@ -26,11 +26,11 @@ Complete unit tests are handled through external frameworks whose sources are au
 ## install & launch
 ```bash
 git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
-cd ~/42FileChecker && sh ./42FileChecker.sh
+cd ~/42FileChecker && bash ./42FileChecker.sh
 ```
 You may also want to set an alias to run it from everywhere, even in your project path. Add this line of code at the end of your shell initialization file (e.g.: `~/.zshrc`):
 ```bash
-alias 42FileChecker='sh ~/42FileChecker/42FileChecker.sh'
+alias 42FileChecker='bash ~/42FileChecker/42FileChecker.sh'
 ```
 
 ## non-interactive mode
@@ -39,7 +39,7 @@ The non-interactive mode enables you to launch a test suite without any prompt.
 You must specify the two options `--project` and `--path`.  
 Here is an example of use with the project `libft`:
 ```bash
-sh ~/42FileChecker/42FileChecker.sh --project "libft" --path "/Users/admin/Projects/libft/"
+bash ~/42FileChecker/42FileChecker.sh --project "libft" --path "/Users/admin/Projects/libft/"
 ```
 
 ## options
@@ -48,7 +48,7 @@ sh ~/42FileChecker/42FileChecker.sh --project "libft" --path "/Users/admin/Proje
 
 Required for non-interactive mode.  
 Specify the name of the project you want to test.  
-e.g.: `sh ./42FileChecker.sh --project "libft"`.  
+e.g.: `bash ./42FileChecker.sh --project "libft"`.  
 Must be one of the following values: `fillit`, `libft`, `libftasm`, `gnl`, `get_next_line`, `ft_ls`, `ft_printf`, `minishell`.
 
 #### `--path` + *`$PATH`*
@@ -56,7 +56,7 @@ Must be one of the following values: `fillit`, `libft`, `libftasm`, `gnl`, `get_
 Required for non-interactive mode.  
 This option has no effect when used without the option `--project`.  
 Specify the absolute path of directory of your project.  
-e.g.: `sh ./42FileChecker.sh --project "libft" --path "/Users/admin/Projects/libft/"`.
+e.g.: `bash ./42FileChecker.sh --project "libft" --path "/Users/admin/Projects/libft/"`.
 
 #### `--no-update`
 
