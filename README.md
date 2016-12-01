@@ -7,7 +7,7 @@ The script is designed as a reminder:
 * count and files name
 * code's standard
 * required and forbidden functions
-* macro definitionsl
+* macro definitions
 * static variables & functions declarations
 * makefile rules
 
