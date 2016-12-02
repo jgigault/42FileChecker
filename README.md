@@ -23,6 +23,10 @@ Complete unit tests are handled through external frameworks whose sources are au
 * [**Maintest**](https://github.com/QuentinPerez/Maintest), developed by [@QuentinPerez](https://github.com/QuentinPerez) and other contributors
 * [**42ShellTester**](https://github.com/we-sh/42ShellTester), developed by [@gabkk](https://github.com/gabkk) and [@jgigault](https://github.com/jgigault)
 
+### Official Team and credits :
+ 42FileChecker is a free open source software originally developped by Jean Michel Gigault (aka jgigault) to help you test and correct the 42's school projects. The team is actually composed of jgigault, jlasne, akebbour, cjacquem, adibk and kalak-io.
+The 42FC Team is expanding and still seeking. Please refer to the contribute section if you want to be part of the 42FC team !
+
 ## install & launch
 ```bash
 git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
