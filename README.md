@@ -23,10 +23,6 @@ Complete unit tests are handled through external frameworks whose sources are au
 * [**Maintest**](https://github.com/QuentinPerez/Maintest), developed by [@QuentinPerez](https://github.com/QuentinPerez) and other contributors
 * [**42ShellTester**](https://github.com/we-sh/42ShellTester), developed by [@gabkk](https://github.com/gabkk) and [@jgigault](https://github.com/jgigault)
 
-### Official Team and credits :
- 42FileChecker is a free open source software originally developped by Jean Michel Gigault (aka jgigault) to help you test and correct the 42's school projects. The team is actually composed of jgigault, jlasne, akebbour, cjacquem, adibk and kalak-io.
-The 42FC Team is expanding and still seeking. Please refer to the contribute section if you want to be part of the 42FC team !
-
 ## install & launch
 ```bash
 git clone https://github.com/jgigault/42FileChecker ~/42FileChecker
@@ -36,6 +32,7 @@ You may also want to set an alias to run it from everywhere, even in your projec
 ```bash
 alias 42FileChecker='bash ~/42FileChecker/42FileChecker.sh'
 ```
+At launch, 42FileChecker invites you to get the latest version of the sources when available. You may just simply accept or skip the message.
 
 ## non-interactive mode
 
@@ -201,11 +198,14 @@ Disable a specific test.
 </tbody>
 </table>
 
-## update
-At launch, 42FileChecker invites you to get the latest version of the sources and dependencies when available. You may just simply accept or skip the message.
+## official team and credits
 
-## contribute
-If you want to fix or to improve the 42FileChecker, follow the guide lines [**Contributing to 42FileChecker**](https://github.com/jgigault/42FileChecker/wiki/Contributing-to-42FileChecker), or if you want your own unit testing framework to be integrated in the 42FileChecker, just let me know at **jgigault@student.42.fr**
+42FileChecker is an open source project distributed under licence [Apache 2.0](https://github.com/jgigault/42FileChecker/blob/master/LICENCE).
+
+Originally developed by Jean Michel Gigault [@jgigault](https://github.com/jgigault), the team also is composed of:
+- [@Seluj78](https://github.com/Seluj78)
+- [@adibk](https://github.com/adibk)
+- [@kalak-io](https://github.com/kalak-io)
 
 ## logo credits
 
@@ -213,61 +213,11 @@ Edouard Audeguy
 Illustrateur / Infographiste  
 https://edouardaudeguy.wix.com/portfolio
 
-## bash tips and tricks
+## contribute
 
-42FileChecker has an [**online wiki**](https://github.com/jgigault/42FileChecker/wiki) on github that gives you tips and lessons in Bash programming:
-* [**What is Bash**](https://github.com/jgigault/42FileChecker/wiki/What-is-Bash)
-* [**What is a bash script**](https://github.com/jgigault/42FileChecker/wiki/What-is-a-Bash-script)
-* What is 42FileChecker
-* [**Contributing to 42FileChecker**](https://github.com/jgigault/42FileChecker/wiki/Contributing-to-42FileChecker)
-    - [Tip: Rebasing a Pull Request](https://github.com/jgigault/42FileChecker/wiki/Contributing-to-42FileChecker#tip1)
-* [**Bash syntax: Variables**](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Variables)
-    - [1. Declaration](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Variables#part1)
-    - [2. Substitution](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Variables#part2)
-    - [3. Positional and special parameters](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Variables#part3)
-* [**Bash syntax: Conditions**](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Conditions)
-    - [1. Conditional expressions](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Conditions#part1)
-    - [2. If-then-else](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Conditions#part2)
-    - [3. Case-in](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Conditions#part3)
-* [**Bash syntax: Functions**](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions)
-    - [1. Syntax of a function](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions#part1)
-    - [2. Local and global variables](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions#part2)
-    - [3. Arguments of a function](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions#part3)
-    - [4. Passing an array as argument](https://github.com/jgigault/42FileChecker/wiki/Bash-syntax:-Functions#part4)
-* Bash builtin commands
-* [**Bash tools: Awk**](https://github.com/jgigault/42FileChecker/wiki/Bash-tools:-Awk)
-    - [1. How to use AWK](https://github.com/jgigault/42FileChecker/wiki/Bash-tools:-Awk#part1)
-    - [2. How works AWK](https://github.com/jgigault/42FileChecker/wiki/Bash-tools:-Awk#part2)
-    - [3. AWK built-in variables](https://github.com/jgigault/42FileChecker/wiki/Bash-tools:-Awk#part3)
-    - [4. Simple AWK examples](https://github.com/jgigault/42FileChecker/wiki/Bash-tools:-Awk#part4)
-* Bash tools: Cat
-* Bash tools: Grep
-* Bash tools: Sed
-* Bash sample code: auto-update (git tool)
-* [**Bash sample code: Create an interactive menu**](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-an-interactive-menu)
-    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-an-interactive-menu#code)
-    - [Tip: Convert ASCII number into numeric value](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-an-interactive-menu#tip1)
-    - [Tip: Check if an index is valid](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-an-interactive-menu#tip2)
-    - [Tip: Evaluate a string as a command line](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-an-interactive-menu#tip3)
-* [**Bash sample code: Animated spinner with a time out**](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Animated-spinner-with-a-time-out)
-    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Animated-spinner-with-a-time-out#code)
-    - [Tip: Arithmetic operation with floating numbers](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Animated-spinner-with-a-time-out#tip1)
-    - [Tip: Check if a process ID has terminated](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Animated-spinner-with-a-time-out#tip2)
-    - [Tip: Move the first character to the end of a string](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Animated-spinner-with-a-time-out#tip3)
-* Bash sample code: static var test
-* [**Bash sample code: Check the basic rules of a makefile**](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile)
-    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile#code)
-    - [Tip: Check if a file or a directory exists](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile#tip1)
-    - [Tip: Read a whole file into a variable](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile#tip2)
-    - [Tip: Find a string in a file using awk](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile#tip3)
-    - [Tip: Get inode of a file](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Check-the-basic-rules-of-a-makefile#tip4)
-* Bash sample code: forbidden functions test
-* Bash sample code: leaks test
-* [**Bash sample code: Create a speed test**](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test)
-    - [Sample code](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test#code)
-    - [Tip: Redirect outputs of a command line](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test#tip1)
-    - [Tip: Count the number of lines of a file](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test#tip2)
-    - [Tip: Execute a command and save the result in a variable](https://github.com/jgigault/42FileChecker/wiki/Bash-sample-code:-Create-a-speed-test#tip3)
+If you want to be part of the project, to fix and to improve the 42FileChecker, please follow the guide lines [**Contributing to 42FileChecker**](https://github.com/jgigault/42FileChecker/wiki/Contributing-to-42FileChecker), or if you want your own unit testing framework to be integrated in the 42FileChecker, just let me know at **jgigault@student.42.fr**.
+
+42FileChecker has an [**online wiki**](https://github.com/jgigault/42FileChecker/wiki) that gives you tips and lessons in Bash programming.
 
 # other scripts
 
