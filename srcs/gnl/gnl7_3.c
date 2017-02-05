@@ -40,9 +40,9 @@ int				main(void)
 		}
 		close(fd);
 		if (count_lines != 4)
-			printf("-> must have returned '1' four times instead of %d time(s)\n", count_lines);
+			printf("-> should have returned '1' four times instead of %d time(s)\n", count_lines);
 		if (errors > 0)
-			printf("-> must have read \"1234567\", \"abcdefg\", \"4567890\" and \"defghijk\"\n");
+			printf("-> should have read \"1234567\", \"abcdefg\", \"4567890\" and \"defghijk\"\n");
 		if (count_lines == 4 && errors == 0)
 			printf("OK\n");
 	}
