@@ -140,7 +140,7 @@ then
             (( fatal += 1 ));
           else
             TARGS=`echo "$TTYPE" "\"$TVAL0\"" | sed 's/|/\" \"/g'`
-            if [ "${TTYPE:0:1}" == "d" -o "$TTYPE" == "0p" -o "$TTYPE" == "sN" -o "${TTYPE:0:1}" == "x" ]
+            if [ "${TTYPE:0:1}" == "d" -o "$TTYPE" == "0p" -o "$TTYPE" == "sN" -o "${TTYPE:0:1}" == "x" -o "${TTYPE:0:1}" == "u" ]
             then
               TARGSV=`echo "\"$TVAL" | sed 's/|/, /g' | sed 's/,/\",/'`
             else
