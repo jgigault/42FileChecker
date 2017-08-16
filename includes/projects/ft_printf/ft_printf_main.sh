@@ -148,8 +148,8 @@ then
             fi
             FILEN1="./tmp/ft_printf_${TTYPE:0:1}"
             FILEN2="./tmp/printf_${TTYPE:0:1}"
-            RET1=`eval "$FILEN1 $TARGS" 2>&1`
-            RET2=`eval "$FILEN2 $TARGS" 2>&1`
+            RET1=`eval "$FILEN1 $TARGS" 2>&1 | cat -e`
+            RET2=`eval "$FILEN2 $TARGS" 2>&1 | cat -e`
             RET1=`printf "%s" "$RET1" | awk 'BEGIN{ORS="[BR]"}{print}' | sed 's/\[BR\]$//'`
             RET2=`printf "%s" "$RET2" | awk 'BEGIN{ORS="[BR]"}{print}' | sed 's/\[BR\]$//'`
             if [ "$RET1" != "$RET2" ]
