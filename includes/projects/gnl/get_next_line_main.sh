@@ -423,31 +423,6 @@ then
       printf "BUFF_SIZE"
       return 0
     fi
-    if [ "$(echo "${RET0}" | grep 'BUF_SIZE')" != "" ]
-    then
-      printf "BUF_SIZE"
-      return 0
-    fi
-    if [ "$(echo "${RET0}" | grep 'BUFFER_SIZE')" != "" ]
-    then
-      printf "BUFFER_SIZE"
-      return 0
-    fi
-    if [ "$(echo "${RET0}" | grep 'BUFFSIZE')" != "" ]
-    then
-      printf "BUFFSIZE"
-      return 0
-    fi
-    if [ "$(echo "${RET0}" | grep 'BUFSIZE')" != "" ]
-    then
-      printf "BUFSIZE"
-      return 0
-    fi
-    if [ "$(echo "${RET0}" | grep 'BUFFERSIZE')" != "" ]
-    then
-      printf "BUFFERSIZE"
-      return 0
-    fi
     return 1
   }
 
