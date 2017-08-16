@@ -145,5 +145,5 @@ check_set_colors
 catch_signals
 display_splash_screen
 utils_update
-[ "${?}" == "0" ] && main_disclaimer
+[ "${?}" == "0" ] && main
 utils_exit
