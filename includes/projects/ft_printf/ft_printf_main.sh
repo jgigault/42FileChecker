@@ -345,23 +345,30 @@ then
   {
     local F FILEN
 
-    if [ "$OPT_NO_FORBIDDEN" == "0" ]
+    if [ "${OPT_NO_FORBIDDEN}" == "0" ]
     then
       if [ -f "${MYPATH}/Makefile" -o -f "${MYPATH}/makefile" ]
       then
-        FILEN=forbiddenfuncs
-        F=$RETURNPATH/tmp/$FILEN.c
+        FILEN="forbiddenfuncs"
+        F="${RETURNPATH}/tmp/${FILEN}.c"
         check_create_tmp_dir
-        echo "int ft_printf(char const *format, ...);\nint main(void) {" > $F
-        echo "ft_printf(\"\");" >> $F
-        echo "return (1); }" >> $F
-        make re -C "$MYPATH" >.myforbiddenfunc 2>&1
-        rm -f "$RETURNPATH/tmp/$FILEN"
-        if [ -f "$MYPATH/libftprintf.a" ]
+        echo "int ft_printf(char const *format, ...);" > "${F}"
+        echo "int main(void) {" >> "${F}"
+        echo "ft_printf(\"\");" >> "${F}"
+        echo "return (1); }" >> "${F}"
+        make re -C "${MYPATH}" >.myforbiddenfunc 2>&1
+        rm -f "${RETURNPATH}/tmp/${FILEN}"
+        if [ -f "${MYPATH}/libftprintf.a" ]
         then
-          RET0=`gcc "$F" -L"$MYPATH" -lftprintf -o "$RETURNPATH/tmp/$FILEN" 2>&1`
-          check_forbidden_func "${CONF_FT_PRINTF_FORBIDDENFUNCS}" "./tmp/$FILEN"
-          return "${?}"
+          RET0=`gcc "${F}" -L"${MYPATH}" -lftprintf -o "${RETURNPATH}/tmp/${FILEN}" 2>&1`
+          if [ -f "./tmp/${FILEN}" ]
+          then
+            check_forbidden_func "${CONF_FT_PRINTF_FORBIDDENFUNCS}" "./tmp/${FILEN}"
+            return "${?}"
+          else
+            echo "${RET0}" >.myforbiddenfunc
+            printf "%s" "Cannot compile"
+          fi
         else
           printf "%s" "Cannot compile"
         fi
