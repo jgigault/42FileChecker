@@ -252,7 +252,7 @@ then
     printf "${C_CLEAR}\n\n"
     [ "${GLOBAL_IS_INTERACTIVE}" == "0" ] && return
     tput cup 0 0
-    tput ed
+    tput cd 2>/dev/null || tput ed 2>/dev/null
   }
 
   function check_cleanlog
