@@ -58,7 +58,7 @@ OPT_NO_GNLMULTIPLEFD=0
 OPT_NO_GNLONESTATIC=0
 OPT_NO_GNLMACRO=0
 OPT_NO_DISCLAIMER=0
-
+OPT_NO_SPLASH=0
 i=1
 while (( i <= $# ))
 do
@@ -93,6 +93,7 @@ do
     "--no-gnlonestatic") OPT_NO_GNLONESTATIC=1 ;;
     "--no-gnlmacro") OPT_NO_GNLMACRO=1 ;;
     "--no-disclaimer") OPT_NO_DISCLAIMER=1 ;;
+    "--no-splash") OPT_NO_SPLASH=1 ;;
   esac
   (( i += 1 ))
 done
@@ -143,7 +144,10 @@ tput civis
 check_set_env
 check_set_colors
 catch_signals
-display_splash_screen
+if [ $OPT_NO_SPLASH == 0 ]
+then
+	display_splash_screen
+fi
 utils_update
 [ "${?}" == "0" ] && main
 utils_exit
