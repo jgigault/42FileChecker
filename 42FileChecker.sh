@@ -55,6 +55,7 @@ OPT_NO_FORBIDDEN=0
 OPT_NO_STATICDECLARATIONS=0
 OPT_NO_LIBFTFILESEXIST=0
 OPT_NO_GNLMULTIPLEFD=0
+OPT_NO_GNLTOFREEORNOTTOFREE=0
 OPT_NO_GNLONESTATIC=0
 OPT_NO_GNLMACRO=0
 OPT_NO_DISCLAIMER=0
@@ -90,6 +91,7 @@ do
     "--no-staticdeclarations") OPT_NO_STATICDECLARATIONS=1 ;;
     "--no-libftfilesexists") OPT_NO_LIBFTFILESEXIST=1 ;;
     "--no-gnlmultiplefd") OPT_NO_GNLMULTIPLEFD=1 ;;
+    "--no-gnltofreeornottofree") OPT_NO_GNLTOFREEORNOTTOFREE=1 ;;
     "--no-gnlonestatic") OPT_NO_GNLONESTATIC=1 ;;
     "--no-gnlmacro") OPT_NO_GNLMACRO=1 ;;
     "--no-disclaimer") OPT_NO_DISCLAIMER=1 ;;

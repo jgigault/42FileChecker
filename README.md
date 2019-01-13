@@ -71,7 +71,7 @@ Do not display color tags.
 
 Disable timeout.
 
-##### `--no-disclaimer`, `--no-auteur`, `--no-author`, `--no-norminette`, `--no-leaks`, `--no-speedtest`, `--no-basictests`, `--no-makefile`, `--no-forbidden`, `--no-staticdeclarations`, `--no-libftfilesexists`, `--no-gnlmultiplefd`, `--no-gnlonestatic`, `--no-gnlmacro`, `--no-moulitest`, `--no-libftunittest`, `--no-fillitchecker`, `--no-maintest`, `--no-42shelltester`
+##### `--no-disclaimer`, `--no-auteur`, `--no-author`, `--no-norminette`, `--no-leaks`, `--no-speedtest`, `--no-basictests`, `--no-makefile`, `--no-forbidden`, `--no-staticdeclarations`, `--no-libftfilesexists`, `--no-gnlmultiplefd`, `--no-gnlonestatic`, `--no-gnlmacro`, `--no-gnltofreeornottofree`, `--no-moulitest`, `--no-libftunittest`, `--no-fillitchecker`, `--no-maintest`, `--no-42shelltester`
 
 Disable a specific test.
 
