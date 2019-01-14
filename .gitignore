@@ -8,5 +8,7 @@ maintest/
 .my*
 *~
 srcs/gnl/gnl.h
+srcs/get_inode/obj/
+srcs/get_inode/get_inode
 tmp/*
 .idea

@@ -79,14 +79,18 @@ then
 
   function check_makefile_re
   {
-    local RET=0 INODE1 INODE2
+    local RET=0 INODE1 INODE2 GETINODEERRFILENAME
 
+    GETINODEERRFILENAME=.mygetinode
     printf "%s\n%s\n" "--------------------------------------------" "CHECKING RULE: re"
     [ "$(awk '$0 ~ /^re[\t ]*:/ {printf "%s", "OK"}' "${CHK_MAKEFILE_FILEPATH}")" != "OK" ] && printf "%s\n" "-> Missing rule" && return 1
     [ ! -f "${CHK_MAKEFILE_BINARYPATH}" ] && printf "%s\n" "-> Cannot check the rule 're' because of the failing rule 'all'" && return 1
-    INODE1="$(ls -i "${CHK_MAKEFILE_BINARYPATH}" 2>/dev/null | awk '{print $1}')"
+    INODE1="$(utils_get_inode "${CHK_MAKEFILE_BINARYPATH}" "${GETINODEERRFILENAME}")"
+    [ ! "${?}" == 0 ] && printf "%s\n" "-> Cannot check the rule 're' because of an unexpected error (Please open an issue on Github with attached file: ${GLOBAL_INSTALLDIR}/${GETINODEERRFILENAME})" && return 1
+    sleep 1
     make -C "${CHK_MAKEFILE_PATH}" re &>/dev/null
-    INODE2="$(ls -i "${CHK_MAKEFILE_BINARYPATH}" 2>/dev/null | awk '{print $1}')"
+    INODE2="$(utils_get_inode "${CHK_MAKEFILE_BINARYPATH}" "${GETINODEERRFILENAME}")"
+    [ ! "${?}" == 0 ] && printf "%s\n" "-> Cannot check the rule 're' because of an unexpected error (Please open an issue on Github with attached file: ${GLOBAL_INSTALLDIR}/${GETINODEERRFILENAME})" && return 1
     [ -z "$(ls -aR1 "${CHK_MAKEFILE_PATH}" | awk '$0 ~ /\.o$/ {print}')" ] && printf "%s\n" "-> Failing rule: It should have built the objects files" && RET=1
     [ ! -f "${CHK_MAKEFILE_BINARYPATH}" ] && printf "%s\n" "-> Failing rule: It should have compiled the binary named '${CHK_MAKEFILE_BINARY}'" && RET=1
     [ "${INODE1}" == "${INODE2}" -o "${INODE2}" == "" ] && printf "%s\n" "-> Failing rule: It should have compiled again the binary named '${CHK_MAKEFILE_BINARY}' (inode unchanged)" && RET=1
