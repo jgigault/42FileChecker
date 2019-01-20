@@ -1,6 +1,8 @@
 #include <string.h>
-int ft_printf(char const *str, ...);
-int main(void)
+
+int				ft_printf(char const *str, ...);
+
+int				main(void)
 {
   ft_printf("\n");
   ft_printf("%%\n");
