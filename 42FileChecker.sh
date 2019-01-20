@@ -146,7 +146,6 @@ tput civis
 check_set_env
 check_set_colors
 catch_signals
-display_splash_screen
 utils_update
 [ "${?}" == "0" ] && main
 utils_exit

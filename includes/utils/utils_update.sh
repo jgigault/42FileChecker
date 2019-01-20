@@ -109,7 +109,7 @@ then
       [ "${GLOBAL_IS_INTERACTIVE}" == "0" ] && check_install_external_repository ${REPONAME} ${URL} ${DIR} && return
       display_header "$C_INVERTRED"
       printf "\n"
-      printf $C_RED"  The '${REPONAME}' (${URL}) is not installed.\n  Choose INSTALL EXTERNAL REPOSITORY (1) to install it or SKIP INSTALL (2) if you want to skip this warning.\n\n"$C_CLEAR
+      printf $C_RED"  The script '${REPONAME}' (${URL}) is not installed.\n  Choose INSTALL EXTERNAL REPOSITORY (1) to install it or SKIP INSTALL (2) if you want to skip this warning.\n\n"$C_CLEAR
       display_menu\
         "$C_INVERTRED"\
         "check_install_external_repository ${REPONAME} ${URL} ${DIR}" "INSTALL EXTERNAL REPOSITORY"\
