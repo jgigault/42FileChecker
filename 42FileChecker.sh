@@ -103,6 +103,7 @@ source includes/utils/utils.sh
 source includes/utils/utils_auteur.sh
 source includes/utils/utils_authorized_functions.sh
 source includes/utils/utils_configure.sh
+source includes/utils/utils_get_inode.sh
 source includes/utils/utils_exit.sh
 source includes/utils/utils_fileexists.sh
 source includes/utils/utils_forbidden_functions.sh
