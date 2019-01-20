@@ -1,6 +1,5 @@
 NAME = get_inode
 
-### PATH ###
 SRCS_PATH = ./
 OBJ_PATH  = ./obj/
 
