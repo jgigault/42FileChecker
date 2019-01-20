@@ -28,7 +28,7 @@ then
     fi
     local ROWS_BEFORE=$(( ${ROWS} / 2 - 9 ))
 
-    [ "${GLOBAL_LOCALBRANCH}" != "master" -o "${GLOBAL_IS_INTERACTIVE}" == "0" ] && return
+    [ "${GLOBAL_IS_INTERACTIVE}" == "0" ] && return
 
     utils_valign
     display_splash_screen_center_text "                                        "
@@ -721,7 +721,7 @@ then
     display_splash_screen_center_text "#######                 #####       ####"
     display_splash_screen_center_text "#######                 #####     ######"
     display_splash_screen_center_text "#######                 #####   ########"
-    sleep 1s
+    sleep 0.5s
 
     printf "${C_CLEAR}"
   }

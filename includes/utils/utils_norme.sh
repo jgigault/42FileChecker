@@ -49,6 +49,7 @@ then
         return 255
       fi
     fi
+    printf "%s" "Not performed"
     return 255
   }
 
