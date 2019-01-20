@@ -93,7 +93,7 @@ then
       then
         if [ -f "$(echo "${FUNCS[${SEL}]}" | sed "s#^$(printf '%s' "${CMD_OPEN}" | sed 's/[#\]/\\\0/g') ##")" -o "$(echo "${FUNCS[${SEL}]}" | grep http)" != "" ]
         then
-          eval ${FUNCS[${SEL}]}
+          eval ${FUNCS[${SEL}]} 2>/dev/null
         fi
       fi
       SEL=""
