@@ -89,21 +89,21 @@ then
     display_menu\
       ""\
       "${CONF_LIBFT_FUNCTIONMAIN}" "OK"\
-      "open .myLIBFT_MANDATORIES" "more info: required functions"\
-      "open .myLIBFT_BONUS" "more info: bonus functions"\
-      "open .myextra" "more info: extra functions"\
-      "open .mynorminette" "more info: norminette"\
-      "open .mystatic" "more info: static declarations"\
-      "open .mymakefile" "more info: makefile"\
-      "open .myforbiddenfunc" "more info: forbidden functions"\
-      "open .mymoulitest" "more info: moulitest"\
-      "open .mylibftunittest" "more info: libft-unit-test"\
-      "open .mymaintest_libft" "more info: Maintest"\
+      "${CMD_OPEN} .myLIBFT_MANDATORIES" "more info: required functions"\
+      "${CMD_OPEN} .myLIBFT_BONUS" "more info: bonus functions"\
+      "${CMD_OPEN} .myextra" "more info: extra functions"\
+      "${CMD_OPEN} .mynorminette" "more info: norminette"\
+      "${CMD_OPEN} .mystatic" "more info: static declarations"\
+      "${CMD_OPEN} .mymakefile" "more info: makefile"\
+      "${CMD_OPEN} .myforbiddenfunc" "more info: forbidden functions"\
+      "${CMD_OPEN} .mymoulitest" "more info: moulitest"\
+      "${CMD_OPEN} .mylibftunittest" "more info: libft-unit-test"\
+      "${CMD_OPEN} .mymaintest_libft" "more info: Maintest"\
       "_"\
-      "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
-      "open ${MOULITEST_URL}/issues/new" "REPORT A BUG ON MOULITEST"\
-      "open ${LIBFTUNITTEST_URL}/issues/new" "REPORT A BUG ON LIBFT-UNIT-TEST"\
-      "open ${EXTERNAL_REPOSITORY_MAINTEST_URL}/issues/new" "REPORT A BUG ON MAINTEST"\
+      "${CMD_OPEN} https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
+      "${CMD_OPEN} ${MOULITEST_URL}/issues/new" "REPORT A BUG ON MOULITEST"\
+      "${CMD_OPEN} ${LIBFTUNITTEST_URL}/issues/new" "REPORT A BUG ON LIBFT-UNIT-TEST"\
+      "${CMD_OPEN} ${EXTERNAL_REPOSITORY_MAINTEST_URL}/issues/new" "REPORT A BUG ON MAINTEST"\
       main "BACK TO MAIN MENU"
   }
 

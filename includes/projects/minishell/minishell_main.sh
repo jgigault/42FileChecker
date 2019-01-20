@@ -50,7 +50,7 @@ then
         "_"\
         "TESTS" "${CONF_MINISHELL_TESTS}" "${CONF_MINISHELL_FUNCTIONTESTALL}"\
         "_"\
-        "open ${EXTERNAL_REPOSITORY_42SHELLTESTER_URL}" "VISIT THE PROJECT 42SHELLTESTER"\
+        "${CMD_OPEN} ${EXTERNAL_REPOSITORY_42SHELLTESTER_URL}" "VISIT THE PROJECT 42SHELLTESTER"\
         "_"\
         "check_configure ${CONF_MINISHELL_FUNCTIONMAIN} ${CONF_MINISHELL_NAME} \"${CONF_MINISHELL_DISPLAYNAME}\" ${CONF_MINISHELL_AUTHORFILE}" "change path"\
         "main" "BACK TO MAIN MENU"
@@ -73,17 +73,17 @@ then
     display_menu\
       ""\
       "${CONF_MINISHELL_FUNCTIONMAIN}" "OK"\
-      "open .mynorminette" "more info: norminette"\
-      "open .mymakefile" "more info: makefile"\
-      "open .myforbiddenfunc" "more info: forbidden functions"\
-      "open .my42shelltester_minishell_builtins" "more info: implementation of built-in utilities"\
-      "open .my42shelltester_minishell_binary" "more info: execution of binaries"\
-      "open .my42shelltester_minishell_miscellaneous" "more info: miscellaneous"\
+      "${CMD_OPEN} .mynorminette" "more info: norminette"\
+      "${CMD_OPEN} .mymakefile" "more info: makefile"\
+      "${CMD_OPEN} .myforbiddenfunc" "more info: forbidden functions"\
+      "${CMD_OPEN} .my42shelltester_minishell_builtins" "more info: implementation of built-in utilities"\
+      "${CMD_OPEN} .my42shelltester_minishell_binary" "more info: execution of binaries"\
+      "${CMD_OPEN} .my42shelltester_minishell_miscellaneous" "more info: miscellaneous"\
       "_"\
-      "open ${EXTERNAL_REPOSITORY_42SHELLTESTER_URL}" "VISIT THE PROJECT 42SHELLTESTER"\
+      "${CMD_OPEN} ${EXTERNAL_REPOSITORY_42SHELLTESTER_URL}" "VISIT THE PROJECT 42SHELLTESTER"\
       "_"\
-      "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
-      "open ${EXTERNAL_REPOSITORY_42SHELLTESTER_URL}/issues/new" "REPORT A BUG ON 42SHELLTESTER"\
+      "${CMD_OPEN} https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
+      "${CMD_OPEN} ${EXTERNAL_REPOSITORY_42SHELLTESTER_URL}/issues/new" "REPORT A BUG ON 42SHELLTESTER"\
       "main" "BACK TO MAIN MENU"
   }
 

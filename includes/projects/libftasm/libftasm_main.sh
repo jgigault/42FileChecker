@@ -64,13 +64,13 @@ then
     display_menu\
       ""\
       "${CONF_LIBFTASM_FUNCTIONMAIN}" "OK"\
-      "open .myLIBFTASM_MANDATORIES" "more info: required functions"\
-      "open .myLIBFTASM_BONUS" "more info: bonus functions"\
-      "open .mymakefile" "more info: makefile"\
-      "open .myforbiddenfunc" "more info: forbidden functions"\
-      "open .mybasictests" "more info: basic tests (beta)"\
+      "${CMD_OPEN} .myLIBFTASM_MANDATORIES" "more info: required functions"\
+      "${CMD_OPEN} .myLIBFTASM_BONUS" "more info: bonus functions"\
+      "${CMD_OPEN} .mymakefile" "more info: makefile"\
+      "${CMD_OPEN} .myforbiddenfunc" "more info: forbidden functions"\
+      "${CMD_OPEN} .mybasictests" "more info: basic tests (beta)"\
       "_"\
-      "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
+      "${CMD_OPEN} https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
       main "BACK TO MAIN MENU"
   }
 

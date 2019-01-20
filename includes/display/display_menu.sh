@@ -9,107 +9,107 @@ then
     local TOTAL SEL LEN SELN TITLE i TESTSA TESTSI
 
     SEL=""
-    if [ "$1" != "" ]
+    if [ "${1}" != "" ]
     then
-      printf $1
+      printf ${1}
     else
-      printf $C_INVERT""
+      printf ${C_INVERT}""
     fi
     shift 1
-    printf "%"$COLUMNS"s" " "
+    printf "%"${COLUMNS}"s" " "
     printf "\n"
-    while (( $# > 0 ))
+    while (( ${#} > 0 ))
     do
-      if [ "$1" == "_" ]
+      if [ "${1}" == "_" ]
       then
-        printf "%"$COLUMNS"s" " "
+        printf "%"${COLUMNS}"s" " "
             printf "\n"
         shift 1
       else
-        if [ "$1" == "TESTS" ]
+        if [ "${1}" == "TESTS" ]
         then
           i=2
           TESTSI=1
-          TESTSA="$2[$i]"
+          TESTSA="${2}[${i}]"
           while [ "${!TESTSA}" != "" ]
           do
             (( TOTAL += 1 ))
             (( i++ ))
-            TESTSA="$2[$i]"
-            FUNCS[$TOTAL]="$3 $TESTSI RUN_ALONE"
-            MENU[$TOTAL]="${!TESTSA}"
+            TESTSA="${2}[${i}]"
+            FUNCS[${TOTAL}]="${3} ${TESTSI} RUN_ALONE"
+            MENU[${TOTAL}]="${!TESTSA}"
             (( i++ ))
             (( TESTSI++ ))
             TITLE=`echo "${!TESTSA}" | sed 's/%/%%/g'`
-            if (( $TOTAL < 10 ))
+            if (( ${TOTAL} < 10 ))
             then
-              SELN=$TOTAL
+              SELN=${TOTAL}
             else
-              (( SELN=65 + $TOTAL - 10 ))
-              SELN=`echo "$SELN" | awk '{printf("%c", $0)}'`
+              (( SELN=65 + ${TOTAL} - 10 ))
+              SELN=`echo "${SELN}" | awk '{printf("%c", $0)}'`
             fi
-            (( LEN=$COLUMNS - ${#TITLE} - 9 ))
-            printf "  "$SELN")    $TITLE "
-            printf "%"$LEN"s" " "
+            (( LEN=${COLUMNS} - ${#TITLE} - 9 ))
+            printf "  "${SELN}")    ${TITLE} "
+            printf "%"${LEN}"s" " "
             printf "\n"
-            TESTSA="$2[$i]"
+            TESTSA="${2}[${i}]"
           done
           shift 3
         else
           (( TOTAL += 1 ))
-          FUNCS[$TOTAL]="$1"
-          MENU[$TOTAL]="$2"
-          TITLE=`echo "$2" | sed 's/%/%%/g'`
-          if (( $TOTAL < 10 ))
+          FUNCS[${TOTAL}]="${1}"
+          MENU[${TOTAL}]="${2}"
+          TITLE=`echo "${2}" | sed 's/%/%%/g'`
+          if (( ${TOTAL} < 10 ))
           then
-            SELN=$TOTAL
+            SELN=${TOTAL}
           else
-            (( SELN=65 + $TOTAL - 10 ))
-            SELN=`echo "$SELN" | awk '{printf("%c", $0)}'`
+            (( SELN=65 + ${TOTAL} - 10 ))
+            SELN=`echo "${SELN}" | awk '{printf("%c", $0)}'`
           fi
-          (( LEN=$COLUMNS - ${#TITLE} - 9 ))
-          printf "  "$SELN")    $TITLE "
-          printf "%"$LEN"s" " "
+          (( LEN=${COLUMNS} - ${#TITLE} - 9 ))
+          printf "  "${SELN}")    ${TITLE} "
+          printf "%"${LEN}"s" " "
           printf "\n"
           shift 2
         fi
       fi
     done
 
-    printf "%"$COLUMNS"s" " "
-    printf $C_CLEAR"\n"
+    printf "%"${COLUMNS}"s" " "
+    printf ${C_CLEAR}"\n"
     read -r -s -n 1 SEL
-    [ $? != 0 ] && utils_exit
-    SEL=$(display_menu_get_key $SEL)
-    if [ "$SEL" == "ESC" ]
+    [ ${?} != 0 ] && utils_exit
+    SEL=$(display_menu_get_key ${SEL})
+    if [ "${SEL}" == "ESC" ]
     then
       utils_exit
     fi
-    SEL=`ft_atoi "$SEL"`
-    while [ -z "${MENU[$SEL]}" -o "$(echo "${FUNCS[$SEL]}" | grep '^open ')" != "" ]
+    SEL=`ft_atoi "${SEL}"`
+    while [ -z "${MENU[${SEL}]}" -o "$(echo "${FUNCS[${SEL}]}" | grep "^${CMD_OPEN} ")" != "" ]
     do
       printf "\a"
-      if [ "$(echo "${FUNCS[$SEL]}" | grep '^open ')" != "" ]
+      if [ "$(echo "${FUNCS[${SEL}]}" | grep "^${CMD_OPEN} ")" != "" ]
       then
-        if [ -f "$(echo "${FUNCS[$SEL]}" | sed 's/^open //')" -o "$(echo "${FUNCS[$SEL]}" | grep http)" != "" ]
+        if [ -f "$(echo "${FUNCS[${SEL}]}" | sed "s#^$(printf '%s' "${CMD_OPEN}" | sed 's/[#\]/\\\0/g') ##")" -o "$(echo "${FUNCS[${SEL}]}" | grep http)" != "" ]
         then
-          eval ${FUNCS[$SEL]}
+          eval ${FUNCS[${SEL}]}
         fi
       fi
       SEL=""
       read -s -n 1 SEL
-      [ $? != 0 ] && utils_exit
-      SEL=$(display_menu_get_key $SEL)
-      if [ "$SEL" == "ESC" ]
+      [ ${?} != 0 ] && utils_exit
+      SEL=$(display_menu_get_key ${SEL})
+      if [ "${SEL}" == "ESC" ]
       then
         utils_exit
       fi
-      SEL=`ft_atoi "$SEL"`
+      SEL=`ft_atoi "${SEL}"`
     done
     printf "\n"
-    if [ "${FUNCS[$SEL]}" != "" ]
+    if [ "${FUNCS[${SEL}]}" != "" ]
     then
-      eval ${FUNCS[$SEL]}
+      eval ${FUNCS[${SEL}]}
     fi
   }
 
