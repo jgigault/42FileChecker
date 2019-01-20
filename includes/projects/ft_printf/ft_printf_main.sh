@@ -71,17 +71,17 @@ then
     display_menu\
       ""\
       "${CONF_FT_PRINTF_FUNCTIONMAIN}" "OK"\
-      "open .mynorminette" "more info: norminette"\
-      "open .mymakefile" "more info: makefile"\
-      "open .myforbiddenfunc" "more info: forbidden functions"\
-      "open .mybasictests" "more info: basic tests"\
-      "open .mybasictests2" "more info: undefined behavior tests"\
-      "open .myleaks" "more info: leaks"\
-      "open .myspeedtest" "more info: speed test"\
-      "open .mymoulitest" "more info: moulitest"\
+      "${CMD_OPEN} .mynorminette" "more info: norminette"\
+      "${CMD_OPEN} .mymakefile" "more info: makefile"\
+      "${CMD_OPEN} .myforbiddenfunc" "more info: forbidden functions"\
+      "${CMD_OPEN} .mybasictests" "more info: basic tests"\
+      "${CMD_OPEN} .mybasictests2" "more info: undefined behavior tests"\
+      "${CMD_OPEN} .myleaks" "more info: leaks"\
+      "${CMD_OPEN} .myspeedtest" "more info: speed test"\
+      "${CMD_OPEN} .mymoulitest" "more info: moulitest"\
       "_"\
-      "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
-      "open ${MOULITEST_URL}/issues/new" "REPORT A BUG ON MOULITEST"\
+      "${CMD_OPEN} https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
+      "${CMD_OPEN} ${MOULITEST_URL}/issues/new" "REPORT A BUG ON MOULITEST"\
       main "BACK TO MAIN MENU"
   }
 

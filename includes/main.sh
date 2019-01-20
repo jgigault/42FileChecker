@@ -49,7 +49,7 @@ then
       "check_option_set OPT_NO_SPEEDTEST" "option: $(if [ "$OPT_NO_SPEEDTEST" == 0 ]; then echo "disable speedtest    (--no-speedtest)"; else echo "enable speedtest"; fi)"\
       "_"\
       display_credits "CREDITS"\
-      "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
+      "${CMD_OPEN} https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG"\
       utils_exit "EXIT"
   }
 

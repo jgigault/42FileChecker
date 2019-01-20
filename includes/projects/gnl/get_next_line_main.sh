@@ -114,18 +114,18 @@ then
     display_menu\
       ""\
       "${CONF_GNL_FUNCTIONMAIN}" "OK"\
-      "open .mynorminette" "more info: norminette"\
-      "open .mymacro" "more info: BUFF_SIZE macro"\
-      "open .mybonusstatic" "more info: bonus: static var"\
-      "open .myforbiddenfunc" "more info: forbidden functions"\
-      "open .mybasictests" "more info: basic tests"\
-      "open .mygnlfreeornottofree" "more info: to free, or not to free"\
-      "open .mymultiplefd" "more info: bonus: multiple file descriptor"\
-      "open .myleaks" "more info: leaks"\
-      "open .mymoulitest" "more info: moulitest"\
+      "${CMD_OPEN} .mynorminette" "more info: norminette"\
+      "${CMD_OPEN} .mymacro" "more info: BUFF_SIZE macro"\
+      "${CMD_OPEN} .mybonusstatic" "more info: bonus: static var"\
+      "${CMD_OPEN} .myforbiddenfunc" "more info: forbidden functions"\
+      "${CMD_OPEN} .mybasictests" "more info: basic tests"\
+      "${CMD_OPEN} .mygnlfreeornottofree" "more info: to free, or not to free"\
+      "${CMD_OPEN} .mymultiplefd" "more info: bonus: multiple file descriptor"\
+      "${CMD_OPEN} .myleaks" "more info: leaks"\
+      "${CMD_OPEN} .mymoulitest" "more info: moulitest"\
       "_"\
-      "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
-      "open ${MOULITEST_URL}/issues/new" "REPORT A BUG ON MOULITEST"\
+      "${CMD_OPEN} https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
+      "${CMD_OPEN} ${MOULITEST_URL}/issues/new" "REPORT A BUG ON MOULITEST"\
       main "BACK TO MAIN MENU"
   }
 

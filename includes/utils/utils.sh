@@ -52,6 +52,7 @@ then
   CMD_RM=/bin/rm
   CMD_TOUCH=/usr/bin/touch
   CMD_GCC=/usr/bin/gcc
+  CMD_OPEN=`command -v xdg-open 2>/dev/null || command -v open 2>/dev/null || echo -n 'open'`
   MOULITEST_URL="https://github.com/yyang42/moulitest_42projects"
   MOULITEST_DIR="moulitest_42projects"
   LIBFTUNITTEST_URL="https://github.com/alelievr/libft-unit-test"

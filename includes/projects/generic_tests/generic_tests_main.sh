@@ -54,11 +54,11 @@ then
     display_menu\
       ""\
       "${CONF_GENERIC_TESTS_FUNCTIONMAIN}" "OK"\
-      "open .mynorminette" "more info: norminette"\
-      "open .mymakefile" "more info: makefile"\
-      "open .myforbiddenfunc" "more info: forbidden functions"\
+      "${CMD_OPEN} .mynorminette" "more info: norminette"\
+      "${CMD_OPEN} .mymakefile" "more info: makefile"\
+      "${CMD_OPEN} .myforbiddenfunc" "more info: forbidden functions"\
       "_"\
-      "open https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
+      "${CMD_OPEN} https://github.com/jgigault/42FileChecker/issues/new" "REPORT A BUG ON 42FILECHECKER"\
       "main" "BACK TO MAIN MENU"
   }
 
