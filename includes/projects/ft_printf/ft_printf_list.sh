@@ -59,11 +59,11 @@ then
   CHK_FT_PRINTF_LIST+=("x" "%hx|4294967296")
   CHK_FT_PRINTF_LIST+=("x" "%hhX|4294967296")
 
-  CHK_FT_PRINTF_LIST+=("x" "%jx|4294967295")
-  CHK_FT_PRINTF_LIST+=("x" "%jx|4294967296")
+  # CHK_FT_PRINTF_LIST+=("x" "%jx|4294967295") #-> no longer mandatory
+  # CHK_FT_PRINTF_LIST+=("x" "%jx|4294967296") #-> no longer mandatory
 
-  CHK_FT_PRINTF_LIST+=("x" "%jx|-4294967296")
-  CHK_FT_PRINTF_LIST+=("x" "%jx|-4294967297")
+  # CHK_FT_PRINTF_LIST+=("x" "%jx|-4294967296") #-> no longer mandatory
+  # CHK_FT_PRINTF_LIST+=("x" "%jx|-4294967297") #-> no longer mandatory
 
   CHK_FT_PRINTF_LIST+=("x" "%llx|9223372036854775807")
   CHK_FT_PRINTF_LIST+=("x" "%llx|9223372036854775808")
@@ -232,14 +232,14 @@ then
   CHK_FT_PRINTF_LIST+=("dL" "%lld|-9223372036854775808")
 
   # interger intmax_t
-  CHK_FT_PRINTF_LIST+=("dj" "%jd|9223372036854775807")
-  CHK_FT_PRINTF_LIST+=("dj" "%jd|-9223372036854775808")
+  # CHK_FT_PRINTF_LIST+=("dj" "%jd|9223372036854775807") #-> no longer mandatory
+  # CHK_FT_PRINTF_LIST+=("dj" "%jd|-9223372036854775808") #-> no longer mandatory
 
   # interger size_t
-  CHK_FT_PRINTF_LIST+=("dz" "%zd|4294967295")
-  CHK_FT_PRINTF_LIST+=("dz" "%zd|4294967296")
-  CHK_FT_PRINTF_LIST+=("dz" "%zd|-0")
-  CHK_FT_PRINTF_LIST+=("dz" "%zd|-1")
+  # CHK_FT_PRINTF_LIST+=("dz" "%zd|4294967295") #-> no longer mandatory
+  # CHK_FT_PRINTF_LIST+=("dz" "%zd|4294967296") #-> no longer mandatory
+  # CHK_FT_PRINTF_LIST+=("dz" "%zd|-0") #-> no longer mandatory
+  # CHK_FT_PRINTF_LIST+=("dz" "%zd|-1") #-> no longer mandatory
 
   CHK_FT_PRINTF_LIST+=("d" "%d|1")
   CHK_FT_PRINTF_LIST+=("d" "%d %d|1|-2")
@@ -284,13 +284,13 @@ then
 
   CHK_FT_PRINTF_LIST+=("uL" "%llu|4999999999")
 
-  CHK_FT_PRINTF_LIST+=("uj" "%ju|4999999999")
+  # CHK_FT_PRINTF_LIST+=("uj" "%ju|4999999999") #-> no longer mandatory
 
-  CHK_FT_PRINTF_LIST+=("uz" "%ju|4294967296")
+  # CHK_FT_PRINTF_LIST+=("uz" "%ju|4294967296") #-> no longer mandatory
 
-  CHK_FT_PRINTF_LIST+=("uU" "%U|4294967295")
-  CHK_FT_PRINTF_LIST+=("uU" "%hU|4294967296")
-  CHK_FT_PRINTF_LIST+=("uU" "%U|4294967296")
+  # CHK_FT_PRINTF_LIST+=("uU" "%U|4294967295") #-> no longer mandatory
+  # CHK_FT_PRINTF_LIST+=("uU" "%hU|4294967296") #-> no longer mandatory
+  # CHK_FT_PRINTF_LIST+=("uU" "%U|4294967296") #-> no longer mandatory
 
   CHK_FT_PRINTF_LIST+=("u" "@moulitest: %.5u|42")
 
