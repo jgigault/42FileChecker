@@ -55,6 +55,8 @@ then
   CMD_OPEN=`command -v xdg-open 2>/dev/null || command -v open 2>/dev/null || echo -n 'open'`
   MOULITEST_URL="https://github.com/yyang42/moulitest_42projects"
   MOULITEST_DIR="moulitest_42projects"
+  PFT_URL="https://github.com/gavinfielder/pft"
+  PFT_DIR="pft"
   LIBFTUNITTEST_URL="https://github.com/alelievr/libft-unit-test"
   LIBFTUNITTEST_DIR="libft-unit-test"
   EXTERNAL_REPOSITORY_FILLITCHECKER_URL="https://github.com/anisg/fillit_checker"
