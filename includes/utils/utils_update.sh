@@ -6,10 +6,9 @@ then
   function utils_update
   {
     local RET0
+    tput cnorm
+    RET0=`check_update_42filechecker`
     tput civis
-    ${CMD_RM} -f .myret
-    check_update_42filechecker
-    RET0=`cat .myret`
     case "$RET0" in
       "exit") utils_exit; return 1 ;;
       "nothing") utils_before_exit; return 1 ;;
@@ -24,9 +23,7 @@ then
     display_header
     printf "\n"
     printf "  Checking for updates (42FileChecker)...\n"
-    (check_for_updates_42filechecker > .myret) &
-    display_spinner $!
-    UPTODATE=`cat .myret`
+    UPTODATE=`check_for_updates_42filechecker`
     case "${UPTODATE}" in
     "1")
       printf "continue" > .myret
@@ -144,9 +141,8 @@ then
     display_header
     printf "\n"
     printf "  Updating 42FileChecker\n"
+    git fetch --all >/dev/null 2>&1
     ${CMD_RM} -f ${LOGFILENAME}
-    (git fetch --all >/dev/null 2>&1) &
-    display_spinner $!
     (git reset --hard "origin/master" 2>&1 | grep -v 'HEAD is now at' >${LOGFILENAME}) &
     display_spinner $!
     RES0=`cat ${LOGFILENAME}`
