@@ -31,6 +31,6 @@ int				main(int argc, char **argv)
 	close(fd);
 	if (ret < 0)
 		return (3);
-	printf("%llu/%s", st.st_ino, formatdate(date, st.st_mtime));
+	printf("%llu/%s", (long long unsigned int)st.st_ino, formatdate(date, st.st_mtime));
 	return (0);
 }
