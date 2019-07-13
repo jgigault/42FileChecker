@@ -43,6 +43,7 @@ OPT_NO_TIMEOUT=0
 OPT_NO_NORMINETTE=0
 OPT_NO_AUTEUR=0
 OPT_NO_MOULITEST=0
+OPT_NO_PFT=0
 OPT_NO_LIBFTUNITTEST=0
 OPT_NO_FILLITCHECKER=0
 OPT_NO_MAINTEST=0
@@ -79,6 +80,7 @@ do
     "--no-auteur") OPT_NO_AUTEUR=1 ;;
     "--no-author") OPT_NO_AUTEUR=1 ;;
     "--no-moulitest") OPT_NO_MOULITEST=1 ;;
+    "--no-pft") OPT_NO_PFT=1 ;;
     "--no-libftunittest") OPT_NO_LIBFTUNITTEST=1 ;;
     "--no-fillitchecker") OPT_NO_FILLITCHECKER=1 ;;
     "--no-maintest") OPT_NO_MAINTEST=1 ;;
@@ -131,6 +133,7 @@ source includes/external_repositories/external_repository_fillit_checker.sh
 source includes/external_repositories/external_repository_libftunittest.sh
 source includes/external_repositories/external_repository_maintest.sh
 source includes/external_repositories/external_repository_moulitest.sh
+source includes/external_repositories/external_repository_pft.sh
 source includes/projects/fillit/fillit_main.sh
 source includes/projects/ft_ls/ft_ls_main.sh
 source includes/projects/ft_printf/ft_printf_main.sh
